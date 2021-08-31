@@ -4,7 +4,6 @@ import {SideBarPage} from "./components/Layout/SideBar/SideBar";
 import {Counterparty} from "./components/Counterparty/Counterparty";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
-import {Container} from "@material-ui/core";
 import {Route} from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -22,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
         content: {
             flexGrow: 1,
             padding: theme.spacing(0),
+            margin:theme.spacing(0),
         },
     }),
 );
@@ -29,19 +29,20 @@ const App: React.FC = () => {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Container maxWidth='xl' className={classes.root}>
+            <div className={classes.root}>
                 <CssBaseline/>
                 <div className={classes.appBar}>
                     <HeaderPage/>
                 </div>
-
                 <div className={classes.drawer}>
                     <SideBarPage/>
                 </div>
+
                 <main className={classes.content}>
+
                     <Route path="/Контрагенты" render={()=> <Counterparty/>}/>
                 </main>
-            </Container>
+            </div>
         </React.Fragment>
     );
 }

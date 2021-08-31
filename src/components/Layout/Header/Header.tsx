@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
              width: theme.spacing(10),
             height: theme.spacing(4),
         },
+
     }),
 );
 export const HeaderPage = () => {

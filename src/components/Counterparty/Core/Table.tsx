@@ -94,7 +94,7 @@ const useStyles = makeStyles({
         width: '100%',
     },
     container: {
-        maxHeight: 394,
+        maxHeight:'74vh',
     },
     textField: {
      width:'75px',

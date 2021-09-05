@@ -23,17 +23,14 @@ interface Column {
     format?: (value: number) => string;
 }
 const currencies =  [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
+    'Oliver ',
+    'Van ',
+    'April ',
+    'Ralph ',
+    'Omar ',
+    'Carlos ',
 ];
+
 const columns: Column[] = [
     { id: 'name', label: 'Name', minWidth: 170 },
     { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
@@ -155,7 +152,7 @@ export default function CounterpartiesTable() {
                             <StyledTableCell align="left">Отрасль
                                 <InputFilterSearch handleChange={handleChange}/>
                             </StyledTableCell>
-                            <StyledTableCell align="left" style={{minWidth:'145px'}}>Группа компаний
+                            <StyledTableCell align="left" style={{minWidth:'150px'}}>Группа компаний
                                 <InputFilterSearch handleChange={handleChange}/>
                             </StyledTableCell>
                             <StyledTableCell align="left">Ответственный

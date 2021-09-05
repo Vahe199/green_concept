@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles,createStyles ,Theme} from "@material-ui/core/styles";
-import {Paper} from "@material-ui/core";
-import {WithMaterialUI} from "../Forms/GeneralInformation/FormGeneralInformation";
+import {FormCompanyDetails} from "../Forms/GeneralInformation/FormCompanyDetails";
+import {FormGeneralInformation} from "../Forms/GeneralInformation/FormGeneralInformation";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -19,15 +19,15 @@ const useStyles = makeStyles((theme: Theme) =>
 export const GeneralInformation = () => {
   const classes = useStyles();
   return <div className={classes.root}>
-    <Paper style={{width:'23%',padding:10}}>
-        <WithMaterialUI/>
-    </Paper>
-      <Paper style={{width:'38%',padding:10}}>
-          <WithMaterialUI/>
-      </Paper>
-      <Paper style={{width:'33%',padding:10}}>
-          <WithMaterialUI/>
-      </Paper>
+    <div style={{width:'23%'}}>
+        <FormGeneralInformation/>
+    </div>
+      <div style={{width:'38%'}}>
+         <FormCompanyDetails/>
+      </div>
+      <div style={{width:'33%'}}>
+          <FormGeneralInformation/>
+      </div>
 
 
   </div>;

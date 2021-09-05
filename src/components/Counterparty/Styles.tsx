@@ -16,17 +16,18 @@ export const useStyles = makeStyles({
   root: {
     flexGrow: 1,
     width: "100%",
-    height: 105,
+    height: 125,
     margin: 0,
     alignItems: "center",
     justifyContent: "space-between",
     paddingLeft: "2%",
     paddingRight: "2%",
-    paddingTop: "2%",
+     paddingTop: 24,
   },
   typography: {
     color: "#3B4750",
     fontSize: 20,
+    marginBottom:16
   },
   btn: {
     color: "#fff",

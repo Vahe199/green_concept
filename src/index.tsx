@@ -4,11 +4,14 @@ import {BrowserRouter} from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import {theme} from "./components/Layout/Style/theme";
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
+          <MuiThemeProvider theme={theme}>
           <App />
+          </MuiThemeProvider>
       </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

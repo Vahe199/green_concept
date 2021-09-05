@@ -3,7 +3,6 @@ import clsx from "clsx";
 import {
   createStyles,
   makeStyles,
-  useTheme,
   Theme,
 } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -125,7 +124,7 @@ export const SideBarPage: React.FC = () => {
           <Divider />
           <List>
             <Link
-              to={"/Оповещения"}
+              to={"/notifications"}
               className={
                 active === "Оповещения" ? classes.activeLink : classes.link
               }
@@ -157,7 +156,7 @@ export const SideBarPage: React.FC = () => {
             </Link>
 
             <Link
-              to={"/Проекты"}
+              to={"/projects"}
               className={
                 active === "Проекты" ? classes.activeLink : classes.link
               }
@@ -178,7 +177,7 @@ export const SideBarPage: React.FC = () => {
             </Link>
 
             <Link
-              to={"/Управление денежными средствами"}
+              to={"/Cash management"}
               className={
                 active === "Управление денежными"
                   ? classes.activeLink
@@ -209,7 +208,7 @@ export const SideBarPage: React.FC = () => {
             </Link>
 
             <Link
-              to={"/Задачи и заявки"}
+              to={"/Tasks and requests"}
               className={
                 active === "Задачи и заявки" ? classes.activeLink : classes.link
               }
@@ -232,7 +231,7 @@ export const SideBarPage: React.FC = () => {
             </Link>
 
             <Link
-              to={"/ТМЦ"}
+              to={"/Goods and materials"}
               className={active === "ТМЦ" ? classes.activeLink : classes.link}
             >
               <ListItem button onClick={() => setActive("ТМЦ")}>
@@ -250,7 +249,7 @@ export const SideBarPage: React.FC = () => {
               </ListItem>
             </Link>
             <Link
-              to={"/Договоры"}
+              to={"/treaties"}
               className={
                 active === "Договоры" ? classes.activeLink : classes.link
               }
@@ -270,7 +269,7 @@ export const SideBarPage: React.FC = () => {
               </ListItem>
             </Link>
             <Link
-              to={"/Письма"}
+              to={"/Letters"}
               className={
                 active === "Письма" ? classes.activeLink : classes.link
               }
@@ -290,7 +289,7 @@ export const SideBarPage: React.FC = () => {
               </ListItem>
             </Link>
             <Link
-              to={"/Контрагенты"}
+              to={"/counterparties"}
               className={
                 active === "Контрагенты" ? classes.activeLink : classes.link
               }
@@ -310,7 +309,7 @@ export const SideBarPage: React.FC = () => {
               </ListItem>
             </Link>
             <Link
-              to={"/Сотрудники"}
+              to={"/employees"}
               className={
                 active === "Сотрудники" ? classes.activeLink : classes.link
               }
@@ -330,7 +329,7 @@ export const SideBarPage: React.FC = () => {
               </ListItem>
             </Link>
             <Link
-              to={"/Таймшит"}
+              to={"/Timesheet"}
               className={
                 active === "Таймшит" ? classes.activeLink : classes.link
               }

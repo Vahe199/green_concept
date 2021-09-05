@@ -1,15 +1,15 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
-import AppBar from "@material-ui/core/AppBar";
+import {Link, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
+// import {Link} from "react-router-dom"
 import { GeneralInformation } from "./TabsForCreating/GeneralInformation";
 import { ContactPerson } from "./TabsForCreating/ContactPerson";
-import { isClassExpression } from "typescript";
+import DoubleLeft from "../../IMG/icons/DoubleLeft.png";
+import {useHistory} from "react-router-dom";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -78,13 +78,11 @@ const useStyles = makeStyles((theme) => ({
   bottomField: {
     flexGrow: 1,
     width: "100%",
-    height: 100,
-    marginTop: 100,
+    backgroundColor: "#E3DFDF",
+    // height:"100vh",
+    // minHeight:'100%',
     alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: "2%",
-    paddingRight: "2%",
-    paddingTop: "2%",
+    justifyContent: "center",
   },
   TabsStyle: {
     height: 1,
@@ -102,11 +100,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const CreateCounterparty = () => {
+  let history = useHistory();
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
+    console.log(event.target)
   };
 
   return (
@@ -171,10 +171,17 @@ export const CreateCounterparty = () => {
           </Tabs>
         </div>
       </Paper>
-      <Paper square className={classes.bottomField}>
+      <div style={{marginLeft:'2%',marginTop:'1%'}}>
+      <Link color="inherit" onClick={()=>history.push('/counterparties')}>
+        <img src={DoubleLeft} style={{width:16,height:16,marginBottom:-2}} alt='double left icon'/>
+       <span style={{fontSize:16}}> Вернуться назад к списку</span>
+      </Link>
+      </div>
+
+      <div className={classes.bottomField}>
         {selectedTab === 0 && <GeneralInformation />}
         {selectedTab === 1 && <ContactPerson />}
-      </Paper>
+      </div>
     </div>
   );
 };

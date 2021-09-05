@@ -1,69 +1,24 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
-import { Avatar, Button, Typography } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
 import XLS from "../../IMG/icons/XLS.png";
-import { Link } from "react-router-dom";
-const useStyles = makeStyles({
-  container: {
-    height: "100vh",
-    width: "100%",
-    paddingTop: 67,
-    margin: 0,
-    paddingLeft: 0,
-    paddingRight: 0,
-  },
-  root: {
-    flexGrow: 1,
-    width: "100%",
-    height: 125,
-    margin: 0,
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: "2%",
-    paddingRight: "2%",
-    paddingTop: "2%",
-  },
-  typography: {
-    color: "#3B4750",
-    fontSize: 20,
-  },
-  btn: {
-    color: "#fff",
-    fontSize: 12,
-    paddingBottom: 4,
-    backgroundColor: "#3AB994",
-    "&:hover": {
-      backgroundColor: green[300],
-    },
-  },
-  button: {
-    fontSize: 12,
-    backgroundColor: "#F2F3F4",
-    width: "165px",
-    height: "30px",
-    marginRight: "10px",
-    padding: 0,
-    paddingTop: 2,
-  },
-  icon: {
-    width: 25,
-  },
-  noUnderline: {
-    textDecoration: "none",
-  },
-});
+import { useHistory } from "react-router-dom";
+import {Button, Typography} from "@material-ui/core";
+import CounterpartiesTable from "./Core/Table";
+import {useStyles} from "./Styles";
+
 
 export const Counterparty = () => {
+  let history = useHistory();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
-
+  const handleClick = (path:string) => {
+    history.push(`/counterparty/${path}`);
+  }
   return (
     <div className={classes.container}>
       <Paper square className={classes.root}>
@@ -71,8 +26,8 @@ export const Counterparty = () => {
           Контрагенты
         </Typography>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Link to={"/Создать-Контрагента"} className={classes.noUnderline}>
-            <Button
+
+            <Button onClick={()=>handleClick('new contractor')}
               variant="contained"
               color="primary"
               startIcon={<AddIcon />}
@@ -80,16 +35,17 @@ export const Counterparty = () => {
             >
               Новый контрагент
             </Button>
-          </Link>
           <span>
-            <Button
+            <Button onClick={()=>handleClick('new contact')}
               variant="contained"
               startIcon={<AddIcon />}
               className={classes.button}
             >
               Новый контакт
             </Button>
-            <Button variant="contained" className={classes.button}>
+            <Button onClick={()=>handleClick('all contact persons')}
+                variant="contained"
+                    className={classes.button} >
               Все контактные лица
             </Button>
             <Button
@@ -101,6 +57,9 @@ export const Counterparty = () => {
           </span>
         </div>
       </Paper>
+      <div style={{paddingLeft:16,paddingTop:8,paddingRight:10}}>
+     <CounterpartiesTable/>
+      </div>
     </div>
   );
 };

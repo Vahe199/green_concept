@@ -1,10 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-} from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -13,18 +9,18 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Avatar, Badge } from "@material-ui/core";
+import { Badge } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import Bell from "../../../IMG/icons/BellSimple.png";
-import Case from "../../../IMG/icons/Briefcase.png";
-import MoneyTra from "../../../IMG/icons/money_transfer.png";
-import CheckSquare from "../../../IMG/icons/CheckSquareOffset.png";
-import TMC from "../../../IMG/icons/DesktopTower.png";
-import Clip from "../../../IMG/icons/ClipboardText.png";
-import Envelope from "../../../IMG/icons/Envelope.png";
-import Counterparty from "../../../IMG/icons/IdentificationCard.png";
-import Users from "../../../IMG/icons/Users.png";
-import Clock from "../../../IMG/icons/ClockClockwise.png";
+import { ProjectsIcon } from "../../../IMG/SVG/ProjectsIcon";
+import { NotificationIcon } from "../../../IMG/SVG/NotificationIcon";
+import { MoneyTransfer } from "../../../IMG/SVG/MoneyTransferIcon";
+import { TaskRequest } from "../../../IMG/SVG/TaskRequestIcon";
+import { TMC } from "../../../IMG/SVG/TMCIcon";
+import { Contracts } from "../../../IMG/SVG/ContractsIcon";
+import { Letters } from "../../../IMG/SVG/LettersIcon";
+import { ConterpartiesIcon } from "../../../IMG/SVG/ConterpartiesIcon";
+import { EmployeesIcon } from "../../../IMG/SVG/EmployeesIcon";
+import { TimesheetIcon } from "../../../IMG/SVG/TimesheetIcon";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -89,7 +85,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     div: {
       // backgroundColor:'#3AB994',
-      backgroundColor: "#bdbdbd42",
+      backgroundColor: "transparent",
       width: "27px",
       height: "27px",
     },
@@ -97,6 +93,10 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "#3abb967d",
       width: "27px",
       height: "27px",
+    },
+    iconsContainer: {
+      marginTop: 62,
+      marginLeft: 5,
     },
   })
 );
@@ -120,7 +120,7 @@ export const SideBarPage: React.FC = () => {
           }),
         }}
       >
-        <div style={{ marginTop: 63 }}>
+        <div className={classes.iconsContainer}>
           <Divider />
           <List>
             <Link
@@ -138,16 +138,9 @@ export const SideBarPage: React.FC = () => {
                     variant="dot"
                     invisible={false}
                   >
-                    <Avatar
-                      variant="rounded"
-                      className={
-                        active === "Оповещения"
-                          ? classes.activeDiv
-                          : classes.div
-                      }
-                    >
-                      <img src={Bell} className={classes.icon} />
-                    </Avatar>
+                    <NotificationIcon
+                      color={active === "Оповещения" ? "#3AB994" : "#000"}
+                    />
                   </Badge>
                 </ListItemIcon>
                 <span>Оповещения</span>
@@ -163,16 +156,11 @@ export const SideBarPage: React.FC = () => {
             >
               <ListItem button onClick={() => setActive("Проекты")}>
                 <ListItemIcon>
-                  <Avatar
-                    variant="rounded"
-                    className={
-                      active === "Проекты" ? classes.activeDiv : classes.div
-                    }
-                  >
-                    <img src={Case} className={classes.icon} />
-                  </Avatar>
+                  <ProjectsIcon
+                    color={active === "Проекты" ? "#3AB994" : "#000"}
+                  />
                 </ListItemIcon>
-                <span>Проекты</span>
+                <span>Проекты </span>
               </ListItem>
             </Link>
 
@@ -189,16 +177,11 @@ export const SideBarPage: React.FC = () => {
                 onClick={() => setActive("Управление денежными")}
               >
                 <ListItemIcon>
-                  <Avatar
-                    variant="rounded"
-                    className={
-                      active === "Управление денежными"
-                        ? classes.activeDiv
-                        : classes.div
+                  <MoneyTransfer
+                    color={
+                      active === "Управление денежными" ? "#3AB994" : "#000"
                     }
-                  >
-                    <img src={MoneyTra} className={classes.icon} />
-                  </Avatar>
+                  />
                 </ListItemIcon>
                 <span>
                   Управление денежными
@@ -215,16 +198,9 @@ export const SideBarPage: React.FC = () => {
             >
               <ListItem button onClick={() => setActive("Задачи и заявки")}>
                 <ListItemIcon>
-                  <Avatar
-                    variant="rounded"
-                    className={
-                      active === "Задачи и заявки"
-                        ? classes.activeDiv
-                        : classes.div
-                    }
-                  >
-                    <img src={CheckSquare} className={classes.icon} />
-                  </Avatar>
+                  <TaskRequest
+                    color={active === "Задачи и заявки" ? "#3AB994" : "#000"}
+                  />
                 </ListItemIcon>
                 <span>Задачи и заявки</span>
               </ListItem>
@@ -236,14 +212,7 @@ export const SideBarPage: React.FC = () => {
             >
               <ListItem button onClick={() => setActive("ТМЦ")}>
                 <ListItemIcon>
-                  <Avatar
-                    variant="rounded"
-                    className={
-                      active === "ТМЦ" ? classes.activeDiv : classes.div
-                    }
-                  >
-                    <img src={TMC} className={classes.icon} />
-                  </Avatar>
+                  <TMC color={active === "ТМЦ" ? "#3AB994" : "#000"} />
                 </ListItemIcon>
                 <span>ТМЦ</span>
               </ListItem>
@@ -256,14 +225,9 @@ export const SideBarPage: React.FC = () => {
             >
               <ListItem button onClick={() => setActive("Договоры")}>
                 <ListItemIcon>
-                  <Avatar
-                    variant="rounded"
-                    className={
-                      active === "Договоры" ? classes.activeDiv : classes.div
-                    }
-                  >
-                    <img src={Clip} className={classes.icon} />
-                  </Avatar>
+                  <Contracts
+                    color={active === "Договоры" ? "#3AB994" : "#000"}
+                  />
                 </ListItemIcon>
                 <span>Договоры</span>
               </ListItem>
@@ -276,14 +240,7 @@ export const SideBarPage: React.FC = () => {
             >
               <ListItem button onClick={() => setActive("Письма")}>
                 <ListItemIcon>
-                  <Avatar
-                    variant="rounded"
-                    className={
-                      active === "Письма" ? classes.activeDiv : classes.div
-                    }
-                  >
-                    <img src={Envelope} className={classes.icon} />
-                  </Avatar>
+                  <Letters color={active === "Письма" ? "#3AB994" : "#000"} />
                 </ListItemIcon>
                 <span>Письма</span>
               </ListItem>
@@ -296,14 +253,9 @@ export const SideBarPage: React.FC = () => {
             >
               <ListItem button onClick={() => setActive("Контрагенты")}>
                 <ListItemIcon>
-                  <Avatar
-                    variant="rounded"
-                    className={
-                      active === "Контрагенты" ? classes.activeDiv : classes.div
-                    }
-                  >
-                    <img src={Counterparty} className={classes.icon} />
-                  </Avatar>
+                  <ConterpartiesIcon
+                    color={active === "Контрагенты" ? "#3AB994" : "#000"}
+                  />
                 </ListItemIcon>
                 <span>Контрагенты</span>
               </ListItem>
@@ -316,14 +268,9 @@ export const SideBarPage: React.FC = () => {
             >
               <ListItem button onClick={() => setActive("Сотрудники")}>
                 <ListItemIcon>
-                  <Avatar
-                    variant="rounded"
-                    className={
-                      active === "Сотрудники" ? classes.activeDiv : classes.div
-                    }
-                  >
-                    <img src={Users} className={classes.icon} />
-                  </Avatar>
+                  <EmployeesIcon
+                    color={active === "Сотрудники" ? "#3AB994" : "#000"}
+                  />
                 </ListItemIcon>
                 <span>Сотрудники</span>
               </ListItem>
@@ -336,14 +283,9 @@ export const SideBarPage: React.FC = () => {
             >
               <ListItem button onClick={() => setActive("Таймшит")}>
                 <ListItemIcon>
-                  <Avatar
-                    variant="rounded"
-                    className={
-                      active === "Таймшит" ? classes.activeDiv : classes.div
-                    }
-                  >
-                    <img src={Clock} className={classes.icon} />
-                  </Avatar>
+                  <TimesheetIcon
+                    color={active === "Таймшит" ? "#3AB994" : "#000"}
+                  />
                 </ListItemIcon>
                 <span>Таймшит</span>
               </ListItem>

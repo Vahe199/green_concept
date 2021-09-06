@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
 export const ContactPerson = () => {
   const classes = useStyles();
   return <div className={classes.root}>
-    <div style={{width:'45%'}}>
+    <div style={{width:'50%'}}>
       <FormBasicInformation/>
     </div>
-    <div style={{width:'45%'}}>
+    <div style={{width:'50%'}}>
       <div>
       <FormContactsFromGreen/>
       </div>

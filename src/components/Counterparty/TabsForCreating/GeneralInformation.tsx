@@ -5,16 +5,16 @@ import {FormGeneralInformation} from "../Forms/GeneralInformation/FormGeneralInf
 import {FormCompanyContacts} from "../Forms/GeneralInformation/FormCompanyContacts";
 
 const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        padding:'1%',
-        '& > *': {
-           margin: theme.spacing(1),
-        },
+  createStyles({
+    root: {
+      display: "flex",
+      flexWrap: "wrap",
+      padding: "1%",
+      "& > *": {
+        margin: theme.spacing(1),
       },
-    }),
+    },
+  })
 );
 
 export const GeneralInformation = () => {
@@ -29,7 +29,9 @@ export const GeneralInformation = () => {
       <div style={{width:'31%'}}>
           <FormCompanyContacts/>
       </div>
-
-
-  </div>;
+      <div style={{ width: "33%" }}>
+        <FormGeneralInformation />
+      </div>
+    </div>
+  );
 };

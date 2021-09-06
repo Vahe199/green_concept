@@ -1,7 +1,7 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import {Link, Typography} from "@material-ui/core";
+import { Link, Typography } from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
@@ -107,7 +107,7 @@ export const CreateCounterparty = () => {
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
-    console.log(event.target)
+    console.log(event.target);
   };
 
   return (
@@ -172,11 +172,15 @@ export const CreateCounterparty = () => {
           </Tabs>
         </div>
       </Paper>
-      <div style={{marginLeft:'2%',marginTop:'1%'}}>
-      <Link color="inherit" onClick={()=>history.push('/counterparties')}>
-        <img src={DoubleLeft} style={{width:16,height:16,marginBottom:-2}} alt='double left icon'/>
-       <span style={{fontSize:16}}> Вернуться назад к списку</span>
-      </Link>
+      <div style={{ marginLeft: "2%", marginTop: "1%" }}>
+        <Link color="inherit" onClick={() => history.push("/counterparties")}>
+          <img
+            src={DoubleLeft}
+            style={{ width: 16, height: 16, marginBottom: -2 }}
+            alt="double left icon"
+          />
+          <span style={{ fontSize: 16 }}> Вернуться назад к списку</span>
+        </Link>
       </div>
 
       <div className={classes.bottomField}>

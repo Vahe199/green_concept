@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const GeneralInformation = () => {
   const classes = useStyles();
-  return <div className={classes.root}>
+  return (<div className={classes.root}>
     <div style={{width:'25%'}}>
         <FormGeneralInformation/>
     </div>
@@ -28,9 +28,6 @@ export const GeneralInformation = () => {
       </div>
       <div style={{width:'31%'}}>
           <FormCompanyContacts/>
-      </div>
-      <div style={{ width: "33%" }}>
-        <FormGeneralInformation />
       </div>
     </div>
   );

@@ -9,7 +9,8 @@ import Box from "@material-ui/core/Box";
 import { GeneralInformation } from "./TabsForCreating/GeneralInformation";
 import { ContactPerson } from "./TabsForCreating/ContactPerson";
 import DoubleLeft from "../../IMG/icons/DoubleLeft.png";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
+import {BankDetails} from "./TabsForCreating/BankDetails";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -185,6 +186,7 @@ export const CreateCounterparty = () => {
       <div className={classes.bottomField}>
         {selectedTab === 0 && <GeneralInformation />}
         {selectedTab === 1 && <ContactPerson />}
+        {selectedTab === 2 && <BankDetails/>}
       </div>
     </div>
   );

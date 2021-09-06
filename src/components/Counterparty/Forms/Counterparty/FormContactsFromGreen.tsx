@@ -2,7 +2,7 @@ import React from 'react';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 import AddIcon from '@material-ui/icons/Add';
-import {Checkbox, FormControlLabel, Radio, TextField, Paper, Button} from "@material-ui/core";
+import {Checkbox, FormControlLabel, Radio, TextField, Paper, Button, Link} from "@material-ui/core";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 type Data = {
@@ -44,6 +44,7 @@ const validationSchema: yup.SchemaOf<Data> = yup.object({
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
+            margin:'3%',
             '& .MuiTextField-root': {
                 minWidth: '60%',
                 height: '30px',
@@ -66,9 +67,29 @@ const useStyles = makeStyles((theme: Theme) =>
                 fontSize: 10,
             }
         },
+        textArea:{
+            marginBottom: '6%',
+            '& .MuiTextField-root': {
+                minWidth: '60%',
+                height: '200px',
+                backgroundColor: theme.palette.common.white,
+            },
+            '& .MuiOutlinedInput-input': {
+                padding: 0,
+                paddingLeft: 4,
+                textAlign: 'start',
+                height: '200px',
+                backgroundColor: 'transparent',
+                fontSize: 13
+            },
+            '& .MuiOutlinedInput-multiline': {
+                padding: '7.5px 14px'
+            },
+        },
         paper: {
             padding: 10,
-            border: '1px solid #3ab994'
+            border: '1px solid #3ab994',
+            height:350,
         },
         label: {
             display: 'flex',
@@ -80,7 +101,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const FormGeneralInformation = () => {
+export const FormContactsFromGreen = () => {
     const classes = useStyles();
     const [checked, setChecked] = React.useState('a')
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,57 +129,17 @@ export const FormGeneralInformation = () => {
         <div className={classes.root}>
             <form onSubmit={formik.handleSubmit}>
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <span>Общие сведения</span>
+                    <span>Контакты со стороны Грин</span>
                     <Button color="primary" type="submit" style={{textTransform:'none'}}>
                         Сохранить
                     </Button>
                 </div>
                 <Paper className={classes.paper}>
-                    <div style={{marginBottom: '2%', display:'flex'}}>
-                        <div>
-                            <span style={{fontSize:10}}>Физическое лицо</span>
-                      <Radio
-                                checked={checked === 'a'}
-                                onChange={handleChange}
-                                value="a"
-                                color="default"
-                                name="radio-button-demo"
-                                size="small"
-                                inputProps={{'aria-label': 'A'}}
-                            />
-                        </div>
-                        <div>
-                            <span style={{fontSize:10}}>Юридическое лицо</span><Radio
-                                checked={checked === 'b'}
-                                onChange={handleChange}
-                                value="b"
-                                color="default"
-                                name="radio-button-demo"
-                                size="small"
-                                inputProps={{'aria-label': 'B'}}
-                            />
-                        </div>
-                    </div>
                     <div className={classes.label}>
-                        <span>CRM</span>
-                        <div style={{width: '60%',display:'flex', justifyContent:'space-between'}}>
-                            <TextField variant={'outlined'}
-                                        style={{width: '83%'}}
-                                       name="CRM"
-                                       placeholder={'Фамилия Имя'}
-                                       value={formik.values.CRM}
-                                       onChange={formik.handleChange}
-                                       error={formik.touched.CRM && Boolean(formik.errors.CRM)}
-                                       helperText={formik.touched.CRM && formik.errors.CRM}
-                            />
-                            <AddIcon />
-                        </div>
-                    </div>
-                    <div className={classes.label}>
-                        <span>Тип контрагента</span>
+                        <span>Направление</span>
                         <TextField variant={'outlined'}
                                    name="CounterpartyType"
-                                   placeholder={'Поставщик'}
+                                   placeholder={'Выберите'}
                                    value={formik.values.CounterpartyType}
                                    onChange={formik.handleChange}
                                    error={formik.touched.CounterpartyType && Boolean(formik.errors.CounterpartyType)}
@@ -166,59 +147,35 @@ export const FormGeneralInformation = () => {
                         />
                     </div>
                     <div className={classes.label}>
-                        <span>Тип услуг</span>
+                        <span>Контактное лицо</span>
                         <TextField variant={'outlined'}
+                                   name="CounterpartyType"
+                                   placeholder={'Введите слово или часть слова'}
+                                   value={formik.values.CounterpartyType}
+                                   onChange={formik.handleChange}
+                                   error={formik.touched.CounterpartyType && Boolean(formik.errors.CounterpartyType)}
+                                   helperText={formik.touched.CounterpartyType && formik.errors.CounterpartyType}
+                        />
+                    </div>
+                    <div className={classes.label}>
+                        <span>Дополнительная информация</span>
 
-                                   name="ServiceType"
-                                   placeholder={'Другое'}
-                                   value={formik.values.ServiceType}
-                                   onChange={formik.handleChange}
-                                   error={formik.touched.ServiceType && Boolean(formik.errors.ServiceType)}
-                                   helperText={formik.touched.ServiceType && formik.errors.ServiceType}
-                        />
-                    </div>
-                    <div className={classes.label}>
-                        <span>ИНН</span>
                         <TextField variant={'outlined'}
-                                   name="INN"
-                                   placeholder={'1234556789101112'}
-                                   value={formik.values.INN}
-                                   onChange={formik.handleChange}
-                                   error={formik.touched.INN && Boolean(formik.errors.INN)}
-                                   helperText={formik.touched.INN && formik.errors.INN}
-                        />
-                    </div>
-                    <div className={classes.label}>
-                        <span>КПП</span>
-                        <TextField variant={'outlined'}
-                                   name="KPP"
-                                   placeholder={'1234556789101112'}
-                                   value={formik.values.KPP}
-                                   onChange={formik.handleChange}
-                                   error={formik.touched.KPP && Boolean(formik.errors.KPP)}
-                                   helperText={formik.touched.KPP && formik.errors.KPP}
-                        />
-                    </div>
-                    <div className={classes.label}>
-                        <span>ОГРН</span>
-                        <TextField variant={'outlined'}
-                                   name="OGPN"
-                                   placeholder={'1234556789101112'}
+                                   className={classes.textArea}
+                                   multiline
+                                   rows={8}
+                                   name="FullCompanyName"
+                                   placeholder={'Введите текст'}
                                    value={formik.values.OGPN}
                                    onChange={formik.handleChange}
                                    error={formik.touched.OGPN && Boolean(formik.errors.OGPN)}
                                    helperText={formik.touched.OGPN && formik.errors.OGPN}
                         />
                     </div>
-                    <div className={classes.label}>
-                        <span>NDA</span>
-                        <span style={{width: '62%'}}>
-               <Checkbox
-                   defaultChecked
-                   color="default"
-                   inputProps={{'aria-label': 'checkbox with default color'}}
-               />
-</span>
+                    <div>
+                    <Link   color="inherit">
+                        + Новый контакт
+                    </Link>
                     </div>
                 </Paper>
             </form>

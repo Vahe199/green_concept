@@ -51,19 +51,22 @@ const useStyles = makeStyles((theme: Theme) =>
             }
         },
         textArea:{
-            marginBottom: '5%',
+            marginBottom: '6%',
             '& .MuiTextField-root': {
                 minWidth: '60%',
-                height: '60px',
+                height: '50px',
                 backgroundColor: theme.palette.common.white,
             },
             '& .MuiOutlinedInput-input': {
                 padding: 0,
                 paddingLeft: 4,
                 textAlign: 'start',
-                height: '60px',
+                height: '50px',
                 backgroundColor: 'transparent',
                 fontSize: 13
+            },
+            '& .MuiOutlinedInput-multiline': {
+                padding: '7.5px 14px'
             },
         },
         paper:{
@@ -99,7 +102,7 @@ export const FormCompanyDetails = () => {
             <form onSubmit={formik.handleSubmit}>
                 <div style={{display:'flex',justifyContent:'space-between', alignItems:'center'}}>
                     <span>Сведения  о компании</span>
-                <Button  color="primary"  type="submit" size={'small'}>
+                <Button  color="primary"  type="submit"  style={{textTransform:'none'}}>
                     Сохранить
                 </Button>
                 </div>
@@ -110,6 +113,8 @@ export const FormCompanyDetails = () => {
 
                             <TextField variant={'outlined'}
                                        className={classes.textArea}
+                                       multiline
+                                       rows={3}
                                        name="FullCompanyName"
                                        placeholder={'ООО "Северо-Западная концессионная компания”'}
                                        value={formik.values.FullCompanyName}

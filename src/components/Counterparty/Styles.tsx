@@ -5,7 +5,7 @@ import { green } from "@material-ui/core/colors";
 export const useStyles = makeStyles({
   container: {
     height: "100%",
-    minHeight:"100vh",
+    minHeight: "100vh",
     width: "100%",
     paddingTop: 67,
     margin: 0,
@@ -22,12 +22,12 @@ export const useStyles = makeStyles({
     justifyContent: "space-between",
     paddingLeft: "2%",
     paddingRight: "2%",
-     paddingTop: 24,
+    paddingTop: 24,
   },
   typography: {
     color: "#3B4750",
     fontSize: 20,
-    marginBottom:16
+    marginBottom: 16,
   },
   btn: {
     color: "#fff",
@@ -35,7 +35,10 @@ export const useStyles = makeStyles({
     paddingBottom: 4,
     backgroundColor: "#3AB994",
     "&:hover": {
-      backgroundColor: green[300],
+      backgroundColor: "#36AD8B",
+    },
+    "&:active": {
+      backgroundColor: "#32A886",
     },
   },
   button: {

@@ -9,10 +9,6 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
       flexWrap: "wrap",
-      padding: "1%",
-      "& > *": {
-        margin: theme.spacing(1),
-      },
     },
   })
 );
@@ -27,7 +23,7 @@ export const GeneralInformation = () => {
       <div style={{ width: "38%" }}>
         <FormCompanyDetails />
       </div>
-      <div style={{ width: "31%" }}>
+      <div style={{ width: "35%" }}>
         <FormCompanyContacts />
       </div>
     </div>

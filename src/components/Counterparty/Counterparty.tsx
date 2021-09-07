@@ -3,10 +3,9 @@ import Paper from "@material-ui/core/Paper";
 import AddIcon from "@material-ui/icons/Add";
 import XLS from "../../IMG/icons/XLS.png";
 import { useHistory } from "react-router-dom";
-import {Button, Typography} from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import CounterpartiesTable from "./Core/Table";
-import {useStyles} from "./Styles";
-
+import { useStyles } from "./Styles";
 
 export const Counterparty = () => {
   let history = useHistory();
@@ -16,9 +15,9 @@ export const Counterparty = () => {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
-  const handleClick = (path:string) => {
+  const handleClick = (path: string) => {
     history.push(`/counterparty/${path}`);
-  }
+  };
   return (
     <div className={classes.container}>
       <Paper square className={classes.root}>
@@ -26,26 +25,29 @@ export const Counterparty = () => {
           Контрагенты
         </Typography>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-
-            <Button onClick={()=>handleClick('new contractor')}
-              variant="contained"
-              color="primary"
-              startIcon={<AddIcon />}
-              className={classes.btn}
-            >
-              Новый контрагент
-            </Button>
+          <Button
+            onClick={() => handleClick("new contractor")}
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            className={classes.btn}
+          >
+            Новый контрагент
+          </Button>
           <span>
-            <Button onClick={()=>handleClick('new contact')}
+            <Button
+              onClick={() => handleClick("new contact")}
               variant="contained"
               startIcon={<AddIcon />}
               className={classes.button}
             >
               Новый контакт
             </Button>
-            <Button onClick={()=>handleClick('all contact persons')}
-                variant="contained"
-                    className={classes.button} >
+            <Button
+              onClick={() => handleClick("all contact persons")}
+              variant="contained"
+              className={classes.button}
+            >
               Все контактные лица
             </Button>
             <Button
@@ -57,8 +59,8 @@ export const Counterparty = () => {
           </span>
         </div>
       </Paper>
-      <div style={{paddingLeft:16,paddingTop:8,paddingRight:10}}>
-     <CounterpartiesTable/>
+      <div style={{ paddingLeft: 16, paddingTop: 8, paddingRight: 10 }}>
+        <CounterpartiesTable />
       </div>
     </div>
   );

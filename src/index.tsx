@@ -6,12 +6,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import {theme} from "./components/Layout/Style/theme";
+import {Provider} from "react-redux";
+import {store} from "./redux/store";
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
+          <Provider store={store}>
           <MuiThemeProvider theme={theme}>
-          <App />
+                  <App/>
           </MuiThemeProvider>
+          </Provider>
       </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

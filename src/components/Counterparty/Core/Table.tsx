@@ -14,7 +14,8 @@ import { StyledTableCell } from './utils/TableCell';
 import InputFilterSelected from './FilterInputs/InputFilterSelected';
 import InputFilterSearch from "./FilterInputs/InputFilterSearch";
 import InputFilterDate from "./FilterInputs/InputFilterDate";
-
+import {useTypedSelector} from "../../../redux/type_redux_hook/useTypedSelector";
+import Loader from "../../Layout/Loader/Loader";
 interface Column {
     id: 'name' | 'code' | 'population' | 'size' | 'density';
     label: string;
@@ -100,11 +101,15 @@ const useStyles = makeStyles({
     tableCell:{
         display:'flex',
         flexDirection:'column'
+    },
+    at:{
+        width:120
     }
 });
 
 export default function CounterpartiesTable() {
     const classes = useStyles();
+    const {contractors,loading} = useTypedSelector(state => state.counterparties)
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [currency, setCurrency] = React.useState('All');
@@ -119,7 +124,8 @@ export default function CounterpartiesTable() {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCurrency(event.target.value);
     };
-    return (
+
+    return (loading? <Loader/>:
         <Paper className={classes.root}>
             <TablePagination style={{padding:0, border:'none'}}
                              rowsPerPageOptions={[5, 10, 25, { label: 'Все', value: -1 }]}
@@ -162,28 +168,52 @@ export default function CounterpartiesTable() {
                                 <InputFilterSelected handleChange={handleChange} currencies={currencies}/>
                             </StyledTableCell>
                             <StyledTableCell align="left">Создано
+
                               <InputFilterDate/>
+
                             </StyledTableCell>
                             <StyledTableCell align="left">Обновлено
-                                <InputFilterDate/>
+                                    <InputFilterDate/>
                             </StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,index:number) => {
-                            return (
+                        {contractors.map((row,index:number) => (
+
                                 <StyledTableRow  role="checkbox" tabIndex={-1} key={index}>
-                                    {columns.map((column,index:number) => {
-                                        const value = row[column.id];
-                                        return (
+
                                             <TableCell key={index} align="left">
-                                                {column.format && typeof value === 'number' ? column.format(value) : value}
+                                                {row.inn}
                                             </TableCell>
-                                        );
-                                    })}
-                                </StyledTableRow>
-                            );
-                        })}
+                                    <TableCell key={index} align="left">
+                                        {row.id}
+                                    </TableCell>
+
+                                    <TableCell key={index} align="left">
+                                        {row.full_name}
+                                    </TableCell>
+                                    <TableCell key={index} align="left">
+                                        {row.org_type}
+                                    </TableCell>
+                                    <TableCell key={index} align="left">
+                                        {row.post_address}
+                                    </TableCell>
+                                    <TableCell key={index} align="left">
+                                        {row.short_name}
+                                    </TableCell>
+                                    <TableCell key={index} align="left">
+                                        {row.actual_address}
+                                    </TableCell>
+                                    <TableCell key={index} align="left">
+                                        {row.created_at}
+                                    </TableCell>
+                                    <TableCell key={index} className={classes.at} align="left">
+                                        {row.updated_at}
+                                    </TableCell>
+
+                                </StyledTableRow>)
+
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>

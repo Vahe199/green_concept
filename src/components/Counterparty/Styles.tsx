@@ -11,7 +11,7 @@ export const useStyles = makeStyles({
     margin: 0,
     paddingLeft: 0,
     paddingRight: 0,
-    backgroundColor: "#E3DFDF",
+    backgroundColor: "#F2F3F4",
   },
   root: {
     flexGrow: 1,

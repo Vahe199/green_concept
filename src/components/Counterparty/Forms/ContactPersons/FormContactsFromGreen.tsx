@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
     btnSubmit: {
       textTransform: "none",
       marginBottom: 3,
+      textDecoration: "underline",
     },
   })
 );

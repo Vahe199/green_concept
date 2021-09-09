@@ -135,6 +135,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: 15,
       fontSize: 12,
     },
+    btnSubmit: {
+      textTransform: "none",
+      textDecoration: "underline",
+    },
   })
 );
 
@@ -183,7 +187,7 @@ export const FormBasicInformation = () => {
           <Button
             color="primary"
             type="submit"
-            style={{ textTransform: "none" }}
+            className={classes.btnSubmit}
           >
             Сохранить
           </Button>

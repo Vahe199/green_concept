@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      backgroundColor: "#E3DFDF",
+      backgroundColor: "#F2F3F4",
       height: "100%",
     },
     appBar: {

@@ -1,4 +1,4 @@
-import React, {PropsWithChildren} from "react";
+import React, { PropsWithChildren } from "react";
 import { HeaderPage } from "./components/Layout/Header/Header";
 import { SideBarPage } from "./components/Layout/SideBar/SideBar";
 import { Counterparty } from "./components/Counterparty/Counterparty";
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
       backgroundColor: "#E3DFDF",
-        height:"100%"
+      height: "100%",
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const App: React.FC = (props:PropsWithChildren<any>) => {
+const App: React.FC = (props: PropsWithChildren<any>) => {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -41,7 +41,7 @@ const App: React.FC = (props:PropsWithChildren<any>) => {
         </div>
 
         <main className={classes.content}>
-          <Route  path="/counterparties" render={() => <Counterparty />} />
+          <Route path="/counterparties" render={() => <Counterparty />} />
           <Route
             path="/counterparty/:item?"
             render={() => <CreateCounterparty />}

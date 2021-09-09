@@ -80,6 +80,10 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between",
       marginBottom: 15,
     },
+    saveButton: {
+      textTransform: "none",
+      textDecoration: "underline",
+    },
   })
 );
 
@@ -110,11 +114,7 @@ export const FormCompanyDetails = () => {
           }}
         >
           <span>Сведения о компании</span>
-          <Button
-            color="primary"
-            type="submit"
-            style={{ textTransform: "none" }}
-          >
+          <Button color="primary" type="submit" className={classes.saveButton}>
             Сохранить
           </Button>
         </div>

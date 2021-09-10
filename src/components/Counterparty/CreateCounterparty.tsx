@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
   bottomField: {
     flexGrow: 1,
     width: "100%",
-    backgroundColor: "#E3DFDF",
+    backgroundColor: "#F2F3F4",
     // height:"100vh",
     // minHeight:'100%',
     alignItems: "center",

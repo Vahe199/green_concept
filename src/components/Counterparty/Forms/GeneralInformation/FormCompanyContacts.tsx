@@ -85,6 +85,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: 8,
       cursor: "pointer",
     },
+    saveButton: {
+      textTransform: "none",
+      textDecoration: "underline",
+    },
   })
 );
 
@@ -129,7 +133,7 @@ export const FormCompanyContacts = () => {
           <Button
             color="primary"
             type="submit"
-            style={{ textTransform: "none" }}
+            className={classes.saveButton}
           >
             Сохранить
           </Button>

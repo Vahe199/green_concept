@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     btnSubmit: {
       textTransform: "none",
+      textDecoration: "underline",
     },
   })
 );

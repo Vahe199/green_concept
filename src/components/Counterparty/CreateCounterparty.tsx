@@ -107,7 +107,6 @@ export const CreateCounterparty = () => {
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
-    console.log(event.target);
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import AddIcon from "@material-ui/icons/Add";
 import XLS from "../../IMG/icons/XLS.png";
@@ -6,14 +6,15 @@ import { useHistory } from "react-router-dom";
 import { Button, Typography } from "@material-ui/core";
 import CounterpartiesTable from "./Core/Table";
 import { useStyles } from "./Styles";
-import {UseActions} from "../../redux/type_redux_hook/ useAction"
-import {useTypedSelector} from "../../redux/type_redux_hook/useTypedSelector";
+import { UseActions } from "../../redux/type_redux_hook/ useAction";
+import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
 import Loader from "../Layout/Loader/Loader";
 export const Counterparty = () => {
-  const {fetchCounterpartiesList} = UseActions()
-  useEffect(()=>{
-    fetchCounterpartiesList()
-  },[])
+  const { fetchCounterpartiesList, fetchAuthorsList } = UseActions();
+  useEffect(() => {
+    fetchCounterpartiesList();
+    fetchAuthorsList();
+  }, []);
   let history = useHistory();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -66,7 +67,7 @@ export const Counterparty = () => {
         </div>
       </Paper>
       <div style={{ paddingLeft: 16, paddingTop: 8, paddingRight: 10 }}>
-       <CounterpartiesTable/>
+        <CounterpartiesTable />
       </div>
     </div>
   );

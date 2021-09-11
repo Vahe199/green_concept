@@ -19,7 +19,7 @@ export const counterpartiesReducer = (
     case CounterpartiesActionType.FETCH_COUNTERPARTIES_LIST_SUCCESS:
       return { ...state, loading: false, contractors: action.payload };
     case CounterpartiesActionType.FETCH_COUNTERPARTIES_LIST_ERROR:
-      return { ...state, loading: false, error: action.payload };
+      return { ...state, loading: true, error: action.payload };
     default:
       return state;
   }

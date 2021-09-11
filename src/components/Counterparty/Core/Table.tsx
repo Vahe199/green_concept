@@ -16,6 +16,8 @@ import InputFilterSearch from "./FilterInputs/InputFilterSearch";
 import InputFilterDate from "./FilterInputs/InputFilterDate";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import Loader from "../../Layout/Loader/Loader";
+import {useHistory} from "react-router-dom";
+import {UseActions} from "../../../redux/type_redux_hook/ useAction";
 
 const useStyles = makeStyles({
   root: {
@@ -37,13 +39,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CounterpartiesTable() {
+export default function CounterpartiesTable(props:any) {
   const classes = useStyles();
   const { contractors, loading } = useTypedSelector(
     (state) => state.counterparties
   );
+  let history = useHistory();
   const { authors } = useTypedSelector((state) => state.authorsList);
-
+  const {getAuthorData} = UseActions();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [currency, setCurrency] = React.useState("All");
@@ -60,6 +63,10 @@ export default function CounterpartiesTable() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrency(event.target.value);
   };
+  const getUserData = (data:any) => {
+    history.push(`/counterparty/author/${data.id}`)
+    getAuthorData(data)
+  }
   return loading ? (
     <Loader />
   ) : (
@@ -98,7 +105,7 @@ export default function CounterpartiesTable() {
                 <InputFilterSearch handleChange={handleChange} />
               </StyledTableCell>
               <StyledTableCell align="left">
-                Отрасль 
+                Отрасль
                 <InputFilterSearch handleChange={handleChange} />
               </StyledTableCell>
               <StyledTableCell align="left" style={{ minWidth: "150px" }}>
@@ -128,7 +135,7 @@ export default function CounterpartiesTable() {
           </TableHead>
           <TableBody>
             {contractors.map((row, index: number) => (
-              <StyledTableRow hover role="checkbox" onClick={()=>console.log(row)} tabIndex={-1} key={index}>
+              <StyledTableRow hover role="checkbox" onClick={()=>getUserData(row)} tabIndex={-1} key={index}>
                 <TableCell align="left">{row.id}</TableCell>
                 <TableCell align="left">
                   {row.type ? row.type.name : ""}

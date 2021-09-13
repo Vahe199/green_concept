@@ -51,7 +51,7 @@ const validationSchema: yup.SchemaOf<Data> = yup.object({
     .required("Обязательное поле"),
 });
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
@@ -116,6 +116,21 @@ const useStyles = makeStyles(() =>
         padding: "7.5px 14px",
       },
     },
+    btn: {
+      marginLeft: "2%",
+      marginTop: 10,
+      marginBottom: 10,
+      color: "#fff",
+      fontSize: 12,
+      paddingBottom: 4,
+      backgroundColor: "#3AB994",
+      "&:hover": {
+        backgroundColor: "#36AD8B",
+      },
+      "&:active": {
+        backgroundColor: "#32A886",
+      },
+    },
   })
 );
 
@@ -157,6 +172,14 @@ export const GeneralInformationForCreating = () => {
   });
   return (
     <>
+      <Button
+        onClick={() => console.log("button")}
+        variant="contained"
+        color="primary"
+        className={classes.btn}
+      >
+        Сохранить карточку
+      </Button>
       <form onSubmit={formik.handleSubmit}>
         <div className={classes.root}>
           <div style={{ width: "24%" }}>

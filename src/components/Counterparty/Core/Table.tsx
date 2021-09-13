@@ -6,9 +6,9 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
+// import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import Divider from "@material-ui/core/Divider";
+// import Divider from "@material-ui/core/Divider";
 import { StyledTableRow } from "./utils/TableRow";
 import { StyledTableCell } from "./utils/TableCell";
 import InputFilterSelected from "./FilterInputs/InputFilterSelected";
@@ -173,14 +173,10 @@ export default function CounterpartiesTable(props: any) {
                   })}
                 </TableCell>
                 <TableCell align="left">
-                  {row.author
-                    ? row.author.surname +
+                  {row.author &&
+                    row.author.surname +
                       " " +
-                      row.author.firstname +
-                      "." +
-                      row.author.middlename +
-                      "."
-                    : ""}
+                      row.author.firstname.substring(0, 1)}
                 </TableCell>
                 <TableCell align="left">{row.created_at}</TableCell>
                 <TableCell className={classes.at} align="left">

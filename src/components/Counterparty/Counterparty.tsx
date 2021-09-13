@@ -66,7 +66,7 @@ export const Counterparty = () => {
           </span>
         </div>
       </Paper>
-      <div style={{ paddingLeft: 16, paddingTop: 8, paddingRight: 10 }}>
+      <div style={{ paddingLeft: "2%", paddingTop: "1%", paddingRight: "2%" }}>
         <CounterpartiesTable />
       </div>
     </div>

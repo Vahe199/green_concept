@@ -71,7 +71,7 @@ export default function CounterpartiesTable(props: any) {
     <Loader />
   ) : (
     <Paper className={classes.root}>
-      <TablePagination
+      {/* <TablePagination
         style={{ padding: 0, border: "none" }}
         rowsPerPageOptions={[5, 10, 25, { label: "Все", value: -1 }]}
         colSpan={3}
@@ -85,8 +85,8 @@ export default function CounterpartiesTable(props: any) {
         }}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-      <Divider variant="middle" />
+      /> 
+      <Divider variant="middle" />*/}
 
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="a dense table">

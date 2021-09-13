@@ -1,8 +1,4 @@
 import React from "react";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { FormCompanyDetails } from "../Forms/GeneralInformation/FormCompanyDetails";
-import { FormGeneralInformation } from "../Forms/GeneralInformation/FormGeneralInformation";
-import { FormCompanyContacts } from "../Forms/GeneralInformation/FormCompanyContacts";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import AddIcon from "@material-ui/icons/Add";
@@ -15,6 +11,7 @@ import {
   Button,
   Link,
 } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 type Data = {
   Surname: string | null;
@@ -82,28 +79,27 @@ const validationSchema = yup.object({
     .min(0, " should be of minimum 8 characters length")
     .required("Обязательное поле"),
 });
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      flexWrap: "wrap",
-      BasicInformation: {
-        marginLeft: "3%",
-        "& .MuiTextField-root": {
-          minWidth: "10%",
-        },
+      marginLeft: "2%",
+      marginRight: "2%",
+      "& .MuiTextField-root": {
+        minWidth: "60%",
+        height: "30px",
+        backgroundColor: theme.palette.common.white,
       },
       "& .MuiOutlinedInput-input": {
+        padding: 0,
+        paddingLeft: 4,
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
         fontSize: 13,
-        padding: 0,
       },
       "& .MuiFormHelperText-root": {
         fontSize: 9,
-        padding: "0 34px",
-        marginTop: -2,
         marginLeft: 0,
       },
       "& .MuiFormControlLabel-root": {
@@ -114,32 +110,45 @@ const useStyles = makeStyles(() =>
       marginBottom: "6%",
       "& .MuiTextField-root": {
         minWidth: "60%",
-        height: "20px",
+        height: "50px",
+        backgroundColor: theme.palette.common.white,
       },
       "& .MuiOutlinedInput-input": {
         padding: 0,
         paddingLeft: 4,
         textAlign: "start",
-        height: "20px",
+        height: "50px",
         backgroundColor: "transparent",
         fontSize: 13,
       },
       "& .MuiOutlinedInput-multiline": {
-        padding: "1px 1px",
+        padding: "7.5px 14px",
       },
     },
     paper: {
       padding: 10,
-      marginLeft: "4%",
-      height: "60vh",
       border: "1px solid #3ab994",
     },
     label: {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
-      marginBottom: 12,
+      marginBottom: 15,
       fontSize: 12,
+    },
+    BasicInformation: {
+      width: "46%",
+      paddingRight: "2%",
+    },
+    ContactsFromGreen: {
+      "& .MuiTextField-root": {
+        minWidth: "60%",
+        height: "30px",
+        backgroundColor: theme.palette.common.white,
+      },
+    },
+    rightPanel: {
+      width: "57%",
     },
   })
 );
@@ -167,6 +176,13 @@ export const ContactPersonsForCreating = () => {
       mobile_phone: "",
       Email: "",
       delivery_address: "",
+      CRM: "",
+      CounterpartyType: "",
+      ServiceType: "",
+      INN: "",
+      KPP: "",
+      OGPN: "",
+      NDA: false,
     },
     // validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -174,309 +190,465 @@ export const ContactPersonsForCreating = () => {
     },
   });
   return (
-    <div className={classes.root}>
-      <div style={{ width: "42%" }} className="BasicInformation">
-        <form onSubmit={formik.handleSubmit}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "98%",
-              marginLeft: "4%",
-            }}
-          >
-            <span>Основные сведения</span>
-            <Button
-              color="primary"
-              type="submit"
-              style={{ textTransform: "none" }}
+    <>
+      <form onSubmit={formik.handleSubmit}>
+        <div className={classes.root}>
+          <div className={classes.BasicInformation}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
-              Сохранить
-            </Button>
-          </div>
-          <Paper className={classes.paper}>
-            <div className={classes.label}>
-              <span>Основное контактное лицо </span>
-              <span style={{ width: "61%" }}>
-                <Checkbox
-                  name="main_contact_person"
-                  color="default"
-                  inputProps={{ "aria-label": "checkbox with default color" }}
-                />
-              </span>
+              <span>Основные сведения</span>
             </div>
-            <div className={classes.label}>
-              <span>Фамилия:</span>
-              <TextField
-                variant={"outlined"}
-                name="Surname"
-                placeholder={"Фамилия"}
-                value={formik.values.Surname}
-                onChange={formik.handleChange}
-                error={formik.touched.Surname && Boolean(formik.errors.Surname)}
-                helperText={formik.touched.Surname && formik.errors.Surname}
-              />
-            </div>
-            <div className={classes.label}>
-              <span>Имя</span>
-              <TextField
-                variant={"outlined"}
-                name="Name"
-                placeholder={"Имя"}
-                value={formik.values.Name}
-                onChange={formik.handleChange}
-                error={formik.touched.Name && Boolean(formik.errors.Name)}
-                helperText={formik.touched.Name && formik.errors.Name}
-              />
-            </div>
-            <div className={classes.label}>
-              <span>Отчество</span>
-              <TextField
-                variant={"outlined"}
-                name="middle_name"
-                placeholder={"Отчество"}
-                value={formik.values.middle_name}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.middle_name &&
-                  Boolean(formik.errors.middle_name)
-                }
-                helperText={
-                  formik.touched.middle_name && formik.errors.middle_name
-                }
-              />
-            </div>
-            <div className={classes.label}>
-              <span>Пол</span>
-              <div style={{ width: "60%", display: "flex" }}>
-                <div>
-                  <span>Мужчина</span>
-                  <Radio
-                    checked={checked === "a"}
-                    onChange={handleChange}
-                    value="a"
+            <Paper className={classes.paper}>
+              <div className={classes.label}>
+                <span>Основное контактное лицо </span>
+                <span style={{ width: "61%" }}>
+                  <Checkbox
+                    name="main_contact_person"
                     color="default"
-                    name="radio-button-demo"
-                    size="small"
-                    inputProps={{ "aria-label": "A" }}
+                    inputProps={{ "aria-label": "checkbox with default color" }}
                   />
-                </div>
-                <div>
-                  <span>Женщина</span>
-                  <Radio
-                    checked={checked === "b"}
-                    onChange={handleChange}
-                    value="b"
-                    color="default"
-                    name="radio-button-demo"
-                    size="small"
-                    inputProps={{ "aria-label": "B" }}
-                  />
-                </div>
+                </span>
               </div>
-            </div>
-            <div className={classes.label}>
-              <span>Дата рождения</span>
-              <div style={{ width: "60%", display: "flex" }}>
+              <div className={classes.label}>
+                <span>Фамилия:</span>
                 <TextField
-                  id="date"
-                  name="date_of_birth"
-                  variant="outlined"
-                  type="date"
-                  defaultValue="2021-01-01"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  variant={"outlined"}
+                  name="Surname"
+                  placeholder={"Фамилия"}
+                  value={formik.values.Surname}
                   onChange={formik.handleChange}
+                  error={
+                    formik.touched.Surname && Boolean(formik.errors.Surname)
+                  }
+                  helperText={formik.touched.Surname && formik.errors.Surname}
                 />
               </div>
-            </div>
-            <div className={classes.label}>
-              <span>Роль</span>
-              <TextField
-                variant={"outlined"}
-                name="Role"
-                placeholder={"Выберите"}
-                value={formik.values.Role}
-                onChange={formik.handleChange}
-                error={formik.touched.Role && Boolean(formik.errors.Role)}
-                helperText={formik.touched.Role && formik.errors.Role}
-              />
-            </div>
-            <div className={classes.label}>
-              <span>Должность</span>
-              <TextField
-                variant={"outlined"}
-                name="Position"
-                placeholder={"Должность"}
-                value={formik.values.Position}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.Position && Boolean(formik.errors.Position)
-                }
-                helperText={formik.touched.Position && formik.errors.Position}
-              />
-            </div>
-            <div className={classes.label}>
-              <span>Тип контрагента</span>
-              <TextField
-                variant={"outlined"}
-                name="counterparty_type"
-                placeholder={"Выберите"}
-                value={formik.values.counterparty_type}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.counterparty_type &&
-                  Boolean(formik.errors.counterparty_type)
-                }
-                helperText={
-                  formik.touched.counterparty_type &&
-                  formik.errors.counterparty_type
-                }
-              />
-            </div>
-            <div className={classes.label}>
-              <span>Тип услуг</span>
-              <TextField
-                variant={"outlined"}
-                name="service_type"
-                placeholder={"Выберите"}
-                value={formik.values.service_type}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.service_type &&
-                  Boolean(formik.errors.service_type)
-                }
-                helperText={
-                  formik.touched.service_type && formik.errors.service_type
-                }
-              />
-            </div>
-            <div className={classes.label}>
-              <span>Отрасль</span>
-              <TextField
-                variant={"outlined"}
-                name="Industry"
-                placeholder={"Выберите"}
-                value={formik.values.Industry}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.Industry && Boolean(formik.errors.Industry)
-                }
-                helperText={formik.touched.Industry && formik.errors.Industry}
-              />
-            </div>
-            <div className={classes.label}>
-              <span>Телефон рабочий</span>
-              <span style={{ width: "60%" }}>
-                <div
-                  style={{
-                    width: "70%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <TextField
-                    variant={"outlined"}
-                    name="work_phone"
-                    placeholder={"+79999999999"}
-                    value={formik.values.work_phone}
-                    onChange={formik.handleChange}
-                    error={
-                      formik.touched.work_phone &&
-                      Boolean(formik.errors.work_phone)
-                    }
-                    helperText={
-                      formik.touched.work_phone && formik.errors.work_phone
-                    }
-                  />
-                  <Link color="inherit">+ Добавить телефон</Link>
+              <div className={classes.label}>
+                <span>Имя</span>
+                <TextField
+                  variant={"outlined"}
+                  name="Name"
+                  placeholder={"Имя"}
+                  value={formik.values.Name}
+                  onChange={formik.handleChange}
+                  error={formik.touched.Name && Boolean(formik.errors.Name)}
+                  helperText={formik.touched.Name && formik.errors.Name}
+                />
+              </div>
+              <div className={classes.label}>
+                <span>Отчество</span>
+                <TextField
+                  variant={"outlined"}
+                  name="middle_name"
+                  placeholder={"Отчество"}
+                  value={formik.values.middle_name}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.middle_name &&
+                    Boolean(formik.errors.middle_name)
+                  }
+                  helperText={
+                    formik.touched.middle_name && formik.errors.middle_name
+                  }
+                />
+              </div>
+              <div className={classes.label}>
+                <span>Пол</span>
+                <div style={{ width: "60%", display: "flex" }}>
+                  <div>
+                    <span>Мужчина</span>
+                    <Radio
+                      checked={checked === "a"}
+                      onChange={handleChange}
+                      value="a"
+                      color="default"
+                      name="radio-button-demo"
+                      size="small"
+                      inputProps={{ "aria-label": "A" }}
+                    />
+                  </div>
+                  <div>
+                    <span>Женщина</span>
+                    <Radio
+                      checked={checked === "b"}
+                      onChange={handleChange}
+                      value="b"
+                      color="default"
+                      name="radio-button-demo"
+                      size="small"
+                      inputProps={{ "aria-label": "B" }}
+                    />
+                  </div>
                 </div>
-              </span>
-            </div>
-            <div className={classes.label}>
-              <span>Телефон мобильный</span>
-              <span style={{ width: "60%" }}>
-                <div
-                  style={{
-                    width: "70%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
+              </div>
+              <div className={classes.label}>
+                <span>Дата рождения</span>
+                <div style={{ width: "60%", display: "flex" }}>
                   <TextField
-                    variant={"outlined"}
-                    name="mobile_phone"
-                    placeholder={"+79999999999"}
-                    value={formik.values.mobile_phone}
+                    id="date"
+                    name="date_of_birth"
+                    variant="outlined"
+                    type="date"
+                    defaultValue="2021-01-01"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     onChange={formik.handleChange}
-                    error={
-                      formik.touched.mobile_phone &&
-                      Boolean(formik.errors.mobile_phone)
-                    }
-                    helperText={
-                      formik.touched.mobile_phone && formik.errors.mobile_phone
-                    }
                   />
-                  <Link color="inherit">+ Добавить телефон</Link>
                 </div>
-              </span>
-            </div>
-            <div className={classes.label}>
-              <span>E-mail</span>
-              <span style={{ width: "60%" }}>
-                <div
-                  style={{
-                    width: "70%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <TextField
-                    variant={"outlined"}
-                    name="Email"
-                    placeholder={"email@email.com"}
-                    value={formik.values.Email}
-                    onChange={formik.handleChange}
-                    error={formik.touched.Email && Boolean(formik.errors.Email)}
-                    helperText={formik.touched.Email && formik.errors.Email}
-                  />
-                  <Link color="inherit">+ Добавить email</Link>
-                </div>
-              </span>
-            </div>
-            <div className={classes.label}>
-              <span>Адрес доставки</span>
+              </div>
+              <div className={classes.label}>
+                <span>Роль</span>
+                <TextField
+                  variant={"outlined"}
+                  name="Role"
+                  placeholder={"Выберите"}
+                  value={formik.values.Role}
+                  onChange={formik.handleChange}
+                  error={formik.touched.Role && Boolean(formik.errors.Role)}
+                  helperText={formik.touched.Role && formik.errors.Role}
+                />
+              </div>
+              <div className={classes.label}>
+                <span>Должность</span>
+                <TextField
+                  variant={"outlined"}
+                  name="Position"
+                  placeholder={"Должность"}
+                  value={formik.values.Position}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.Position && Boolean(formik.errors.Position)
+                  }
+                  helperText={formik.touched.Position && formik.errors.Position}
+                />
+              </div>
+              <div className={classes.label}>
+                <span>Тип контрагента</span>
+                <TextField
+                  variant={"outlined"}
+                  name="counterparty_type"
+                  placeholder={"Выберите"}
+                  value={formik.values.counterparty_type}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.counterparty_type &&
+                    Boolean(formik.errors.counterparty_type)
+                  }
+                  helperText={
+                    formik.touched.counterparty_type &&
+                    formik.errors.counterparty_type
+                  }
+                />
+              </div>
+              <div className={classes.label}>
+                <span>Тип услуг</span>
+                <TextField
+                  variant={"outlined"}
+                  name="service_type"
+                  placeholder={"Выберите"}
+                  value={formik.values.service_type}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.service_type &&
+                    Boolean(formik.errors.service_type)
+                  }
+                  helperText={
+                    formik.touched.service_type && formik.errors.service_type
+                  }
+                />
+              </div>
+              <div className={classes.label}>
+                <span>Отрасль</span>
+                <TextField
+                  variant={"outlined"}
+                  name="Industry"
+                  placeholder={"Выберите"}
+                  value={formik.values.Industry}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.Industry && Boolean(formik.errors.Industry)
+                  }
+                  helperText={formik.touched.Industry && formik.errors.Industry}
+                />
+              </div>
+              <div className={classes.label}>
+                <span>Телефон рабочий</span>
+                <span style={{ width: "60%" }}>
+                  <div
+                    style={{
+                      width: "70%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <TextField
+                      variant={"outlined"}
+                      name="work_phone"
+                      placeholder={"+79999999999"}
+                      value={formik.values.work_phone}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.work_phone &&
+                        Boolean(formik.errors.work_phone)
+                      }
+                      helperText={
+                        formik.touched.work_phone && formik.errors.work_phone
+                      }
+                    />
+                    <Link color="inherit">+ Добавить телефон</Link>
+                  </div>
+                </span>
+              </div>
+              <div className={classes.label}>
+                <span>Телефон мобильный</span>
+                <span style={{ width: "60%" }}>
+                  <div
+                    style={{
+                      width: "70%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <TextField
+                      variant={"outlined"}
+                      name="mobile_phone"
+                      placeholder={"+79999999999"}
+                      value={formik.values.mobile_phone}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.mobile_phone &&
+                        Boolean(formik.errors.mobile_phone)
+                      }
+                      helperText={
+                        formik.touched.mobile_phone &&
+                        formik.errors.mobile_phone
+                      }
+                    />
+                    <Link color="inherit">+ Добавить телефон</Link>
+                  </div>
+                </span>
+              </div>
+              <div className={classes.label}>
+                <span>E-mail</span>
+                <span style={{ width: "60%" }}>
+                  <div
+                    style={{
+                      width: "70%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <TextField
+                      variant={"outlined"}
+                      name="Email"
+                      placeholder={"email@email.com"}
+                      value={formik.values.Email}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.Email && Boolean(formik.errors.Email)
+                      }
+                      helperText={formik.touched.Email && formik.errors.Email}
+                    />
+                    <Link color="inherit">+ Добавить email</Link>
+                  </div>
+                </span>
+              </div>
+              <div className={classes.label}>
+                <span>Адрес доставки</span>
 
-              <TextField
-                variant={"outlined"}
-                className={classes.textArea}
-                multiline
-                rows={3}
-                name="delivery_address"
-                placeholder={"Адрес доставки адрес вторая линия"}
-                value={formik.values.delivery_address}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.delivery_address &&
-                  Boolean(formik.errors.delivery_address)
-                }
-                helperText={
-                  formik.touched.delivery_address &&
-                  formik.errors.delivery_address
-                }
-              />
+                <TextField
+                  variant={"outlined"}
+                  className={classes.textArea}
+                  multiline
+                  rows={3}
+                  name="delivery_address"
+                  placeholder={"Адрес доставки адрес вторая линия"}
+                  value={formik.values.delivery_address}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.delivery_address &&
+                    Boolean(formik.errors.delivery_address)
+                  }
+                  helperText={
+                    formik.touched.delivery_address &&
+                    formik.errors.delivery_address
+                  }
+                />
+              </div>
+            </Paper>
+          </div>
+          <div className={classes.rightPanel}>
+            <div style={{ width: "100%" }}>
+              <div className={classes.ContactsFromGreen}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "100%",
+                  }}
+                >
+                  <span>Контакты со стороны Грин</span>
+                </div>
+                <Paper className={classes.paper}>
+                  <div className={classes.label}>
+                    <span>Направление</span>
+                    <TextField
+                      variant={"outlined"}
+                      name="CounterpartyType"
+                      placeholder={"Выберите"}
+                      value={formik.values.CounterpartyType}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.CounterpartyType &&
+                        Boolean(formik.errors.CounterpartyType)
+                      }
+                      helperText={
+                        formik.touched.CounterpartyType &&
+                        formik.errors.CounterpartyType
+                      }
+                    />
+                  </div>
+                  <div className={classes.label}>
+                    <span>Контактное лицо</span>
+                    <TextField
+                      variant={"outlined"}
+                      name="CounterpartyType"
+                      placeholder={"Введите слово или часть слова"}
+                      value={formik.values.CounterpartyType}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.CounterpartyType &&
+                        Boolean(formik.errors.CounterpartyType)
+                      }
+                      helperText={
+                        formik.touched.CounterpartyType &&
+                        formik.errors.CounterpartyType
+                      }
+                    />
+                  </div>
+                  <div className={classes.label}>
+                    <span>Дополнительная информация</span>
+
+                    <TextField
+                      variant={"outlined"}
+                      className={classes.textArea}
+                      multiline
+                      rows={8}
+                      name="FullCompanyName"
+                      placeholder={"Введите текст"}
+                      value={formik.values.OGPN}
+                      onChange={formik.handleChange}
+                      error={formik.touched.OGPN && Boolean(formik.errors.OGPN)}
+                      helperText={formik.touched.OGPN && formik.errors.OGPN}
+                    />
+                  </div>
+                  <div>
+                    <Link color="inherit">+ Новый контакт</Link>
+                  </div>
+                </Paper>
+              </div>
             </div>
-          </Paper>
-        </form>
-      </div>
-      {/*<div style={{ width: "38%" }}>
-        <FormCompanyDetails />
-      </div>
-      <div style={{ width: "35%" }}>
-        <FormCompanyContacts />
-      </div> */}
-    </div>
+            <div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "100%",
+                  marginTop: "2%",
+                }}
+              >
+                <span>Сведения о поздравлениях</span>
+              </div>
+              <Paper className={classes.paper}>
+                <div className={classes.label}>
+                  <span>Праздник</span>
+                  <TextField
+                    variant={"outlined"}
+                    name="CounterpartyType"
+                    placeholder={"Название праздника"}
+                    value={formik.values.CounterpartyType}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.CounterpartyType &&
+                      Boolean(formik.errors.CounterpartyType)
+                    }
+                    helperText={
+                      formik.touched.CounterpartyType &&
+                      formik.errors.CounterpartyType
+                    }
+                  />
+                </div>
+                <div className={classes.label}>
+                  <span></span>
+                  <Link color="inherit">+ Новый праздник</Link>
+                </div>
+                <div className={classes.label}>
+                  <span>Тип поздравления</span>
+                  <TextField
+                    variant={"outlined"}
+                    name="CounterpartyType"
+                    placeholder={"Выберите"}
+                    value={formik.values.CounterpartyType}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.CounterpartyType &&
+                      Boolean(formik.errors.CounterpartyType)
+                    }
+                    helperText={
+                      formik.touched.CounterpartyType &&
+                      formik.errors.CounterpartyType
+                    }
+                  />
+                </div>
+                <div className={classes.label}>
+                  <span>Другое</span>
+                  <TextField
+                    variant={"outlined"}
+                    name="CounterpartyType"
+                    placeholder={"Другое"}
+                    value={formik.values.CounterpartyType}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.CounterpartyType &&
+                      Boolean(formik.errors.CounterpartyType)
+                    }
+                    helperText={
+                      formik.touched.CounterpartyType &&
+                      formik.errors.CounterpartyType
+                    }
+                  />
+                </div>
+                <div className={classes.label}>
+                  <span>Статус контактного лица</span>
+                  <TextField
+                    variant={"outlined"}
+                    name="CounterpartyType"
+                    placeholder={"Выберите"}
+                    value={formik.values.CounterpartyType}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.CounterpartyType &&
+                      Boolean(formik.errors.CounterpartyType)
+                    }
+                    helperText={
+                      formik.touched.CounterpartyType &&
+                      formik.errors.CounterpartyType
+                    }
+                  />
+                </div>
+              </Paper>
+            </div>
+          </div>
+        </div>
+      </form>
+    </>
   );
 };

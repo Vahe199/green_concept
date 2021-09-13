@@ -123,13 +123,6 @@ export const FormInformationCongratulations = () => {
           }}
         >
           <span>Сведения о поздравлениях</span>
-          <Button
-            color="primary"
-            type="submit"
-            style={{ textTransform: "none" }}
-          >
-            Сохранить
-          </Button>
         </div>
         <Paper className={classes.paper}>
           <div className={classes.label}>

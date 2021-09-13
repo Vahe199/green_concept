@@ -1,19 +1,44 @@
-import { composeWithDevTools } from 'redux-devtools-extension';
-import {applyMiddleware, createStore} from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
-import {combineReducers} from "redux";
-import {counterpartiesReducer} from "./reducer/counterpartiesReducer";
-import {newContractorReducer} from "./reducer/NewContractorReducer";
-
-
-
+import { combineReducers } from "redux";
+import { counterpartiesReducer } from "./reducer/conterparties/counterpartiesReducer";
+import { counterpartiesAuthorsListReducer } from "./reducer/conterparties/conterpartiesAuthorsListReducer";
+import {counterpartiesAuthorDataReducer} from "./reducer/conterparties/conterpartiesAuthorDataReducer";
 
 const reducer = combineReducers({
-     counterparties:counterpartiesReducer,
-     contractor:newContractorReducer
+  counterparties: counterpartiesReducer,
+  //contractor:newContractorReducer,
+  // counterpartiesTypesList:counterpartiesTypesListReducer,
+  authorsList: counterpartiesAuthorsListReducer,
+  author:counterpartiesAuthorDataReducer
 });
+// convert object to string and store in localStorage
+function saveToLocalStorage(state:any) {
+  try {
+    const serialisedState = JSON.stringify(state);
+    localStorage.setItem("persistantState", serialisedState);
+  } catch (e) {
+    console.warn(e);
+  }
+}
 
-export type  RootState = ReturnType<typeof reducer>
+// load string from localStarage and convert into an Object
+// invalid output must be undefined
+function loadFromLocalStorage() {
+  try {
+    const serialisedState = localStorage.getItem("persistantState");
+    if (serialisedState === null) return undefined;
+    return JSON.parse(serialisedState);
+  } catch (e) {
+    console.warn(e);
+    return undefined;
+  }
+}
+export type RootState = ReturnType<typeof reducer>;
 
-export const store= createStore(reducer,composeWithDevTools(applyMiddleware(thunk)))
-
+export const store = createStore(
+  reducer,loadFromLocalStorage(),
+  composeWithDevTools(applyMiddleware(thunk))
+);
+store.subscribe(() => saveToLocalStorage({author: store.getState().author}));

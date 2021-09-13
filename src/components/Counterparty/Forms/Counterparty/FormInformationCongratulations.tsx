@@ -127,13 +127,6 @@ export const FormInformationCongratulations = () => {
           }}
         >
           <span>Сведения о поздравлениях</span>
-          <Button
-            color="primary"
-            type="submit"
-            className={classes.btnSubmit}
-          >
-            Сохранить
-          </Button>
         </div>
         <Paper className={classes.paper}>
           <div className={classes.label}>

@@ -4,38 +4,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link, Typography } from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import Box from "@material-ui/core/Box";
-// import {Link} from "react-router-dom"
-import { GeneralInformation } from "./TabsForCreating/GeneralInformation";
-import { ContactPerson } from "./TabsForCreating/ContactPerson";
 import DoubleLeft from "../../IMG/icons/DoubleLeft.png";
-import { useHistory } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 import { BankDetails } from "./TabsForCreating/BankDetails";
+import { InformationUserData } from "./InformationUserData/InformationUserData";
+import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformationForCreating";
+import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: any;
   value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`nav-tabpanel-${index}`}
-      aria-labelledby={`nav-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -100,21 +79,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const CreateCounterparty = () => {
+const CreateCounterparty = (props: any) => {
+  console.log(props, "props");
   let history = useHistory();
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
-    console.log(event.target);
   };
 
   return (
     <div className={classes.container}>
       <Paper square className={classes.root}>
         <Typography variant="subtitle1" noWrap className={classes.typography}>
-          Новый контрагент
+          {props.match.params.item === "author"
+            ? "ООО «Контрагент №1»"
+            : "Новый контрагент"}
         </Typography>
         <div style={{ display: "flex" }}>
           <Tabs
@@ -184,10 +165,19 @@ export const CreateCounterparty = () => {
       </div>
 
       <div className={classes.bottomField}>
-        {selectedTab === 0 && <GeneralInformation />}
-        {selectedTab === 1 && <ContactPerson />}
-        {selectedTab === 2 && <BankDetails />}
+        {props.match.params.item === "author" ? (
+          <InformationUserData />
+        ) : props.match.params.item === "new contractor" ? (
+          <div>
+            {selectedTab === 0 && <GeneralInformationForCreating />}
+            {selectedTab === 1 && <ContactPersonsForCreating />}
+            {selectedTab === 2 && <BankDetails />}
+          </div>
+        ) : (
+          <div>{props.match.params.item}</div>
+        )}
       </div>
     </div>
   );
 };
+export default withRouter(CreateCounterparty);

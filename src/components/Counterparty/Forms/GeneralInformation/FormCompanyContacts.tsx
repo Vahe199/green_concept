@@ -97,7 +97,6 @@ export const FormCompanyContacts = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.value);
   };
-  console.log(site, "site");
   const formik = useFormik({
     initialValues: {
       LegalAddress: "",

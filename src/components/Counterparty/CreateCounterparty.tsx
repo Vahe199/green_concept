@@ -4,19 +4,18 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link, Typography } from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { GeneralInformation } from "./TabsForCreating/GeneralInformation";
-import { ContactPerson } from "./TabsForCreating/ContactPerson";
 import DoubleLeft from "../../IMG/icons/DoubleLeft.png";
-import { useHistory,withRouter } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 import { BankDetails } from "./TabsForCreating/BankDetails";
-import {InformationUserData} from "./InformationUserData/InformationUserData";
+import { InformationUserData } from "./InformationUserData/InformationUserData";
+import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformationForCreating";
+import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: any;
   value: any;
 }
-
 
 const useStyles = makeStyles((theme) => ({
   menuRoot: {
@@ -80,8 +79,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- const CreateCounterparty = (props:any) => {
-  console.log(props,'props')
+const CreateCounterparty = (props: any) => {
+  console.log(props, "props");
   let history = useHistory();
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
@@ -94,7 +93,9 @@ const useStyles = makeStyles((theme) => ({
     <div className={classes.container}>
       <Paper square className={classes.root}>
         <Typography variant="subtitle1" noWrap className={classes.typography}>
-            {props.match.params.item === "author"? 'ООО «Контрагент №1»':'Новый контрагент'}
+          {props.match.params.item === "author"
+            ? "ООО «Контрагент №1»"
+            : "Новый контрагент"}
         </Typography>
         <div style={{ display: "flex" }}>
           <Tabs
@@ -164,12 +165,17 @@ const useStyles = makeStyles((theme) => ({
       </div>
 
       <div className={classes.bottomField}>
-          {props.match.params.item === "author"? <InformationUserData/>
-              : <div>
-                  {selectedTab === 0 && <GeneralInformation />}
-                  {selectedTab === 1 && <ContactPerson />}
-                  {selectedTab === 2 && <BankDetails />}
-              </div>}
+        {props.match.params.item === "author" ? (
+          <InformationUserData />
+        ) : props.match.params.item === "new contractor" ? (
+          <div>
+            {selectedTab === 0 && <GeneralInformationForCreating />}
+            {selectedTab === 1 && <ContactPersonsForCreating />}
+            {selectedTab === 2 && <BankDetails />}
+          </div>
+        ) : (
+          <div>{props.match.params.item}</div>
+        )}
       </div>
     </div>
   );

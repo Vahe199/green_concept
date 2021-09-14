@@ -24,8 +24,11 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
-
-export const CompanyContactsForUser:React.FC = () => {
+type Props = {
+    // change: boolean;
+    setChangeContacts: (val: boolean) => void;
+};
+export const CompanyContactsForUser:React.FC<Props> = ({setChangeContacts}) => {
     const classes = useStyles();
     const {AuthorData} = useTypedSelector(state => state.author)
     const {legal_registration_address,actual_address,post_address,emails,phones}:any = AuthorData;
@@ -39,7 +42,7 @@ export const CompanyContactsForUser:React.FC = () => {
             }}
         >
             <Typography variant={'subtitle2'}>Контакты компании</Typography>
-            <div onClick={()=>console.log('Общие сведения')}>
+            <div onClick={()=> setChangeContacts(true)}>
                 <img src={pencil} style={{width:15,height:15}}/>
             </div>
         </div>

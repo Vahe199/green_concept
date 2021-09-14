@@ -26,7 +26,11 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const GeneralInformationForUser:React.FC = () => {
+type Props = {
+    // change: boolean;
+    setChangeGeneralInformation: (val: boolean) => void;
+};
+export const GeneralInformationForUser:React.FC<Props> = ({setChangeGeneralInformation}) => {
     const {AuthorData} = useTypedSelector(state => state.author)
     const {crms,org_type,inn,kpp,ogrn,nda,type}:any = AuthorData;
     const classes = useStyles();
@@ -41,7 +45,7 @@ export const GeneralInformationForUser:React.FC = () => {
             }}
         >
             <Typography variant={'subtitle2'}>Общие сведения</Typography>
-         <div onClick={()=>console.log('Общие сведения')}>
+         <div onClick={()=>setChangeGeneralInformation(true)}>
              <img src={pencil} style={{width:15,height:15}}/>
          </div>
         </div>

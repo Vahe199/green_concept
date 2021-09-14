@@ -90,8 +90,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
-export const FormGeneralInformation = () => {
+type Props = {
+  // change: boolean;
+  setChangeGeneralInformation: (val: boolean) => void;
+};
+export const FormGeneralInformation:React.FC<Props> = ({setChangeGeneralInformation}) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState("a");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,9 +110,10 @@ export const FormGeneralInformation = () => {
       OGPN: "",
       NDA: false,
     },
-    validationSchema: validationSchema,
+     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      setChangeGeneralInformation(false)
+      // alert(JSON.stringify(values, null, 2));
     },
   });
 

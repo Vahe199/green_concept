@@ -3,6 +3,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { FormCompanyDetails } from "../Forms/GeneralInformation/FormCompanyDetails";
 import { FormGeneralInformation } from "../Forms/GeneralInformation/FormGeneralInformation";
 import { FormCompanyContacts } from "../Forms/GeneralInformation/FormCompanyContacts";
+import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import AddIcon from "@material-ui/icons/Add";
@@ -53,6 +54,21 @@ const validationSchema: yup.SchemaOf<Data> = yup.object({
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    textArea: {
+      marginBottom: "2%",
+      width: "100%",
+      "& .MuiOutlinedInput-multiline": {
+        padding: 7,
+      },
+    },
+    textAreaCN: {
+      marginBottom: "2%",
+      width: "60%",
+      "& .MuiOutlinedInput-multiline": {
+        padding: 1,
+        height: "100px",
+      },
+    },
     root: {
       display: "flex",
       marginLeft: "2%",
@@ -86,6 +102,11 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: 8,
       cursor: "pointer",
     },
+    addItemCRM: {
+      marginLeft: "40%",
+      marginBottom: 8,
+      cursor: "pointer",
+    },
     paper: {
       padding: 10,
       border: "1px solid #3ab994",
@@ -96,25 +117,6 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between",
       marginBottom: 15,
       fontSize: 12,
-    },
-    textArea: {
-      marginBottom: "6%",
-      "& .MuiTextField-root": {
-        minWidth: "60%",
-        height: "50px",
-        backgroundColor: "white",
-      },
-      "& .MuiOutlinedInput-input": {
-        padding: 0,
-        paddingLeft: 4,
-        textAlign: "start",
-        height: "50px",
-        backgroundColor: "transparent",
-        fontSize: 13,
-      },
-      "& .MuiOutlinedInput-multiline": {
-        padding: "7.5px 14px",
-      },
     },
     btn: {
       marginLeft: "2%",
@@ -137,6 +139,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export const GeneralInformationForCreating = () => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState("a");
+  const [branch, setBranch] = React.useState(1);
+  const [CRMs, setCRMs] = React.useState(1);
   const [site, setSite] = React.useState(1);
   const [phone, setPhone] = React.useState(1);
   const [email, setEmail] = React.useState(1);
@@ -231,7 +235,9 @@ export const GeneralInformationForCreating = () => {
                 >
                   <TextField
                     variant={"outlined"}
-                    style={{ width: "83%" }}
+                    className={classes.textArea}
+                    multiline
+                    rows={2}
                     name="CRM"
                     placeholder={"Фамилия Имя"}
                     value={formik.values.CRM}
@@ -239,9 +245,98 @@ export const GeneralInformationForCreating = () => {
                     error={formik.touched.CRM && Boolean(formik.errors.CRM)}
                     helperText={formik.touched.CRM && formik.errors.CRM}
                   />
-                  <AddIcon />
+                  <div
+                    style={{
+                      marginLeft: "3%",
+                      marginTop: "5%",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <TrashIcon />
+                  </div>
                 </div>
               </div>
+              {CRMs > 1 ? (
+                <div
+                  style={{
+                    width: "60%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginLeft: "40%",
+                    marginTop: "3%",
+                    marginBottom: "5%",
+                  }}
+                >
+                  <TextField
+                    variant={"outlined"}
+                    className={classes.textArea}
+                    multiline
+                    rows={2}
+                    name="CRM"
+                    placeholder={"Фамилия Имя"}
+                    value={formik.values.CRM}
+                    onChange={formik.handleChange}
+                    error={formik.touched.CRM && Boolean(formik.errors.CRM)}
+                    helperText={formik.touched.CRM && formik.errors.CRM}
+                  />
+                  <div
+                    style={{
+                      marginLeft: "3%",
+                      marginTop: "5%",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <TrashIcon />
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              {CRMs > 2 ? (
+                <div
+                  style={{
+                    width: "60%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginLeft: "40%",
+                    marginBottom: "5%",
+                  }}
+                >
+                  <TextField
+                    variant={"outlined"}
+                    className={classes.textArea}
+                    multiline
+                    rows={2}
+                    name="CRM"
+                    placeholder={"Фамилия Имя"}
+                    value={formik.values.CRM}
+                    onChange={formik.handleChange}
+                    error={formik.touched.CRM && Boolean(formik.errors.CRM)}
+                    helperText={formik.touched.CRM && formik.errors.CRM}
+                  />
+                  <div
+                    style={{
+                      marginLeft: "3%",
+                      marginTop: "5%",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <TrashIcon />
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              {CRMs! < 3 ? (
+                <div
+                  className={classes.addItemCRM}
+                  onClick={() => (CRMs < 3 ? setCRMs(CRMs + 1) : null)}
+                >
+                  + Добавить еще CRM
+                </div>
+              ) : (
+                ""
+              )}
               <div className={classes.label}>
                 <span>Тип контрагента</span>
                 <TextField
@@ -342,9 +437,9 @@ export const GeneralInformationForCreating = () => {
 
                 <TextField
                   variant={"outlined"}
-                  className={classes.textArea}
                   multiline
-                  rows={3}
+                  style={{ height: 100 }}
+                  rows={4}
                   name="FullCompanyName"
                   placeholder={'ООО "Северо-Западная концессионная компания”'}
                   value={formik.values.FullCompanyName}
@@ -396,18 +491,129 @@ export const GeneralInformationForCreating = () => {
               </div>
               <div className={classes.label}>
                 <span>Отрасль</span>
-                <TextField
-                  variant={"outlined"}
-                  name="Industry"
-                  placeholder={"Выберите отрасль"}
-                  value={formik.values.Industry}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.Industry && Boolean(formik.errors.Industry)
-                  }
-                  helperText={formik.touched.Industry && formik.errors.Industry}
-                />
+                <div
+                  style={{
+                    width: "60%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <TextField
+                    variant={"outlined"}
+                    name="Industry"
+                    style={{ width: "85%" }}
+                    placeholder={"Выберите отрасль"}
+                    value={formik.values.Industry}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.Industry && Boolean(formik.errors.Industry)
+                    }
+                    helperText={
+                      formik.touched.Industry && formik.errors.Industry
+                    }
+                  />
+                  <div
+                    style={{
+                      marginRight: "2%",
+                      marginTop: 3,
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setBranch(5);
+                    }}
+                  >
+                    <TrashIcon />
+                  </div>
+                </div>
               </div>
+              {branch > 1 || branch === 0 ? (
+                <div className={classes.label}>
+                  <span></span>
+                  <div
+                    style={{
+                      width: "60%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <TextField
+                      variant={"outlined"}
+                      name="Industry"
+                      style={{ width: "85%" }}
+                      placeholder={"Выберите отрасль"}
+                      value={formik.values.Industry}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.Industry &&
+                        Boolean(formik.errors.Industry)
+                      }
+                      helperText={
+                        formik.touched.Industry && formik.errors.Industry
+                      }
+                    />
+                    <div
+                      style={{
+                        marginRight: "2%",
+                        marginTop: 3,
+                        cursor: "pointer",
+                      }}
+                    >
+                      <TrashIcon />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              {branch > 2 ? (
+                <div className={classes.label}>
+                  <span></span>
+                  <div
+                    style={{
+                      width: "60%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <TextField
+                      variant={"outlined"}
+                      name="Industry"
+                      style={{ width: "85%" }}
+                      placeholder={"Выберите отрасль"}
+                      value={formik.values.Industry}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.Industry &&
+                        Boolean(formik.errors.Industry)
+                      }
+                      helperText={
+                        formik.touched.Industry && formik.errors.Industry
+                      }
+                    />
+                    <div
+                      style={{
+                        marginRight: "2%",
+                        marginTop: 3,
+                        cursor: "pointer",
+                      }}
+                    >
+                      <TrashIcon />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              {branch! < 3 ? (
+                <div
+                  className={classes.addItemCRM}
+                  onClick={() => (branch < 3 ? setBranch(branch + 1) : null)}
+                >
+                  + Добавить отрасль
+                </div>
+              ) : (
+                ""
+              )}
             </Paper>
           </div>
           <div style={{ width: "34%" }}>
@@ -492,27 +698,17 @@ export const GeneralInformationForCreating = () => {
               </div>
               <div className={classes.label}>
                 <span>Сайт компании</span>
-                <TextField
-                  variant={"outlined"}
-                  name="SiteCompany1"
-                  placeholder={"www.сайткомпании.ru"}
-                  value={formik.values.SiteCompany}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.SiteCompany &&
-                    Boolean(formik.errors.SiteCompany)
-                  }
-                  helperText={
-                    formik.touched.SiteCompany && formik.errors.SiteCompany
-                  }
-                />
-              </div>
-              {site > 1 ? (
-                <div className={classes.label}>
-                  <>&nbsp;</>
+                <div
+                  style={{
+                    width: "60%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
                   <TextField
                     variant={"outlined"}
-                    name="SiteCompany2"
+                    name="SiteCompany1"
+                    style={{ width: "85%" }}
                     placeholder={"www.сайткомпании.ru"}
                     value={formik.values.SiteCompany}
                     onChange={formik.handleChange}
@@ -524,6 +720,46 @@ export const GeneralInformationForCreating = () => {
                       formik.touched.SiteCompany && formik.errors.SiteCompany
                     }
                   />
+                  <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                    <TrashIcon />
+                  </div>
+                </div>
+              </div>
+              {site > 1 ? (
+                <div className={classes.label}>
+                  <>&nbsp;</>
+                  <div
+                    style={{
+                      width: "60%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <TextField
+                      variant={"outlined"}
+                      name="SiteCompany2"
+                      style={{ width: "85%" }}
+                      placeholder={"www.сайткомпании.ru"}
+                      value={formik.values.SiteCompany}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.SiteCompany &&
+                        Boolean(formik.errors.SiteCompany)
+                      }
+                      helperText={
+                        formik.touched.SiteCompany && formik.errors.SiteCompany
+                      }
+                    />
+                    <div
+                      style={{
+                        marginRight: "2%",
+                        marginTop: 3,
+                        cursor: "pointer",
+                      }}
+                    >
+                      <TrashIcon />
+                    </div>
+                  </div>
                 </div>
               ) : (
                 ""
@@ -531,55 +767,108 @@ export const GeneralInformationForCreating = () => {
               {site > 2 ? (
                 <div className={classes.label}>
                   <>&nbsp;</>
-                  <TextField
-                    variant={"outlined"}
-                    name="SiteCompany3"
-                    placeholder={"www.сайткомпании.ru"}
-                    value={formik.values.SiteCompany}
-                    onChange={formik.handleChange}
-                    error={
-                      formik.touched.SiteCompany &&
-                      Boolean(formik.errors.SiteCompany)
-                    }
-                    helperText={
-                      formik.touched.SiteCompany && formik.errors.SiteCompany
-                    }
-                  />
+                  <div
+                    style={{
+                      width: "60%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <TextField
+                      variant={"outlined"}
+                      name="SiteCompany3"
+                      style={{ width: "85%" }}
+                      placeholder={"www.сайткомпании.ru"}
+                      value={formik.values.SiteCompany}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.SiteCompany &&
+                        Boolean(formik.errors.SiteCompany)
+                      }
+                      helperText={
+                        formik.touched.SiteCompany && formik.errors.SiteCompany
+                      }
+                    />
+                    <div
+                      style={{
+                        marginRight: "2%",
+                        marginTop: 3,
+                        cursor: "pointer",
+                      }}
+                    >
+                      <TrashIcon />
+                    </div>
+                  </div>
                 </div>
               ) : (
                 ""
               )}
-
-              <div
-                className={classes.addItem}
-                onClick={() => (site < 3 ? setSite(site + 1) : null)}
-              >
-                + Добавить сайт
-              </div>
+              {site! < 3 ? (
+                <div
+                  className={classes.addItem}
+                  onClick={() => (site < 3 ? setSite(site + 1) : null)}
+                >
+                  + Добавить сайт
+                </div>
+              ) : (
+                ""
+              )}
               <div className={classes.label}>
                 <span>Телефон</span>
-                <TextField
-                  variant={"outlined"}
-                  name="Phone"
-                  placeholder={"+79991234567"}
-                  value={formik.values.Phone}
-                  onChange={formik.handleChange}
-                  error={formik.touched.Phone && Boolean(formik.errors.Phone)}
-                  helperText={formik.touched.Phone && formik.errors.Phone}
-                />
-              </div>
-              {phone > 1 ? (
-                <div className={classes.label}>
-                  <>&nbsp;</>
+                <div
+                  style={{
+                    width: "60%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
                   <TextField
                     variant={"outlined"}
                     name="Phone"
                     placeholder={"+79991234567"}
+                    style={{ width: "85%" }}
                     value={formik.values.Phone}
                     onChange={formik.handleChange}
                     error={formik.touched.Phone && Boolean(formik.errors.Phone)}
                     helperText={formik.touched.Phone && formik.errors.Phone}
                   />
+                  <div
+                    style={{
+                      marginRight: "2%",
+                      marginTop: 3,
+                      cursor: "pointer",
+                    }}
+                  >
+                    <TrashIcon />
+                  </div>
+                </div>
+              </div>
+              {phone > 1 ? (
+                <div className={classes.label}>
+                  <>&nbsp;</>
+                  <div
+                    style={{
+                      width: "60%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <TextField
+                      variant={"outlined"}
+                      name="Phone"
+                      style={{ width: "85%" }}
+                      placeholder={"+79991234567"}
+                      value={formik.values.Phone}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.Phone && Boolean(formik.errors.Phone)
+                      }
+                      helperText={formik.touched.Phone && formik.errors.Phone}
+                    />
+                    <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                      <TrashIcon />
+                    </div>
+                  </div>
                 </div>
               ) : (
                 ""
@@ -587,50 +876,94 @@ export const GeneralInformationForCreating = () => {
               {phone > 2 ? (
                 <div className={classes.label}>
                   <>&nbsp;</>
-                  <TextField
-                    variant={"outlined"}
-                    name="Phone"
-                    placeholder={"+79991234567"}
-                    value={formik.values.Phone}
-                    onChange={formik.handleChange}
-                    error={formik.touched.Phone && Boolean(formik.errors.Phone)}
-                    helperText={formik.touched.Phone && formik.errors.Phone}
-                  />
+                  <div
+                    style={{
+                      width: "60%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <TextField
+                      variant={"outlined"}
+                      name="Phone"
+                      style={{ width: "85%" }}
+                      placeholder={"+79991234567"}
+                      value={formik.values.Phone}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.Phone && Boolean(formik.errors.Phone)
+                      }
+                      helperText={formik.touched.Phone && formik.errors.Phone}
+                    />
+                    <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                      <TrashIcon />
+                    </div>
+                  </div>
                 </div>
               ) : (
                 ""
               )}
-              <div
-                className={classes.addItem}
-                onClick={() => (phone < 3 ? setPhone(phone + 1) : null)}
-              >
-                {" "}
-                + Добавить телефон
-              </div>
+              {phone! < 3 ? (
+                <div
+                  className={classes.addItem}
+                  onClick={() => (phone < 3 ? setPhone(phone + 1) : null)}
+                >
+                  + Добавить телефон
+                </div>
+              ) : (
+                ""
+              )}
               <div className={classes.label}>
                 <span>E-mail</span>
-                <TextField
-                  variant={"outlined"}
-                  name="email"
-                  placeholder={"email@email.ru"}
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                />
-              </div>
-              {email > 1 ? (
-                <div className={classes.label}>
-                  <>&nbsp;</>
+                <div
+                  style={{
+                    width: "60%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
                   <TextField
                     variant={"outlined"}
                     name="email"
+                    style={{ width: "85%" }}
                     placeholder={"email@email.ru"}
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email && formik.errors.email}
                   />
+
+                  <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                    <TrashIcon />
+                  </div>
+                </div>
+              </div>
+              {email > 1 ? (
+                <div className={classes.label}>
+                  <>&nbsp;</>
+                  <div
+                    style={{
+                      width: "60%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <TextField
+                      variant={"outlined"}
+                      name="email"
+                      placeholder={"email@email.ru"}
+                      style={{ width: "85%" }}
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.email && Boolean(formik.errors.email)
+                      }
+                      helperText={formik.touched.email && formik.errors.email}
+                    />
+                    <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                      <TrashIcon />
+                    </div>
+                  </div>
                 </div>
               ) : (
                 ""
@@ -638,26 +971,44 @@ export const GeneralInformationForCreating = () => {
               {email > 2 ? (
                 <div className={classes.label}>
                   <>&nbsp;</>
-                  <TextField
-                    variant={"outlined"}
-                    name="email"
-                    placeholder={"email@email.ru"}
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
-                  />
+                  <div
+                    style={{
+                      width: "60%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <TextField
+                      variant={"outlined"}
+                      name="email"
+                      placeholder={"email@email.ru"}
+                      value={formik.values.email}
+                      style={{ width: "85%" }}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.email && Boolean(formik.errors.email)
+                      }
+                      helperText={formik.touched.email && formik.errors.email}
+                    />
+                    <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                      <TrashIcon />
+                    </div>
+                  </div>
                 </div>
               ) : (
                 ""
               )}
-              <div
-                className={classes.addItem}
-                onClick={() => (email < 3 ? setEmail(email + 1) : null)}
-              >
-                {" "}
-                + Добавить email
-              </div>
+              {email! < 3 ? (
+                <div
+                  className={classes.addItem}
+                  onClick={() => (email < 3 ? setEmail(email + 1) : null)}
+                >
+                  {" "}
+                  + Добавить email
+                </div>
+              ) : (
+                ""
+              )}
             </Paper>
           </div>
         </div>

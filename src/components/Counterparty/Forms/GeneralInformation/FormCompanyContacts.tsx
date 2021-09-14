@@ -91,8 +91,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
-export const FormCompanyContacts = () => {
+type Props = {
+  // change: boolean;
+  setChangeContacts: (val: boolean) => void;
+};
+export const FormCompanyContacts:React.FC<Props> = ({setChangeContacts}) => {
   const classes = useStyles();
   const [site, setSite] = React.useState(1);
   const [phone, setPhone] = React.useState(1);
@@ -114,7 +117,8 @@ export const FormCompanyContacts = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      setChangeContacts(false)
+      // alert(JSON.stringify(values, null, 2));
     },
   });
   return (
@@ -209,7 +213,7 @@ export const FormCompanyContacts = () => {
             <span>Сайт компании</span>
             <TextField
               variant={"outlined"}
-              name="SiteCompany1"
+              name="SiteCompany"
               placeholder={"www.сайткомпании.ru"}
               value={formik.values.SiteCompany}
               onChange={formik.handleChange}

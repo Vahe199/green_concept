@@ -25,8 +25,11 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
-
-export const CompanyDetailsForUser:React.FC = () => {
+type Props = {
+    // change: boolean;
+    setChangeCompanyDetails: (val: boolean) => void;
+};
+export const CompanyDetailsForUser:React.FC<Props> = ({setChangeCompanyDetails}) => {
     const {AuthorData} = useTypedSelector(state => state.author)
     const {full_name,short_name,group,branches}:any = AuthorData;
     const classes = useStyles();
@@ -40,7 +43,7 @@ export const CompanyDetailsForUser:React.FC = () => {
             }}
         >
             <Typography variant={'subtitle2'}>Сведения  о компании </Typography>
-            <div onClick={()=>console.log('Общие сведения')}>
+            <div onClick={()=>setChangeCompanyDetails(true)}>
                 <img src={pencil} style={{width:15,height:15}}/>
             </div>
         </div>

@@ -86,8 +86,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+type Props = {
+  // change: boolean;
+  setChangeCompanyDetails: (val: boolean) => void;
+};
 
-export const FormCompanyDetails = () => {
+export const FormCompanyDetails:React.FC<Props> = ({setChangeCompanyDetails}) => {
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
@@ -98,7 +102,8 @@ export const FormCompanyDetails = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      setChangeCompanyDetails(false)
+      // alert(JSON.stringify(values, null, 2));
     },
   });
 

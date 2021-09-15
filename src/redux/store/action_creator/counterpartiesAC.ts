@@ -10,7 +10,6 @@ export const fetchCounterpartiesList =
     try {
       dispatch({ type: CounterpartiesActionType.FETCH_COUNTERPARTIES_LIST });
       const { data } = await counterpartiesApi.fetchContractorsList();
-      console.log(data);
       dispatch({
         type: CounterpartiesActionType.FETCH_COUNTERPARTIES_LIST_SUCCESS,
         payload: data.contractors,

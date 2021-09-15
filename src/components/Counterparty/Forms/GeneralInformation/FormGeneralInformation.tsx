@@ -1,17 +1,20 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import AddIcon from "@material-ui/icons/Add";
 import {
   Checkbox,
-  FormControlLabel,
   Radio,
   TextField,
   Paper,
   Button,
 } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelectedType";
+import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
+import {UseActions} from "../../../../redux/type_redux_hook/ useAction";
+import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedCRM";
 type Data = {
   CRM: string | null;
   CounterpartyType: string | null;
@@ -50,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       marginLeft: "7%",
-      marginRight: "7%",
+      // marginRight: "7%",
       "& .MuiTextField-root": {
         minWidth: "60%",
         height: "30px",
@@ -72,6 +75,9 @@ const useStyles = makeStyles((theme: Theme) =>
       "& .MuiFormControlLabel-root": {
         fontSize: 10,
       },
+      '& .MuiOutlinedInput-adornedEnd ':{
+        paddingRight:0
+      }
     },
     paper: {
       padding: 10,
@@ -95,30 +101,60 @@ type Props = {
   setChangeGeneralInformation: (val: boolean) => void;
 };
 export const FormGeneralInformation:React.FC<Props> = ({setChangeGeneralInformation}) => {
+  const {changeAuthorData,recoveryAuthorDataState} = UseActions();
   const classes = useStyles();
-  const [checked, setChecked] = React.useState("a");
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.value);
-  };
+
+  const {AuthorData,error,isChange} = useTypedSelector(state => state.author)
+debugger
+  let {id,crms, org_type, inn,kpp,ogrn,nda,type,service}:any = AuthorData;
+  const [orgType, setOrgType] = React.useState(org_type);
+  const [srm, setCRM] = React.useState(crms[0].id);
+  const [counterparty, setCounterparty] = React.useState(!type ? 1: type &&  type.length > 0 ? type[0].id : type.id);
+  const [services, setServices] = React.useState(!service ? 1 :service && service.length > 0 ? service[0].id : service.id);
+useEffect(()=>{
+  if(error) {
+    setChangeGeneralInformation(true)
+    setTimeout(()=>{
+      recoveryAuthorDataState()
+    },4000)
+
+  }
+  if(isChange){
+    setChangeGeneralInformation(false)
+    recoveryAuthorDataState()
+  }
+},[error,isChange])
   const formik = useFormik({
     initialValues: {
-      CRM: "",
-      CounterpartyType: "",
-      ServiceType: "",
-      INN: "",
-      KPP: "",
-      OGPN: "",
-      NDA: false,
+      org_type:orgType,
+      CRM:srm ,
+      CounterpartyType: counterparty,
+      ServiceType: services,
+      INN: inn,
+      KPP: kpp,
+      OGPN:ogrn,
+      NDA: nda,
     },
-     validationSchema: validationSchema,
+     // validationSchema: validationSchema,
     onSubmit: (values) => {
-      setChangeGeneralInformation(false)
-      // alert(JSON.stringify(values, null, 2));
-    },
+      const formData = new FormData()
+      formData.append('org_type', orgType);
+      formData.append('crms[]', values.CRM);
+      formData.append('contractor_type_id', '1');
+      formData.append('service_type_id', '1');
+      formData.append('inn', values.INN);
+      formData.append('kpp', values.KPP);
+      formData.append('ogrn', values.OGPN);
+      formData.append('nda', values.NDA);
+      changeAuthorData({'org_type':orgType,'contractor_type_id': counterparty,'crms': [srm],
+        'service_type_id':services,'inn':values.INN,'kpp':values.KPP,'ogrn':values.OGPN,'nda':values.NDA},id)
+
+      },
   });
 
   return (
     <div className={classes.root}>
+
       <form onSubmit={formik.handleSubmit}>
         <div
           style={{
@@ -138,15 +174,16 @@ export const FormGeneralInformation:React.FC<Props> = ({setChangeGeneralInformat
           </Button>
         </div>
         <Paper className={classes.paper}>
+          {error && <div style={{color:"red"}}>{error}</div>}
           <div style={{ marginBottom: "2%", display: "flex" }}>
             <div>
               <span style={{ fontSize: 10 }}>Физическое лицо</span>
               <Radio
-                checked={checked === "a"}
-                onChange={handleChange}
-                value="a"
+                checked={orgType === "ФЛ"}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setOrgType(e.target.value)}
+                value="ФЛ"
                 color="default"
-                name="radio-button-demo"
+                name="org_type"
                 size="small"
                 inputProps={{ "aria-label": "A" }}
               />
@@ -154,11 +191,11 @@ export const FormGeneralInformation:React.FC<Props> = ({setChangeGeneralInformat
             <div>
               <span style={{ fontSize: 10 }}>Юридическое лицо</span>
               <Radio
-                checked={checked === "b"}
-                onChange={handleChange}
-                value="b"
+                checked={orgType === "ЮЛ"}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setOrgType(e.target.value)}
+                value="ЮЛ"
                 color="default"
-                name="radio-button-demo"
+                name="org_type"
                 size="small"
                 inputProps={{ "aria-label": "B" }}
               />
@@ -173,52 +210,35 @@ export const FormGeneralInformation:React.FC<Props> = ({setChangeGeneralInformat
                 justifyContent: "space-between",
               }}
             >
-              <TextField
-                variant={"outlined"}
-                style={{ width: "83%" }}
-                name="CRM"
-                placeholder={"Фамилия Имя"}
-                value={formik.values.CRM}
-                onChange={formik.handleChange}
-                error={formik.touched.CRM && Boolean(formik.errors.CRM)}
-                helperText={formik.touched.CRM && formik.errors.CRM}
+              <InputFilterSelectedCrm
+                  name="CRM"
+                  style={{ width: "83%" }}
+                  placeholder={"Фамилия Имя"}
+                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) => setCRM(e.target.value)}
               />
               <AddIcon />
             </div>
           </div>
           <div className={classes.label}>
             <span>Тип контрагента</span>
-            <TextField
-              variant={"outlined"}
-              name="CounterpartyType"
-              placeholder={"Поставщик"}
-              value={formik.values.CounterpartyType}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.CounterpartyType &&
-                Boolean(formik.errors.CounterpartyType)
-              }
-              helperText={
-                formik.touched.CounterpartyType &&
-                formik.errors.CounterpartyType
-              }
-            />
+            <span style={{width:'60%'}}>
+                <InputFilterSelectedType
+                    name="CounterpartyType"
+                    value={counterparty}
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>)=>setCounterparty(e.target.value)}
+                />
+              </span>
           </div>
           <div className={classes.label}>
             <span>Тип услуг</span>
-            <TextField
-              variant={"outlined"}
-              name="ServiceType"
-              placeholder={"Другое"}
-              value={formik.values.ServiceType}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.ServiceType && Boolean(formik.errors.ServiceType)
-              }
-              helperText={
-                formik.touched.ServiceType && formik.errors.ServiceType
-              }
-            />
+            <span style={{width: '60%'}}>
+           <InputFilterSelectedServicesType
+               value={services}
+               name="ServiceType"
+               handleChange={(e: React.ChangeEvent<HTMLInputElement>)=>setServices(e.target.value)}
+               // options={authors}
+           />
+            </span>
           </div>
           <div className={classes.label}>
             <span>ИНН</span>

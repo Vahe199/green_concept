@@ -80,7 +80,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateCounterparty = (props: any) => {
-  console.log(props, "props");
   let history = useHistory();
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
@@ -166,7 +165,9 @@ const CreateCounterparty = (props: any) => {
 
       <div className={classes.bottomField}>
         {props.match.params.item === "author" ? (
-          <InformationUserData />
+                <div>
+                  {selectedTab === 0 &&<InformationUserData />}
+                </div>
         ) : props.match.params.item === "new contractor" ? (
           <div>
             {selectedTab === 0 && <GeneralInformationForCreating />}

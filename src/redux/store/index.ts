@@ -5,11 +5,14 @@ import { combineReducers } from "redux";
 import { counterpartiesReducer } from "./reducer/conterparties/counterpartiesReducer";
 import { counterpartiesAuthorsListReducer } from "./reducer/conterparties/conterpartiesAuthorsListReducer";
 import {counterpartiesAuthorDataReducer} from "./reducer/conterparties/conterpartiesAuthorDataReducer";
+import {counterpartiesAssetsListReducer} from "./reducer/conterparties/conterpartiesAssetsTypesList";
+import {counterpartiesServicesTypesListReducer} from "./reducer/conterparties/conterpartiesServicesTypesList";
 
 const reducer = combineReducers({
   counterparties: counterpartiesReducer,
   //contractor:newContractorReducer,
-  // counterpartiesTypesList:counterpartiesTypesListReducer,
+   assets:counterpartiesAssetsListReducer,
+  servicesTypes:counterpartiesServicesTypesListReducer,
   authorsList: counterpartiesAuthorsListReducer,
   author:counterpartiesAuthorDataReducer
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import AddIcon from "@material-ui/icons/Add";
@@ -11,6 +11,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 
 type Data = {
   LegalAddress: string | null;
@@ -97,26 +98,43 @@ type Props = {
 };
 export const FormCompanyContacts:React.FC<Props> = ({setChangeContacts}) => {
   const classes = useStyles();
+  const {AuthorData,error,success} = useTypedSelector(state => state.author)
+  const {id,legal_registration_address,actual_address,post_address,emails,phones}:any = AuthorData;
+
   const [site, setSite] = React.useState(1);
   const [phone, setPhone] = React.useState(1);
   const [email, setEmail] = React.useState(1);
   const [checked, setChecked] = React.useState("a");
+  useEffect(()=>{
+    if(error) {
+      setChangeContacts(true)
+    }
+    if(success){
+      setChangeContacts(false)
+    }
+  },[])
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.value);
   };
   const formik = useFormik({
     initialValues: {
-      LegalAddress: "",
-      ActualAddress: "",
+      LegalAddress:legal_registration_address,
+      ActualAddress: actual_address,
       MatchesAddressActualAddress: false,
-      MailingAddress: "",
+      MailingAddress: post_address,
       MatchesAddressMailingAddress: false,
       SiteCompany: "",
-      Phone: "",
-      email: "",
+      Phone: phones[0].phone,
+      email: emails[0].email,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      const formData = new FormData()
+      formData.append('legal_registration_address',values.LegalAddress);
+      formData.append('actual_address',values.ActualAddress);
+      formData.append('post_address',values.MailingAddress);
+      formData.append('phones',values.Phone);
+      formData.append('emails',values.email);
       setChangeContacts(false)
       // alert(JSON.stringify(values, null, 2));
     },

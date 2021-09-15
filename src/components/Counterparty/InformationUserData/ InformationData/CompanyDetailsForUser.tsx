@@ -77,7 +77,7 @@ export const CompanyDetailsForUser:React.FC<Props> = ({setChangeCompanyDetails})
                     Отрасль
                 </Typography>
                 <Typography variant={'body2'}>
-                    {branches.map((branch:any)=><div key={branch.id}>{branch.name}</div>)}
+                    {branches.length >0 ? branches.map((branch:any)=><div key={branch.id}>{branch.name}</div>):''}
                 </Typography>
             </div>
         </Paper>

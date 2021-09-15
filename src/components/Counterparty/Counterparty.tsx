@@ -10,10 +10,11 @@ import { UseActions } from "../../redux/type_redux_hook/ useAction";
 import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
 import Loader from "../Layout/Loader/Loader";
 export const Counterparty = () => {
-  const { fetchCounterpartiesList, fetchAuthorsList } = UseActions();
+  const { fetchCounterpartiesList, fetchAuthorsList,getAssetsListData } = UseActions();
   useEffect(() => {
     fetchCounterpartiesList();
     fetchAuthorsList();
+    getAssetsListData()
   }, []);
   let history = useHistory();
   const classes = useStyles();

@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { TextField, Paper, Button } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import {UseActions} from "../../../../redux/type_redux_hook/ useAction";
 
 type Data = {
   FullCompanyName: string | null;
@@ -31,7 +33,7 @@ const validationSchema: yup.SchemaOf<Data> = yup.object({
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginRight: "5%",
+      // marginRight: "5%",
       "& .MuiTextField-root": {
         minWidth: "60%",
         height: "30px",
@@ -92,18 +94,37 @@ type Props = {
 };
 
 export const FormCompanyDetails:React.FC<Props> = ({setChangeCompanyDetails}) => {
+  const {changeAuthorData} = UseActions();
+  const {AuthorData,error,success} = useTypedSelector(state => state.author)
+  const {id,full_name,short_name,group,branches}:any = AuthorData;
   const classes = useStyles();
+  useEffect(()=>{
+    if(error) {
+      setChangeCompanyDetails(true)
+    }
+    if(success){
+      setChangeCompanyDetails(false)
+    }
+  },[])
   const formik = useFormik({
     initialValues: {
-      FullCompanyName: "",
-      ShortNameCompany: "",
-      CompanyGroup: "",
-      Industry: "",
+      FullCompanyName: full_name,
+      ShortNameCompany: short_name,
+      CompanyGroup: group? group.full_name :  "",
+      Industry: branches.length > 0 ? branches[0].name : "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      setChangeCompanyDetails(false)
-      // alert(JSON.stringify(values, null, 2));
+      const formData = new FormData()
+      formData.append('full_name', values.FullCompanyName);
+      formData.append('short_name', values.ShortNameCompany);
+      formData.append('group', values.CompanyGroup);
+      formData.append('branches', values.Industry);
+      // changeAuthorData(formData,id)
+       changeAuthorData({'full_name':values.FullCompanyName,'short_name':values.ShortNameCompany,
+         'group':values.CompanyGroup, 'branches':values.Industry },id)
+       alert(JSON.stringify({'full_name':values.FullCompanyName,'short_name':values.ShortNameCompany,
+         'group':values.CompanyGroup, 'branches':values.Industry }, null, 2));
     },
   });
 
@@ -124,6 +145,7 @@ export const FormCompanyDetails:React.FC<Props> = ({setChangeCompanyDetails}) =>
           </Button>
         </div>
         <Paper className={classes.paper}>
+          {error && <div style={{color:"red"}}>{error}</div>}
           <div className={classes.label}>
             <span>Полное наименование компании</span>
 

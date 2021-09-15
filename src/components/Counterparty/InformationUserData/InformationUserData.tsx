@@ -1,4 +1,4 @@
-import React, {useState,Dispatch,SetStateAction} from "react";
+import React, {useState} from "react";
 import {makeStyles, createStyles, Theme} from "@material-ui/core/styles";
 import {Typography} from '@material-ui/core';
 import {Paper} from "@material-ui/core";
@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             flexWrap: 'wrap',
             flexDirection: 'row',
-            padding: '1%',
+             paddingTop: '1%',
+            paddingRight:'2%',
             justifyContent: 'space-between'
         },
         paper: {

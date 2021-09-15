@@ -3,7 +3,6 @@ import {AuthorDataAction, AuthorDataActionType} from "../../types/conterpart_aut
 
 
 export const getAuthorData = (data:any[]) =>  (dispatch: Dispatch<AuthorDataAction>) => {
-debugger
     console.log(data,'autorarr')
       dispatch({
         type: AuthorDataActionType.GET_AUTHOR_DATA,

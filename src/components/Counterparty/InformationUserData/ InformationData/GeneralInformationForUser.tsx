@@ -9,6 +9,7 @@ import {DataType} from "../../../../redux/types/conterpart_author_data";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
+            marginLeft: "7%",
             display: 'flex',
             flexWrap: 'wrap',
             flexDirection:'column',

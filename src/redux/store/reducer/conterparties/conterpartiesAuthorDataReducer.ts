@@ -3,14 +3,10 @@ import {AuthorDataAction, AuthorDataActionType, AuthorDataState} from "../../../
 
 const initialState: AuthorDataState = {
   AuthorData:[],
-  // author:[],
-// branches:[],
-// crms: [],
-// emails: [],
-// group:[],
-// phones: [],
-// service: [],
-// sites: [],
+  loading:true,
+  error:false,
+  success:false,
+  isChange:false
 };
 export const counterpartiesAuthorDataReducer = (
   state = initialState,
@@ -18,19 +14,22 @@ export const counterpartiesAuthorDataReducer = (
 ): AuthorDataState => {
   switch (action.type) {
     case AuthorDataActionType.GET_AUTHOR_DATA:
-      return {AuthorData:action.payload,
-        // author:action.author,
-        // branches:action.payload.branches,
-        // crms:action.payload.crms,
-        // emails:action.payload.emails,
-        // group:action.payload.group,
-        // phones:action.payload.phones,
-        // service:action.payload.service,
-        // sites:action.payload.sites
-
-
-
-      };
+      return {AuthorData:action.payload,isChange:false,
+        error:false,loading:false,success:false};
+    case AuthorDataActionType.CHANGE_AUTHOR_DATA:
+      return {...state,AuthorData:state.AuthorData,error:false,loading:true,isChange:false};
+    case AuthorDataActionType.CHANGE_AUTHOR_DATA_SUCCESS:
+      debugger
+      return {AuthorData:action.payload, success:true,isChange:true,
+        error:false,loading:false};
+    case AuthorDataActionType.CHANGE_AUTHOR_DATA_ERROR:
+      return {...state,AuthorData:state.AuthorData,success:false,isChange:false,
+        error:"что-то пошло не так !",
+        loading:false}
+    case AuthorDataActionType.RECOVERY_AUTHOR_DATA_STATE:
+      return {
+        ...state,AuthorData:state.AuthorData,success:false,isChange:false,error:false
+      }
 
     default:
       return state;

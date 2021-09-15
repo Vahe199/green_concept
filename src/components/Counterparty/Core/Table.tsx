@@ -18,6 +18,7 @@ import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelecto
 import Loader from "../../Layout/Loader/Loader";
 import { useHistory } from "react-router-dom";
 import { UseActions } from "../../../redux/type_redux_hook/ useAction";
+import InputFilterSelectedType from "./FilterInputs/InputFilterSelectedType";
 
 const useStyles = makeStyles({
   root: {
@@ -40,15 +41,14 @@ const useStyles = makeStyles({
 });
 
 export default function CounterpartiesTable(props: any) {
-  const classes = useStyles();
-  const { contractors, loading } = useTypedSelector(
-    (state) => state.counterparties
-  );
   let history = useHistory();
+  const classes = useStyles();
+  const { contractors, loading } = useTypedSelector((state) => state.counterparties);
   const { authors } = useTypedSelector((state) => state.authorsList);
   const { getAuthorData } = UseActions();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [services, setServices] = React.useState('Другое');
   const [currency, setCurrency] = React.useState("All");
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -63,6 +63,9 @@ export default function CounterpartiesTable(props: any) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrency(event.target.value);
     console.log(event.target.value, "selected");
+  };
+  const handleChangeServices = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setServices(event.target.value);
   };
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/${data.id}`);
@@ -86,7 +89,7 @@ export default function CounterpartiesTable(props: any) {
         }}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      /> 
+      />
       <Divider variant="middle" />*/}
 
       <TableContainer className={classes.container}>
@@ -96,9 +99,10 @@ export default function CounterpartiesTable(props: any) {
               <StyledTableCell align="left">N</StyledTableCell>
               <StyledTableCell align="left">
                 Тип
-                <InputFilterSelected
-                  handleChange={handleChange}
-                  options={authors}
+                <InputFilterSelectedType
+                  handleChange={handleChangeServices}
+                  // options={types}
+                  value={services}
                 />
               </StyledTableCell>
               <StyledTableCell align="left">

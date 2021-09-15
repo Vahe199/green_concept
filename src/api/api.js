@@ -12,7 +12,7 @@ const instance = axios.create({
     Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMxNjk2NTI2LCJleHAiOjE2MzE3ODI5MjYsIm5iZiI6MTYzMTY5NjUyNiwianRpIjoia2FWd3hveXFPdVBrWk5YaiIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.6Bxd31yNlnP5y0BYPCEvtZRfWUTS3faZhtzWMgOtOUE`,
+    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMxNzA3OTA3LCJleHAiOjE2MzE3OTQzMDcsIm5iZiI6MTYzMTcwNzkwNywianRpIjoic1lJT29IZlVOSnNUTHFaOCIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0._aQQEnyLEAmpFrLt2TrHemLxVjybLIFqKJvtkMiZg-Q`,
   },
 });
 
@@ -26,6 +26,18 @@ export const counterpartiesApi = {
     return instance.get("contractors/authors_list");
   },
   fetchContractorsTypes() {
-    return instance.get("api/admin/contractor_types");
+    return instance.get("admin/contractor_types").then(res =>{
+      debugger
+    });
   },
+  fetchContractorsServicesTypes() {
+    return instance.get("admin/contractor_type_services");
+  },
+  changeContractorsData(formData, id) {
+    return instance.put(`contractors/general_info/${id}`,formData);
+  },
+  getAssetsData() {
+    return instance.get('contractors/get_assets');
+  },
+
 };

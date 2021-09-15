@@ -66,12 +66,25 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "60%",
       "& .MuiOutlinedInput-multiline": {
         padding: 1,
-        height: "100px",
+      },
+    },
+    btn: {
+      marginLeft: "2%",
+      marginTop: 10,
+      marginBottom: 10,
+      color: "#fff",
+      fontSize: 12,
+      paddingBottom: 4,
+      backgroundColor: "#3AB994",
+      "&:hover": {
+        backgroundColor: "#36AD8B",
+      },
+      "&:active": {
+        backgroundColor: "#32A886",
       },
     },
     root: {
       display: "flex",
-      marginLeft: "2%",
       marginRight: "2%",
       width: "100%",
       height: "20%",
@@ -118,21 +131,6 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: 15,
       fontSize: 12,
     },
-    btn: {
-      marginLeft: "2%",
-      marginTop: 10,
-      marginBottom: 10,
-      color: "#fff",
-      fontSize: 12,
-      paddingBottom: 4,
-      backgroundColor: "#3AB994",
-      "&:hover": {
-        backgroundColor: "#36AD8B",
-      },
-      "&:active": {
-        backgroundColor: "#32A886",
-      },
-    },
   })
 );
 
@@ -176,17 +174,17 @@ export const GeneralInformationForCreating = () => {
   });
   return (
     <>
-      <Button
-        onClick={() => console.log("button")}
-        variant="contained"
-        color="primary"
-        className={classes.btn}
-      >
-        Сохранить карточку
-      </Button>
       <form onSubmit={formik.handleSubmit}>
+        <Button
+          onClick={() => console.log("button")}
+          variant="contained"
+          color="primary"
+          className={classes.btn}
+        >
+          Сохранить карточку
+        </Button>
         <div className={classes.root}>
-          <div style={{ width: "24%" }}>
+          <div style={{ width: "24%", marginLeft: "2%" }}>
             <div
               style={{
                 display: "flex",
@@ -251,6 +249,7 @@ export const GeneralInformationForCreating = () => {
                       marginTop: "5%",
                       cursor: "pointer",
                     }}
+                    onClick={() => (CRMs > 1 ? setCRMs(CRMs - 1) : null)}
                   >
                     <TrashIcon />
                   </div>
@@ -285,6 +284,7 @@ export const GeneralInformationForCreating = () => {
                       marginTop: "5%",
                       cursor: "pointer",
                     }}
+                    onClick={() => (CRMs > 1 ? setCRMs(CRMs - 1) : null)}
                   >
                     <TrashIcon />
                   </div>
@@ -320,6 +320,7 @@ export const GeneralInformationForCreating = () => {
                       marginTop: "5%",
                       cursor: "pointer",
                     }}
+                    onClick={() => (CRMs > 1 ? setCRMs(CRMs - 1) : null)}
                   >
                     <TrashIcon />
                   </div>
@@ -438,10 +439,10 @@ export const GeneralInformationForCreating = () => {
                 <TextField
                   variant={"outlined"}
                   multiline
-                  style={{ height: 100 }}
+                  className={classes.textAreaCN}
                   rows={4}
                   name="FullCompanyName"
-                  placeholder={'ООО "Северо-Западная концессионная компания”'}
+                  placeholder={'ООО "Северо-Западная компания”'}
                   value={formik.values.FullCompanyName}
                   onChange={formik.handleChange}
                   error={
@@ -518,15 +519,13 @@ export const GeneralInformationForCreating = () => {
                       marginTop: 3,
                       cursor: "pointer",
                     }}
-                    onClick={() => {
-                      setBranch(5);
-                    }}
+                    onClick={() => (branch > 1 ? setBranch(branch - 1) : null)}
                   >
                     <TrashIcon />
                   </div>
                 </div>
               </div>
-              {branch > 1 || branch === 0 ? (
+              {branch > 1 ? (
                 <div className={classes.label}>
                   <span></span>
                   <div
@@ -557,6 +556,9 @@ export const GeneralInformationForCreating = () => {
                         marginTop: 3,
                         cursor: "pointer",
                       }}
+                      onClick={() =>
+                        branch > 1 ? setBranch(branch - 1) : null
+                      }
                     >
                       <TrashIcon />
                     </div>
@@ -596,6 +598,9 @@ export const GeneralInformationForCreating = () => {
                         marginTop: 3,
                         cursor: "pointer",
                       }}
+                      onClick={() =>
+                        branch > 1 ? setBranch(branch - 1) : null
+                      }
                     >
                       <TrashIcon />
                     </div>
@@ -720,7 +725,10 @@ export const GeneralInformationForCreating = () => {
                       formik.touched.SiteCompany && formik.errors.SiteCompany
                     }
                   />
-                  <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                  <div
+                    style={{ marginRight: "2%", cursor: "pointer" }}
+                    onClick={() => (site > 1 ? setSite(site - 1) : null)}
+                  >
                     <TrashIcon />
                   </div>
                 </div>
@@ -756,6 +764,7 @@ export const GeneralInformationForCreating = () => {
                         marginTop: 3,
                         cursor: "pointer",
                       }}
+                      onClick={() => (site > 1 ? setSite(site - 1) : null)}
                     >
                       <TrashIcon />
                     </div>
@@ -795,6 +804,7 @@ export const GeneralInformationForCreating = () => {
                         marginTop: 3,
                         cursor: "pointer",
                       }}
+                      onClick={() => (site > 1 ? setSite(site - 1) : null)}
                     >
                       <TrashIcon />
                     </div>
@@ -838,6 +848,7 @@ export const GeneralInformationForCreating = () => {
                       marginTop: 3,
                       cursor: "pointer",
                     }}
+                    onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
                   >
                     <TrashIcon />
                   </div>
@@ -865,7 +876,10 @@ export const GeneralInformationForCreating = () => {
                       }
                       helperText={formik.touched.Phone && formik.errors.Phone}
                     />
-                    <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                    <div
+                      style={{ marginRight: "2%", cursor: "pointer" }}
+                      onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
+                    >
                       <TrashIcon />
                     </div>
                   </div>
@@ -895,7 +909,10 @@ export const GeneralInformationForCreating = () => {
                       }
                       helperText={formik.touched.Phone && formik.errors.Phone}
                     />
-                    <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                    <div
+                      style={{ marginRight: "2%", cursor: "pointer" }}
+                      onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
+                    >
                       <TrashIcon />
                     </div>
                   </div>
@@ -921,6 +938,7 @@ export const GeneralInformationForCreating = () => {
                     display: "flex",
                     justifyContent: "space-between",
                   }}
+                  onClick={() => (email < 3 ? setEmail(email + 1) : null)}
                 >
                   <TextField
                     variant={"outlined"}
@@ -933,7 +951,10 @@ export const GeneralInformationForCreating = () => {
                     helperText={formik.touched.email && formik.errors.email}
                   />
 
-                  <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                  <div
+                    style={{ marginRight: "2%", cursor: "pointer" }}
+                    onClick={() => (email > 1 ? setEmail(email - 1) : null)}
+                  >
                     <TrashIcon />
                   </div>
                 </div>
@@ -960,7 +981,10 @@ export const GeneralInformationForCreating = () => {
                       }
                       helperText={formik.touched.email && formik.errors.email}
                     />
-                    <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                    <div
+                      style={{ marginRight: "2%", cursor: "pointer" }}
+                      onClick={() => (email > 1 ? setEmail(email - 1) : null)}
+                    >
                       <TrashIcon />
                     </div>
                   </div>
@@ -990,7 +1014,10 @@ export const GeneralInformationForCreating = () => {
                       }
                       helperText={formik.touched.email && formik.errors.email}
                     />
-                    <div style={{ marginRight: "2%", cursor: "pointer" }}>
+                    <div
+                      style={{ marginRight: "2%", cursor: "pointer" }}
+                      onClick={() => (email > 1 ? setEmail(email - 1) : null)}
+                    >
                       <TrashIcon />
                     </div>
                   </div>
@@ -1003,7 +1030,6 @@ export const GeneralInformationForCreating = () => {
                   className={classes.addItem}
                   onClick={() => (email < 3 ? setEmail(email + 1) : null)}
                 >
-                  {" "}
                   + Добавить email
                 </div>
               ) : (

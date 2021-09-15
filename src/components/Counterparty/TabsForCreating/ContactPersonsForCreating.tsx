@@ -1,7 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import AddIcon from "@material-ui/icons/Add";
 import {
   Checkbox,
   FormControlLabel,
@@ -12,6 +11,7 @@ import {
   Link,
 } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
 
 type Data = {
   Surname: string | null;
@@ -106,6 +106,21 @@ const useStyles = makeStyles((theme: Theme) =>
         fontSize: 10,
       },
     },
+    btn: {
+      marginLeft: "2%",
+      marginTop: 10,
+      marginBottom: 10,
+      color: "#fff",
+      fontSize: 12,
+      paddingBottom: 4,
+      backgroundColor: "#3AB994",
+      "&:hover": {
+        backgroundColor: "#36AD8B",
+      },
+      "&:active": {
+        backgroundColor: "#32A886",
+      },
+    },
     textArea: {
       marginBottom: "6%",
       "& .MuiTextField-root": {
@@ -133,11 +148,18 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
-      marginBottom: 15,
-      fontSize: 12,
+      marginBottom: 10,
+      fontSize: "12px",
+    },
+    addItem: {
+      marginLeft: "40%",
+      textDecoration: "none",
+      marginBottom: "2%",
+      cursor: "pointer",
+      fontSize: "12px",
     },
     BasicInformation: {
-      width: "46%",
+      width: "52%",
       paddingRight: "2%",
     },
     ContactsFromGreen: {
@@ -156,6 +178,11 @@ const useStyles = makeStyles((theme: Theme) =>
 export const ContactPersonsForCreating = () => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState("a");
+  const [phoneMob, setPhoneMob] = React.useState(1);
+  const [CRMs, setCRMs] = React.useState(1);
+  const [site, setSite] = React.useState(1);
+  const [phone, setPhone] = React.useState(1);
+  const [email, setEmail] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.value);
   };
@@ -192,6 +219,14 @@ export const ContactPersonsForCreating = () => {
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
+        <Button
+          onClick={() => console.log("button")}
+          variant="contained"
+          color="primary"
+          className={classes.btn}
+        >
+          Сохранить карточку
+        </Button>
         <div className={classes.root}>
           <div className={classes.BasicInformation}>
             <div
@@ -382,14 +417,15 @@ export const ContactPersonsForCreating = () => {
                 <span style={{ width: "60%" }}>
                   <div
                     style={{
-                      width: "70%",
+                      width: "80%",
                       display: "flex",
-                      flexDirection: "column",
+                      justifyContent: "space-between",
                     }}
                   >
                     <TextField
                       variant={"outlined"}
                       name="work_phone"
+                      style={{ width: "85%" }}
                       placeholder={"+79999999999"}
                       value={formik.values.work_phone}
                       onChange={formik.handleChange}
@@ -401,53 +437,268 @@ export const ContactPersonsForCreating = () => {
                         formik.touched.work_phone && formik.errors.work_phone
                       }
                     />
-                    <Link color="inherit">+ Добавить телефон</Link>
+                    <div
+                      style={{
+                        marginLeft: "3%",
+                        marginTop: "1%",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
+                    >
+                      <TrashIcon />
+                    </div>
                   </div>
                 </span>
               </div>
+              {phone > 1 ? (
+                <div className={classes.label}>
+                  <span></span>
+                  <span style={{ width: "60%" }}>
+                    <div
+                      style={{
+                        width: "80%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <TextField
+                        variant={"outlined"}
+                        name="work_phone"
+                        style={{ width: "85%" }}
+                        placeholder={"+79999999999"}
+                        value={formik.values.work_phone}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.work_phone &&
+                          Boolean(formik.errors.work_phone)
+                        }
+                        helperText={
+                          formik.touched.work_phone && formik.errors.work_phone
+                        }
+                      />
+                      <div
+                        style={{
+                          marginLeft: "3%",
+                          marginTop: "1%",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
+                      >
+                        <TrashIcon />
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              ) : (
+                ""
+              )}
+              {phone > 2 ? (
+                <div className={classes.label}>
+                  <span></span>
+                  <span style={{ width: "60%" }}>
+                    <div
+                      style={{
+                        width: "80%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <TextField
+                        variant={"outlined"}
+                        name="work_phone"
+                        style={{ width: "85%" }}
+                        placeholder={"+79999999999"}
+                        value={formik.values.work_phone}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.work_phone &&
+                          Boolean(formik.errors.work_phone)
+                        }
+                        helperText={
+                          formik.touched.work_phone && formik.errors.work_phone
+                        }
+                      />
+                      <div
+                        style={{
+                          marginLeft: "3%",
+                          marginTop: "1%",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
+                      >
+                        <TrashIcon />
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              ) : (
+                ""
+              )}
+              {phoneMob! < 3 ? (
+                <div
+                  className={classes.addItem}
+                  onClick={() => (phone < 3 ? setPhone(phone + 1) : null)}
+                >
+                  + Добавить телефон
+                </div>
+              ) : (
+                ""
+              )}
               <div className={classes.label}>
                 <span>Телефон мобильный</span>
                 <span style={{ width: "60%" }}>
                   <div
                     style={{
-                      width: "70%",
+                      width: "80%",
                       display: "flex",
-                      flexDirection: "column",
+                      justifyContent: "space-between",
                     }}
                   >
                     <TextField
                       variant={"outlined"}
                       name="mobile_phone"
+                      style={{ width: "85%" }}
                       placeholder={"+79999999999"}
-                      value={formik.values.mobile_phone}
+                      value={formik.values.work_phone}
                       onChange={formik.handleChange}
                       error={
-                        formik.touched.mobile_phone &&
-                        Boolean(formik.errors.mobile_phone)
+                        formik.touched.work_phone &&
+                        Boolean(formik.errors.work_phone)
                       }
                       helperText={
-                        formik.touched.mobile_phone &&
-                        formik.errors.mobile_phone
+                        formik.touched.work_phone && formik.errors.work_phone
                       }
                     />
-                    <Link color="inherit">+ Добавить телефон</Link>
+                    <div
+                      style={{
+                        marginLeft: "3%",
+                        marginTop: "1%",
+                        cursor: "pointer",
+                      }}
+                      onClick={() =>
+                        phoneMob > 1 ? setPhoneMob(phoneMob - 1) : null
+                      }
+                    >
+                      <TrashIcon />
+                    </div>
                   </div>
                 </span>
               </div>
+              {phoneMob > 1 ? (
+                <div className={classes.label}>
+                  <span></span>
+                  <span style={{ width: "60%" }}>
+                    <div
+                      style={{
+                        width: "80%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <TextField
+                        variant={"outlined"}
+                        name="mobile_phone"
+                        style={{ width: "85%" }}
+                        placeholder={"+79999999999"}
+                        value={formik.values.work_phone}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.work_phone &&
+                          Boolean(formik.errors.work_phone)
+                        }
+                        helperText={
+                          formik.touched.work_phone && formik.errors.work_phone
+                        }
+                      />
+                      <div
+                        style={{
+                          marginLeft: "3%",
+                          marginTop: "1%",
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          phoneMob > 1 ? setPhoneMob(phoneMob - 1) : null
+                        }
+                      >
+                        <TrashIcon />
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              ) : (
+                ""
+              )}
+              {phoneMob > 2 ? (
+                <div className={classes.label}>
+                  <span></span>
+                  <span style={{ width: "60%" }}>
+                    <div
+                      style={{
+                        width: "80%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <TextField
+                        variant={"outlined"}
+                        name="mobile_phone"
+                        style={{ width: "85%" }}
+                        placeholder={"+79999999999"}
+                        value={formik.values.work_phone}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.work_phone &&
+                          Boolean(formik.errors.work_phone)
+                        }
+                        helperText={
+                          formik.touched.work_phone && formik.errors.work_phone
+                        }
+                      />
+                      <div
+                        style={{
+                          marginLeft: "3%",
+                          marginTop: "1%",
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          phoneMob > 1 ? setPhoneMob(phoneMob - 1) : null
+                        }
+                      >
+                        <TrashIcon />
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              ) : (
+                ""
+              )}
+              {phoneMob! < 3 ? (
+                <div
+                  className={classes.addItem}
+                  onClick={() =>
+                    phoneMob < 3 ? setPhoneMob(phoneMob + 1) : null
+                  }
+                >
+                  + Добавить телефон
+                </div>
+              ) : (
+                ""
+              )}
               <div className={classes.label}>
-                <span>E-mail</span>
+                <span>Телефон мобильный</span>
                 <span style={{ width: "60%" }}>
                   <div
                     style={{
-                      width: "70%",
+                      width: "80%",
                       display: "flex",
-                      flexDirection: "column",
+                      justifyContent: "space-between",
                     }}
                   >
                     <TextField
                       variant={"outlined"}
                       name="Email"
                       placeholder={"email@email.com"}
+                      style={{ width: "85%" }}
                       value={formik.values.Email}
                       onChange={formik.handleChange}
                       error={
@@ -455,10 +706,107 @@ export const ContactPersonsForCreating = () => {
                       }
                       helperText={formik.touched.Email && formik.errors.Email}
                     />
-                    <Link color="inherit">+ Добавить email</Link>
+                    <div
+                      style={{
+                        marginLeft: "3%",
+                        marginTop: "1%",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => (email > 1 ? setEmail(email - 1) : null)}
+                    >
+                      <TrashIcon />
+                    </div>
                   </div>
                 </span>
               </div>
+              {email > 1 ? (
+                <div className={classes.label}>
+                  <span></span>
+                  <span style={{ width: "60%" }}>
+                    <div
+                      style={{
+                        width: "80%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <TextField
+                        variant={"outlined"}
+                        name="Email"
+                        placeholder={"email@email.com"}
+                        style={{ width: "85%" }}
+                        value={formik.values.Email}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.Email && Boolean(formik.errors.Email)
+                        }
+                        helperText={formik.touched.Email && formik.errors.Email}
+                      />
+                      <div
+                        style={{
+                          marginLeft: "3%",
+                          marginTop: "1%",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => (email > 1 ? setEmail(email - 1) : null)}
+                      >
+                        <TrashIcon />
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              ) : (
+                ""
+              )}
+              {email > 2 ? (
+                <div className={classes.label}>
+                  <span></span>
+                  <span style={{ width: "60%" }}>
+                    <div
+                      style={{
+                        width: "80%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <TextField
+                        variant={"outlined"}
+                        name="Email"
+                        placeholder={"email@email.com"}
+                        style={{ width: "85%" }}
+                        value={formik.values.Email}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.Email && Boolean(formik.errors.Email)
+                        }
+                        helperText={formik.touched.Email && formik.errors.Email}
+                      />
+                      <div
+                        style={{
+                          marginLeft: "3%",
+                          marginTop: "1%",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => (email > 1 ? setEmail(email - 1) : null)}
+                      >
+                        <TrashIcon />
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              ) : (
+                ""
+              )}
+              {email! < 3 ? (
+                <div
+                  className={classes.addItem}
+                  onClick={() => (email < 3 ? setEmail(email + 1) : null)}
+                >
+                  + Добавить email
+                </div>
+              ) : (
+                ""
+              )}
               <div className={classes.label}>
                 <span>Адрес доставки</span>
 

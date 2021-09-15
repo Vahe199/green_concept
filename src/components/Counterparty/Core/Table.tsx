@@ -62,6 +62,7 @@ export default function CounterpartiesTable(props: any) {
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrency(event.target.value);
+    console.log(event.target.value, "selected");
   };
   const handleChangeServices = (event: React.ChangeEvent<HTMLInputElement>) => {
     setServices(event.target.value);
@@ -177,10 +178,15 @@ export default function CounterpartiesTable(props: any) {
                   })}
                 </TableCell>
                 <TableCell align="left">
-                  {row.author &&
-                    row.author.surname +
-                      " " +
-                      row.author.firstname.substring(0, 1)}
+                  {row.author
+                    ? `${row.author.surname} ${row.author.firstname.substring(
+                        0,
+                        1
+                      )}. `
+                    : ""}
+                  {row.author.middlename
+                    ? `${row.author.middlename.substring(0, 1)}.`
+                    : ""}
                 </TableCell>
                 <TableCell align="left">{row.created_at}</TableCell>
                 <TableCell className={classes.at} align="left">

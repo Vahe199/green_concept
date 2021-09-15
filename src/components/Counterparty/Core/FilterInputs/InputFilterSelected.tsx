@@ -25,8 +25,11 @@ export default function InputFilterSelected(props: any): any {
         variant="outlined"
       >
         {props.options?.map((option: any) => (
-          <option key={option.author_id} value={option.author_fio}>
-            {option.author_fio}
+          <option
+            key={option.author_id}
+            value={option.author_fio}
+          >
+            {option.author_fio.substring(0, 9) + "..."}
           </option>
         ))}
       </TextField>

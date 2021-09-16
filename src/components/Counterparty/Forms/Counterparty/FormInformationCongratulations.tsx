@@ -130,7 +130,7 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
           <span className={classes.spanTitle}>Сведения о поздравлениях</span>
           <Button
             color="primary"
-            onClick={() => setChangeCongratulations(false)}
+            onClick={() => setChangeCongratulations(true)}
             type="submit"
             style={{ textTransform: "none" }}
           >

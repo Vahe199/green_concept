@@ -34,8 +34,8 @@ export const ContractorContactFacesData = () => {
 
                 </div>
                 <div>
-                    {changeCongratulations ? <FormInformationCongratulations setChangeCongratulations={setChangeCongratulations}/>
-                       : <InformationContactCongratulations setChangeCongratulations={setChangeCongratulations}/>}
+                    {changeCongratulations ? <InformationContactCongratulations setChangeCongratulations={setChangeCongratulations}/>
+                       :<FormInformationCongratulations setChangeCongratulations={setChangeCongratulations}/> }
                 </div>
             </div>
         </div>

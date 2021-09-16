@@ -44,7 +44,7 @@ export const InformationContactCongratulations:React.FC<InfoCongratulations> = (
         <div className={classes.root}>
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center',marginBottom:10}}>
                     <span className={classes.spanTitle}>Сведения о поздравлениях</span>
-                    <span onClick={()=>setChangeCongratulations(true)}>
+                    <span onClick={()=>setChangeCongratulations(false)}>
                         <img src={pencil} style={{width:15,height:15}}/>
                     </span>
                 </div>

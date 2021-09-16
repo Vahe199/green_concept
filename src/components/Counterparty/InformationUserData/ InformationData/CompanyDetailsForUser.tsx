@@ -40,6 +40,7 @@ export const CompanyDetailsForUser:React.FC<Props> = ({setChangeCompanyDetails})
                 justifyContent: "space-between",
                 alignItems: "center",
                 width: "100%",
+                marginBottom:10
             }}
         >
             <Typography variant={'subtitle2'}>Сведения  о компании </Typography>

@@ -3,22 +3,21 @@ import {AuthorDataAction, AuthorDataActionType} from "../../types/conterpart_aut
 import {counterpartiesApi} from "../../../api/api";
 
 
-export const changeAuthorData = (formData:any, id:number) =>  async (dispatch: Dispatch<AuthorDataAction>) => {
+export const changeAuthorContactInfoData = (formData:any, id:number,errorMessage:string) =>  async (dispatch: Dispatch<AuthorDataAction>) => {
    debugger
     try {
         dispatch({
             type: AuthorDataActionType.CHANGE_AUTHOR_DATA});
-        const {data} = await counterpartiesApi.changeContractorsData(formData,id)
+        const {data} = await counterpartiesApi.changeContractorsContactInfoData(formData,id)
       dispatch({
         type: AuthorDataActionType.CHANGE_AUTHOR_DATA_SUCCESS,
         payload: data.contractor
       });
     }catch (e) {
-       let {response}:any = e
-        console.log(response,'e error')
            dispatch({
                type: AuthorDataActionType.CHANGE_AUTHOR_DATA_ERROR,
-               payload:'something went wrong'
+               payload:'"что-то пошло не так !"',
+               errorMsg:errorMessage
            });
     }
 

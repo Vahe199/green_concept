@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { FormBasicInformation } from "../Forms/Counterparty/FormBasicInformation";
 import { FormContactsFromGreen } from "../Forms/Counterparty/FormContactsFromGreen";
@@ -13,18 +13,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ContactPerson = () => {
+
+    const [changeBasicInformation, setChangeBasicInformation] = useState<boolean>(true)
+    const [changeContactsFromGreen, setChangeContactsFromGreen] = useState<boolean>(true)
+    const [changeCongratulations, setChangeCongratulations] = useState<boolean>(true)
+    console.log(898098)
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <div style={{ width: "50%" }}>
-        <FormBasicInformation />
+        <FormBasicInformation setChangeBasicInformation={setChangeBasicInformation} />
       </div>
       <div style={{ width: "50%" }}>
         <div>
-          <FormContactsFromGreen />
+          <FormContactsFromGreen setChangeContactsFromGreen={setChangeContactsFromGreen}/>
         </div>
         <div>
-          <FormInformationCongratulations />
+          <FormInformationCongratulations setChangeCongratulations={setChangeCongratulations}/>
         </div>
       </div>
     </div>

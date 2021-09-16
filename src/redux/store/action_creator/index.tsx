@@ -3,9 +3,12 @@ import * as NewContractorActionCreators from "./newContractorAC";
 import * as AuthorListAC from "./authorListAC";
 import * as ServicesTypesListAC from "./ServicesTypesListAC";
 import * as AuthorDataAC from "./authorAC";
-import * as ChangeAuthorDataAC from "./authorDataChangeAC";
+import * as ChangeAuthorGeneralDataAC from "./ChangeAuthorGeneralDataAC";
+import * as AuthorCompanyDetailsData from "./ChangeAuthorCompanyDetailsDataAC";
+import * as AuthorContactInfoData from "./ChangeAuthorContactInfoDataAC";
 import * as AssetsListDataAC from "./AssetsListAC";
 import * as RecoveryAuthorDataAC from "./recoveryAuthorDataState";
+
 
 export default {
   ...CounterpartiesActionCreators,
@@ -13,7 +16,9 @@ export default {
   ...AuthorListAC,
   ...ServicesTypesListAC,
   ...AuthorDataAC,
-  ...ChangeAuthorDataAC,
+  ...ChangeAuthorGeneralDataAC,
+  ...AuthorContactInfoData,
+  ...AuthorCompanyDetailsData,
   ...AssetsListDataAC,
   ...RecoveryAuthorDataAC
 };

@@ -33,8 +33,14 @@ export const counterpartiesApi = {
   fetchContractorsServicesTypes() {
     return instance.get("admin/contractor_type_services");
   },
-  changeContractorsData(formData, id) {
+  changeContractorsGeneralData(formData, id) {
     return instance.put(`contractors/general_info/${id}`,formData);
+  },
+  changeContractorsCompanyDetailsData(formData, id) {
+    return instance.put(`contractors/about_company/${id}`,formData);
+  },
+  changeContractorsContactInfoData(formData, id) {
+    return instance.put(`contractors/contacts_info/${id}`,formData);
   },
   getAssetsData() {
     return instance.get('contractors/get_assets');

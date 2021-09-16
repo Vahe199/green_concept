@@ -243,16 +243,6 @@ export const GeneralInformationForCreating = () => {
                     error={formik.touched.CRM && Boolean(formik.errors.CRM)}
                     helperText={formik.touched.CRM && formik.errors.CRM}
                   />
-                  <div
-                    style={{
-                      marginLeft: "3%",
-                      marginTop: "5%",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => (CRMs > 1 ? setCRMs(CRMs - 1) : null)}
-                  >
-                    <TrashIcon />
-                  </div>
                 </div>
               </div>
               {CRMs > 1 ? (
@@ -286,7 +276,7 @@ export const GeneralInformationForCreating = () => {
                     }}
                     onClick={() => (CRMs > 1 ? setCRMs(CRMs - 1) : null)}
                   >
-                    <TrashIcon />
+                    {CRMs === 2 ? <TrashIcon /> : ""}
                   </div>
                 </div>
               ) : (
@@ -513,16 +503,6 @@ export const GeneralInformationForCreating = () => {
                       formik.touched.Industry && formik.errors.Industry
                     }
                   />
-                  <div
-                    style={{
-                      marginRight: "2%",
-                      marginTop: 3,
-                      cursor: "pointer",
-                    }}
-                    onClick={() => (branch > 1 ? setBranch(branch - 1) : null)}
-                  >
-                    <TrashIcon />
-                  </div>
                 </div>
               </div>
               {branch > 1 ? (
@@ -560,7 +540,7 @@ export const GeneralInformationForCreating = () => {
                         branch > 1 ? setBranch(branch - 1) : null
                       }
                     >
-                      <TrashIcon />
+                      {branch === 2 ? <TrashIcon /> : ""}
                     </div>
                   </div>
                 </div>
@@ -725,12 +705,6 @@ export const GeneralInformationForCreating = () => {
                       formik.touched.SiteCompany && formik.errors.SiteCompany
                     }
                   />
-                  <div
-                    style={{ marginRight: "2%", cursor: "pointer" }}
-                    onClick={() => (site > 1 ? setSite(site - 1) : null)}
-                  >
-                    <TrashIcon />
-                  </div>
                 </div>
               </div>
               {site > 1 ? (
@@ -766,7 +740,7 @@ export const GeneralInformationForCreating = () => {
                       }}
                       onClick={() => (site > 1 ? setSite(site - 1) : null)}
                     >
-                      <TrashIcon />
+                      {site === 2 ? <TrashIcon /> : ""}
                     </div>
                   </div>
                 </div>
@@ -842,16 +816,6 @@ export const GeneralInformationForCreating = () => {
                     error={formik.touched.Phone && Boolean(formik.errors.Phone)}
                     helperText={formik.touched.Phone && formik.errors.Phone}
                   />
-                  <div
-                    style={{
-                      marginRight: "2%",
-                      marginTop: 3,
-                      cursor: "pointer",
-                    }}
-                    onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
-                  >
-                    <TrashIcon />
-                  </div>
                 </div>
               </div>
               {phone > 1 ? (
@@ -880,7 +844,7 @@ export const GeneralInformationForCreating = () => {
                       style={{ marginRight: "2%", cursor: "pointer" }}
                       onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
                     >
-                      <TrashIcon />
+                      {phone === 2 ? <TrashIcon /> : ""}
                     </div>
                   </div>
                 </div>
@@ -950,13 +914,6 @@ export const GeneralInformationForCreating = () => {
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email && formik.errors.email}
                   />
-
-                  <div
-                    style={{ marginRight: "2%", cursor: "pointer" }}
-                    onClick={() => (email > 1 ? setEmail(email - 1) : null)}
-                  >
-                    <TrashIcon />
-                  </div>
                 </div>
               </div>
               {email > 1 ? (
@@ -985,7 +942,7 @@ export const GeneralInformationForCreating = () => {
                       style={{ marginRight: "2%", cursor: "pointer" }}
                       onClick={() => (email > 1 ? setEmail(email - 1) : null)}
                     >
-                      <TrashIcon />
+                      {email === 2 ? <TrashIcon /> : ""}
                     </div>
                   </div>
                 </div>

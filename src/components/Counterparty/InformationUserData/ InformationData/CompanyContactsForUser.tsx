@@ -39,6 +39,7 @@ export const CompanyContactsForUser:React.FC<Props> = ({setChangeContacts}) => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 width: "100%",
+                marginBottom:10
             }}
         >
             <Typography variant={'subtitle2'}>Контакты компании</Typography>

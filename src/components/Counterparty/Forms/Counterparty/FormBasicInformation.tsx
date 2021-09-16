@@ -76,7 +76,7 @@ const validationSchema = yup.object({
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            margin:'3%',
+            margin:'4%',
             '& .MuiTextField-root': {
                 minWidth: '60%',
                 height: '30px',
@@ -129,10 +129,16 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: 15,
             fontSize:12,
         },
+        spanTitle:{
+            fontSize: 16,
+        },
     }),
 )
-
-export const FormBasicInformation = () => {
+type InfoProps = {
+    // change: boolean;
+    setChangeBasicInformation: (val: boolean) => void;
+};
+export const FormBasicInformation:React.FC<InfoProps> = ({setChangeBasicInformation}) => {
     const classes = useStyles();
     const [checked, setChecked] = React.useState('a')
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -167,8 +173,9 @@ export const FormBasicInformation = () => {
         <div className={classes.root}>
             <form onSubmit={formik.handleSubmit}>
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <span>Основные сведения</span>
-                    <Button color="primary" type="submit" style={{textTransform:'none'}}>
+                    <span className={classes.spanTitle}>Основные сведения</span>
+                    <Button color="primary"  onClick={()=>setChangeBasicInformation(true)}
+                            type="submit" style={{textTransform:'none'}}>
                         Сохранить
                     </Button>
                 </div>

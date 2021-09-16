@@ -5,7 +5,8 @@ export interface AuthorDataState {
     loading:boolean,
     error:boolean | string,
     success:boolean,
-    isChange:boolean
+    isChange:boolean,
+    errorMsg:boolean | string
 }
 export interface DataType{
     full_name:null|string,
@@ -44,6 +45,7 @@ interface ChangeAuthorDataSuccessAction {
 interface ChangeAuthorDataErrorAction {
     type: AuthorDataActionType.CHANGE_AUTHOR_DATA_ERROR;
     payload: string;
+    errorMsg:string | boolean
 }
 interface RecoveryState
    {type: AuthorDataActionType.RECOVERY_AUTHOR_DATA_STATE}

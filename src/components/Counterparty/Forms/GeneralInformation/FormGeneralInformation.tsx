@@ -15,6 +15,7 @@ import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelected
 import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
 import {UseActions} from "../../../../redux/type_redux_hook/ useAction";
 import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedCRM";
+import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 type Data = {
   CRM: string | null;
   CounterpartyType: string | null;
@@ -101,14 +102,24 @@ type Props = {
   setChangeGeneralInformation: (val: boolean) => void;
 };
 export const FormGeneralInformation:React.FC<Props> = ({setChangeGeneralInformation}) => {
-  const {changeAuthorData,recoveryAuthorDataState} = UseActions();
+  const {changeAuthorGeneralData,recoveryAuthorDataState} = UseActions();
   const classes = useStyles();
 
   const {AuthorData,error,isChange} = useTypedSelector(state => state.author)
-debugger
-  let {id,crms, org_type, inn,kpp,ogrn,nda,type,service}:any = AuthorData;
+  let {id,crms, org_type, inn,kpp,ogrn,nda,type,service,errorMsg}:any = AuthorData;
   const [orgType, setOrgType] = React.useState(org_type);
-  const [srm, setCRM] = React.useState(crms[0].id);
+  const [srm, setCRM] = React.useState(`${crms[0]?.id}`);
+  const [srm1, setCRM1] = React.useState('');
+  const [srm2, setCRM2] = React.useState('');
+  let errorMessage:string = 'General'
+const addCRMInput = () => {
+  if(!srm1){
+    setCRM1('1')
+  }
+  if(!srm2 && srm1){
+      setCRM2('1')
+  }
+}
   const [counterparty, setCounterparty] = React.useState(!type ? 1: type &&  type.length > 0 ? type[0].id : type.id);
   const [services, setServices] = React.useState(!service ? 1 :service && service.length > 0 ? service[0].id : service.id);
 useEffect(()=>{
@@ -137,17 +148,8 @@ useEffect(()=>{
     },
      // validationSchema: validationSchema,
     onSubmit: (values) => {
-      const formData = new FormData()
-      formData.append('org_type', orgType);
-      formData.append('crms[]', values.CRM);
-      formData.append('contractor_type_id', '1');
-      formData.append('service_type_id', '1');
-      formData.append('inn', values.INN);
-      formData.append('kpp', values.KPP);
-      formData.append('ogrn', values.OGPN);
-      formData.append('nda', values.NDA);
-      changeAuthorData({'org_type':orgType,'contractor_type_id': counterparty,'crms': [srm],
-        'service_type_id':services,'inn':values.INN,'kpp':values.KPP,'ogrn':values.OGPN,'nda':values.NDA},id)
+      changeAuthorGeneralData({'org_type':orgType,'contractor_type_id': counterparty,'crms': [srm,srm1,srm2].filter(tiem => tiem.length > 0),
+        'service_type_id':services,'inn':values.INN,'kpp':values.KPP,'ogrn':values.OGPN,'nda':values.NDA},id,errorMessage)
 
       },
   });
@@ -174,7 +176,7 @@ useEffect(()=>{
           </Button>
         </div>
         <Paper className={classes.paper}>
-          {error && <div style={{color:"red"}}>{error}</div>}
+          {errorMsg == 'General' && <div style={{color:"red"}}>{error}</div>}
           <div style={{ marginBottom: "2%", display: "flex" }}>
             <div>
               <span style={{ fontSize: 10 }}>Физическое лицо</span>
@@ -216,9 +218,49 @@ useEffect(()=>{
                   placeholder={"Фамилия Имя"}
                   handleChange={(e: React.ChangeEvent<HTMLInputElement>) => setCRM(e.target.value)}
               />
-              <AddIcon />
+              {srm && srm1 && srm2 ?<span style={{width:25}}></span> : <AddIcon onClick={addCRMInput}/>}
             </div>
           </div>
+          {srm1 &&   <div className={classes.label}>
+            <span></span>
+            <div
+                style={{
+                  width: "60%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+            >
+              <InputFilterSelectedCrm
+                  name="CRM1"
+                  style={{ width: "83%" }}
+                  placeholder={"Фамилия Имя"}
+                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) => setCRM1(e.target.value)}
+              />
+              <span onClick={()=>setCRM1('')}>
+              <TrashIcon />
+              </span>
+            </div>
+          </div>}
+          {srm2 &&   <div className={classes.label}>
+            <span></span>
+            <div
+                style={{
+                  width: "60%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+            >
+              <InputFilterSelectedCrm
+                  name="CRM2"
+                  style={{ width: "83%" }}
+                  placeholder={"Фамилия Имя"}
+                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) => setCRM2(e.target.value)}
+              />
+              <span onClick={()=>setCRM2('')}>
+              <TrashIcon />
+              </span>
+            </div>
+          </div>}
           <div className={classes.label}>
             <span>Тип контрагента</span>
             <span style={{width:'60%'}}>

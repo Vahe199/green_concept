@@ -6,7 +6,8 @@ const initialState: AuthorDataState = {
   loading:true,
   error:false,
   success:false,
-  isChange:false
+  isChange:false,
+  errorMsg:false
 };
 export const counterpartiesAuthorDataReducer = (
   state = initialState,
@@ -14,21 +15,20 @@ export const counterpartiesAuthorDataReducer = (
 ): AuthorDataState => {
   switch (action.type) {
     case AuthorDataActionType.GET_AUTHOR_DATA:
-      return {AuthorData:action.payload,isChange:false,
+      return {AuthorData:action.payload,isChange:false,errorMsg:false,
         error:false,loading:false,success:false};
     case AuthorDataActionType.CHANGE_AUTHOR_DATA:
-      return {...state,AuthorData:state.AuthorData,error:false,loading:true,isChange:false};
+      return {...state,AuthorData:state.AuthorData,error:false,loading:true,isChange:false,errorMsg:false};
     case AuthorDataActionType.CHANGE_AUTHOR_DATA_SUCCESS:
-      debugger
-      return {AuthorData:action.payload, success:true,isChange:true,
+      return {AuthorData:action.payload, success:true,isChange:true,errorMsg:false,
         error:false,loading:false};
     case AuthorDataActionType.CHANGE_AUTHOR_DATA_ERROR:
-      return {...state,AuthorData:state.AuthorData,success:false,isChange:false,
-        error:"что-то пошло не так !",
+      return {...state,AuthorData:state.AuthorData,success:false,isChange:false,errorMsg:action.errorMsg,
+        error:action.payload,
         loading:false}
     case AuthorDataActionType.RECOVERY_AUTHOR_DATA_STATE:
       return {
-        ...state,AuthorData:state.AuthorData,success:false,isChange:false,error:false
+        ...state,AuthorData:state.AuthorData,success:false,isChange:false,error:false,errorMsg:false
       }
 
     default:

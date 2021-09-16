@@ -43,6 +43,7 @@ export const GeneralInformationForUser:React.FC<Props> = ({setChangeGeneralInfor
                 justifyContent: "space-between",
                 alignItems: "center",
                 width: "100%",
+                marginBottom:10
             }}
         >
             <Typography variant={'subtitle2'}>Общие сведения</Typography>

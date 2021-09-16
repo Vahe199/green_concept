@@ -1,43 +1,19 @@
 import React, {useEffect} from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import AddIcon from "@material-ui/icons/Add";
 import {
   Checkbox,
-  FormControlLabel,
-  Radio,
   TextField,
   Paper,
   Button,
 } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
+import {UseActions} from "../../../../redux/type_redux_hook/ useAction";
 
-type Data = {
-  LegalAddress: string | null;
-  ActualAddress: string | null;
-  MailingAddress: string | null;
-  Phone: string | number | null;
-  email: string | null;
-};
-const validationSchema: yup.SchemaOf<Data> = yup.object({
-  LegalAddress: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  ActualAddress: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  MailingAddress: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  SiteCompany: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  Phone: yup
+const validationSchema = yup.object({
+  phone: yup
     .string()
     .min(0, " should be of minimum 8 characters length")
     .required("Обязательное поле"),
@@ -82,7 +58,6 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: 10,
     },
     addItem: {
-      marginLeft: "40%",
       marginBottom: 8,
       cursor: "pointer",
     },
@@ -98,24 +73,29 @@ type Props = {
 };
 export const FormCompanyContacts:React.FC<Props> = ({setChangeContacts}) => {
   const classes = useStyles();
-  const {AuthorData,error,success} = useTypedSelector(state => state.author)
+  const {changeAuthorContactInfoData,recoveryAuthorDataState} = UseActions();
+  const {AuthorData,error,success,isChange,errorMsg} = useTypedSelector(state => state.author)
   const {id,legal_registration_address,actual_address,post_address,emails,phones}:any = AuthorData;
 
-  const [site, setSite] = React.useState(1);
-  const [phone, setPhone] = React.useState(1);
-  const [email, setEmail] = React.useState(1);
-  const [checked, setChecked] = React.useState("a");
+  const [site1, setSite1] = React.useState('');
+  const [site2, setSite2] = React.useState('');
+  const [phone1, setPhone1] = React.useState('');
+  const [phone2, setPhone2] = React.useState('');
+  const [email1, setEmail1] = React.useState('');
+  const [email2, setEmail2] = React.useState('');
+  let errorMessage:string = 'ContactInfo';
   useEffect(()=>{
     if(error) {
       setChangeContacts(true)
+      setTimeout(()=>{
+        recoveryAuthorDataState()
+      },4000)
     }
-    if(success){
+    if(isChange){
       setChangeContacts(false)
+      recoveryAuthorDataState()
     }
-  },[])
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.value);
-  };
+  },[error,isChange])
   const formik = useFormik({
     initialValues: {
       LegalAddress:legal_registration_address,
@@ -124,21 +104,50 @@ export const FormCompanyContacts:React.FC<Props> = ({setChangeContacts}) => {
       MailingAddress: post_address,
       MatchesAddressMailingAddress: false,
       SiteCompany: "",
-      Phone: phones[0].phone,
+      SiteCompany1: "",
+      SiteCompany2: "",
+      phone: phones[0].phone,
+      phone1:phone1,
+      phone2: phone2,
       email: emails[0].email,
+      email1: email1,
+      email2: email2,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      const formData = new FormData()
-      formData.append('legal_registration_address',values.LegalAddress);
-      formData.append('actual_address',values.ActualAddress);
-      formData.append('post_address',values.MailingAddress);
-      formData.append('phones',values.Phone);
-      formData.append('emails',values.email);
-      setChangeContacts(false)
+      changeAuthorContactInfoData({'legal_registration_address':values.LegalAddress,
+        'actual_address':values.ActualAddress,'post_address':values.MailingAddress,
+        'phones':[{'phone':values.phone},{'phone':phone1},{'phone':phone2}].filter(phon =>phon.phone.length > 0),
+        'emails':[{'email':values.email},{'email':email1},{'email':email2}].filter(mail =>mail.email.length > 0),
+      'sites':[{'url':values.SiteCompany},{'url':site1},{'url':site2}].filter(url =>url.url.length > 0)
+      },id,errorMessage)
       // alert(JSON.stringify(values, null, 2));
     },
   });
+  const addSiteCompany = () =>{
+    if(!site1){
+      setSite1('1')
+    }
+    if(!site2 && site1){
+      setSite2('1')
+    }
+  }
+  const addPhone = () =>{
+    if(!phone1){
+      setPhone1('1')
+    }
+    if(!phone2 && phone1){
+      setPhone2('1')
+    }
+  }
+  const addEmail = () =>{
+    if(!email1){
+      setEmail1('1')
+    }
+    if(!email2 && email1){
+      setEmail2('1')
+    }
+  }
   return (
     <div className={classes.root}>
       <form onSubmit={formik.handleSubmit}>
@@ -160,6 +169,7 @@ export const FormCompanyContacts:React.FC<Props> = ({setChangeContacts}) => {
           </Button>
         </div>
         <Paper className={classes.paper}>
+          {errorMsg == 'ContactInfo' && <div style={{color: "red"}}>{error}</div>}
           <div className={classes.label}>
             <span>Юридический адрес </span>
             <TextField
@@ -227,9 +237,11 @@ export const FormCompanyContacts:React.FC<Props> = ({setChangeContacts}) => {
             />
             <span>Совпадает с юридическим адресом</span>
           </div>
-          <div className={classes.label}>
+          <div className={classes.label} style={{alignItems: 'flex-start'}}>
             <span>Сайт компании</span>
-            <TextField
+            <span style={{width: '60%', flexDirection: 'column'}}>
+              <div style={{marginBottom: 15}}>
+            <TextField style={{ width:'100%'}}
               variant={"outlined"}
               name="SiteCompany"
               placeholder={"www.сайткомпании.ru"}
@@ -242,110 +254,103 @@ export const FormCompanyContacts:React.FC<Props> = ({setChangeContacts}) => {
                 formik.touched.SiteCompany && formik.errors.SiteCompany
               }
             />
+              </div>
+              {site1 && <div style={{marginBottom: 15}}>
+                <TextField style={{ width:'90%'}}
+                    variant={"outlined"}
+                    name="SiteCompany1"
+                    placeholder={"www.сайткомпании.ru"}
+                    value={site1}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setSite1(e.target.value)}
+                    helperText={
+                      formik.touched.SiteCompany && formik.errors.SiteCompany
+                    }
+                />
+                <span onClick={()=>setSite1('')}>
+              <TrashIcon />
+              </span>
+              </div>}
+              {site2 && <div style={{marginBottom: 15}}>
+                <TextField style={{ width:'90%'}}
+                    variant={"outlined"}
+                    name="SiteCompany2"
+                    placeholder={"www.сайткомпании.ru"}
+                    value={site2}
+                           onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setSite2(e.target.value)}
+                    helperText={
+                      formik.touched.SiteCompany && formik.errors.SiteCompany
+                    }
+                />
+                <span onClick={()=>setSite2('')}>
+              <TrashIcon />
+              </span>
+              </div>}
+              {site1 && site2 ? <span></span> : <div
+                  className={classes.addItem}
+                  onClick={addSiteCompany}>
+                + Добавить сайт
+              </div>}
+            </span>
           </div>
-          {site > 1 ? (
-            <div className={classes.label}>
-              <>&nbsp;</>
-              <TextField
-                variant={"outlined"}
-                name="SiteCompany2"
-                placeholder={"www.сайткомпании.ru"}
-                value={formik.values.SiteCompany}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.SiteCompany &&
-                  Boolean(formik.errors.SiteCompany)
-                }
-                helperText={
-                  formik.touched.SiteCompany && formik.errors.SiteCompany
-                }
-              />
-            </div>
-          ) : (
-            ""
-          )}
-          {site > 2 ? (
-            <div className={classes.label}>
-              <>&nbsp;</>
-              <TextField
-                variant={"outlined"}
-                name="SiteCompany3"
-                placeholder={"www.сайткомпании.ru"}
-                value={formik.values.SiteCompany}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.SiteCompany &&
-                  Boolean(formik.errors.SiteCompany)
-                }
-                helperText={
-                  formik.touched.SiteCompany && formik.errors.SiteCompany
-                }
-              />
-            </div>
-          ) : (
-            ""
-          )}
 
-          <div
-            className={classes.addItem}
-            onClick={() => (site < 3 ? setSite(site + 1) : null)}
-          >
-            + Добавить сайт
-          </div>
-          <div className={classes.label}>
+          <div className={classes.label} style={{alignItems: 'flex-start'}}>
             <span>Телефон</span>
-            <TextField
+            <span style={{width: '60%', flexDirection: 'column'}}>
+              <div style={{marginBottom: 15}}>
+            <TextField style={{ width:'100%'}}
               variant={"outlined"}
-              name="Phone"
+              name="phone"
               placeholder={"+79991234567"}
-              value={formik.values.Phone}
+              value={formik.values.phone}
               onChange={formik.handleChange}
-              error={formik.touched.Phone && Boolean(formik.errors.Phone)}
-              helperText={formik.touched.Phone && formik.errors.Phone}
+              error={formik.touched.phone && Boolean(formik.errors.phone)}
+              helperText={formik.touched.phone && formik.errors.phone}
             />
-          </div>
-          {phone > 1 ? (
-            <div className={classes.label}>
-              <>&nbsp;</>
-              <TextField
-                variant={"outlined"}
-                name="Phone"
-                placeholder={"+79991234567"}
-                value={formik.values.Phone}
-                onChange={formik.handleChange}
-                error={formik.touched.Phone && Boolean(formik.errors.Phone)}
-                helperText={formik.touched.Phone && formik.errors.Phone}
-              />
+              </div>
+              <div>
+                 {phone1 &&<div style={{marginBottom: 15}}>
+                 <TextField style={{ width:'90%'}}
+                     variant={"outlined"}
+                     name="phone1"
+                     placeholder={"+79991234567"}
+                     value={phone1}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setPhone1(e.target.value)}
+                     helperText={formik.touched.phone && formik.errors.phone}
+                 />
+                   <span onClick={()=>setPhone1('')}>
+              <TrashIcon />
+              </span>
+                 </div>}
+                <div>
+                      {phone2 && <div style={{marginBottom: 15}}>
+                      <TextField style={{ width:'90%'}}
+                          variant={"outlined"}
+                          name="phone2"
+                          placeholder={"+79991234567"}
+                                 value={phone2}
+                                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setPhone2(e.target.value)}
+                          helperText={formik.touched.phone && formik.errors.phone}
+                      />
+                        <span onClick={()=>setPhone2('')}>
+              <TrashIcon />
+              </span>
+                      </div>}
+                  {phone1 && phone2 ? <span></span> : <div
+                      className={classes.addItem}
+                      onClick={addPhone}>
+                    + Добавить телефон
+                  </div>}
+                </div>
             </div>
-          ) : (
-            ""
-          )}
-          {phone > 2 ? (
-            <div className={classes.label}>
-              <>&nbsp;</>
-              <TextField
-                variant={"outlined"}
-                name="Phone"
-                placeholder={"+79991234567"}
-                value={formik.values.Phone}
-                onChange={formik.handleChange}
-                error={formik.touched.Phone && Boolean(formik.errors.Phone)}
-                helperText={formik.touched.Phone && formik.errors.Phone}
-              />
-            </div>
-          ) : (
-            ""
-          )}
-          <div
-            className={classes.addItem}
-            onClick={() => (phone < 3 ? setPhone(phone + 1) : null)}
-          >
-            {" "}
-            + Добавить телефон
+            </span>
           </div>
-          <div className={classes.label}>
+
+          <div className={classes.label} style={{alignItems: 'flex-start'}}>
             <span>E-mail</span>
-            <TextField
+            <span style={{width: '60%', flexDirection: 'column'}}>
+              <div>
+                <div style={{marginBottom: 15}}>
+            <TextField style={{ width:'100%'}}
               variant={"outlined"}
               name="email"
               placeholder={"email@email.ru"}
@@ -354,45 +359,44 @@ export const FormCompanyContacts:React.FC<Props> = ({setChangeContacts}) => {
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
             />
-          </div>
-          {email > 1 ? (
-            <div className={classes.label}>
-              <>&nbsp;</>
-              <TextField
-                variant={"outlined"}
-                name="email"
-                placeholder={"email@email.ru"}
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-              />
-            </div>
-          ) : (
-            ""
-          )}
-          {email > 2 ? (
-            <div className={classes.label}>
-              <>&nbsp;</>
-              <TextField
-                variant={"outlined"}
-                name="email"
-                placeholder={"email@email.ru"}
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-              />
-            </div>
-          ) : (
-            ""
-          )}
-          <div
-            className={classes.addItem}
-            onClick={() => (email < 3 ? setEmail(email + 1) : null)}
-          >
-            {" "}
-            + Добавить email
+              </div>
+                </div>
+              <div>
+                   {email1 && <div style={{marginBottom: 15}}>
+                   <TextField style={{ width:'90%'}}
+                       variant={"outlined"}
+                       name="email1"
+                       placeholder={"email@email.ru"}
+                              value={email1}
+                              onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setEmail1(e.target.value)}
+                       helperText={formik.touched.email && formik.errors.email}
+                   />
+                     <span onClick={()=>setEmail1('')}>
+              <TrashIcon />
+              </span>
+                   </div>}
+              </div>
+              <div>
+                   {email2 && <div style={{marginBottom: 15}}>
+                   <TextField style={{ width:'90%'}}
+                       variant={"outlined"}
+                       name="email2"
+                       placeholder={"email@email.ru"}
+                              value={email2}
+                              onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setEmail2(e.target.value)}
+                       helperText={formik.touched.email && formik.errors.email}
+                   />
+                     <span onClick={()=>setEmail2('')}>
+              <TrashIcon />
+              </span>
+                   </div>}
+              </div>
+              {email1 && email2 ? <span></span> : <div
+                  className={classes.addItem}
+                  onClick={addEmail}>
+                + Добавить email
+              </div>}
+            </span>
           </div>
         </Paper>
       </form>

@@ -5,7 +5,6 @@ import {AssetsListAction, AssetsListActionType} from "../../types/conterpart_ass
 
 export const getAssetsListData =
   () => async (dispatch: Dispatch<AssetsListAction>) => {
-  debugger
     try {
        dispatch({ type: AssetsListActionType.GET_ASSETS_LIST });
       const { data } = await counterpartiesApi.getAssetsData();

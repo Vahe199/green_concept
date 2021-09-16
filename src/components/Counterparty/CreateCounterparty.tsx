@@ -10,6 +10,8 @@ import { BankDetails } from "./TabsForCreating/BankDetails";
 import { InformationUserData } from "./InformationUserData/InformationUserData";
 import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformationForCreating";
 import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
+import {useTypedSelector} from "../../redux/type_redux_hook/useTypedSelector";
+import {ContractorContactFacesData} from "./ContractorContactFaces/ContractorContactFacesData";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -80,6 +82,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateCounterparty = (props: any) => {
+  const {AuthorData} = useTypedSelector(state => state.author)
+let {id}:any =AuthorData
   let history = useHistory();
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
@@ -93,7 +97,7 @@ const CreateCounterparty = (props: any) => {
       <Paper square className={classes.root}>
         <Typography variant="subtitle1" noWrap className={classes.typography}>
           {props.match.params.item === "author"
-            ? "ООО «Контрагент №1»"
+            ? `ООО «Контрагент №${id}»`
             : "Новый контрагент"}
         </Typography>
         <div style={{ display: "flex" }}>
@@ -167,6 +171,7 @@ const CreateCounterparty = (props: any) => {
         {props.match.params.item === "author" ? (
                 <div>
                   {selectedTab === 0 &&<InformationUserData />}
+                  {selectedTab === 1 &&<ContractorContactFacesData/>}
                 </div>
         ) : props.match.params.item === "new contractor" ? (
           <div>

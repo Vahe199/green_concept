@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         paper: {
             padding: 10,
-            border: "1px solid #3ab994",
         },
         label: {
             display: "flex",

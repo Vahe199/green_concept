@@ -3,11 +3,9 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { TextField, Paper, Link, Divider, Button } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import {
-  InputFilterSelectedDirection,
-  InputFilterSelectedCongratulationsType,
-} from "../../Core/FilterInputs/InputFilterSelectedDirection";
+
 import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
+import {InputFilterSelectedCongratulationsType} from "../../Core/FilterInputs/InputFilterSelectedDirection";
 
 const validationSchema = yup.object({
   CRM: yup

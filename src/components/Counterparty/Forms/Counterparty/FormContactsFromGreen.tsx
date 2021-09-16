@@ -1,15 +1,10 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import {
-  TextField,
-  Paper,
-  Button,
-  Link,
-} from "@material-ui/core";
+import { TextField, Paper, Button, Link } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import SearchInput from "../../Core/FilterInputs/searchInput";
-import InputFilterSelectedDirection from "../../Core/FilterInputs/InputFilterSelectedDirection";
+import { InputFilterSelectedDirection } from "../../Core/FilterInputs/InputFilterSelectedDirection";
 
 const validationSchema = yup.object({
   direction: yup
@@ -28,7 +23,7 @@ const validationSchema = yup.object({
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-     margin:'4%',
+      margin: "4%",
       "& .MuiTextField-root": {
         minWidth: "60%",
         height: "30px",
@@ -54,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
     textArea: {
       "& .MuiOutlinedInput-input": {
         textAlign: "start",
-         height: "80px",
+        height: "80px",
         backgroundColor: "transparent",
         fontSize: 13,
       },
@@ -71,28 +66,30 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
-      marginBottom:15,
+      marginBottom: 15,
       fontSize: 12,
     },
     btnSubmit: {
       textTransform: "none",
       textDecoration: "underline",
     },
-      spanTitle:{
-          fontSize: 16,
-      },
+    spanTitle: {
+      fontSize: 16,
+    },
     addItem: {
-       marginTop: 70,
+      marginTop: 70,
       cursor: "pointer",
-      textDecoration: "underline"
+      textDecoration: "underline",
     },
   })
 );
 type InfoProps = {
-    // change: boolean;
-    setChangeContactsFromGreen: (val: boolean) => void;
+  // change: boolean;
+  setChangeContactsFromGreen: (val: boolean) => void;
 };
-export const FormContactsFromGreen:React.FC<InfoProps> = ({setChangeContactsFromGreen}) => {
+export const FormContactsFromGreen: React.FC<InfoProps> = ({
+  setChangeContactsFromGreen,
+}) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState("a");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,7 +123,7 @@ export const FormContactsFromGreen:React.FC<InfoProps> = ({setChangeContactsFrom
             color="primary"
             type="submit"
             className={classes.btnSubmit}
-            onClick={()=>setChangeContactsFromGreen(true)}
+            onClick={() => setChangeContactsFromGreen(true)}
           >
             Сохранить
           </Button>
@@ -149,7 +146,7 @@ export const FormContactsFromGreen:React.FC<InfoProps> = ({setChangeContactsFrom
             {/*    formik.errors.direction*/}
             {/*  }*/}
             {/*/>*/}
-              <InputFilterSelectedDirection/>
+            <InputFilterSelectedDirection />
           </div>
           <div className={classes.label}>
             <span>Контактное лицо</span>
@@ -168,14 +165,14 @@ export const FormContactsFromGreen:React.FC<InfoProps> = ({setChangeContactsFrom
             {/*    formik.errors.contact_person*/}
             {/*  }*/}
             {/*/>*/}
-              <SearchInput/>
+            <SearchInput />
           </div>
-          <div className={classes.label} >
+          <div className={classes.label}>
             <span>Дополнительная информация</span>
 
             <TextField
               variant={"outlined"}
-               className={classes.textArea}
+              className={classes.textArea}
               multiline
               rows={8}
               name="add_Info"
@@ -187,8 +184,8 @@ export const FormContactsFromGreen:React.FC<InfoProps> = ({setChangeContactsFrom
             />
           </div>
           <div
-              className={classes.addItem}
-              // onClick={addBranch}
+            className={classes.addItem}
+            // onClick={addBranch}
           >
             + Добавить отрасль
           </div>

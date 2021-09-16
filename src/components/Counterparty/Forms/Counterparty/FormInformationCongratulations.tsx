@@ -1,14 +1,13 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import {
-  TextField,
-  Paper,
-  Link, Divider, Button,
-} from "@material-ui/core";
+import { TextField, Paper, Link, Divider, Button } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import InputFilterSelectedDirection from "../../Core/FilterInputs/InputFilterSelectedDirection";
-import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
+import {
+  InputFilterSelectedDirection,
+  InputFilterSelectedCongratulationsType,
+} from "../../Core/FilterInputs/InputFilterSelectedDirection";
+import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
 
 const validationSchema = yup.object({
   CRM: yup
@@ -74,7 +73,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: 8,
       fontSize: 12,
     },
-    spanTitle:{
+    spanTitle: {
       fontSize: 16,
     },
     btnSubmit: {
@@ -88,10 +87,12 @@ type InfoCongratulations = {
   setChangeCongratulations: (val: boolean) => void;
 };
 
-export const FormInformationCongratulations:React.FC<InfoCongratulations> = ({setChangeCongratulations}) => {
+export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
+  setChangeCongratulations,
+}) => {
   const classes = useStyles();
-  const [congratulations, setCongratulations] = React.useState('');
-  const [congratulations1, setCongratulations1] = React.useState('');
+  const [congratulations, setCongratulations] = React.useState("");
+  const [congratulations1, setCongratulations1] = React.useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -108,23 +109,31 @@ export const FormInformationCongratulations:React.FC<InfoCongratulations> = ({se
       alert(JSON.stringify(values, null, 2));
     },
   });
-const addCongratulations = () => {
-  if(!congratulations){
-    setCongratulations('1')
-  }
-  if(!congratulations1 && congratulations){
-    setCongratulations1('1')
-  }
-
-}
+  const addCongratulations = () => {
+    if (!congratulations) {
+      setCongratulations("1");
+    }
+    if (!congratulations1 && congratulations) {
+      setCongratulations1("1");
+    }
+  };
   return (
     <div className={classes.root}>
       <form onSubmit={formik.handleSubmit}>
-
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <span className={classes.spanTitle}>Сведения о поздравлениях</span>
-          <Button color="primary" onClick={()=>setChangeCongratulations(false)}
-                  type="submit" style={{textTransform:'none'}}>
+          <Button
+            color="primary"
+            onClick={() => setChangeCongratulations(false)}
+            type="submit"
+            style={{ textTransform: "none" }}
+          >
             Сохранить
           </Button>
         </div>
@@ -149,22 +158,7 @@ const addCongratulations = () => {
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Тип поздравления</span>
-            <InputFilterSelectedDirection/>
-            {/*<TextField*/}
-            {/*  variant={"outlined"}*/}
-            {/*  name="CounterpartyType"*/}
-            {/*  placeholder={"Выберите"}*/}
-            {/*  value={formik.values.CounterpartyType}*/}
-            {/*  onChange={formik.handleChange}*/}
-            {/*  error={*/}
-            {/*    formik.touched.CounterpartyType &&*/}
-            {/*    Boolean(formik.errors.CounterpartyType)*/}
-            {/*  }*/}
-            {/*  helperText={*/}
-            {/*    formik.touched.CounterpartyType &&*/}
-            {/*    formik.errors.CounterpartyType*/}
-            {/*  }*/}
-            {/*/>*/}
+            <InputFilterSelectedCongratulationsType />
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}> Другое</span>
@@ -204,102 +198,24 @@ const addCongratulations = () => {
           </div>
           <div className={classes.label}>
             <span></span>
-            <span style={{width:'60%', marginTop:10}}>
-            <Link color="inherit" onClick={addCongratulations}>+ Новый праздник</Link>
-           </span>
+            <span style={{ width: "60%", marginTop: 10 }}>
+              <Link color="inherit" onClick={addCongratulations}>
+                + Новый праздник
+              </Link>
+            </span>
           </div>
-          { congratulations1 && <div>
-            <Divider variant="middle" style={{margin:15}}/>
-            <div style={{display:'flex', flexDirection:'row'}}>
-              <div style={{width:'100%'}}>
-            <div className={classes.label}>
-              <span className={classes.spanTitle}> Тип поздравления</span>
-              <InputFilterSelectedDirection/>
-              {/*<TextField*/}
-              {/*  variant={"outlined"}*/}
-              {/*  name="CounterpartyType"*/}
-              {/*  placeholder={"Выберите"}*/}
-              {/*  value={formik.values.CounterpartyType}*/}
-              {/*  onChange={formik.handleChange}*/}
-              {/*  error={*/}
-              {/*    formik.touched.CounterpartyType &&*/}
-              {/*    Boolean(formik.errors.CounterpartyType)*/}
-              {/*  }*/}
-              {/*  helperText={*/}
-              {/*    formik.touched.CounterpartyType &&*/}
-              {/*    formik.errors.CounterpartyType*/}
-              {/*  }*/}
-              {/*/>*/}
-            </div>
-            <div className={classes.label}>
-              <span className={classes.spanTitle}>Другое</span>
-              <TextField
-                  variant={"outlined"}
-                  name="CounterpartyType"
-                  placeholder={"Другое"}
-                  value={formik.values.CounterpartyType}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.CounterpartyType &&
-                    Boolean(formik.errors.CounterpartyType)
-                  }
-                  helperText={
-                    formik.touched.CounterpartyType &&
-                    formik.errors.CounterpartyType
-                  }
-              />
-            </div>
-            <div className={classes.label}>
-              <span className={classes.spanTitle}>Статус контактного лица</span>
-              <TextField
-                  variant={"outlined"}
-                  name="CounterpartyType"
-                  placeholder={"Выберите"}
-                  value={formik.values.CounterpartyType}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.CounterpartyType &&
-                    Boolean(formik.errors.CounterpartyType)
-                  }
-                  helperText={
-                    formik.touched.CounterpartyType &&
-                    formik.errors.CounterpartyType
-                  }
-              />
-            </div>
-              </div>
-              <span onClick={()=>setCongratulations1('')}>
-                 <TrashIcon />
-              </span>
-            </div>
-          </div>
-          }
-          { congratulations && <div>
-            <Divider variant="middle" style={{margin:15}}/>
-            <div style={{display:'flex', flexDirection:'row'}}>
-              <div style={{width:'100%'}}>
-                <div className={classes.label}>
-                  <span className={classes.spanTitle}>Тип поздравления</span>
-                  <InputFilterSelectedDirection/>
-                  {/*<TextField*/}
-                  {/*  variant={"outlined"}*/}
-                  {/*  name="CounterpartyType"*/}
-                  {/*  placeholder={"Выберите"}*/}
-                  {/*  value={formik.values.CounterpartyType}*/}
-                  {/*  onChange={formik.handleChange}*/}
-                  {/*  error={*/}
-                  {/*    formik.touched.CounterpartyType &&*/}
-                  {/*    Boolean(formik.errors.CounterpartyType)*/}
-                  {/*  }*/}
-                  {/*  helperText={*/}
-                  {/*    formik.touched.CounterpartyType &&*/}
-                  {/*    formik.errors.CounterpartyType*/}
-                  {/*  }*/}
-                  {/*/>*/}
-                </div>
-                <div className={classes.label}>
-                  <span className={classes.spanTitle}>Другое</span>
-                  <TextField
+          {congratulations1 && (
+            <div>
+              <Divider variant="middle" style={{ margin: 15 }} />
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div style={{ width: "100%" }}>
+                  <div className={classes.label}>
+                    <span className={classes.spanTitle}> Тип поздравления</span>
+                    <InputFilterSelectedCongratulationsType />
+                  </div>
+                  <div className={classes.label}>
+                    <span className={classes.spanTitle}>Другое</span>
+                    <TextField
                       variant={"outlined"}
                       name="CounterpartyType"
                       placeholder={"Другое"}
@@ -313,11 +229,13 @@ const addCongratulations = () => {
                         formik.touched.CounterpartyType &&
                         formik.errors.CounterpartyType
                       }
-                  />
-                </div>
-                <div className={classes.label}>
-                  <span className={classes.spanTitle}>Статус контактного лица</span>
-                  <TextField
+                    />
+                  </div>
+                  <div className={classes.label}>
+                    <span className={classes.spanTitle}>
+                      Статус контактного лица
+                    </span>
+                    <TextField
                       variant={"outlined"}
                       name="CounterpartyType"
                       placeholder={"Выберите"}
@@ -331,15 +249,69 @@ const addCongratulations = () => {
                         formik.touched.CounterpartyType &&
                         formik.errors.CounterpartyType
                       }
-                  />
+                    />
+                  </div>
                 </div>
+                <span onClick={() => setCongratulations1("")}>
+                  <TrashIcon />
+                </span>
               </div>
-              <span onClick={()=>setCongratulations('')}>
-                 <TrashIcon />
-              </span>
             </div>
-          </div>
-          }
+          )}
+          {congratulations && (
+            <div>
+              <Divider variant="middle" style={{ margin: 15 }} />
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div style={{ width: "100%" }}>
+                  <div className={classes.label}>
+                    <span className={classes.spanTitle}>Тип поздравления</span>
+                    <InputFilterSelectedCongratulationsType />
+                  </div>
+                  <div className={classes.label}>
+                    <span className={classes.spanTitle}>Другое</span>
+                    <TextField
+                      variant={"outlined"}
+                      name="CounterpartyType"
+                      placeholder={"Другое"}
+                      value={formik.values.CounterpartyType}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.CounterpartyType &&
+                        Boolean(formik.errors.CounterpartyType)
+                      }
+                      helperText={
+                        formik.touched.CounterpartyType &&
+                        formik.errors.CounterpartyType
+                      }
+                    />
+                  </div>
+                  <div className={classes.label}>
+                    <span className={classes.spanTitle}>
+                      Статус контактного лица
+                    </span>
+                    <TextField
+                      variant={"outlined"}
+                      name="CounterpartyType"
+                      placeholder={"Выберите"}
+                      value={formik.values.CounterpartyType}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.CounterpartyType &&
+                        Boolean(formik.errors.CounterpartyType)
+                      }
+                      helperText={
+                        formik.touched.CounterpartyType &&
+                        formik.errors.CounterpartyType
+                      }
+                    />
+                  </div>
+                </div>
+                <span onClick={() => setCongratulations("")}>
+                  <TrashIcon />
+                </span>
+              </div>
+            </div>
+          )}
         </Paper>
       </form>
     </div>

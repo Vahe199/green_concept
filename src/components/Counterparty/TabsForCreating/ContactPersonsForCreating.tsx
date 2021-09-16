@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
+import Divider from "@material-ui/core/Divider";
+import { SpaRounded } from "@material-ui/icons";
 
 type Data = {
   Surname: string | null;
@@ -132,7 +134,7 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: 0,
         paddingLeft: 4,
         textAlign: "start",
-        height: "50px",
+        height: "40px",
         backgroundColor: "transparent",
         fontSize: 13,
       },
@@ -142,6 +144,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       padding: 10,
+      marginBottom: "1%",
       border: "1px solid #3ab994",
     },
     label: {
@@ -149,7 +152,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "space-between",
       marginBottom: 10,
-      fontSize: "12px",
+      fontSize: "13px",
     },
     addItem: {
       marginLeft: "40%",
@@ -172,6 +175,22 @@ const useStyles = makeStyles((theme: Theme) =>
     rightPanel: {
       width: "57%",
     },
+    statusText: {
+      fontSize: 15,
+      marginTop: "3%",
+      marginRight: "10%",
+    },
+    topDiv: {
+      display: "flex",
+      justifyContent: "space-between",
+      width: "100%",
+    },
+    rightDivider: {
+      marginLeft: "3%",
+      marginTop: "1%",
+      cursor: "pointer",
+      width: "10%",
+    },
   })
 );
 
@@ -179,8 +198,9 @@ export const ContactPersonsForCreating = () => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState("a");
   const [phoneMob, setPhoneMob] = React.useState(1);
-  const [CRMs, setCRMs] = React.useState(1);
-  const [site, setSite] = React.useState(1);
+  const [multipleContactsFromGreen, setMultipleContactsFromGreen] =
+    React.useState(1);
+  const [congratsPart, setCongratsPart] = React.useState(1);
   const [phone, setPhone] = React.useState(1);
   const [email, setEmail] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -240,14 +260,30 @@ export const ContactPersonsForCreating = () => {
             </div>
             <Paper className={classes.paper}>
               <div className={classes.label}>
-                <span>Основное контактное лицо </span>
-                <span style={{ width: "61%" }}>
-                  <Checkbox
-                    name="main_contact_person"
-                    color="default"
-                    inputProps={{ "aria-label": "checkbox with default color" }}
-                  />
-                </span>
+                <div className={classes.topDiv}>
+                  <span>Основное контактное лицо </span>
+                  <span style={{ width: "61%" }}>
+                    <Checkbox
+                      name="main_contact_person"
+                      color="default"
+                      inputProps={{
+                        "aria-label": "checkbox with default color",
+                      }}
+                    />
+                  </span>
+                  <div style={{ display: "flex" }}>
+                    <span className={classes.statusText}>Статус</span>
+                    <TextField
+                      variant={"outlined"}
+                      name="Status"
+                      placeholder={"Active"}
+                      value={formik.values.Name}
+                      onChange={formik.handleChange}
+                      error={formik.touched.Name && Boolean(formik.errors.Name)}
+                      helperText={formik.touched.Name && formik.errors.Name}
+                    />
+                  </div>
+                </div>
               </div>
               <div className={classes.label}>
                 <span>Фамилия:</span>
@@ -437,16 +473,6 @@ export const ContactPersonsForCreating = () => {
                         formik.touched.work_phone && formik.errors.work_phone
                       }
                     />
-                    <div
-                      style={{
-                        marginLeft: "3%",
-                        marginTop: "1%",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
-                    >
-                      <TrashIcon />
-                    </div>
                   </div>
                 </span>
               </div>
@@ -484,7 +510,7 @@ export const ContactPersonsForCreating = () => {
                         }}
                         onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
                       >
-                        <TrashIcon />
+                        {phone === 2 ? <TrashIcon /> : ""}
                       </div>
                     </div>
                   </span>
@@ -526,7 +552,7 @@ export const ContactPersonsForCreating = () => {
                         }}
                         onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
                       >
-                        <TrashIcon />
+                        {phone === 3 ? <TrashIcon /> : ""}
                       </div>
                     </div>
                   </span>
@@ -534,7 +560,7 @@ export const ContactPersonsForCreating = () => {
               ) : (
                 ""
               )}
-              {phoneMob! < 3 ? (
+              {phone! < 3 ? (
                 <div
                   className={classes.addItem}
                   onClick={() => (phone < 3 ? setPhone(phone + 1) : null)}
@@ -569,18 +595,6 @@ export const ContactPersonsForCreating = () => {
                         formik.touched.work_phone && formik.errors.work_phone
                       }
                     />
-                    <div
-                      style={{
-                        marginLeft: "3%",
-                        marginTop: "1%",
-                        cursor: "pointer",
-                      }}
-                      onClick={() =>
-                        phoneMob > 1 ? setPhoneMob(phoneMob - 1) : null
-                      }
-                    >
-                      <TrashIcon />
-                    </div>
                   </div>
                 </span>
               </div>
@@ -610,18 +624,22 @@ export const ContactPersonsForCreating = () => {
                           formik.touched.work_phone && formik.errors.work_phone
                         }
                       />
-                      <div
-                        style={{
-                          marginLeft: "3%",
-                          marginTop: "1%",
-                          cursor: "pointer",
-                        }}
-                        onClick={() =>
-                          phoneMob > 1 ? setPhoneMob(phoneMob - 1) : null
-                        }
-                      >
-                        <TrashIcon />
-                      </div>
+                      {phoneMob == 2 ? (
+                        <div
+                          style={{
+                            marginLeft: "3%",
+                            marginTop: "1%",
+                            cursor: "pointer",
+                          }}
+                          onClick={() =>
+                            phoneMob > 1 ? setPhoneMob(phoneMob - 1) : null
+                          }
+                        >
+                          <TrashIcon />
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </span>
                 </div>
@@ -685,7 +703,7 @@ export const ContactPersonsForCreating = () => {
                 ""
               )}
               <div className={classes.label}>
-                <span>Телефон мобильный</span>
+                <span>E-mail</span>
                 <span style={{ width: "60%" }}>
                   <div
                     style={{
@@ -706,16 +724,6 @@ export const ContactPersonsForCreating = () => {
                       }
                       helperText={formik.touched.Email && formik.errors.Email}
                     />
-                    <div
-                      style={{
-                        marginLeft: "3%",
-                        marginTop: "1%",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => (email > 1 ? setEmail(email - 1) : null)}
-                    >
-                      <TrashIcon />
-                    </div>
                   </div>
                 </span>
               </div>
@@ -742,16 +750,22 @@ export const ContactPersonsForCreating = () => {
                         }
                         helperText={formik.touched.Email && formik.errors.Email}
                       />
-                      <div
-                        style={{
-                          marginLeft: "3%",
-                          marginTop: "1%",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => (email > 1 ? setEmail(email - 1) : null)}
-                      >
-                        <TrashIcon />
-                      </div>
+                      {email == 2 ? (
+                        <div
+                          style={{
+                            marginLeft: "3%",
+                            marginTop: "1%",
+                            cursor: "pointer",
+                          }}
+                          onClick={() =>
+                            email > 1 ? setEmail(email - 1) : null
+                          }
+                        >
+                          <TrashIcon />
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </span>
                 </div>
@@ -891,15 +905,219 @@ export const ContactPersonsForCreating = () => {
                       rows={8}
                       name="FullCompanyName"
                       placeholder={"Введите текст"}
-                      value={formik.values.OGPN}
+                      value={"esi mecacra vonc vor dizaynuma"}
                       onChange={formik.handleChange}
                       error={formik.touched.OGPN && Boolean(formik.errors.OGPN)}
                       helperText={formik.touched.OGPN && formik.errors.OGPN}
                     />
                   </div>
                   <div>
-                    <Link color="inherit">+ Новый контакт</Link>
+                    {multipleContactsFromGreen! < 3 ? (
+                      <div style={{fontSize: "12px"}}
+                        onClick={() =>
+                          multipleContactsFromGreen < 3
+                            ? setMultipleContactsFromGreen(
+                                multipleContactsFromGreen + 1
+                              )
+                            : null
+                        }
+                      >
+                        + Новый контакт
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
+
+                  {multipleContactsFromGreen > 1 ? (
+                    <>
+                      <Divider style={{ marginBottom: "9px" }} />
+                      <div className={classes.label}>
+                        <span style={{ width: "54%" }}>Направление</span>
+                        <TextField
+                          variant={"outlined"}
+                          name="CounterpartyType"
+                          style={{ minWidth: "50%" }}
+                          placeholder={"Выберите"}
+                          value={formik.values.CounterpartyType}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.CounterpartyType &&
+                            Boolean(formik.errors.CounterpartyType)
+                          }
+                          helperText={
+                            formik.touched.CounterpartyType &&
+                            formik.errors.CounterpartyType
+                          }
+                        />
+                        <div
+                          className={classes.rightDivider}
+                          onClick={() =>
+                            setMultipleContactsFromGreen(
+                              multipleContactsFromGreen - 1
+                            )
+                          }
+                        >
+                          {multipleContactsFromGreen === 2 ? <TrashIcon /> : ""}
+                        </div>
+                      </div>
+                      <div className={classes.label}>
+                        <span style={{ width: "54%" }}>Контактное лицо</span>
+                        <TextField
+                          variant={"outlined"}
+                          name="CounterpartyType"
+                          style={{ minWidth: "50%" }}
+                          placeholder={"Введите слово или часть слова"}
+                          value={formik.values.CounterpartyType}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.CounterpartyType &&
+                            Boolean(formik.errors.CounterpartyType)
+                          }
+                          helperText={
+                            formik.touched.CounterpartyType &&
+                            formik.errors.CounterpartyType
+                          }
+                        />
+                        <div className={classes.rightDivider}></div>
+                      </div>
+                      <div className={classes.label}>
+                        <span style={{ width: "54%" }}>
+                          Дополнительная информация
+                        </span>
+                        <TextField
+                          variant={"outlined"}
+                          className={classes.textArea}
+                          multiline
+                          rows={8}
+                          name="FullCompanyName"
+                          style={{ minWidth: "50%" }}
+                          placeholder={"Введите текст"}
+                          value={formik.values.OGPN}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.OGPN && Boolean(formik.errors.OGPN)
+                          }
+                          helperText={formik.touched.OGPN && formik.errors.OGPN}
+                        />
+                        <div className={classes.rightDivider}></div>
+                      </div>
+                      <div>
+                        {multipleContactsFromGreen! < 3 ? (
+                          <div style={{fontSize: "12px"}}
+                            onClick={() =>
+                              multipleContactsFromGreen < 3
+                                ? setMultipleContactsFromGreen(
+                                    multipleContactsFromGreen + 1
+                                  )
+                                : null
+                            }
+                          >
+                            + Новый контакт
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {multipleContactsFromGreen > 2 ? (
+                    <>
+                      <Divider style={{ marginBottom: "9px" }} />
+                      <div className={classes.label}>
+                        <span style={{ width: "54%" }}>Направление</span>
+                        <TextField
+                          variant={"outlined"}
+                          name="CounterpartyType"
+                          style={{ minWidth: "50%" }}
+                          placeholder={"Выберите"}
+                          value={formik.values.CounterpartyType}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.CounterpartyType &&
+                            Boolean(formik.errors.CounterpartyType)
+                          }
+                          helperText={
+                            formik.touched.CounterpartyType &&
+                            formik.errors.CounterpartyType
+                          }
+                        />
+                        <div
+                          className={classes.rightDivider}
+                          onClick={() =>
+                            setMultipleContactsFromGreen(
+                              multipleContactsFromGreen - 1
+                            )
+                          }
+                        >
+                          <TrashIcon />
+                        </div>
+                      </div>
+                      <div className={classes.label}>
+                        <span style={{ width: "54%" }}>Контактное лицо</span>
+                        <TextField
+                          variant={"outlined"}
+                          name="CounterpartyType"
+                          style={{ minWidth: "50%" }}
+                          placeholder={"Введите слово или часть слова"}
+                          value={formik.values.CounterpartyType}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.CounterpartyType &&
+                            Boolean(formik.errors.CounterpartyType)
+                          }
+                          helperText={
+                            formik.touched.CounterpartyType &&
+                            formik.errors.CounterpartyType
+                          }
+                        />
+                        <div className={classes.rightDivider}></div>
+                      </div>
+                      <div className={classes.label}>
+                        <span style={{ width: "54%" }}>
+                          Дополнительная информация
+                        </span>
+
+                        <TextField
+                          variant={"outlined"}
+                          className={classes.textArea}
+                          multiline
+                          rows={8}
+                          name="FullCompanyName"
+                          style={{ minWidth: "50%" }}
+                          placeholder={"Введите текст"}
+                          value={formik.values.OGPN}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.OGPN && Boolean(formik.errors.OGPN)
+                          }
+                          helperText={formik.touched.OGPN && formik.errors.OGPN}
+                        />
+                        <div className={classes.rightDivider}></div>
+                      </div>
+                      <div>
+                        {multipleContactsFromGreen! < 3 ? (
+                          <div
+                            onClick={() =>
+                              multipleContactsFromGreen < 3
+                                ? setMultipleContactsFromGreen(
+                                    multipleContactsFromGreen + 1
+                                  )
+                                : null
+                            }
+                          >
+                            + Новый контакт
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </Paper>
               </div>
             </div>
@@ -934,10 +1152,7 @@ export const ContactPersonsForCreating = () => {
                     }
                   />
                 </div>
-                <div className={classes.label}>
-                  <span></span>
-                  <Link color="inherit">+ Новый праздник</Link>
-                </div>
+
                 <div className={classes.label}>
                   <span>Тип поздравления</span>
                   <TextField
@@ -974,24 +1189,179 @@ export const ContactPersonsForCreating = () => {
                     }
                   />
                 </div>
-                <div className={classes.label}>
-                  <span>Статус контактного лица</span>
-                  <TextField
-                    variant={"outlined"}
-                    name="CounterpartyType"
-                    placeholder={"Выберите"}
-                    value={formik.values.CounterpartyType}
-                    onChange={formik.handleChange}
-                    error={
-                      formik.touched.CounterpartyType &&
-                      Boolean(formik.errors.CounterpartyType)
+                {congratsPart! < 3 ? (
+                  <div
+                    className={classes.addItem}
+                    onClick={() =>
+                      congratsPart < 3
+                        ? setCongratsPart(congratsPart + 1)
+                        : null
                     }
-                    helperText={
-                      formik.touched.CounterpartyType &&
-                      formik.errors.CounterpartyType
-                    }
-                  />
-                </div>
+                  >
+                    + Новый праздник
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {congratsPart > 1 ? (
+                  <>
+                    <Divider style={{ marginBottom: "9px" }} />
+                    <div className={classes.label}>
+                      <span style={{ width: "54%" }}>Праздник</span>
+                      <TextField
+                        variant={"outlined"}
+                        name="CounterpartyType"
+                        style={{ minWidth: "50%" }}
+                        placeholder={"Название праздника"}
+                        value={formik.values.CounterpartyType}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.CounterpartyType &&
+                          Boolean(formik.errors.CounterpartyType)
+                        }
+                        helperText={
+                          formik.touched.CounterpartyType &&
+                          formik.errors.CounterpartyType
+                        }
+                      />
+                      <div
+                        style={{
+                          marginLeft: "3%",
+                          marginTop: "1%",
+                          cursor: "pointer",
+                          width: "10%",
+                        }}
+                        onClick={() =>
+                          congratsPart > 1
+                            ? setCongratsPart(congratsPart - 1)
+                            : null
+                        }
+                      >
+                        {congratsPart === 2 ? <TrashIcon /> : ""}
+                      </div>
+                    </div>
+                    <div className={classes.label}>
+                      <span style={{ width: "54%" }}>Тип поздравления</span>
+                      <TextField
+                        variant={"outlined"}
+                        name="CounterpartyType"
+                        style={{ minWidth: "50%" }}
+                        placeholder={"Выберите"}
+                        value={formik.values.CounterpartyType}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.CounterpartyType &&
+                          Boolean(formik.errors.CounterpartyType)
+                        }
+                        helperText={
+                          formik.touched.CounterpartyType &&
+                          formik.errors.CounterpartyType
+                        }
+                      />
+                      <div className={classes.rightDivider}></div>
+                    </div>
+                    <div className={classes.label}>
+                      <span style={{ width: "54%" }}>Другое</span>
+                      <TextField
+                        variant={"outlined"}
+                        name="CounterpartyType"
+                        style={{ minWidth: "50%" }}
+                        placeholder={"Другое"}
+                        value={formik.values.CounterpartyType}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.CounterpartyType &&
+                          Boolean(formik.errors.CounterpartyType)
+                        }
+                        helperText={
+                          formik.touched.CounterpartyType &&
+                          formik.errors.CounterpartyType
+                        }
+                      />
+                      <div className={classes.rightDivider}></div>
+                    </div>
+                  </>
+                ) : null}
+                {congratsPart > 2 ? (
+                  <>
+                    <Divider style={{ marginBottom: "9px" }} />
+                    <div className={classes.label}>
+                      <span style={{ width: "54%" }}>Праздник</span>
+                      <TextField
+                        variant={"outlined"}
+                        name="CounterpartyType"
+                        style={{ minWidth: "50%" }}
+                        placeholder={"Название праздника"}
+                        value={formik.values.CounterpartyType}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.CounterpartyType &&
+                          Boolean(formik.errors.CounterpartyType)
+                        }
+                        helperText={
+                          formik.touched.CounterpartyType &&
+                          formik.errors.CounterpartyType
+                        }
+                      />
+                      <div
+                        style={{
+                          marginLeft: "3%",
+                          marginTop: "1%",
+                          cursor: "pointer",
+                          width: "10%",
+                        }}
+                        onClick={() =>
+                          congratsPart > 1
+                            ? setCongratsPart(congratsPart - 1)
+                            : null
+                        }
+                      >
+                        <TrashIcon />
+                      </div>
+                    </div>
+                    <div className={classes.label}>
+                      <span style={{ width: "54%" }}>Тип поздравления</span>
+                      <TextField
+                        variant={"outlined"}
+                        name="CounterpartyType"
+                        style={{ minWidth: "50%" }}
+                        placeholder={"Выберите"}
+                        value={formik.values.CounterpartyType}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.CounterpartyType &&
+                          Boolean(formik.errors.CounterpartyType)
+                        }
+                        helperText={
+                          formik.touched.CounterpartyType &&
+                          formik.errors.CounterpartyType
+                        }
+                      />
+                      <div className={classes.rightDivider}></div>
+                    </div>
+                    <div className={classes.label}>
+                      <span style={{ width: "54%" }}>Другое</span>
+                      <TextField
+                        variant={"outlined"}
+                        name="CounterpartyType"
+                        style={{ minWidth: "50%" }}
+                        placeholder={"Другое"}
+                        value={formik.values.CounterpartyType}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.CounterpartyType &&
+                          Boolean(formik.errors.CounterpartyType)
+                        }
+                        helperText={
+                          formik.touched.CounterpartyType &&
+                          formik.errors.CounterpartyType
+                        }
+                      />
+                      <div className={classes.rightDivider}></div>
+                    </div>
+                  </>
+                ) : null}
               </Paper>
             </div>
           </div>

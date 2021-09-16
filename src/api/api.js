@@ -12,7 +12,7 @@ const instance = axios.create({
     Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMxNzA3OTA3LCJleHAiOjE2MzE3OTQzMDcsIm5iZiI6MTYzMTcwNzkwNywianRpIjoic1lJT29IZlVOSnNUTHFaOCIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0._aQQEnyLEAmpFrLt2TrHemLxVjybLIFqKJvtkMiZg-Q`,
+    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMxNzk1MzgzLCJleHAiOjE2MzE4ODE3ODMsIm5iZiI6MTYzMTc5NTM4MywianRpIjoiSkFjUFRhS3FkUGczcDJUTCIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.zJtOH3HR3nqPNv5USgUTng_pDC2p-_zibycHX5_WU4U`,
   },
 });
 
@@ -26,24 +26,23 @@ export const counterpartiesApi = {
     return instance.get("contractors/authors_list");
   },
   fetchContractorsTypes() {
-    return instance.get("admin/contractor_types").then(res =>{
-      debugger
+    return instance.get("admin/contractor_types").then((res) => {
+      debugger;
     });
   },
   fetchContractorsServicesTypes() {
     return instance.get("admin/contractor_type_services");
   },
   changeContractorsGeneralData(formData, id) {
-    return instance.put(`contractors/general_info/${id}`,formData);
+    return instance.put(`contractors/general_info/${id}`, formData);
   },
   changeContractorsCompanyDetailsData(formData, id) {
-    return instance.put(`contractors/about_company/${id}`,formData);
+    return instance.put(`contractors/about_company/${id}`, formData);
   },
   changeContractorsContactInfoData(formData, id) {
-    return instance.put(`contractors/contacts_info/${id}`,formData);
+    return instance.put(`contractors/contacts_info/${id}`, formData);
   },
   getAssetsData() {
-    return instance.get('contractors/get_assets');
+    return instance.get("contractors/get_assets");
   },
-
 };

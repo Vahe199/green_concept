@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link, Typography } from "@material-ui/core";
@@ -12,6 +12,7 @@ import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformat
 import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
 import {useTypedSelector} from "../../redux/type_redux_hook/useTypedSelector";
 import {ContractorContactFacesData} from "./ContractorContactFaces/ContractorContactFacesData";
+import CreatingBankDetails from "./BankDetails/CreatingBankDetails";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -87,7 +88,7 @@ let {id}:any =AuthorData
   let history = useHistory();
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
-
+  const [edit, setEdit] = useState(true)
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
   };
@@ -172,12 +173,13 @@ let {id}:any =AuthorData
                 <div>
                   {selectedTab === 0 &&<InformationUserData />}
                   {selectedTab === 1 &&<ContractorContactFacesData/>}
+                  {selectedTab === 2 &&<CreatingBankDetails/>}
                 </div>
         ) : props.match.params.item === "new contractor" ? (
           <div>
             {selectedTab === 0 && <GeneralInformationForCreating />}
             {selectedTab === 1 && <ContactPersonsForCreating />}
-            {selectedTab === 2 && <BankDetails />}
+            {selectedTab === 2 && <BankDetails  setEdit={ setEdit}/>}
           </div>
         ) : (
           <div>{props.match.params.item}</div>

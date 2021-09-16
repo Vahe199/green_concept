@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles,createStyles ,Theme} from "@material-ui/core/styles";
 import { Typography } from '@material-ui/core';
 import {Paper} from "@material-ui/core";
+import pencil from "../../../IMG/icons/pencil.png";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -20,8 +21,11 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
-
-export const BankDetails = () => {
+type BankProps = {
+    // change: boolean;
+    setEdit: (val: boolean) => void;
+};
+export const BankDetails:React.FC<BankProps> = ({setEdit}) => {
     const data = [
         {id:1,item:'БИК',value:'123456789'},
         {id:2,item:'Наименование банка',value:'ПАО “Сбербанк”'},
@@ -43,7 +47,13 @@ export const BankDetails = () => {
   return <div className={classes.root}>
     <div style={{width:'40%'}}>
         <div>
-            <Typography variant={'subtitle2'}>Основной банковский счет</Typography>
+            <div style={{display:'flex', justifyContent:'space-between'}}>
+                <Typography variant={'subtitle2'}>Основной банковский счет</Typography>
+                <div onClick={()=>setEdit(false)}>
+                    <img src={pencil} style={{width:15,height:15}}/>
+                </div>
+            </div>
+
             <Paper className={classes.paper}>
                 {data.map(data=><Details item={data.item}value={data.value}/>)}
             </Paper>
@@ -51,7 +61,12 @@ export const BankDetails = () => {
     </div>
       <div style={{width:'40%'}}>
           <div>
+              <div style={{display:'flex', justifyContent:'space-between'}}>
               <Typography variant={'subtitle2'}>Дополнительный банковский счет</Typography>
+              <div onClick={()=>setEdit(false)}>
+                  <img src={pencil} style={{width:15,height:15}}/>
+              </div>
+          </div>
               <Paper className={classes.paper}>
                   {data.map(data=><Details item={data.item}value={data.value}/>)}
               </Paper>

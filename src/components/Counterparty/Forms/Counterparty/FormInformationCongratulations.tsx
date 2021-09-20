@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& .MuiOutlinedInput-input": {
         padding: 0,
-        paddingLeft: 4,
+        paddingLeft: 7,
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       padding: 10,
+      color: "#3B4750",
       border: "1px solid #3ab994",
     },
     label: {

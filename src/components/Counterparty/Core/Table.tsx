@@ -43,12 +43,14 @@ const useStyles = makeStyles({
 export default function CounterpartiesTable(props: any) {
   let history = useHistory();
   const classes = useStyles();
-  const { contractors, loading } = useTypedSelector((state) => state.counterparties);
+  const { contractors, loading } = useTypedSelector(
+    (state) => state.counterparties
+  );
   const { authors } = useTypedSelector((state) => state.authorsList);
   const { getAuthorData } = UseActions();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [services, setServices] = React.useState('Другое');
+  const [services, setServices] = React.useState("Другое");
   const [currency, setCurrency] = React.useState("All");
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -97,7 +99,7 @@ export default function CounterpartiesTable(props: any) {
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">N</StyledTableCell>
-              <StyledTableCell align="left">
+              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 Тип
                 <InputFilterSelectedType
                   handleChange={handleChangeServices}
@@ -105,34 +107,40 @@ export default function CounterpartiesTable(props: any) {
                   value={services}
                 />
               </StyledTableCell>
-              <StyledTableCell align="left">
+              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 Наименование
                 <InputFilterSearch handleChange={handleChange} />
               </StyledTableCell>
-              <StyledTableCell align="left">
+              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 Отрасль
                 <InputFilterSearch handleChange={handleChange} />
               </StyledTableCell>
-              <StyledTableCell align="left" style={{ minWidth: "150px" }}>
+              <StyledTableCell
+                align="left"
+                style={{ minWidth: "150px", color: "#3B4750" }}
+              >
                 Группа компаний
                 <InputFilterSearch handleChange={handleChange} />
               </StyledTableCell>
-              <StyledTableCell align="left">
+              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 Ответственный
                 <InputFilterSearch handleChange={handleChange} />
               </StyledTableCell>
-              <StyledTableCell align="left" style={{ minWidth: "135px" }}>
+              <StyledTableCell
+                align="left"
+                style={{ minWidth: "135px", color: "#3B4750" }}
+              >
                 Автор записи
                 <InputFilterSelected
                   handleChange={handleChange}
                   options={authors}
                 />
               </StyledTableCell>
-              <StyledTableCell align="left">
+              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 Создано
                 <InputFilterDate />
               </StyledTableCell>
-              <StyledTableCell align="left">
+              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 Обновлено
                 <InputFilterDate />
               </StyledTableCell>

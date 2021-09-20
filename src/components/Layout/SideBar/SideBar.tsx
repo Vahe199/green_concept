@@ -21,7 +21,7 @@ import { Letters } from "../../../IMG/SVG/LettersIcon";
 import { ConterpartiesIcon } from "../../../IMG/SVG/ConterpartiesIcon";
 import { EmployeesIcon } from "../../../IMG/SVG/EmployeesIcon";
 import { TimesheetIcon } from "../../../IMG/SVG/TimesheetIcon";
-const drawerWidth = 240;
+const drawerWidth = 255;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -83,6 +83,12 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 700,
       fontSize: 13,
     },
+    linkIco: {
+      color: "#3B4750",
+    },
+    activeLinkIco: {
+      color: "#3AB994",
+    },
     div: {
       // backgroundColor:'#3AB994',
       backgroundColor: "transparent",
@@ -98,12 +104,17 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 62,
       marginLeft: 5,
     },
+    switcherContainer: {
+      display: "flex",
+      alignItems: "center",
+    },
   })
 );
 export const SideBarPage: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState("");
+  const [activeLinkIco, linkIco] = ["#3AB994", "#3B4750"];
 
   return (
     <div className={classes.sidebar}>
@@ -139,7 +150,7 @@ export const SideBarPage: React.FC = () => {
                     invisible={false}
                   >
                     <NotificationIcon
-                      color={active === "Оповещения" ? "#3AB994" : "#000"}
+                      color={active === "Оповещения" ? activeLinkIco : linkIco}
                     />
                   </Badge>
                 </ListItemIcon>
@@ -157,7 +168,7 @@ export const SideBarPage: React.FC = () => {
               <ListItem button onClick={() => setActive("Проекты")}>
                 <ListItemIcon>
                   <ProjectsIcon
-                    color={active === "Проекты" ? "#3AB994" : "#000"}
+                    color={active === "Проекты" ? activeLinkIco : linkIco}
                   />
                 </ListItemIcon>
                 <span>Проекты </span>
@@ -179,7 +190,9 @@ export const SideBarPage: React.FC = () => {
                 <ListItemIcon>
                   <MoneyTransfer
                     color={
-                      active === "Управление денежными" ? "#3AB994" : "#000"
+                      active === "Управление денежными"
+                        ? activeLinkIco
+                        : linkIco
                     }
                   />
                 </ListItemIcon>
@@ -199,7 +212,9 @@ export const SideBarPage: React.FC = () => {
               <ListItem button onClick={() => setActive("Задачи и заявки")}>
                 <ListItemIcon>
                   <TaskRequest
-                    color={active === "Задачи и заявки" ? "#3AB994" : "#000"}
+                    color={
+                      active === "Задачи и заявки" ? activeLinkIco : linkIco
+                    }
                   />
                 </ListItemIcon>
                 <span>Задачи и заявки</span>
@@ -212,7 +227,7 @@ export const SideBarPage: React.FC = () => {
             >
               <ListItem button onClick={() => setActive("ТМЦ")}>
                 <ListItemIcon>
-                  <TMC color={active === "ТМЦ" ? "#3AB994" : "#000"} />
+                  <TMC color={active === "ТМЦ" ? activeLinkIco : linkIco} />
                 </ListItemIcon>
                 <span>ТМЦ</span>
               </ListItem>
@@ -226,7 +241,7 @@ export const SideBarPage: React.FC = () => {
               <ListItem button onClick={() => setActive("Договоры")}>
                 <ListItemIcon>
                   <Contracts
-                    color={active === "Договоры" ? "#3AB994" : "#000"}
+                    color={active === "Договоры" ? activeLinkIco : linkIco}
                   />
                 </ListItemIcon>
                 <span>Договоры</span>
@@ -240,7 +255,9 @@ export const SideBarPage: React.FC = () => {
             >
               <ListItem button onClick={() => setActive("Письма")}>
                 <ListItemIcon>
-                  <Letters color={active === "Письма" ? "#3AB994" : "#000"} />
+                  <Letters
+                    color={active === "Письма" ? activeLinkIco : linkIco}
+                  />
                 </ListItemIcon>
                 <span>Письма</span>
               </ListItem>
@@ -254,7 +271,7 @@ export const SideBarPage: React.FC = () => {
               <ListItem button onClick={() => setActive("Контрагенты")}>
                 <ListItemIcon>
                   <ConterpartiesIcon
-                    color={active === "Контрагенты" ? "#3AB994" : "#000"}
+                    color={active === "Контрагенты" ? activeLinkIco : linkIco}
                   />
                 </ListItemIcon>
                 <span>Контрагенты</span>
@@ -269,7 +286,7 @@ export const SideBarPage: React.FC = () => {
               <ListItem button onClick={() => setActive("Сотрудники")}>
                 <ListItemIcon>
                   <EmployeesIcon
-                    color={active === "Сотрудники" ? "#3AB994" : "#000"}
+                    color={active === "Сотрудники" ? activeLinkIco : linkIco}
                   />
                 </ListItemIcon>
                 <span>Сотрудники</span>
@@ -284,7 +301,7 @@ export const SideBarPage: React.FC = () => {
               <ListItem button onClick={() => setActive("Таймшит")}>
                 <ListItemIcon>
                   <TimesheetIcon
-                    color={active === "Таймшит" ? "#3AB994" : "#000"}
+                    color={active === "Таймшит" ? activeLinkIco : linkIco}
                   />
                 </ListItemIcon>
                 <span>Таймшит</span>
@@ -293,18 +310,21 @@ export const SideBarPage: React.FC = () => {
           </List>
           <Divider />
           <div className={classes.toolbar}>
-            <ListItem button onClick={() => setOpen(!open)}>
+            <div
+              onClick={() => setOpen(!open)}
+              style={{
+                marginRight: "3%",
+              }}
+            >
               {open ? (
-                <ListItem style={{ justifyContent: "flex-end" }}>
+                <div className={classes.switcherContainer}>
                   <ChevronLeftIcon />
                   <span>Свернуть</span>
-                </ListItem>
+                </div>
               ) : (
-                <ListItem>
-                  <ChevronRightIcon />
-                </ListItem>
+                <ChevronRightIcon />
               )}
-            </ListItem>
+            </div>
           </div>
         </div>
       </Drawer>

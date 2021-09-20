@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textTransform: "none",
       marginBottom: 3,
       textDecoration: "underline",
+      boxShadow: "none",
     },
   })
 );

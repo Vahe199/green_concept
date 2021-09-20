@@ -73,11 +73,13 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 10,
       marginBottom: 10,
       color: "#fff",
-      fontSize: 12,
       paddingBottom: 4,
       backgroundColor: "#3AB994",
+      boxShadow: "none",
+      textTransform: "none",
       "&:hover": {
         backgroundColor: "#36AD8B",
+        boxShadow: "none",
       },
       "&:active": {
         backgroundColor: "#32A886",
@@ -95,7 +97,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& .MuiOutlinedInput-input": {
         padding: 0,
-        paddingLeft: 4,
+        paddingLeft: 7,
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
@@ -122,6 +124,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       padding: 10,
+      color: "#3B4750",
       border: "1px solid #3ab994",
     },
     label: {
@@ -354,13 +357,6 @@ export const GeneralInformationForCreating = () => {
                   placeholder={"Другое"}
                   value={formik.values.ServiceType}
                   onChange={formik.handleChange}
-                  error={
-                    formik.touched.ServiceType &&
-                    Boolean(formik.errors.ServiceType)
-                  }
-                  helperText={
-                    formik.touched.ServiceType && formik.errors.ServiceType
-                  }
                 />
               </div>
               <div className={classes.label}>

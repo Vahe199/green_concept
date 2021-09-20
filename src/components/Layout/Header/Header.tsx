@@ -1,8 +1,9 @@
+import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import logo from "../../../IMG/Green_Logo.png";
-import gear from "../../../IMG/icons/Gear.png";
-import signOut from "../../../IMG/icons/SignOut.png";
 import profilePic from "../../../IMG/profilePic.png";
+import { SettingsIcon } from "../../../IMG/SVG/SettingsIcon";
+import { SignOutIcon } from "../../../IMG/SVG/SignOutIcon";
 import { AppBar, Avatar, Toolbar, Link, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -11,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       // zIndex: theme.zIndex.drawer + 1,
       backgroundColor: "#F2F3F4",
+      boxShadow: "none",
     },
     typography: {
       color: "#56626b",
@@ -42,16 +44,23 @@ const useStyles = makeStyles((theme: Theme) =>
     settings: {
       width: 25,
       height: 25,
-      marginLeft: 35,
+      marginLeft: 32,
+      marginTop: -7,
+      cursor: "pointer",
     },
     signOut: {
       width: 25,
       height: 25,
-      marginLeft: 40,
+      marginLeft: 37,
+      marginRight: 34,
+      marginTop: -7,
+      cursor: "pointer",
     },
   })
 );
 export const HeaderPage = () => {
+  const [activeLinkIco, linkIco] = ["#3B4750", "#5B6770"];
+  const [hover, setHover] = React.useState("");
   const classes = useStyles();
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -75,12 +84,24 @@ export const HeaderPage = () => {
               className={classes.avatar}
             />
           </Link>
-          <Link href="#">
-            <img alt="Settings" src={gear} className={classes.settings} />
-          </Link>
-          <Link href="#">
-            <img alt="Sign Out" src={signOut} className={classes.signOut} />
-          </Link>
+          <div
+            className={classes.settings}
+            onMouseOver={() => setHover("Settings")}
+            onMouseOut={() => setHover("")}
+          >
+            <SettingsIcon
+              color={hover === "Settings" ? activeLinkIco : linkIco}
+            />
+          </div>
+          <div
+            className={classes.signOut}
+            onMouseOver={() => setHover("SignOut")}
+            onMouseOut={() => setHover("")}
+          >
+            <SignOutIcon
+              color={hover === "SignOut" ? activeLinkIco : linkIco}
+            />
+          </div>
         </section>
       </Toolbar>
     </AppBar>

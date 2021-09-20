@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         paper:{
             width:'100%',
+            color: "#3B4750",
             padding: 16,
             borderRadius:4
         },

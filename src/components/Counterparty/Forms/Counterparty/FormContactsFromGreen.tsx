@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& .MuiOutlinedInput-input": {
         padding: 0,
-        paddingLeft: 4,
+        paddingLeft: 7,
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
         height: "80px",
         backgroundColor: "transparent",
         fontSize: 13,
+        paddingLeft: 7,
       },
       "& .MuiOutlinedInput-multiline": {
         padding: "7.5px 14px",
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       padding: 10,
+      color: "#3B4750",
       border: "1px solid #3ab994",
       height: 270,
     },
@@ -72,6 +74,7 @@ const useStyles = makeStyles((theme: Theme) =>
     btnSubmit: {
       textTransform: "none",
       textDecoration: "underline",
+      boxShadow: "none",
     },
     spanTitle: {
       fontSize: 16,

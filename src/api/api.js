@@ -12,7 +12,7 @@ const instance = axios.create({
     Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMxNzk1MzgzLCJleHAiOjE2MzE4ODE3ODMsIm5iZiI6MTYzMTc5NTM4MywianRpIjoiSkFjUFRhS3FkUGczcDJUTCIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.zJtOH3HR3nqPNv5USgUTng_pDC2p-_zibycHX5_WU4U`,
+    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMyMDY0NDk4LCJleHAiOjE2MzIxNTA4OTgsIm5iZiI6MTYzMjA2NDQ5OCwianRpIjoieWQ2YllqdjRGNnp3VGdjUSIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.5bBfPmVgDhOx9eDPzGvAiFMPA3pbvH-ljnNqwNGse24`,
   },
 });
 

@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         paper: {
             padding: 10,
+            color: "#3B4750",
         },
         spanTitle:{
             fontSize: 16,

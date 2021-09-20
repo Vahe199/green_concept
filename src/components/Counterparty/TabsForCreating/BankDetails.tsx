@@ -4,7 +4,6 @@ import { Typography } from "@material-ui/core";
 import { Paper, Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import pencil from "../../../IMG/icons/pencil.png";
-// hok24
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -18,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       padding: 16,
+      color: "#3B4750",
       borderRadius: 4,
     },
     btn: {
@@ -26,8 +26,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 14,
       paddingBottom: 4,
       backgroundColor: "#3AB994",
+      boxShadow: "none",
       "&:hover": {
         backgroundColor: "#36AD8B",
+        boxShadow: "none",
       },
       "&:active": {
         backgroundColor: "#32A886",

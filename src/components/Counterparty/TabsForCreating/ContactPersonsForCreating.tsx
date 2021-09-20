@@ -8,6 +8,7 @@ import {
   TextField,
   Paper,
   Button,
+  Link,
 } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
@@ -93,7 +94,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& .MuiOutlinedInput-input": {
         padding: 0,
-        paddingLeft: 4,
+        paddingLeft: 7,
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
@@ -131,7 +132,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& .MuiOutlinedInput-input": {
         padding: 0,
-        paddingLeft: 4,
+        paddingLeft: 7,
         textAlign: "start",
         height: "40px",
         backgroundColor: "transparent",
@@ -912,7 +913,8 @@ export const ContactPersonsForCreating = () => {
                   </div>
                   <div>
                     {multipleContactsFromGreen! < 3 ? (
-                      <div style={{fontSize: "12px"}}
+                      <div
+                        style={{ fontSize: "12px" }}
                         onClick={() =>
                           multipleContactsFromGreen < 3
                             ? setMultipleContactsFromGreen(
@@ -1003,7 +1005,8 @@ export const ContactPersonsForCreating = () => {
                       </div>
                       <div>
                         {multipleContactsFromGreen! < 3 ? (
-                          <div style={{fontSize: "12px"}}
+                          <div
+                            style={{ fontSize: "12px" }}
                             onClick={() =>
                               multipleContactsFromGreen < 3
                                 ? setMultipleContactsFromGreen(

@@ -1,21 +1,15 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import AddIcon from "@material-ui/icons/Add";
-import {
-  Checkbox,
-  Radio,
-  TextField,
-  Paper,
-  Button,
-} from "@material-ui/core";
+import { Checkbox, Radio, TextField, Paper, Button } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelectedType";
 import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
-import {UseActions} from "../../../../redux/type_redux_hook/ useAction";
+import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
 import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedCRM";
-import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
+import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
 type Data = {
   CRM: string | null;
   CounterpartyType: string | null;
@@ -62,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& .MuiOutlinedInput-input": {
         padding: 0,
-        paddingLeft: 4,
+        paddingLeft: 7,
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
@@ -76,13 +70,15 @@ const useStyles = makeStyles((theme: Theme) =>
       "& .MuiFormControlLabel-root": {
         fontSize: 10,
       },
-      '& .MuiOutlinedInput-adornedEnd ':{
-        paddingRight:0
-      }
+      "& .MuiOutlinedInput-adornedEnd ": {
+        paddingRight: 0,
+      },
     },
     paper: {
       padding: 10,
+      color: "#3B4750",
       border: "1px solid #3ab994",
+      // color: "red",
     },
     label: {
       display: "flex",
@@ -101,62 +97,90 @@ type Props = {
   // change: boolean;
   setChangeGeneralInformation: (val: boolean) => void;
 };
-export const FormGeneralInformation:React.FC<Props> = ({setChangeGeneralInformation}) => {
-  const {changeAuthorGeneralData,recoveryAuthorDataState} = UseActions();
+export const FormGeneralInformation: React.FC<Props> = ({
+  setChangeGeneralInformation,
+}) => {
+  const { changeAuthorGeneralData, recoveryAuthorDataState } = UseActions();
   const classes = useStyles();
 
-  const {AuthorData,error,isChange} = useTypedSelector(state => state.author)
-  let {id,crms, org_type, inn,kpp,ogrn,nda,type,service,errorMsg}:any = AuthorData;
+  const { AuthorData, error, isChange } = useTypedSelector(
+    (state) => state.author
+  );
+  let {
+    id,
+    crms,
+    org_type,
+    inn,
+    kpp,
+    ogrn,
+    nda,
+    type,
+    service,
+    errorMsg,
+  }: any = AuthorData;
   const [orgType, setOrgType] = React.useState(org_type);
   const [srm, setCRM] = React.useState(`${crms[0]?.id}`);
-  const [srm1, setCRM1] = React.useState('');
-  const [srm2, setCRM2] = React.useState('');
-  let errorMessage:string = 'General'
-const addCRMInput = () => {
-  if(!srm1){
-    setCRM1('1')
-  }
-  if(!srm2 && srm1){
-      setCRM2('1')
-  }
-}
-  const [counterparty, setCounterparty] = React.useState(!type ? 1: type &&  type.length > 0 ? type[0].id : type.id);
-  const [services, setServices] = React.useState(!service ? 1 :service && service.length > 0 ? service[0].id : service.id);
-useEffect(()=>{
-  if(error) {
-    setChangeGeneralInformation(true)
-    setTimeout(()=>{
-      recoveryAuthorDataState()
-    },4000)
-
-  }
-  if(isChange){
-    setChangeGeneralInformation(false)
-    recoveryAuthorDataState()
-  }
-},[error,isChange])
+  const [srm1, setCRM1] = React.useState("");
+  const [srm2, setCRM2] = React.useState("");
+  let errorMessage: string = "General";
+  const addCRMInput = () => {
+    if (!srm1) {
+      setCRM1("1");
+    }
+    if (!srm2 && srm1) {
+      setCRM2("1");
+    }
+  };
+  const [counterparty, setCounterparty] = React.useState(
+    !type ? 1 : type && type.length > 0 ? type[0].id : type.id
+  );
+  const [services, setServices] = React.useState(
+    !service ? 1 : service && service.length > 0 ? service[0].id : service.id
+  );
+  useEffect(() => {
+    if (error) {
+      setChangeGeneralInformation(true);
+      setTimeout(() => {
+        recoveryAuthorDataState();
+      }, 4000);
+    }
+    if (isChange) {
+      setChangeGeneralInformation(false);
+      recoveryAuthorDataState();
+    }
+  }, [error, isChange]);
   const formik = useFormik({
     initialValues: {
-      org_type:orgType,
-      CRM:srm ,
+      org_type: orgType,
+      CRM: srm,
       CounterpartyType: counterparty,
       ServiceType: services,
       INN: inn,
       KPP: kpp,
-      OGPN:ogrn,
+      OGPN: ogrn,
       NDA: nda,
     },
-     // validationSchema: validationSchema,
+    // validationSchema: validationSchema,
     onSubmit: (values) => {
-      changeAuthorGeneralData({'org_type':orgType,'contractor_type_id': counterparty,'crms': [srm,srm1,srm2].filter(tiem => tiem.length > 0),
-        'service_type_id':services,'inn':values.INN,'kpp':values.KPP,'ogrn':values.OGPN,'nda':values.NDA},id,errorMessage)
-
-      },
+      changeAuthorGeneralData(
+        {
+          org_type: orgType,
+          contractor_type_id: counterparty,
+          crms: [srm, srm1, srm2].filter((tiem) => tiem.length > 0),
+          service_type_id: services,
+          inn: values.INN,
+          kpp: values.KPP,
+          ogrn: values.OGPN,
+          nda: values.NDA,
+        },
+        id,
+        errorMessage
+      );
+    },
   });
 
   return (
     <div className={classes.root}>
-
       <form onSubmit={formik.handleSubmit}>
         <div
           style={{
@@ -166,23 +190,21 @@ useEffect(()=>{
             width: "101%",
           }}
         >
-          <span>Общие сведения</span>
-          <Button
-            color="primary"
-            type="submit"
-           className={classes.saveButton}
-          >
+          <span style={{ fontWeight: 500 }}>Общие сведения</span>
+          <Button color="primary" type="submit" className={classes.saveButton}>
             Сохранить
           </Button>
         </div>
         <Paper className={classes.paper}>
-          {errorMsg == 'General' && <div style={{color:"red"}}>{error}</div>}
+          {errorMsg == "General" && <div style={{ color: "red" }}>{error}</div>}
           <div style={{ marginBottom: "2%", display: "flex" }}>
             <div>
               <span style={{ fontSize: 10 }}>Физическое лицо</span>
               <Radio
                 checked={orgType === "ФЛ"}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setOrgType(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setOrgType(e.target.value)
+                }
                 value="ФЛ"
                 color="default"
                 name="org_type"
@@ -194,7 +216,9 @@ useEffect(()=>{
               <span style={{ fontSize: 10 }}>Юридическое лицо</span>
               <Radio
                 checked={orgType === "ЮЛ"}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setOrgType(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setOrgType(e.target.value)
+                }
                 value="ЮЛ"
                 color="default"
                 name="org_type"
@@ -213,73 +237,91 @@ useEffect(()=>{
               }}
             >
               <InputFilterSelectedCrm
-                  name="CRM"
-                  style={{ width: "83%" }}
-                  placeholder={"Фамилия Имя"}
-                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) => setCRM(e.target.value)}
+                name="CRM"
+                style={{ width: "83%" }}
+                placeholder={"Фамилия Имя"}
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setCRM(e.target.value)
+                }
               />
-              {srm && srm1 && srm2 ?<span style={{width:25}}></span> : <AddIcon onClick={addCRMInput}/>}
+              {srm && srm1 && srm2 ? (
+                <span style={{ width: 25 }}></span>
+              ) : (
+                <AddIcon onClick={addCRMInput} />
+              )}
             </div>
           </div>
-          {srm1 &&   <div className={classes.label}>
-            <span></span>
-            <div
+          {srm1 && (
+            <div className={classes.label}>
+              <span></span>
+              <div
                 style={{
                   width: "60%",
                   display: "flex",
                   justifyContent: "space-between",
                 }}
-            >
-              <InputFilterSelectedCrm
+              >
+                <InputFilterSelectedCrm
                   name="CRM1"
                   style={{ width: "83%" }}
                   placeholder={"Фамилия Имя"}
-                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) => setCRM1(e.target.value)}
-              />
-              <span onClick={()=>setCRM1('')}>
-              <TrashIcon />
-              </span>
+                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setCRM1(e.target.value)
+                  }
+                />
+                <span onClick={() => setCRM1("")}>
+                  <TrashIcon />
+                </span>
+              </div>
             </div>
-          </div>}
-          {srm2 &&   <div className={classes.label}>
-            <span></span>
-            <div
+          )}
+          {srm2 && (
+            <div className={classes.label}>
+              <span></span>
+              <div
                 style={{
                   width: "60%",
                   display: "flex",
                   justifyContent: "space-between",
                 }}
-            >
-              <InputFilterSelectedCrm
+              >
+                <InputFilterSelectedCrm
                   name="CRM2"
                   style={{ width: "83%" }}
                   placeholder={"Фамилия Имя"}
-                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) => setCRM2(e.target.value)}
-              />
-              <span onClick={()=>setCRM2('')}>
-              <TrashIcon />
-              </span>
+                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setCRM2(e.target.value)
+                  }
+                />
+                <span onClick={() => setCRM2("")}>
+                  <TrashIcon />
+                </span>
+              </div>
             </div>
-          </div>}
+          )}
           <div className={classes.label}>
             <span>Тип контрагента</span>
-            <span style={{width:'60%'}}>
-                <InputFilterSelectedType
-                    name="CounterpartyType"
-                    value={counterparty}
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>)=>setCounterparty(e.target.value)}
-                />
-              </span>
+            <span style={{ width: "60%" }}>
+              <InputFilterSelectedType
+                name="CounterpartyType"
+                value={counterparty}
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setCounterparty(e.target.value)
+                }
+              />
+            </span>
           </div>
           <div className={classes.label}>
             <span>Тип услуг</span>
-            <span style={{width: '60%'}}>
-           <InputFilterSelectedServicesType
-               value={services}
-               name="ServiceType"
-               handleChange={(e: React.ChangeEvent<HTMLInputElement>)=>setServices(e.target.value)}
-               // options={authors}
-           />
+            <span style={{ width: "60%" }}>
+              <InputFilterSelectedServicesType
+                value={services}
+                name="ServiceType"
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setServices(e.target.value)
+                }
+                // options={authors}
+              />
             </span>
           </div>
           <div className={classes.label}>

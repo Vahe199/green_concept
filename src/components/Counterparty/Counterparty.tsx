@@ -1,20 +1,22 @@
 import React, { useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import AddIcon from "@material-ui/icons/Add";
-import XLS from "../../IMG/icons/XLS.png";
 import { useHistory } from "react-router-dom";
 import { Button, Typography } from "@material-ui/core";
 import CounterpartiesTable from "./Core/Table";
 import { useStyles } from "./Styles";
 import { UseActions } from "../../redux/type_redux_hook/ useAction";
+import { XLSIcon } from "../../IMG/SVG/XLS";
 import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
 import Loader from "../Layout/Loader/Loader";
+
 export const Counterparty = () => {
-  const { fetchCounterpartiesList, fetchAuthorsList,getAssetsListData } = UseActions();
+  const { fetchCounterpartiesList, fetchAuthorsList, getAssetsListData } =
+    UseActions();
   useEffect(() => {
     fetchCounterpartiesList();
     fetchAuthorsList();
-    getAssetsListData()
+    getAssetsListData();
   }, []);
   let history = useHistory();
   const classes = useStyles();
@@ -42,7 +44,7 @@ export const Counterparty = () => {
           >
             Новый контрагент
           </Button>
-          <span>
+          <span style={{ display: "flex" }}>
             <Button
               onClick={() => handleClick("new contact")}
               variant="contained"
@@ -58,12 +60,17 @@ export const Counterparty = () => {
             >
               Все контактные лица
             </Button>
-            <Button
-              variant="outlined"
-              style={{ minWidth: 28, padding: 0, height: "30px" }}
+
+            <span
+              style={{
+                minWidth: 28,
+                padding: 0,
+                height: 29,
+                width: 25,
+              }}
             >
-              <img src={XLS} className={classes.icon} />
-            </Button>
+              <XLSIcon color="#3AB994" />
+            </span>
           </span>
         </div>
       </Paper>

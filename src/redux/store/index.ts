@@ -4,20 +4,20 @@ import thunk from "redux-thunk";
 import { combineReducers } from "redux";
 import { counterpartiesReducer } from "./reducer/conterparties/counterpartiesReducer";
 import { counterpartiesAuthorsListReducer } from "./reducer/conterparties/conterpartiesAuthorsListReducer";
-import {counterpartiesAuthorDataReducer} from "./reducer/conterparties/conterpartiesAuthorDataReducer";
-import {counterpartiesAssetsListReducer} from "./reducer/conterparties/conterpartiesAssetsTypesList";
-import {counterpartiesServicesTypesListReducer} from "./reducer/conterparties/conterpartiesServicesTypesList";
+import { counterpartiesAuthorDataReducer } from "./reducer/conterparties/conterpartiesAuthorDataReducer";
+import { counterpartiesAssetsListReducer } from "./reducer/conterparties/conterpartiesAssetsTypesList";
+import { counterpartiesServicesTypesListReducer } from "./reducer/conterparties/conterpartiesServicesTypesList";
 
 const reducer = combineReducers({
   counterparties: counterpartiesReducer,
   //contractor:newContractorReducer,
-   assets:counterpartiesAssetsListReducer,
-  servicesTypes:counterpartiesServicesTypesListReducer,
+  assets: counterpartiesAssetsListReducer,
+  servicesTypes: counterpartiesServicesTypesListReducer,
   authorsList: counterpartiesAuthorsListReducer,
-  author:counterpartiesAuthorDataReducer
+  author: counterpartiesAuthorDataReducer,
 });
 // convert object to string and store in localStorage
-function saveToLocalStorage(state:any) {
+function saveToLocalStorage(state: any) {
   try {
     const serialisedState = JSON.stringify(state);
     localStorage.setItem("persistantState", serialisedState);
@@ -41,7 +41,13 @@ function loadFromLocalStorage() {
 export type RootState = ReturnType<typeof reducer>;
 
 export const store = createStore(
-  reducer,loadFromLocalStorage(),
+  reducer,
+  loadFromLocalStorage(),
   composeWithDevTools(applyMiddleware(thunk))
 );
-store.subscribe(() => saveToLocalStorage({author: store.getState().author}));
+store.subscribe(() =>
+  saveToLocalStorage({
+    author: store.getState().author,
+    assets: store.getState().assets,
+  })
+);

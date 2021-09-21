@@ -98,7 +98,9 @@ export default function CounterpartiesTable(props: any) {
         <Table stickyHeader aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">N</StyledTableCell>
+              <StyledTableCell>
+                <div style={{ marginTop: -27, marginLeft: 4 }}> &#x2116;</div>
+              </StyledTableCell>
               <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 Тип
                 <InputFilterSelectedType

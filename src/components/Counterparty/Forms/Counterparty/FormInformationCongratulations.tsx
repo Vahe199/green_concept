@@ -5,7 +5,7 @@ import { TextField, Paper, Link, Divider, Button } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
-import {InputFilterSelectedCongratulationsType} from "../../Core/FilterInputs/InputFilterSelectedDirection";
+import { InputFilterSelectedCongratulationsType } from "../../Core/FilterInputs/InputFilterSelectedDirection";
 
 const validationSchema = yup.object({
   CRM: yup
@@ -71,9 +71,10 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between",
       marginBottom: 8,
       fontSize: 12,
+      fontWeight: 500,
     },
     spanTitle: {
-      fontSize: 16,
+      fontSize: 12,
     },
     btnSubmit: {
       textTransform: "none",

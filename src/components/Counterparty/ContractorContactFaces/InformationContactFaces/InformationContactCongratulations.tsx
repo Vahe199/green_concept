@@ -67,7 +67,6 @@ export const InformationContactCongratulations: React.FC<InfoCongratulations> =
             <span className={classes.spanTitle}> Другое</span>
             <span style={{ width: "60%" }}>Другое</span>
           </div>
-          <Divider variant="middle" style={{ margin: 15 }} />
         </Paper>
       </div>
     );

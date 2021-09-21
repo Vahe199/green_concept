@@ -153,6 +153,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between",
       marginBottom: 10,
       fontSize: "13px",
+      fontWeight: 500,
     },
     addItem: {
       marginLeft: "40%",

@@ -19,10 +19,15 @@ import Loader from "../../Layout/Loader/Loader";
 import { useHistory } from "react-router-dom";
 import { UseActions } from "../../../redux/type_redux_hook/ useAction";
 import InputFilterSelectedType from "./FilterInputs/InputFilterSelectedType";
+import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
 
 const useStyles = makeStyles({
   root: {
     width: "100%",
+    "& .MuiInputBase-root": {
+      marginTop: 8,
+      border: "1px solid #D6D9DC",
+    },
   },
   container: {
     maxHeight: "74vh",
@@ -139,11 +144,21 @@ export default function CounterpartiesTable(props: any) {
                 />
               </StyledTableCell>
               <StyledTableCell align="left" style={{ color: "#3B4750" }}>
-                Создано
+                <div style={{ display: "flex" }}>
+                  <span>Создано</span>
+                  <span style={{ position: "absolute", right: 8, top: 8 }}>
+                    <SortingButtons color="#5B6770" />
+                  </span>
+                </div>
                 <InputFilterDate />
               </StyledTableCell>
               <StyledTableCell align="left" style={{ color: "#3B4750" }}>
-                Обновлено
+                <div style={{ display: "flex" }}>
+                  <span>Обновлено</span>
+                  <span style={{ position: "absolute", right: 8, top: 8 }}>
+                    <SortingButtons color="#5B6770" />
+                  </span>
+                </div>
                 <InputFilterDate />
               </StyledTableCell>
             </TableRow>

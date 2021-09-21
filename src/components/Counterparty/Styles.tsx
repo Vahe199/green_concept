@@ -45,6 +45,9 @@ export const useStyles = makeStyles({
     "&:active": {
       backgroundColor: "#32A886",
     },
+    "& .MuiButton-label": {
+      marginTop: -3,
+    },
   },
   button: {
     fontSize: 14,
@@ -60,6 +63,9 @@ export const useStyles = makeStyles({
     "&:hover": {
       backgroundColor: "#EBECED",
       boxShadow: "none",
+    },
+    "& .MuiButton-label": {
+      marginTop: -3,
     },
   },
   icon: {

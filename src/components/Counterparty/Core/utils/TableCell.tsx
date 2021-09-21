@@ -18,7 +18,7 @@ export const StyledTableCell = withStyles((theme: Theme): any =>
         height: "30px",
         backgroundColor: "transparent",
         fontSize: 13,
-        opacity: 0.75,
+        opacity: 0.5,
       },
       "& .MuiSelect-iconOutlined": {
         right: 0,

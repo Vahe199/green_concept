@@ -10,6 +10,8 @@ import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilter
 import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
 import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedCRM";
 import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
+import clsx from "clsx";
+
 type Data = {
   CRM: string | null;
   CounterpartyType: string | null;
@@ -88,6 +90,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: 15,
       fontSize: 12,
       fontWeight: 500,
+    },
+    NDASection: {
+      marginTop: "-30px",
     },
     saveButton: {
       textTransform: "none",
@@ -362,7 +367,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
               helperText={formik.touched.OGPN && formik.errors.OGPN}
             />
           </div>
-          <div className={classes.label}>
+          <div className={clsx(classes.label, classes.NDASection)}>
             <span>NDA</span>
             <span style={{ width: "62%" }}>
               <Checkbox

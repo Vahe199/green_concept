@@ -133,6 +133,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between",
       marginBottom: 15,
       fontSize: 12,
+      fontWeight: 500,
     },
   })
 );

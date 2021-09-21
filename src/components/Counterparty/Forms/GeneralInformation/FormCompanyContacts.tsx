@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "space-between",
       marginBottom: 10,
+      fontWeight: 500,
     },
     addItem: {
       marginBottom: 8,

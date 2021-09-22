@@ -116,11 +116,17 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: "40%",
       marginBottom: 8,
       cursor: "pointer",
+      "&:hover": {
+        textDecoration: "underline",
+      },
     },
     addItemCRM: {
       marginLeft: "40%",
       marginBottom: 8,
       cursor: "pointer",
+      "&:hover": {
+        textDecoration: "underline",
+      },
     },
     paper: {
       padding: 10,

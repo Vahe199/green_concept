@@ -114,7 +114,6 @@ export default function CounterpartiesTable(props: any) {
                 Тип
                 <InputFilterSelectedType
                   handleChange={handleChangeServices}
-                  // options={types}
                   value={services}
                 />
               </StyledTableCell>

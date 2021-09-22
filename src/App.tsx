@@ -5,7 +5,6 @@ import { Counterparty } from "./components/Counterparty/Counterparty";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Route } from "react-router-dom";
-import { InformationUserData } from "./components/Counterparty/InformationUserData/InformationUserData";
 import CreateCounterparty from "./components/Counterparty/CreateCounterparty";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

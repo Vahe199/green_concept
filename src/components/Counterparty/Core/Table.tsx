@@ -42,6 +42,10 @@ const useStyles = makeStyles({
   },
   at: {
     width: 120,
+    color: "#3B4750",
+  },
+  TextColor: {
+    color: "#3B4750",
   },
 });
 
@@ -173,12 +177,14 @@ export default function CounterpartiesTable(props: any) {
                 key={index}
               >
                 <TableCell align="left">{row.id}</TableCell>
-                <TableCell align="left">
+                <TableCell align="left" className={classes.TextColor}>
                   {row.type ? row.type.name : ""}
                 </TableCell>
 
-                <TableCell align="left">{row.full_name}</TableCell>
-                <TableCell align="left">
+                <TableCell align="left" className={classes.TextColor}>
+                  {row.full_name}
+                </TableCell>
+                <TableCell align="left" className={classes.TextColor}>
                   {row.branches.map((branch: any, index: number) => {
                     return (
                       <span key={index}>
@@ -188,10 +194,10 @@ export default function CounterpartiesTable(props: any) {
                     );
                   })}
                 </TableCell>
-                <TableCell align="left">
+                <TableCell align="left" className={classes.TextColor}>
                   {row.group === null ? row.group : ""}
                 </TableCell>
-                <TableCell align="left">
+                <TableCell align="left" className={classes.TextColor}>
                   {row.crms.firstname}
                   {row.crms.map((crm: any, index: number) => {
                     return (
@@ -202,7 +208,7 @@ export default function CounterpartiesTable(props: any) {
                     );
                   })}
                 </TableCell>
-                <TableCell align="left">
+                <TableCell align="left" className={classes.TextColor}>
                   {row.author
                     ? `${row.author.surname} ${row.author.firstname.substring(
                         0,
@@ -213,7 +219,9 @@ export default function CounterpartiesTable(props: any) {
                     ? `${row.author.middlename.substring(0, 1)}.`
                     : ""}
                 </TableCell>
-                <TableCell align="left">{row.created_at}</TableCell>
+                <TableCell align="left" className={classes.TextColor}>
+                  {row.created_at}
+                </TableCell>
                 <TableCell className={classes.at} align="left">
                   {row.updated_at}
                 </TableCell>

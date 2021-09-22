@@ -161,6 +161,17 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: "2%",
       cursor: "pointer",
       fontSize: "12px",
+      "&:hover": {
+        textDecoration: "underline",
+      },
+    },
+    addContact: {
+      textDecoration: "none",
+      cursor: "pointer",
+      fontSize: "12px",
+      "&:hover": {
+        textDecoration: "underline",
+      },
     },
     BasicInformation: {
       width: "52%",
@@ -915,7 +926,7 @@ export const ContactPersonsForCreating = () => {
                   <div>
                     {multipleContactsFromGreen! < 3 ? (
                       <div
-                        style={{ fontSize: "12px" }}
+                        className={classes.addContact}
                         onClick={() =>
                           multipleContactsFromGreen < 3
                             ? setMultipleContactsFromGreen(

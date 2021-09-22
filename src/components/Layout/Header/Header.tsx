@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 40,
     },
     avatarTitle: {
-      color: "#000",
+      color: "#3B4750",
       display: "inline",
       marginRight: 12,
       fontSize: 15,

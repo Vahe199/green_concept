@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between",
       marginBottom: 15,
       fontSize: 12,
+      textTransform: "none"
     },
     saveButton: {
       textTransform: "none",
@@ -195,7 +196,7 @@ const MainBankAccount: React.FC<BankProps> = ({ setEdit }) => {
             />
           </div>
           <div className={classes.label}>
-            <span>К/с</span>
+            <span>К/c</span>
             <TextField
               style={{ width: "75%" }}
               variant={"outlined"}
@@ -208,7 +209,7 @@ const MainBankAccount: React.FC<BankProps> = ({ setEdit }) => {
             />
           </div>
           <div className={classes.label}>
-            <span>Р/с</span>
+            <span>Р/c</span>
             <TextField
               style={{ width: "75%" }}
               variant={"outlined"}

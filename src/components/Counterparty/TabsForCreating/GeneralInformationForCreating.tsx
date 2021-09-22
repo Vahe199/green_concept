@@ -141,6 +141,12 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 12,
       fontWeight: 500,
     },
+    check: {
+      marginLeft: "15%"
+    },
+    checkText: {
+      width: "53%"
+    },
   })
 );
 
@@ -208,7 +214,7 @@ export const GeneralInformationForCreating = () => {
             <Paper className={classes.paper}>
               <div style={{ marginBottom: "2%", display: "flex" }}>
                 <div>
-                  <span style={{ fontSize: 10 }}>Физическое лицо</span>
+                  <span style={{ fontSize: 16 }}>Физическое лицо</span>
                   <Radio
                     checked={checked === "a"}
                     onChange={handleChange}
@@ -220,7 +226,7 @@ export const GeneralInformationForCreating = () => {
                   />
                 </div>
                 <div>
-                  <span style={{ fontSize: 10 }}>Юридическое лицо</span>
+                  <span style={{ fontSize: 16 }}>Юридическое лицо</span>
                   <Radio
                     checked={checked === "b"}
                     onChange={handleChange}
@@ -404,7 +410,7 @@ export const GeneralInformationForCreating = () => {
               </div>
               <div className={classes.label}>
                 <span>NDA</span>
-                <span style={{ width: "62%" }}>
+                <span style={{ width: "63.2%" }}>
                   <Checkbox
                     defaultChecked
                     color="default"
@@ -635,7 +641,13 @@ export const GeneralInformationForCreating = () => {
               </div>
               <div className={classes.label}>
                 <span>Фактический адрес</span>
-                <TextField
+                <Checkbox className={classes.check}
+                  name="MatchesAddressActualAddress"
+                  color="default"
+                  inputProps={{ "aria-label": "checkbox with default color" }}
+                />
+                <span className={classes.checkText}>Совпадает с юридическим адресом</span>
+                {/* <TextField
                   variant={"outlined"}
                   name="ActualAddress"
                   placeholder={"123456 город улица строени дом офис"}
@@ -648,16 +660,9 @@ export const GeneralInformationForCreating = () => {
                   helperText={
                     formik.touched.ActualAddress && formik.errors.ActualAddress
                   }
-                />
+                /> */}
               </div>
-              <div>
-                <Checkbox
-                  name="MatchesAddressActualAddress"
-                  color="default"
-                  inputProps={{ "aria-label": "checkbox with default color" }}
-                />
-                <span>Совпадает с юридическим адресом</span>
-              </div>
+            
               <div className={classes.label}>
                 <span>Почтовый адрес</span>
                 <TextField
@@ -676,14 +681,7 @@ export const GeneralInformationForCreating = () => {
                   }
                 />
               </div>
-              <div>
-                <Checkbox
-                  name="MatchesAddressMailingAddress"
-                  color="default"
-                  inputProps={{ "aria-label": "checkbox with default color" }}
-                />
-                <span>Совпадает с юридическим адресом</span>
-              </div>
+           
               <div className={classes.label}>
                 <span>Сайт компании</span>
                 <div

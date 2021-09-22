@@ -206,7 +206,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
           {errorMsg == "General" && <div style={{ color: "red" }}>{error}</div>}
           <div style={{ marginBottom: "2%", display: "flex" }}>
             <div>
-              <span style={{ fontSize: 10 }}>Физическое лицо</span>
+              <span style={{ fontSize: 16 }}>Физическое лицо</span>
               <Radio
                 checked={orgType === "ФЛ"}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -220,7 +220,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
               />
             </div>
             <div>
-              <span style={{ fontSize: 10 }}>Юридическое лицо</span>
+              <span style={{ fontSize: 16 }}>Юридическое лицо</span>
               <Radio
                 checked={orgType === "ЮЛ"}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -369,7 +369,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
           </div>
           <div className={clsx(classes.label, classes.NDASection)}>
             <span>NDA</span>
-            <span style={{ width: "62%" }}>
+            <span style={{ width: "63.2%" }}>
               <Checkbox
                 defaultChecked
                 color="default"

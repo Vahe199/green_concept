@@ -203,6 +203,21 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: "pointer",
       width: "10%",
     },
+    selectListItem: {
+      marginLeft: "3%",
+      
+    }, 
+    addListItem: {
+      fontSize: 23,
+      border: "none",
+      background: "none",
+      color: "#3AB994",
+    },
+    selectItem: {
+      fontSize: 18,
+      textDecoration: "underline",
+     
+    }
   })
 );
 
@@ -259,6 +274,16 @@ export const ContactPersonsForCreating = () => {
         >
           Сохранить карточку
         </Button>
+        <span className={classes.selectListItem}>
+          <button className={classes.addListItem}> + 
+          <span className={classes.selectItem}>
+            Выбрать из списка
+          </span>
+        </button>
+       
+        </span>
+       
+
         <div className={classes.root}>
           <div className={classes.BasicInformation}>
             <div

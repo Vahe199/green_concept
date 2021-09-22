@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& .MuiOutlinedInput-input": {
         padding: 0,
-        paddingLeft: 7,
+        paddingLeft: 12,
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 500,
     },
     NDASection: {
-      marginTop: "-30px",
+      marginTop: "-10px",
     },
     saveButton: {
       textTransform: "none",
@@ -206,7 +206,9 @@ export const FormGeneralInformation: React.FC<Props> = ({
           {errorMsg == "General" && <div style={{ color: "red" }}>{error}</div>}
           <div style={{ marginBottom: "2%", display: "flex" }}>
             <div>
-              <span style={{ fontSize: 16 }}>Физическое лицо</span>
+              <span style={{ fontSize: 12, fontWeight: 500 }}>
+                Физическое лицо
+              </span>
               <Radio
                 checked={orgType === "ФЛ"}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -220,7 +222,9 @@ export const FormGeneralInformation: React.FC<Props> = ({
               />
             </div>
             <div>
-              <span style={{ fontSize: 16 }}>Юридическое лицо</span>
+              <span style={{ fontSize: 12, fontWeight: 500 }}>
+                Юридическое лицо
+              </span>
               <Radio
                 checked={orgType === "ЮЛ"}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

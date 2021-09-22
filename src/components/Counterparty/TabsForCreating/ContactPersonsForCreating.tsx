@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& .MuiOutlinedInput-input": {
         padding: 0,
-        paddingLeft: 7,
+        paddingLeft: 12,
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
@@ -132,14 +132,13 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& .MuiOutlinedInput-input": {
         padding: 0,
-        paddingLeft: 7,
         textAlign: "start",
         height: "40px",
         backgroundColor: "transparent",
         fontSize: 13,
       },
       "& .MuiOutlinedInput-multiline": {
-        padding: "7.5px 14px",
+        padding: "7.5px 12px",
       },
     },
     paper: {
@@ -205,8 +204,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     selectListItem: {
       marginLeft: "3%",
-      
-    }, 
+    },
     addListItem: {
       fontSize: 23,
       border: "none",
@@ -216,8 +214,7 @@ const useStyles = makeStyles((theme: Theme) =>
     selectItem: {
       fontSize: 18,
       textDecoration: "underline",
-     
-    }
+    },
   })
 );
 
@@ -275,14 +272,11 @@ export const ContactPersonsForCreating = () => {
           Сохранить карточку
         </Button>
         <span className={classes.selectListItem}>
-          <button className={classes.addListItem}> + 
-          <span className={classes.selectItem}>
-            Выбрать из списка
-          </span>
-        </button>
-       
+          <button className={classes.addListItem}>
+            {" "}
+            +<span className={classes.selectItem}>Выбрать из списка</span>
+          </button>
         </span>
-       
 
         <div className={classes.root}>
           <div className={classes.BasicInformation}>
@@ -942,7 +936,6 @@ export const ContactPersonsForCreating = () => {
                       rows={8}
                       name="FullCompanyName"
                       placeholder={"Введите текст"}
-                      value={"esi mecacra vonc vor dizaynuma"}
                       onChange={formik.handleChange}
                       error={formik.touched.OGPN && Boolean(formik.errors.OGPN)}
                       helperText={formik.touched.OGPN && formik.errors.OGPN}

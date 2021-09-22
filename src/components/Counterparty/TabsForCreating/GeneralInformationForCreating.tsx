@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& .MuiOutlinedInput-input": {
         padding: 0,
-        paddingLeft: 7,
+        paddingLeft: 12,
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
@@ -140,10 +140,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 500,
     },
     check: {
-      marginLeft: "15%"
+      marginLeft: "15%",
     },
     checkText: {
-      width: "53%"
+      width: "53%",
     },
   })
 );
@@ -215,7 +215,9 @@ export const GeneralInformationForCreating = () => {
             <Paper className={classes.paper}>
               <div style={{ marginBottom: "2%", display: "flex" }}>
                 <div>
-                  <span style={{ fontSize: 16 }}>Физическое лицо</span>
+                  <span style={{ fontSize: 12, fontWeight: 500 }}>
+                    Физическое лицо
+                  </span>
                   <Radio
                     checked={checked === "a"}
                     onChange={handleChange}
@@ -227,7 +229,9 @@ export const GeneralInformationForCreating = () => {
                   />
                 </div>
                 <div>
-                  <span style={{ fontSize: 16 }}>Юридическое лицо</span>
+                  <span style={{ fontSize: 12, fontWeight: 500 }}>
+                    Юридическое лицо
+                  </span>
                   <Radio
                     checked={checked === "b"}
                     onChange={handleChange}
@@ -643,12 +647,15 @@ export const GeneralInformationForCreating = () => {
               </div>
               <div className={classes.label}>
                 <span>Фактический адрес</span>
-                <Checkbox className={classes.check}
+                <Checkbox
+                  className={classes.check}
                   name="MatchesAddressActualAddress"
                   color="default"
                   inputProps={{ "aria-label": "checkbox with default color" }}
                 />
-                <span className={classes.checkText}>Совпадает с юридическим адресом</span>
+                <span className={classes.checkText}>
+                  Совпадает с юридическим адресом
+                </span>
                 {/* <TextField
                   variant={"outlined"}
                   name="ActualAddress"
@@ -664,7 +671,7 @@ export const GeneralInformationForCreating = () => {
                   }
                 /> */}
               </div>
-            
+
               <div className={classes.label}>
                 <span>Почтовый адрес</span>
                 <TextField
@@ -683,7 +690,7 @@ export const GeneralInformationForCreating = () => {
                   }
                 />
               </div>
-           
+
               <div className={classes.label}>
                 <span>Сайт компании</span>
                 <div

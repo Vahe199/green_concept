@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Divider } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import pencil from "../../../../IMG/icons/pencil.png";
 
@@ -51,7 +51,7 @@ export const InformationContactCongratulations: React.FC<InfoCongratulations> =
         >
           <span className={classes.spanTitle}>Сведения о поздравлениях</span>
           <span onClick={() => setChangeCongratulations(false)}>
-            <img src={pencil} style={{ width: 15, height: 15 }} />
+            <img src={pencil} alt="Pencil" style={{ width: 15, height: 15 }} />
           </span>
         </div>
         <Paper className={classes.paper}>

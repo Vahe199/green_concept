@@ -10,7 +10,6 @@ export const fetchAuthorsList =
     try {
       dispatch({ type: AuthorsListActionType.FETCH_AUTHORS_LIST });
       const { data } = await counterpartiesApi.fetchContractorsAuthor();
-      console.log(data, "authors");
       dispatch({
         type: AuthorsListActionType.FETCH_AUTHORS_LIST_SUCCESS,
         payload: data.authors,

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const jwt = localStorage.getItem("jwt_token")
-  ? localStorage.getItem("jwt_token")
-  : null;
+// const jwt = localStorage.getItem("jwt_token")
+//   ? localStorage.getItem("jwt_token")
+//   : null;
 
 const instance = axios.create({
   baseURL: "https://green-kis.tecman.ru/api/",
@@ -12,7 +12,7 @@ const instance = axios.create({
     Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMyMjE4MDgwLCJleHAiOjE2MzIzMDQ0ODAsIm5iZiI6MTYzMjIxODA4MCwianRpIjoibDJpeXJBYVZEMGRqaXJ1RCIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.03Wb2wlj8XS1FM_DdaWuCkZPW7hlJqOrXe9WPnxZ_bo`,
+    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMyMzEzMzU2LCJleHAiOjE2MzIzOTk3NTYsIm5iZiI6MTYzMjMxMzM1NiwianRpIjoibldJWGJ4dGFEblRGYnZBYiIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.fOVQmbDR7RjYHY0F_42mPOUwyVgk3qSw1IpyfpesQIE`,
   },
 });
 

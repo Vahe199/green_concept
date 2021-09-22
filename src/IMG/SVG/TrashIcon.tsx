@@ -1,7 +1,6 @@
 import React from "react";
 
 export const TrashIcon = (props: any) => {
-  const { color } = props;
   return (
     <svg
       width="24"

@@ -50,7 +50,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
       >
         <span className={classes.spanTitle}>Основные сведения</span>
         <span onClick={() => setChangeBasicInformation(false)}>
-          <img src={pencil} style={{ width: 15, height: 15 }} />
+          <img src={pencil} alt="Pencil" style={{ width: 15, height: 15 }} />
         </span>
       </div>
       <Paper className={classes.paper}>

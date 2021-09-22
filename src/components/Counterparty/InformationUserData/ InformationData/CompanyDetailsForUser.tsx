@@ -46,7 +46,7 @@ export const CompanyDetailsForUser:React.FC<Props> = ({setChangeCompanyDetails})
         >
             <Typography variant={'subtitle2'}>Сведения  о компании </Typography>
             <div onClick={()=>setChangeCompanyDetails(true)}>
-                <img src={pencil} style={{width:15,height:15}}/>
+                <img src={pencil} alt="Pencil" style={{width:15,height:15}}/>
             </div>
         </div>
         <Paper className={classes.paper}>

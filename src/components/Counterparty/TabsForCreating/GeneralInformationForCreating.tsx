@@ -1,15 +1,13 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { FormCompanyDetails } from "../Forms/GeneralInformation/FormCompanyDetails";
-import { FormGeneralInformation } from "../Forms/GeneralInformation/FormGeneralInformation";
-import { FormCompanyContacts } from "../Forms/GeneralInformation/FormCompanyContacts";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import AddIcon from "@material-ui/icons/Add";
+import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelectedType";
+import InputFilterSelectedServicesType from "../Core/FilterInputs/InputFilterSelectedServicesType";
 import {
   Checkbox,
-  FormControlLabel,
   Radio,
   TextField,
   Paper,
@@ -152,9 +150,12 @@ export const GeneralInformationForCreating = () => {
   const [site, setSite] = React.useState(1);
   const [phone, setPhone] = React.useState(1);
   const [email, setEmail] = React.useState(1);
+  const [CounterpartyType, setCounterpartyType] = React.useState("1");
+  const [service, setService] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.value);
   };
+  console.log(service, "service");
   const formik = useFormik({
     initialValues: {
       CRM: "",
@@ -340,31 +341,32 @@ export const GeneralInformationForCreating = () => {
               )}
               <div className={classes.label}>
                 <span>Тип контрагента</span>
-                <TextField
-                  variant={"outlined"}
-                  name="CounterpartyType"
-                  placeholder={"Поставщик"}
-                  value={formik.values.CounterpartyType}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.CounterpartyType &&
-                    Boolean(formik.errors.CounterpartyType)
-                  }
-                  helperText={
-                    formik.touched.CounterpartyType &&
-                    formik.errors.CounterpartyType
-                  }
-                />
+                <span style={{ width: "60%" }}>
+                  <InputFilterSelectedType
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setCounterpartyType(e.target.value)
+                    }
+                    value={CounterpartyType}
+                  />
+                </span>
               </div>
               <div className={classes.label}>
                 <span>Тип услуг</span>
-                <TextField
+                <span style={{ width: "60%" }}>
+                  <InputFilterSelectedServicesType
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setService(e.target.value)
+                    }
+                    value={service}
+                  />
+                </span>
+                {/* <TextField
                   variant={"outlined"}
                   name="ServiceType"
                   placeholder={"Другое"}
                   value={formik.values.ServiceType}
                   onChange={formik.handleChange}
-                />
+                /> */}
               </div>
               <div className={classes.label}>
                 <span>ИНН</span>

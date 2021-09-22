@@ -83,7 +83,7 @@ export const BankDetails: React.FC<BankProps> = ({ setEdit }) => {
               Основной банковский счет
             </Typography>
             <div onClick={() => setEdit(false)}>
-              <img src={pencil} style={{ width: 15, height: 15 }} />
+              <img src={pencil} alt="Pencil" style={{ width: 15, height: 15 }} />
             </div>
           </div>
 
@@ -101,7 +101,7 @@ export const BankDetails: React.FC<BankProps> = ({ setEdit }) => {
               Дополнительный банковский счет
             </Typography>
             <div onClick={() => setEdit(false)}>
-              <img src={pencil} style={{ width: 15, height: 15 }} />
+              <img src={pencil} alt="Pencil" style={{ width: 15, height: 15 }} />
             </div>
           </div>
           <Paper className={classes.paper}>

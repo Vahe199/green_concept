@@ -1,5 +1,4 @@
 import React from "react";
-import { useFormik } from "formik";
 
 import { Paper } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -54,7 +53,7 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
       >
         <span className={classes.spanTitle}>Контакты со стороны Грин</span>
         <span onClick={() => setChangeContactsFromGreen(false)}>
-          <img src={pencil} style={{ width: 15, height: 15 }} />
+          <img src={pencil} alt="Pencil" style={{ width: 15, height: 15 }} />
         </span>
       </div>
       <Paper className={classes.paper}>

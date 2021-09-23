@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Link, Typography } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
-import pencil from "../../../../IMG/icons/pencil.png";
+import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -54,7 +54,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
       >
         <Typography variant={"subtitle2"}>Контакты компании</Typography>
         <div onClick={() => setChangeContacts(true)}>
-          <img src={pencil} alt="Pencil" style={{ width: 15, height: 15 }} />
+        <PencilSimpleIcon color="#3B4750" />
         </div>
       </div>
       <Paper className={classes.paper}>

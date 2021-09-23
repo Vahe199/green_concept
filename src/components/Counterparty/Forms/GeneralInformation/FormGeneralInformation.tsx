@@ -217,7 +217,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
                 value="ФЛ"
                 color="default"
                 name="org_type"
-                size="small"
+                size="medium"
                 inputProps={{ "aria-label": "A" }}
               />
             </div>
@@ -233,7 +233,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
                 value="ЮЛ"
                 color="default"
                 name="org_type"
-                size="small"
+                size="medium"
                 inputProps={{ "aria-label": "B" }}
               />
             </div>

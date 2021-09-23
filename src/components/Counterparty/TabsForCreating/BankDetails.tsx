@@ -4,6 +4,7 @@ import { Typography } from "@material-ui/core";
 import { Paper, Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import pencil from "../../../IMG/icons/pencil.png";
+import { PencilSimpleIcon } from "../../../IMG/SVG/PencilSimpleIcon";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -55,7 +56,7 @@ export const BankDetails: React.FC<BankProps> = ({ setEdit }) => {
       <div style={{ display: "flex" }}>
         <Typography
           variant={"button"}
-          style={{ width: "40%", flexWrap: "wrap" }}
+          style={{ width: "40%", flexWrap: "wrap", textTransform: "none" }}
         >
           {props.item}
         </Typography>
@@ -83,7 +84,7 @@ export const BankDetails: React.FC<BankProps> = ({ setEdit }) => {
               Основной банковский счет
             </Typography>
             <div onClick={() => setEdit(false)}>
-              <img src={pencil} alt="Pencil" style={{ width: 15, height: 15 }} />
+              <PencilSimpleIcon color="#3B4750"/>
             </div>
           </div>
 
@@ -101,7 +102,7 @@ export const BankDetails: React.FC<BankProps> = ({ setEdit }) => {
               Дополнительный банковский счет
             </Typography>
             <div onClick={() => setEdit(false)}>
-              <img src={pencil} alt="Pencil" style={{ width: 15, height: 15 }} />
+            <PencilSimpleIcon color="#3B4750"/>
             </div>
           </div>
           <Paper className={classes.paper}>

@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     width: "100%",
     "& .MuiInputBase-root": {
       marginTop: 8,
-      border: "1px solid #D6D9DC",
+      border: "1px solid #F1F2F3",
     },
   },
   container: {
@@ -145,6 +145,7 @@ export default function CounterpartiesTable(props: any) {
                   handleChange={handleChange}
                   options={authors}
                 />
+                
               </StyledTableCell>
               <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 <div style={{ display: "flex" }}>

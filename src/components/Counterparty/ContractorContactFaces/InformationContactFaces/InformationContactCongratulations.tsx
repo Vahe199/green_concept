@@ -2,7 +2,7 @@ import React from "react";
 import { Paper } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import pencil from "../../../../IMG/icons/pencil.png";
-
+import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -51,7 +51,7 @@ export const InformationContactCongratulations: React.FC<InfoCongratulations> =
         >
           <span className={classes.spanTitle}>Сведения о поздравлениях</span>
           <span onClick={() => setChangeCongratulations(false)}>
-            <img src={pencil} alt="Pencil" style={{ width: 15, height: 15 }} />
+            <PencilSimpleIcon color="#3B4750" />
           </span>
         </div>
         <Paper className={classes.paper}>

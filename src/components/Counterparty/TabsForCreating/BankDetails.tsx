@@ -35,6 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: "#32A886",
       },
     },
+    description: {
+      width: "40.1%",
+      flexWrap: "wrap",
+      textTransform: "none",
+    },
   })
 );
 type BankProps = {
@@ -53,10 +58,7 @@ export const BankDetails: React.FC<BankProps> = ({ setEdit }) => {
   const Details = (props: any) => {
     return (
       <div style={{ display: "flex" }}>
-        <Typography
-          variant={"button"}
-          style={{ width: "40%", flexWrap: "wrap" }}
-        >
+        <Typography variant={"button"} className={classes.description}>
           {props.item}
         </Typography>
         <Typography variant={"body2"}>{props.value}</Typography>
@@ -83,7 +85,11 @@ export const BankDetails: React.FC<BankProps> = ({ setEdit }) => {
               Основной банковский счет
             </Typography>
             <div onClick={() => setEdit(false)}>
-              <img src={pencil} alt="Pencil" style={{ width: 15, height: 15 }} />
+              <img
+                src={pencil}
+                alt="Pencil"
+                style={{ width: 15, height: 15 }}
+              />
             </div>
           </div>
 
@@ -101,7 +107,11 @@ export const BankDetails: React.FC<BankProps> = ({ setEdit }) => {
               Дополнительный банковский счет
             </Typography>
             <div onClick={() => setEdit(false)}>
-              <img src={pencil} alt="Pencil" style={{ width: 15, height: 15 }} />
+              <img
+                src={pencil}
+                alt="Pencil"
+                style={{ width: 15, height: 15 }}
+              />
             </div>
           </div>
           <Paper className={classes.paper}>

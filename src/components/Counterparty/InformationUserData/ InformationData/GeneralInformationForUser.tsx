@@ -69,11 +69,11 @@ export const GeneralInformationForUser: React.FC<Props> = ({
         <div className={classes.div}>
           <Typography
             variant={"button"}
-            style={{ width: "40%", flexWrap: "wrap" }}
+            style={{ width: "40%", flexWrap: "wrap", textTransform: "none" }}
           >
             Тип контрагента
           </Typography>
-          <Typography variant={"body2"}>
+          <Typography variant={"body2"} style={{ marginTop: 2 }}>
             {type ? type.name : "-----------------"}
           </Typography>
         </div>
@@ -111,13 +111,13 @@ export const GeneralInformationForUser: React.FC<Props> = ({
           >
             NDA
           </Typography>
-          <Typography variant={"body2"}>
+          <span style={{ margin: "-10px 0 0 -12px" }}>
             <Checkbox
               disabled
               checked={nda}
               inputProps={{ "aria-label": "disabled checked checkbox" }}
             />
-          </Typography>
+          </span>
         </div>
       </Paper>
     </div>

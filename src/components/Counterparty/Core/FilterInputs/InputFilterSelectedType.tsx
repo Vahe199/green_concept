@@ -33,7 +33,7 @@ export default function InputFilterSelectedType(props: any): any {
         }}
         variant="outlined"
       >
-        {types_and_services.map((option: any) => (
+        {types_and_services?.map((option: any) => (
           <option key={option.id} value={option.id ? option.id : "1"}>
             {option.name}
           </option>

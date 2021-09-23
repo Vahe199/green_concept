@@ -164,7 +164,7 @@ const CreateCounterparty = (props: any) => {
       </Paper>
       <div style={{ display: "flex", marginLeft: "2%", marginTop: "1%" }}>
         <div style={{ marginRight: ".5%" }}>
-          <CaretDoubleLeft color={"#3B4750"} alt="double left icon" />
+          <CaretDoubleLeft color="#3B4750" alt="double left icon" />
         </div>
         <Link color="inherit" onClick={() => history.push("/counterparties")}>
           <div style={{ fontSize: 16, cursor: "pointer" }}>

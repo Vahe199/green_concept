@@ -161,7 +161,6 @@ export const GeneralInformationForCreating = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.value);
   };
-  console.log(service, "service");
   const formik = useFormik({
     initialValues: {
       CRM: "",

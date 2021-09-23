@@ -22,7 +22,7 @@ export default function InputFilterSelectedType(props: any): any {
     <Loader />
   ) : (
     <div className={classes.root}>
-      {/* <TextField
+      <TextField
         style={{ width: "100%" }}
         id="outlined-select-currency-native"
         select
@@ -38,7 +38,7 @@ export default function InputFilterSelectedType(props: any): any {
             {option.name}
           </option>
         ))}
-      </TextField> */}
+      </TextField>
     </div>
   );
 }

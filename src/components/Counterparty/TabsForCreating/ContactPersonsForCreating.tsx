@@ -212,7 +212,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#3AB994",
     },
     selectItem: {
-      fontSize: 18,
+      fontSize: 16,
       textDecoration: "underline",
     },
   })
@@ -273,8 +273,8 @@ export const ContactPersonsForCreating = () => {
         </Button>
         <span className={classes.selectListItem}>
           <button className={classes.addListItem}>
-            {" "}
-            +<span className={classes.selectItem}>Выбрать из списка</span>
+            <span style={{ fontSize: 16, marginTop: 14 }}> + </span>
+            <span className={classes.selectItem}> Выбрать из списка</span>
           </button>
         </span>
 

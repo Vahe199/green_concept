@@ -23,6 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       marginBottom: 10,
     },
+    description: {
+      width: "47%",
+      flexWrap: "wrap",
+      textTransform: "none",
+    },
   })
 );
 type Props = {
@@ -61,7 +66,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
         <div className={classes.div}>
           <Typography
             variant={"button"}
-            style={{ width: "47%", flexWrap: "wrap" }}
+            className={classes.description}
           >
             Юридический адрес
           </Typography>
@@ -72,7 +77,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
         <div className={classes.div}>
           <Typography
             variant={"button"}
-            style={{ width: "47%", flexWrap: "wrap" }}
+            className={classes.description}
           >
             Фактический адрес
           </Typography>
@@ -81,7 +86,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
         <div className={classes.div}>
           <Typography
             variant={"button"}
-            style={{ width: "47%", flexWrap: "wrap" }}
+            className={classes.description}
           >
             Почтовый адрес
           </Typography>
@@ -90,7 +95,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
         <div className={classes.div}>
           <Typography
             variant={"button"}
-            style={{ width: "47%", flexWrap: "wrap" }}
+            className={classes.description}
           >
             Сайт компании
           </Typography>
@@ -99,7 +104,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
         <div className={classes.div}>
           <Typography
             variant={"button"}
-            style={{ width: "47%", flexWrap: "wrap" }}
+            className={classes.description}
           >
             Телефон
           </Typography>
@@ -112,7 +117,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
         <div className={classes.div}>
           <Typography
             variant={"button"}
-            style={{ width: "47%", flexWrap: "wrap" }}
+            className={classes.description}
           >
             E-mail
           </Typography>

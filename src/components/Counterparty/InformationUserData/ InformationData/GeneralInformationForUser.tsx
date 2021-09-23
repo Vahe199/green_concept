@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Checkbox, Typography } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
-import pencil from "../../../../IMG/icons/pencil.png";
+import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import { DataType } from "../../../../redux/types/conterpart_author_data";
 
@@ -51,7 +51,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
       >
         <Typography variant={"subtitle2"}>Общие сведения</Typography>
         <div onClick={() => setChangeGeneralInformation(true)}>
-          <img src={pencil} style={{ width: 15, height: 15 }} />
+          <PencilSimpleIcon color="#3B4750" />
         </div>
       </div>
       <Paper className={classes.paper}>

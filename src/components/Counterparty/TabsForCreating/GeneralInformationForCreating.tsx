@@ -219,7 +219,7 @@ export const GeneralInformationForCreating = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                width: "101%",
+                width: "100%",
               }}
             >
               <span>Общие сведения</span>

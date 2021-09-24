@@ -18,6 +18,10 @@ import { InputFilterSelectedCongratulationsType } from "../../Counterparty/Core/
 import { InputFilterSelectedDirection } from "../../Counterparty/Core/FilterInputs/InputFilterSelectedDirection";
 import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
 import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
+import InputFilterSelectedRoles from "../../Counterparty/Core/FilterInputs/InputFilterSelectedRoles";
+import InputFilterSelectedType from "../../Counterparty/Core/FilterInputs/InputFilterSelectedType";
+import InputFilterSelectedServicesType from "../../Counterparty/Core/FilterInputs/InputFilterSelectedServicesType";
+import InputFilterSelectedBranches from "../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
 
 type Data = {
   Surname: string | null;
@@ -236,6 +240,10 @@ export const ContactPersonsForCreating = () => {
   const [status, setStatus] = React.useState("1");
   const [congrats, setCongrats] = React.useState("1");
   const [directionValue, setDirectionValue] = React.useState("1");
+  const [rolesValue, setRolesValue] = React.useState("1");
+  const [branchValue, setBranchValue] = React.useState("1");
+  const [service, setService] = React.useState("1");
+  const [CounterpartyType, setCounterpartyType] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.value);
   };
@@ -421,14 +429,11 @@ export const ContactPersonsForCreating = () => {
               </div>
               <div className={classes.label}>
                 <span>Роль</span>
-                <TextField
-                  variant={"outlined"}
-                  name="Role"
-                  placeholder={"Выберите"}
-                  value={formik.values.Role}
-                  onChange={formik.handleChange}
-                  error={formik.touched.Role && Boolean(formik.errors.Role)}
-                  helperText={formik.touched.Role && formik.errors.Role}
+                <InputFilterSelectedRoles
+                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setRolesValue(e.target.value)
+                  }
+                  value={rolesValue}
                 />
               </div>
               <div className={classes.label}>
@@ -447,52 +452,36 @@ export const ContactPersonsForCreating = () => {
               </div>
               <div className={classes.label}>
                 <span>Тип контрагента</span>
-                <TextField
-                  variant={"outlined"}
-                  name="counterparty_type"
-                  placeholder={"Выберите"}
-                  value={formik.values.counterparty_type}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.counterparty_type &&
-                    Boolean(formik.errors.counterparty_type)
-                  }
-                  helperText={
-                    formik.touched.counterparty_type &&
-                    formik.errors.counterparty_type
-                  }
-                />
+                <span style={{ width: "60%" }}>
+                  <InputFilterSelectedType
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setCounterpartyType(e.target.value)
+                    }
+                    value={CounterpartyType}
+                  />
+                </span>
               </div>
               <div className={classes.label}>
                 <span>Тип услуг</span>
-                <TextField
-                  variant={"outlined"}
-                  name="service_type"
-                  placeholder={"Выберите"}
-                  value={formik.values.service_type}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.service_type &&
-                    Boolean(formik.errors.service_type)
-                  }
-                  helperText={
-                    formik.touched.service_type && formik.errors.service_type
-                  }
-                />
+                <span style={{ width: "60%" }}>
+                  <InputFilterSelectedServicesType
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setService(e.target.value)
+                    }
+                    value={service}
+                  />
+                </span>
               </div>
               <div className={classes.label}>
                 <span>Отрасль</span>
-                <TextField
-                  variant={"outlined"}
-                  name="Industry"
-                  placeholder={"Выберите"}
-                  value={formik.values.Industry}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.Industry && Boolean(formik.errors.Industry)
-                  }
-                  helperText={formik.touched.Industry && formik.errors.Industry}
-                />
+                <span style={{ width: "60%" }}>
+                  <InputFilterSelectedBranches
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setBranchValue(e.target.value)
+                    }
+                    value={branchValue}
+                  />
+                </span>
               </div>
               <div className={classes.label}>
                 <span>Телефон рабочий</span>

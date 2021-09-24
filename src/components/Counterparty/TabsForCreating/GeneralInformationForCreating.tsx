@@ -236,7 +236,7 @@ export const GeneralInformationForCreating = () => {
                     value="a"
                     color="default"
                     name="radio-button-demo"
-                    size="small"
+                    size="medium"
                     inputProps={{ "aria-label": "A" }}
                   />
                 </div>
@@ -250,7 +250,7 @@ export const GeneralInformationForCreating = () => {
                     value="b"
                     color="default"
                     name="radio-button-demo"
-                    size="small"
+                    size="medium"
                     inputProps={{ "aria-label": "B" }}
                   />
                 </div>

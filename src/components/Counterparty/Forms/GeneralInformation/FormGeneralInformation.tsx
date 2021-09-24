@@ -10,6 +10,8 @@ import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilter
 import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
 import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedCRM";
 import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
+import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
+import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
 import clsx from "clsx";
 
 type Data = {
@@ -377,6 +379,8 @@ export const FormGeneralInformation: React.FC<Props> = ({
               <Checkbox
                 defaultChecked
                 color="default"
+                icon={<CheckSquareChecked color="#5B6770" />}
+                checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
                 inputProps={{ "aria-label": "checkbox with default color" }}
               />
             </span>

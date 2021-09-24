@@ -3,7 +3,8 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import AddIcon from "@material-ui/icons/Add";
+import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
+import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
 import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelectedType";
 import InputFilterSelectedServicesType from "../Core/FilterInputs/InputFilterSelectedServicesType";
 import InputFilterSelectedCrm from "../../Counterparty/Core/FilterInputs/InputFilterSelectedCRM";
@@ -145,10 +146,11 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 500,
     },
     check: {
-      marginLeft: "15%",
+      marginLeft: "-1%",
     },
     checkText: {
       width: "53%",
+      fontSize: 12,
     },
   })
 );
@@ -411,6 +413,8 @@ export const GeneralInformationForCreating = () => {
                 <span style={{ width: "63.2%" }}>
                   <Checkbox
                     defaultChecked
+                    icon={<CheckSquareChecked color="#5B6770" />}
+                    checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
                     color="default"
                     inputProps={{ "aria-label": "checkbox with default color" }}
                   />
@@ -503,7 +507,7 @@ export const GeneralInformationForCreating = () => {
                       setBranchValue(e.target.value)
                     }
                     value={branchValue}
-                  />  
+                  />
                 </div>
               </div>
               {branch > 1 ? (
@@ -617,16 +621,8 @@ export const GeneralInformationForCreating = () => {
               </div>
               <div className={classes.label}>
                 <span>Фактический адрес</span>
-                <Checkbox
-                  className={classes.check}
-                  name="MatchesAddressActualAddress"
-                  color="default"
-                  inputProps={{ "aria-label": "checkbox with default color" }}
-                />
-                <span className={classes.checkText}>
-                  Совпадает с юридическим адресом
-                </span>
-                {/* <TextField
+
+                <TextField
                   variant={"outlined"}
                   name="ActualAddress"
                   placeholder={"123456 город улица строени дом офис"}
@@ -639,9 +635,21 @@ export const GeneralInformationForCreating = () => {
                   helperText={
                     formik.touched.ActualAddress && formik.errors.ActualAddress
                   }
-                /> */}
+                />
               </div>
-
+              <div style={{ justifyContent: "left", marginTop: -12 }}>
+                <Checkbox
+                  className={classes.check}
+                  icon={<CheckSquareChecked color="#5B6770" />}
+                  checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
+                  name="MatchesAddressActualAddress"
+                  color="default"
+                  inputProps={{ "aria-label": "checkbox with default color" }}
+                />
+                <span className={classes.checkText}>
+                  Совпадает с юридическим адресом
+                </span>
+              </div>
               <div className={classes.label}>
                 <span>Почтовый адрес</span>
                 <TextField
@@ -660,7 +668,19 @@ export const GeneralInformationForCreating = () => {
                   }
                 />
               </div>
-
+              <div style={{ justifyContent: "left", marginTop: -12 }}>
+                <Checkbox
+                  className={classes.check}
+                  icon={<CheckSquareChecked color="#5B6770" />}
+                  checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
+                  name="MatchesAddressActualAddress"
+                  color="default"
+                  inputProps={{ "aria-label": "checkbox with default color" }}
+                />
+                <span className={classes.checkText}>
+                  Совпадает с юридическим адресом
+                </span>
+              </div>
               <div className={classes.label}>
                 <span>Сайт компании</span>
                 <div

@@ -117,7 +117,7 @@ const CreateCounterparty = (props: any) => {
             <Tab
               label={
                 <Typography variant="subtitle1" className={classes.tabStyle}>
-                  Общие Сведения
+                  Общие сведения
                 </Typography>
               }
               className={classes.rootTabStyle}

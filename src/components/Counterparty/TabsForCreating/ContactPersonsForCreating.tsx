@@ -15,6 +15,9 @@ import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
 import Divider from "@material-ui/core/Divider";
 import InputFilterSelectedStatus from "../../Counterparty/Core/FilterInputs/InputFilterSelectedStatus";
 import { InputFilterSelectedCongratulationsType } from "../../Counterparty/Core/FilterInputs/InputFilterSelectedDirection";
+import { InputFilterSelectedDirection } from "../../Counterparty/Core/FilterInputs/InputFilterSelectedDirection";
+import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
+import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
 
 type Data = {
   Surname: string | null;
@@ -114,8 +117,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 10,
       marginBottom: 10,
       color: "#fff",
-      fontSize: 12,
+      fontSize: 14,
       paddingBottom: 4,
+      textTransform: "none",
       backgroundColor: "#3AB994",
       "&:hover": {
         backgroundColor: "#36AD8B",
@@ -231,6 +235,7 @@ export const ContactPersonsForCreating = () => {
   const [email, setEmail] = React.useState(1);
   const [status, setStatus] = React.useState("1");
   const [congrats, setCongrats] = React.useState("1");
+  const [directionValue, setDirectionValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.value);
   };
@@ -267,7 +272,12 @@ export const ContactPersonsForCreating = () => {
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <Button
             onClick={() => console.log("button")}
             variant="contained"
@@ -303,7 +313,8 @@ export const ContactPersonsForCreating = () => {
                   <span style={{ width: "20%" }}>
                     <Checkbox
                       name="main_contact_person"
-                      color="default"
+                      icon={<CheckSquareChecked color="#5B6770" />}
+                      checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
                       inputProps={{
                         "aria-label": "checkbox with default color",
                       }}
@@ -896,20 +907,11 @@ export const ContactPersonsForCreating = () => {
                 <Paper className={classes.paper}>
                   <div className={classes.label}>
                     <span>Направление</span>
-                    <TextField
-                      variant={"outlined"}
-                      name="CounterpartyType"
-                      placeholder={"Выберите"}
-                      value={formik.values.CounterpartyType}
-                      onChange={formik.handleChange}
-                      error={
-                        formik.touched.CounterpartyType &&
-                        Boolean(formik.errors.CounterpartyType)
+                    <InputFilterSelectedDirection
+                      handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setDirectionValue(e.target.value)
                       }
-                      helperText={
-                        formik.touched.CounterpartyType &&
-                        formik.errors.CounterpartyType
-                      }
+                      value={directionValue}
                     />
                   </div>
                   <div className={classes.label}>

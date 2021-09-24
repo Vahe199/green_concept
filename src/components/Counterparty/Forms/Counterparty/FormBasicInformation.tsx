@@ -1,7 +1,8 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import AddIcon from "@material-ui/icons/Add";
+import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
+import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
 import {
   Checkbox,
   FormControlLabel,
@@ -203,6 +204,8 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             <span style={{ width: "61%" }}>
               <Checkbox
                 name="main_contact_person"
+                icon={<CheckSquareChecked color="#5B6770" />}
+                checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
                 color="default"
                 inputProps={{ "aria-label": "checkbox with default color" }}
               />

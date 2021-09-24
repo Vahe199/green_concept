@@ -6,6 +6,8 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
 import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
+import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
+import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
 
 const validationSchema = yup.object({
   phone: yup
@@ -229,6 +231,8 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
             <Checkbox
               name="MatchesAddressActualAddress"
               color="default"
+              icon={<CheckSquareChecked color="#5B6770" />}
+              checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
               inputProps={{ "aria-label": "checkbox with default color" }}
             />
             <span>Совпадает с юридическим адресом</span>
@@ -254,6 +258,8 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
             <Checkbox
               name="MatchesAddressMailingAddress"
               color="default"
+              icon={<CheckSquareChecked color="#5B6770" />}
+              checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
               inputProps={{ "aria-label": "checkbox with default color" }}
             />
             <span>Совпадает с юридическим адресом</span>

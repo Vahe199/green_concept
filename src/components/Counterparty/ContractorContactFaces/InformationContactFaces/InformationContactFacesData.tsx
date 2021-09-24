@@ -88,7 +88,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
                 value="a"
                 color="default"
                 name="radio-button-demo"
-                size="small"
+                size="medium"
                 inputProps={{ "aria-label": "A" }}
               />
             </div>
@@ -100,7 +100,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
                 value="b"
                 color="default"
                 name="radio-button-demo"
-                size="small"
+                size="medium"
                 inputProps={{ "aria-label": "B" }}
               />
             </div>

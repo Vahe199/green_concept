@@ -385,7 +385,7 @@ export const ContactPersonsForCreating = () => {
                       value="a"
                       color="default"
                       name="radio-button-demo"
-                      size="small"
+                      size="medium"
                       inputProps={{ "aria-label": "A" }}
                     />
                   </div>
@@ -397,7 +397,7 @@ export const ContactPersonsForCreating = () => {
                       value="b"
                       color="default"
                       name="radio-button-demo"
-                      size="small"
+                      size="medium"
                       inputProps={{ "aria-label": "B" }}
                     />
                   </div>

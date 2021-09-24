@@ -13,7 +13,8 @@ import {
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
 import Divider from "@material-ui/core/Divider";
-import { SpaRounded } from "@material-ui/icons";
+import InputFilterSelectedStatus from "../../Counterparty/Core/FilterInputs/InputFilterSelectedStatus";
+import { InputFilterSelectedCongratulationsType } from "../../Counterparty/Core/FilterInputs/InputFilterSelectedDirection";
 
 type Data = {
   Surname: string | null;
@@ -195,6 +196,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "space-between",
       width: "100%",
+      alignItems: "center",
     },
     rightDivider: {
       marginLeft: "3%",
@@ -227,6 +229,8 @@ export const ContactPersonsForCreating = () => {
   const [congratsPart, setCongratsPart] = React.useState(1);
   const [phone, setPhone] = React.useState(1);
   const [email, setEmail] = React.useState(1);
+  const [status, setStatus] = React.useState("1");
+  const [congrats, setCongrats] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.value);
   };
@@ -263,21 +267,24 @@ export const ContactPersonsForCreating = () => {
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
-        <Button
-          onClick={() => console.log("button")}
-          variant="contained"
-          color="primary"
-          className={classes.btn}
-        >
-          Сохранить карточку
-        </Button>
-        <span className={classes.selectListItem}>
-          <button className={classes.addListItem}>
-            <span style={{ fontSize: 16, marginTop: 14 }}> + </span>
-            <span className={classes.selectItem}> Выбрать из списка</span>
-          </button>
-        </span>
-
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Button
+            onClick={() => console.log("button")}
+            variant="contained"
+            color="primary"
+            className={classes.btn}
+          >
+            Сохранить карточку
+          </Button>
+          <span className={classes.selectListItem}>
+            <span className={classes.addListItem}>
+              <span style={{ fontSize: 17, marginTop: 15 }}> + </span>
+              <span className={classes.selectItem} style={{ marginTop: 15 }}>
+                Выбрать из списка
+              </span>
+            </span>
+          </span>
+        </div>
         <div className={classes.root}>
           <div className={classes.BasicInformation}>
             <div
@@ -293,7 +300,7 @@ export const ContactPersonsForCreating = () => {
               <div className={classes.label}>
                 <div className={classes.topDiv}>
                   <span>Основное контактное лицо </span>
-                  <span style={{ width: "61%" }}>
+                  <span style={{ width: "20%" }}>
                     <Checkbox
                       name="main_contact_person"
                       color="default"
@@ -302,16 +309,13 @@ export const ContactPersonsForCreating = () => {
                       }}
                     />
                   </span>
-                  <div style={{ display: "flex" }}>
+                  <div style={{ display: "flex", width: "30%" }}>
                     <span className={classes.statusText}>Статус</span>
-                    <TextField
-                      variant={"outlined"}
-                      name="Status"
-                      placeholder={"Active"}
-                      value={formik.values.Name}
-                      onChange={formik.handleChange}
-                      error={formik.touched.Name && Boolean(formik.errors.Name)}
-                      helperText={formik.touched.Name && formik.errors.Name}
+                    <InputFilterSelectedStatus
+                      handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setStatus(e.target.value)
+                      }
+                      value={status}
                     />
                   </div>
                 </div>
@@ -1187,20 +1191,11 @@ export const ContactPersonsForCreating = () => {
 
                 <div className={classes.label}>
                   <span>Тип поздравления</span>
-                  <TextField
-                    variant={"outlined"}
-                    name="CounterpartyType"
-                    placeholder={"Выберите"}
-                    value={formik.values.CounterpartyType}
-                    onChange={formik.handleChange}
-                    error={
-                      formik.touched.CounterpartyType &&
-                      Boolean(formik.errors.CounterpartyType)
+                  <InputFilterSelectedCongratulationsType
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setCongrats(e.target.value)
                     }
-                    helperText={
-                      formik.touched.CounterpartyType &&
-                      formik.errors.CounterpartyType
-                    }
+                    value={congrats}
                   />
                 </div>
                 <div className={classes.label}>

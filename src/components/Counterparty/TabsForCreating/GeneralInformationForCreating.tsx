@@ -6,6 +6,8 @@ import * as yup from "yup";
 import AddIcon from "@material-ui/icons/Add";
 import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelectedType";
 import InputFilterSelectedServicesType from "../Core/FilterInputs/InputFilterSelectedServicesType";
+import InputFilterSelectedCrm from "../../Counterparty/Core/FilterInputs/InputFilterSelectedCRM";
+import InputFilterSelectedBranches from "../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
 import {
   Checkbox,
   Radio,
@@ -56,12 +58,15 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: "2%",
       width: "100%",
       "& .MuiOutlinedInput-multiline": {
-        padding: 7,
+        padding: 1,
       },
     },
     textAreaCN: {
-      marginBottom: "2%",
+      marginBottom: "4%",
       width: "60%",
+      "& .MuiOutlinedInput-inputMultiline": {
+        height: "50px !important",
+      },
       "& .MuiOutlinedInput-multiline": {
         padding: 1,
       },
@@ -158,6 +163,12 @@ export const GeneralInformationForCreating = () => {
   const [email, setEmail] = React.useState(1);
   const [CounterpartyType, setCounterpartyType] = React.useState("1");
   const [service, setService] = React.useState("1");
+  const [CRMvalue, setCRMvalue] = React.useState("1");
+  const [CRMvalue2, setCRMvalue2] = React.useState("1");
+  const [CRMvalue3, setCRMvalue3] = React.useState("1");
+  const [branchValue, setBranchValue] = React.useState("1");
+  const [branchValue2, setBranchValue2] = React.useState("1");
+  const [branchValue3, setBranchValue3] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.value);
   };
@@ -251,17 +262,11 @@ export const GeneralInformationForCreating = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <TextField
-                    variant={"outlined"}
-                    className={classes.textArea}
-                    multiline
-                    rows={2}
-                    name="CRM"
-                    placeholder={"Фамилия Имя"}
-                    value={formik.values.CRM}
-                    onChange={formik.handleChange}
-                    error={formik.touched.CRM && Boolean(formik.errors.CRM)}
-                    helperText={formik.touched.CRM && formik.errors.CRM}
+                  <InputFilterSelectedCrm
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setCRMvalue(e.target.value)
+                    }
+                    value={CRMvalue}
                   />
                 </div>
               </div>
@@ -276,22 +281,16 @@ export const GeneralInformationForCreating = () => {
                     marginBottom: "5%",
                   }}
                 >
-                  <TextField
-                    variant={"outlined"}
-                    className={classes.textArea}
-                    multiline
-                    rows={2}
-                    name="CRM"
-                    placeholder={"Фамилия Имя"}
-                    value={formik.values.CRM}
-                    onChange={formik.handleChange}
-                    error={formik.touched.CRM && Boolean(formik.errors.CRM)}
-                    helperText={formik.touched.CRM && formik.errors.CRM}
+                  <InputFilterSelectedCrm
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setCRMvalue2(e.target.value)
+                    }
+                    value={CRMvalue2}
                   />
                   <div
                     style={{
                       marginLeft: "3%",
-                      marginTop: "5%",
+                      marginTop: "1%",
                       cursor: "pointer",
                     }}
                     onClick={() => (CRMs > 1 ? setCRMs(CRMs - 1) : null)}
@@ -312,22 +311,16 @@ export const GeneralInformationForCreating = () => {
                     marginBottom: "5%",
                   }}
                 >
-                  <TextField
-                    variant={"outlined"}
-                    className={classes.textArea}
-                    multiline
-                    rows={2}
-                    name="CRM"
-                    placeholder={"Фамилия Имя"}
-                    value={formik.values.CRM}
-                    onChange={formik.handleChange}
-                    error={formik.touched.CRM && Boolean(formik.errors.CRM)}
-                    helperText={formik.touched.CRM && formik.errors.CRM}
+                  <InputFilterSelectedCrm
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setCRMvalue3(e.target.value)
+                    }
+                    value={CRMvalue3}
                   />
                   <div
                     style={{
                       marginLeft: "3%",
-                      marginTop: "5%",
+                      marginTop: "1%",
                       cursor: "pointer",
                     }}
                     onClick={() => (CRMs > 1 ? setCRMs(CRMs - 1) : null)}
@@ -438,13 +431,15 @@ export const GeneralInformationForCreating = () => {
             </div>
             <Paper className={classes.paper}>
               <div className={classes.label}>
-                <span>Полное наименование компании</span>
+                <span style={{ marginTop: "1%" }}>
+                  Полное наименование компании
+                </span>
 
                 <TextField
                   variant={"outlined"}
                   multiline
                   className={classes.textAreaCN}
-                  rows={4}
+                  rows={2}
                   name="FullCompanyName"
                   placeholder={'ООО "Северо-Западная компания”'}
                   value={formik.values.FullCompanyName}
@@ -503,20 +498,12 @@ export const GeneralInformationForCreating = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <TextField
-                    variant={"outlined"}
-                    name="Industry"
-                    style={{ width: "85%" }}
-                    placeholder={"Выберите отрасль"}
-                    value={formik.values.Industry}
-                    onChange={formik.handleChange}
-                    error={
-                      formik.touched.Industry && Boolean(formik.errors.Industry)
+                  <InputFilterSelectedBranches
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setBranchValue(e.target.value)
                     }
-                    helperText={
-                      formik.touched.Industry && formik.errors.Industry
-                    }
-                  />
+                    value={branchValue}
+                  />  
                 </div>
               </div>
               {branch > 1 ? (
@@ -529,24 +516,16 @@ export const GeneralInformationForCreating = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <TextField
-                      variant={"outlined"}
-                      name="Industry"
-                      style={{ width: "85%" }}
-                      placeholder={"Выберите отрасль"}
-                      value={formik.values.Industry}
-                      onChange={formik.handleChange}
-                      error={
-                        formik.touched.Industry &&
-                        Boolean(formik.errors.Industry)
+                    <InputFilterSelectedBranches
+                      handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setBranchValue2(e.target.value)
                       }
-                      helperText={
-                        formik.touched.Industry && formik.errors.Industry
-                      }
+                      value={branchValue2}
                     />
                     <div
                       style={{
-                        marginRight: "2%",
+                        marginRight: "1%",
+                        marginLeft: "5%",
                         marginTop: 3,
                         cursor: "pointer",
                       }}
@@ -571,24 +550,16 @@ export const GeneralInformationForCreating = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <TextField
-                      variant={"outlined"}
-                      name="Industry"
-                      style={{ width: "85%" }}
-                      placeholder={"Выберите отрасль"}
-                      value={formik.values.Industry}
-                      onChange={formik.handleChange}
-                      error={
-                        formik.touched.Industry &&
-                        Boolean(formik.errors.Industry)
+                    <InputFilterSelectedBranches
+                      handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setBranchValue3(e.target.value)
                       }
-                      helperText={
-                        formik.touched.Industry && formik.errors.Industry
-                      }
+                      value={branchValue3}
                     />
                     <div
                       style={{
-                        marginRight: "2%",
+                        marginRight: "1%",
+                        marginLeft: "5%",
                         marginTop: 3,
                         cursor: "pointer",
                       }}

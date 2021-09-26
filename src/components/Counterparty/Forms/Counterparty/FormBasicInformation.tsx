@@ -1,89 +1,21 @@
-import React from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
-import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
-import InputFilterSelectedRoles from "../../Core/FilterInputs/InputFilterSelectedRoles";
-import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelectedType";
-import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
-import InputFilterSelectedBranches from "../../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
 import {
+  Button,
   Checkbox,
-  FormControlLabel,
+  Link,
+  Paper,
   Radio,
   TextField,
-  Paper,
-  Button,
-  Link,
 } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { useFormik } from "formik";
+import React from "react";
+import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
+import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
+import InputFilterSelectedBranches from "../../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
+import InputFilterSelectedRoles from "../../Core/FilterInputs/InputFilterSelectedRoles";
+import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
+import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelectedType";
 
-type Data = {
-  Surname: string | null;
-  Name: string | null;
-  middle_name: string | null;
-  Gender: string | null;
-  date_of_birth: string | null;
-  Role: string | null;
-  Position: string | null;
-  counterparty_type: string | null;
-  service_type: string | null;
-  Industry: string | null;
-  work_phone: string | null;
-  mobile_phone: string | null;
-  Email: string | null;
-  delivery_address: string | null;
-};
-const validationSchema = yup.object({
-  Surname: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  Name: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  middle_name: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  date_of_birth: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  Position: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  counterparty_type: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  service_type: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  Industry: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  work_phone: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  mobile_phone: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  Email: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  delivery_address: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-});
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {

@@ -1,10 +1,8 @@
+import { Checkbox, Paper, Typography } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Checkbox, Typography } from "@material-ui/core";
-import { Paper } from "@material-ui/core";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
-import { DataType } from "../../../../redux/types/conterpart_author_data";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

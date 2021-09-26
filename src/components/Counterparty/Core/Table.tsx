@@ -57,24 +57,23 @@ export default function CounterpartiesTable(props: any) {
   );
   const { authors } = useTypedSelector((state) => state.authorsList);
   const { getAuthorData } = UseActions();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  // const [page, setPage] = React.useState(0);
+  // const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [services, setServices] = React.useState("Другое");
-  const [currency, setCurrency] = React.useState("All");
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
+  // const [currency, setCurrency] = React.useState("All");
+  // const handleChangePage = (event: unknown, newPage: number) => {
+  //   setPage(newPage);
+  // };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrency(event.target.value);
-    console.log(event.target.value, "selected");
-  };
+  // const handleChangeRowsPerPage = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   // setRowsPerPage(+event.target.value);
+  //   // setPage(0);
+  // };
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setCurrency(event.target.value);
+  // };
   const handleChangeServices = (event: React.ChangeEvent<HTMLInputElement>) => {
     setServices(event.target.value);
   };
@@ -119,33 +118,33 @@ export default function CounterpartiesTable(props: any) {
               </StyledTableCell>
               <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 Наименование
-                <InputFilterSearch handleChange={handleChange} />
+                {/* <InputFilterSearch handleChange={handleChange} /> */}
+                <InputFilterSearch />
               </StyledTableCell>
               <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 Отрасль
-                <InputFilterSearch handleChange={handleChange} />
+                {/* <InputFilterSearch handleChange={handleChange} /> */}
+                <InputFilterSearch />
               </StyledTableCell>
               <StyledTableCell
                 align="left"
                 style={{ minWidth: "150px", color: "#3B4750" }}
               >
                 Группа компаний
-                <InputFilterSearch handleChange={handleChange} />
+                {/* <InputFilterSearch handleChange={handleChange} /> */}
+                <InputFilterSearch />
               </StyledTableCell>
               <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 Ответственный
-                <InputFilterSearch handleChange={handleChange} />
+                {/* <InputFilterSearch handleChange={handleChange} /> */}
+                <InputFilterSearch />
               </StyledTableCell>
               <StyledTableCell
                 align="left"
                 style={{ minWidth: "135px", color: "#3B4750" }}
               >
                 Автор записи
-                <InputFilterSelected
-                  handleChange={handleChange}
-                  options={authors}
-                />
-                
+                <InputFilterSelected options={authors} />
               </StyledTableCell>
               <StyledTableCell align="left" style={{ color: "#3B4750" }}>
                 <div style={{ display: "flex" }}>

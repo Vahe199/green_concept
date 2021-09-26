@@ -1,30 +1,31 @@
-import React, { useEffect } from "react";
+import { Button, Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import AddIcon from "@material-ui/icons/Add";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Typography } from "@material-ui/core";
+import { XLSIcon } from "../../IMG/SVG/XLS";
+import { UseActions } from "../../redux/type_redux_hook/ useAction";
 import CounterpartiesTable from "./Core/Table";
 import { useStyles } from "./Styles";
-import { UseActions } from "../../redux/type_redux_hook/ useAction";
-import { XLSIcon } from "../../IMG/SVG/XLS";
-import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
-import Loader from "../Layout/Loader/Loader";
 
 export const Counterparty = () => {
   const { fetchCounterpartiesList, fetchAuthorsList, getAssetsListData } =
     UseActions();
+  const getData = async () => {
+    await fetchCounterpartiesList();
+    await fetchAuthorsList();
+    await getAssetsListData();
+  };
   useEffect(() => {
-    fetchCounterpartiesList();
-    fetchAuthorsList();
-    getAssetsListData();
-  }, []);
+    getData();
+  });
   let history = useHistory();
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  // const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  //   setValue(newValue);
+  // };
   const handleClick = (path: string) => {
     history.push(`/counterparty/${path}`);
   };

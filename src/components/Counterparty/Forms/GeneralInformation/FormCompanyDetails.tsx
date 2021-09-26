@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { TextField, Paper, Button, Link } from "@material-ui/core";
+import { Button, Paper, TextField } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
-import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
-import InputFilterSelectedBranches from "../../Core/FilterInputs/InputFilterSelectedBranches";
+import { useFormik } from "formik";
+import React, { useEffect, useState } from "react";
+import * as yup from "yup";
 import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
+import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
+import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
+import InputFilterSelectedBranches from "../../Core/FilterInputs/InputFilterSelectedBranches";
 
 type Data = {
   FullCompanyName: string | null;
@@ -180,7 +180,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
           </Button>
         </div>
         <Paper className={classes.paper}>
-          {errorMsg == "CompanyDetails" && (
+          {errorMsg === "CompanyDetails" && (
             <div style={{ color: "red" }}>{error}</div>
           )}
           <div className={classes.label}>

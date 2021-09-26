@@ -73,7 +73,7 @@ type Props = {
 export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
   const classes = useStyles();
   const { changeAuthorContactInfoData, recoveryAuthorDataState } = UseActions();
-  const { AuthorData, error, success, isChange, errorMsg } = useTypedSelector(
+  const { AuthorData, error, isChange, errorMsg } = useTypedSelector(
     (state) => state.author
   );
   const {
@@ -190,7 +190,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
           </Button>
         </div>
         <Paper className={classes.paper}>
-          {errorMsg == "ContactInfo" && (
+          {errorMsg === "ContactInfo" && (
             <div style={{ color: "red" }}>{error}</div>
           )}
           <div className={classes.label}>

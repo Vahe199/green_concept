@@ -1,7 +1,6 @@
 import React from "react";
 
 export const CheckSquareChecked = (props: any) => {
-  const { color } = props;
   return (
     <svg
       width="26"

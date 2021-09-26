@@ -1,26 +1,26 @@
-import React, { useState } from "react";
+import { Link, Typography } from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, Typography } from "@material-ui/core";
-import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import DoubleLeft from "../../IMG/icons/DoubleLeft.png";
+import Tabs from "@material-ui/core/Tabs";
+import { CancelPresentationOutlined } from "@material-ui/icons";
+import React, { useState } from "react";
 import { useHistory, withRouter } from "react-router-dom";
-import { BankDetails } from "./TabsForCreating/BankDetails";
-import { InformationUserData } from "./InformationUserData/InformationUserData";
-import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformationForCreating";
-import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
-import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
-import { ContractorContactFacesData } from "./ContractorContactFaces/ContractorContactFacesData";
-import CreatingBankDetails from "./BankDetails/CreatingBankDetails";
 import { CaretDoubleLeft } from "../../IMG/SVG/CaretDoubleLeft";
-import Divider from "@material-ui/core/Divider";
+import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
+import CreatingBankDetails from "./BankDetails/CreatingBankDetails";
+import { ContractorContactFacesData } from "./ContractorContactFaces/ContractorContactFacesData";
+import { InformationUserData } from "./InformationUserData/InformationUserData";
+import { BankDetails } from "./TabsForCreating/BankDetails";
+import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
+import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformationForCreating";
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
+// interface TabPanelProps {
+//   children?: React.ReactNode;
+//   index: any;
+//   value: any;
+// }
 
 const useStyles = makeStyles((theme) => ({
   menuRoot: {
@@ -95,7 +95,7 @@ const CreateCounterparty = (props: any) => {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
   };
-
+  console.log(edit);
   return (
     <div className={classes.container}>
       <Paper square className={classes.root}>

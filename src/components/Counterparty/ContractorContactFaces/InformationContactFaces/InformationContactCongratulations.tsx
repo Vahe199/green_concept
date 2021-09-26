@@ -1,7 +1,6 @@
-import React from "react";
 import { Paper } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import pencil from "../../../../IMG/icons/pencil.png";
+import React from "react";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

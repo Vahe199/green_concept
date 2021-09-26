@@ -1,53 +1,19 @@
-import React, { useEffect } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import AddIcon from "@material-ui/icons/Add";
-import { Checkbox, Radio, TextField, Paper, Button } from "@material-ui/core";
+import { Button, Checkbox, Paper, Radio, TextField } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
-import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelectedType";
-import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
-import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
-import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedCRM";
-import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
-import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
-import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
+import AddIcon from "@material-ui/icons/Add";
 import clsx from "clsx";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
+import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
+import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
+import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
+import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
+import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
+import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedCRM";
+import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
+import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelectedType";
 
-type Data = {
-  CRM: string | null;
-  CounterpartyType: string | null;
-  ServiceType: string | null;
-  INN: string | null;
-  KPP: string | null;
-  OGPN: string | null;
-};
-const validationSchema: yup.SchemaOf<Data> = yup.object({
-  CRM: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  CounterpartyType: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  ServiceType: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  INN: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  KPP: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  OGPN: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-});
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -205,7 +171,9 @@ export const FormGeneralInformation: React.FC<Props> = ({
           </Button>
         </div>
         <Paper className={classes.paper}>
-          {errorMsg == "General" && <div style={{ color: "red" }}>{error}</div>}
+          {errorMsg === "General" && (
+            <div style={{ color: "red" }}>{error}</div>
+          )}
           <div style={{ marginBottom: "2%", display: "flex" }}>
             <div>
               <span style={{ fontSize: 12, fontWeight: 500 }}>

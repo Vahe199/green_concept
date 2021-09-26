@@ -1,10 +1,10 @@
-import React from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { TextField, Paper, Button, Link } from "@material-ui/core";
+import { Button, Paper, TextField } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import SearchInput from "../../Core/FilterInputs/searchInput";
+import { useFormik } from "formik";
+import React from "react";
+import * as yup from "yup";
 import { InputFilterSelectedDirection } from "../../Core/FilterInputs/InputFilterSelectedDirection";
+import SearchInput from "../../Core/FilterInputs/searchInput";
 
 const validationSchema = yup.object({
   direction: yup
@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between",
       marginBottom: 15,
       fontSize: 12,
-      
     },
     btnSubmit: {
       textTransform: "none",
@@ -150,7 +149,10 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
             {/*    formik.errors.direction*/}
             {/*  }*/}
             {/*/>*/}
-            <InputFilterSelectedDirection />
+            <InputFilterSelectedDirection
+              selected={checked}
+              onChange={handleChange}
+            />
           </div>
           <div className={classes.label}>
             <span>Контактное лицо</span>

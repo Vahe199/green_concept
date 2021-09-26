@@ -1,22 +1,18 @@
-import React from "react";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
-import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
-import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelectedType";
-import InputFilterSelectedServicesType from "../Core/FilterInputs/InputFilterSelectedServicesType";
-import InputFilterSelectedCrm from "../../Counterparty/Core/FilterInputs/InputFilterSelectedCRM";
-import InputFilterSelectedBranches from "../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
 import {
-  Checkbox,
-  Radio,
-  TextField,
-  Paper,
-  Button,
-  Link,
+  Button, Checkbox, Paper, Radio,
+  TextField
 } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { useFormik } from "formik";
+import React from "react";
+import * as yup from "yup";
+import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
+import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
+import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
+import InputFilterSelectedBranches from "../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
+import InputFilterSelectedCrm from "../../Counterparty/Core/FilterInputs/InputFilterSelectedCRM";
+import InputFilterSelectedServicesType from "../Core/FilterInputs/InputFilterSelectedServicesType";
+import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelectedType";
 
 type Data = {
   CRM: string | null;

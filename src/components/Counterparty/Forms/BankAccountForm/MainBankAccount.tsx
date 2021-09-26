@@ -1,33 +1,9 @@
-import React, { useEffect } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { Checkbox, TextField, Paper, Button } from "@material-ui/core";
+import { Button, Checkbox, Paper, TextField } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { useFormik } from "formik";
+import React from "react";
 import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
-import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedCRM";
 
-const validationSchema = yup.object({
-  BNK: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  name_bank: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  cities: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  k_c: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  R_r: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-});
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
       // marginRight: "5%",
       "& .MuiTextField-root": {
         minWidth: "60%",
-        height: "30px",
+        height: 30,
         backgroundColor: theme.palette.common.white,
       },
       "& .MuiOutlinedInput-input": {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
       },
       "& .MuiFormHelperText-root": {
         fontSize: 9,
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "50px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
       },
       "& .MuiOutlinedInput-multiline": {
         padding: "7.5px 14px",
@@ -77,6 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 10,
       color: "#3B4750",
       border: "1px solid #3ab994",
+      boxShadow: "none",
     },
     label: {
       display: "flex",
@@ -84,6 +85,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between",
       marginBottom: 15,
       fontWeight: 500,
+      fontSize: 16,
     },
     addItem: {
       marginTop: 12,
@@ -174,7 +176,9 @@ export const FormCompanyDetails: React.FC<Props> = ({
             width: "101%",
           }}
         >
-          <span style={{ fontWeight: 500 }}>Сведения о компании</span>
+          <span style={{ fontWeight: 500, fontSize: 16 }}>
+            Сведения о компании
+          </span>
           <Button color="primary" type="submit" className={classes.saveButton}>
             Сохранить
           </Button>

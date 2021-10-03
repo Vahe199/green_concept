@@ -1,8 +1,13 @@
 import { Button, Checkbox, Paper, TextField } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
+import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
+import * as yup from "yup";
+import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
+import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
+import { initialBankDetails } from "../../BankDetails/CreatingBankDetails";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 10,
       color: "#3B4750",
       border: "1px solid #3ab994",
+      boxShadow: "none",
     },
     label: {
       display: "flex",
@@ -70,28 +76,84 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+export type ContractorBankDetailType = {
+  bik: string;
+  name: string;
+  city: string;
+  ks: string;
+  rs: string;
+  account_active: boolean;
+  id: number | string;
+};
+const validationSchema = yup.object({
+  bik: yup
+    .string()
+    .min(0, " should be of minimum 8 characters length")
+    .max(9, " Не больше 9 символов")
+    .required("Обязательное поле"),
+  name: yup
+    .string()
+    .min(0, " should be of minimum 8 characters length")
+    .max(200, " не больше 200 символов")
+    .required("Обязательное поле"),
+  city: yup
+    .string()
+    .min(0, " should be of minimum 8 characters length")
+    .max(100, " Не больше 100 символов")
+    .required("Обязательное поле"),
+  ks: yup
+    .string()
+    .min(20, " Не менее 20 символов.")
+    .max(20, " Не более 20 символов")
+    .required("Обязательное поле"),
+  rs: yup
+    .string()
+    .min(20, " Не менее 20 символов.")
+    .max(20, " Не более 20 символов")
+    .required("Обязательное поле"),
+});
+
 type BankProps = {
   // change: boolean;
   setEdit: (val: boolean) => void;
+  contractorBankDetail: ContractorBankDetailType;
+  setContractorBankDetail?: (data: ContractorBankDetailType) => void;
 };
-const MainBankAccount: React.FC<BankProps> = ({ setEdit }) => {
-  const { changeAuthorGeneralData, recoveryAuthorDataState } = UseActions();
+
+const CreatEditBankAccount: React.FC<BankProps> = ({
+  setEdit,
+  contractorBankDetail,
+  setContractorBankDetail,
+}) => {
+  const { AuthorData } = useTypedSelector((state) => state.author);
+  const { id }: any = AuthorData;
+
+  const { loading } = useTypedSelector((state) => state.contractorBankDetails);
+
   const classes = useStyles();
 
+  const { insertContractorBankDetails, updateContractorBankDetails } =
+    UseActions();
+  console.log(contractorBankDetail);
+
   const formik = useFormik({
-    initialValues: {
-      BNK: "",
-      name_bank: "",
-      cities: "",
-      k_c: "",
-      R_r: "",
-      account_active: false,
-    },
-    // validationSchema: validationSchema,
+    initialValues: contractorBankDetail,
+    validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      const data = { ...values, contractor_id: id };
+      if (contractorBankDetail && contractorBankDetail.id) {
+        updateContractorBankDetails(contractorBankDetail.id, data);
+      } else {
+        insertContractorBankDetails(data);
+      }
+      setEdit(true);
     },
   });
+
+  useEffect(() => {
+    return () =>
+      setContractorBankDetail && setContractorBankDetail(initialBankDetails);
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -101,15 +163,15 @@ const MainBankAccount: React.FC<BankProps> = ({ setEdit }) => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            width: "101%",
+            width: "100%",
           }}
         >
           <span>Основной банковский счет</span>
           <Button
-            onClick={() => setEdit(true)}
-            color="primary"
             type="submit"
+            color="primary"
             className={classes.saveButton}
+            disabled={loading}
           >
             Сохранить
           </Button>
@@ -125,14 +187,14 @@ const MainBankAccount: React.FC<BankProps> = ({ setEdit }) => {
               }}
             >
               <TextField
-                name="BNK"
+                name="bik"
                 style={{ width: "75%" }}
                 variant={"outlined"}
                 placeholder={"1234556789101112"}
-                value={formik.values.BNK}
+                value={formik.values.bik}
                 onChange={formik.handleChange}
-                error={formik.touched.BNK && Boolean(formik.errors.BNK)}
-                helperText={formik.touched.BNK && formik.errors.BNK}
+                error={formik.touched.bik && Boolean(formik.errors.bik)}
+                helperText={formik.touched.bik && formik.errors.bik}
               />
               <Button
                 variant="contained"
@@ -148,14 +210,12 @@ const MainBankAccount: React.FC<BankProps> = ({ setEdit }) => {
             <TextField
               style={{ width: "75%" }}
               variant={"outlined"}
-              name="name_bank"
+              name="name"
               placeholder={"Наименование банка"}
-              value={formik.values.name_bank}
+              value={formik.values.name}
               onChange={formik.handleChange}
-              error={
-                formik.touched.name_bank && Boolean(formik.errors.name_bank)
-              }
-              helperText={formik.touched.name_bank && formik.errors.name_bank}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
             />
           </div>
           <div className={classes.label}>
@@ -163,12 +223,12 @@ const MainBankAccount: React.FC<BankProps> = ({ setEdit }) => {
             <TextField
               style={{ width: "75%" }}
               variant={"outlined"}
-              name="cities"
+              name="city"
               placeholder={"Город"}
-              value={formik.values.cities}
+              value={formik.values.city}
               onChange={formik.handleChange}
-              error={formik.touched.cities && Boolean(formik.errors.cities)}
-              helperText={formik.touched.cities && formik.errors.cities}
+              error={formik.touched.city && Boolean(formik.errors.city)}
+              helperText={formik.touched.city && formik.errors.city}
             />
           </div>
           <div className={classes.label}>
@@ -176,12 +236,12 @@ const MainBankAccount: React.FC<BankProps> = ({ setEdit }) => {
             <TextField
               style={{ width: "75%" }}
               variant={"outlined"}
-              name="k_c"
+              name="ks"
               placeholder={"123456789101112"}
-              value={formik.values.k_c}
+              value={formik.values.ks}
               onChange={formik.handleChange}
-              error={formik.touched.k_c && Boolean(formik.errors.k_c)}
-              helperText={formik.touched.k_c && formik.errors.k_c}
+              error={formik.touched.ks && Boolean(formik.errors.ks)}
+              helperText={formik.touched.ks && formik.errors.ks}
             />
           </div>
           <div className={classes.label}>
@@ -189,12 +249,12 @@ const MainBankAccount: React.FC<BankProps> = ({ setEdit }) => {
             <TextField
               style={{ width: "75%" }}
               variant={"outlined"}
-              name="R_r"
+              name="rs"
               placeholder={"123456789101112"}
-              value={formik.values.R_r}
+              value={formik.values.rs}
               onChange={formik.handleChange}
-              error={formik.touched.R_r && Boolean(formik.errors.R_r)}
-              helperText={formik.touched.R_r && formik.errors.R_r}
+              error={formik.touched.rs && Boolean(formik.errors.rs)}
+              helperText={formik.touched.rs && formik.errors.rs}
             />
           </div>
           <div className={classes.label}>
@@ -205,6 +265,11 @@ const MainBankAccount: React.FC<BankProps> = ({ setEdit }) => {
                 defaultChecked
                 color="default"
                 inputProps={{ "aria-label": "checkbox with default color" }}
+                value={formik.values.account_active}
+                onChange={formik.handleChange}
+                icon={<CheckSquareUnChecked color="#5B6770" />}
+                checkedIcon={<CheckSquareChecked color="#5B6770" />}
+                // todo, not implemented
               />
             </span>
           </div>
@@ -214,4 +279,4 @@ const MainBankAccount: React.FC<BankProps> = ({ setEdit }) => {
   );
 };
 
-export default MainBankAccount;
+export default CreatEditBankAccount;

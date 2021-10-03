@@ -28,9 +28,11 @@ const useStyles = makeStyles({
       marginTop: 8,
       border: "1px solid #F1F2F3",
     },
+    borderRadius: 4,
   },
   container: {
     maxHeight: "74vh",
+    borderRadius: 4,
   },
   textField: {
     width: "75px",
@@ -46,6 +48,8 @@ const useStyles = makeStyles({
   },
   TextColor: {
     color: "#3B4750",
+    fontSize: 15,
+    fontWeight: 400,
   },
 });
 
@@ -109,44 +113,64 @@ export default function CounterpartiesTable(props: any) {
               <StyledTableCell>
                 <div style={{ marginTop: -27, marginLeft: 4 }}> &#x2116;</div>
               </StyledTableCell>
-              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
+              <StyledTableCell
+                align="left"
+                style={{ color: "#3B4750", fontSize: 15 }}
+              >
                 Тип
                 <InputFilterSelectedType
                   handleChange={handleChangeServices}
                   value={services}
                 />
               </StyledTableCell>
-              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
+              <StyledTableCell
+                align="left"
+                style={{ color: "#3B4750", fontSize: 15 }}
+              >
                 Наименование
                 {/* <InputFilterSearch handleChange={handleChange} /> */}
                 <InputFilterSearch />
               </StyledTableCell>
-              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
+              <StyledTableCell
+                align="left"
+                style={{ color: "#3B4750", fontSize: 15 }}
+              >
                 Отрасль
                 {/* <InputFilterSearch handleChange={handleChange} /> */}
                 <InputFilterSearch />
               </StyledTableCell>
               <StyledTableCell
                 align="left"
-                style={{ minWidth: "150px", color: "#3B4750" }}
+                style={{
+                  minWidth: "150px",
+                  color: "#3B4750",
+                  fontSize: 15,
+                  whiteSpace: "pre",
+                }}
               >
                 Группа компаний
                 {/* <InputFilterSearch handleChange={handleChange} /> */}
                 <InputFilterSearch />
               </StyledTableCell>
-              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
+              <StyledTableCell
+                align="left"
+                style={{ color: "#3B4750", fontSize: 15 }}
+              >
                 Ответственный
                 {/* <InputFilterSearch handleChange={handleChange} /> */}
                 <InputFilterSearch />
               </StyledTableCell>
               <StyledTableCell
                 align="left"
-                style={{ minWidth: "135px", color: "#3B4750" }}
+                style={{ minWidth: "135px", color: "#3B4750", fontSize: 15 }}
               >
                 Автор записи
                 <InputFilterSelected options={authors} />
               </StyledTableCell>
-              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
+              <StyledTableCell
+                align="left"
+                style={{ color: "#3B4750", fontSize: 15 }}
+              >
                 <div style={{ display: "flex" }}>
                   <span>Создано</span>
                   <span style={{ position: "absolute", right: 8, top: 8 }}>
@@ -155,7 +179,10 @@ export default function CounterpartiesTable(props: any) {
                 </div>
                 <InputFilterDate />
               </StyledTableCell>
-              <StyledTableCell align="left" style={{ color: "#3B4750" }}>
+              <StyledTableCell
+                align="left"
+                style={{ color: "#3B4750", fontSize: 15 }}
+              >
                 <div style={{ display: "flex" }}>
                   <span>Обновлено</span>
                   <span style={{ position: "absolute", right: 8, top: 8 }}>

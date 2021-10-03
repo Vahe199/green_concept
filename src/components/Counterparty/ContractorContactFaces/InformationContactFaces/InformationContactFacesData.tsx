@@ -11,9 +11,10 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       padding: 10,
       color: "#3B4750",
+      boxShadow: "none",
     },
     spanTitle: {
-      fontSize: 12,
+      fontSize: 16,
       fontWeight: 500,
     },
     label: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "space-between",
       marginBottom: 15,
-      fontSize: 12,
+      fontSize: 16,
     },
   })
 );

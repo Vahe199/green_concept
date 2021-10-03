@@ -2,6 +2,7 @@ import TextField from "@material-ui/core/TextField";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import Loader from "../../../Layout/Loader/Loader";
+import { CaretDown } from "../../../../IMG/SVG/CaretDown";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,6 +30,13 @@ export default function InputFilterSelectedStatus(props: any): any {
         onChange={props.handleChange}
         SelectProps={{
           native: true,
+        }}
+        InputProps={{
+          endAdornment: (
+            <div style={{ position: "absolute", right: 5, top: 6 }}>
+              <CaretDown />
+            </div>
+          ),
         }}
         variant="outlined"
       >

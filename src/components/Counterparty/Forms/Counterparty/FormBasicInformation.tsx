@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 10,
       color: "#3B4750",
       border: "1px solid #3ab994",
+      boxShadow: "none",
     },
     label: {
       display: "flex",

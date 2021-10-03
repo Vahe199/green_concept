@@ -1,8 +1,12 @@
 import { Button, Paper, Typography } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
-import React from "react";
+import React, { useEffect } from "react";
+import { UseActions } from "../../../redux/type_redux_hook/ useAction";
+import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import { PencilSimpleIcon } from "../../../IMG/SVG/PencilSimpleIcon";
+import { ContractorBankDetailType } from "../Forms/BankAccountForm/CreatEditBankAccount";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -18,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 16,
       color: "#3B4750",
       borderRadius: 4,
+      boxShadow: "none",
     },
     btn: {
       textTransform: "none",
@@ -35,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     description: {
+      fontSize: 16,
       width: "40.1%",
       flexWrap: "wrap",
       textTransform: "none",
@@ -44,15 +50,34 @@ const useStyles = makeStyles((theme: Theme) =>
 type BankProps = {
   // change: boolean;
   setEdit: (val: boolean) => void;
+  setContractorBankDetail?: (data: ContractorBankDetailType) => void;
 };
-export const BankDetails: React.FC<BankProps> = ({ setEdit }) => {
-  const data = [
-    { id: 1, item: "БИК", value: "123456789" },
-    { id: 2, item: "Наименование банка", value: "ПАО “Сбербанк”" },
-    { id: 3, item: "Город", value: "Консультирование" },
-    { id: 4, item: "К/с", value: "123456789101112" },
-    { id: 5, item: "Р/с", value: "123456789101112" },
+export const BankDetails: React.FC<BankProps> = ({
+  setEdit,
+  setContractorBankDetail,
+}) => {
+  const { data, loading } = useTypedSelector(
+    (state) => state.contractorBankDetails
+  );
+
+  const fieldsMapper = [
+    { id: 1, title: "БИК", field: "bik" },
+    { id: 2, title: "Наименование банка", field: "name" },
+    { id: 3, title: "Город", field: "city" },
+    { id: 4, title: "К/с", field: "ks" },
+    { id: 5, title: "Р/с", field: "rs" },
+    { id: 6, title: "account_active", field: "account_active" },
   ];
+
+  const { AuthorData } = useTypedSelector((state) => state.author);
+  const { id }: any = AuthorData;
+
+  const { fetchContractorBankDetails } = UseActions();
+
+  useEffect(() => {
+    fetchContractorBankDetails(id);
+  }, []);
+
   const classes = useStyles();
   const Details = (props: any) => {
     return (
@@ -60,15 +85,52 @@ export const BankDetails: React.FC<BankProps> = ({ setEdit }) => {
         <Typography variant={"button"} className={classes.description}>
           {props.item}
         </Typography>
-        <Typography variant={"body2"}>{props.value}</Typography>
+        <Typography variant={"body2"} className={classes.description}>{props.value}</Typography>
       </div>
     );
   };
+
   return (
     <div className={classes.root}>
+      {data.length && !loading
+        ? data.map((details) => (
+            <div style={{ width: "40%" }}>
+              <div>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <Typography variant={"subtitle2"}>
+                    {Boolean(details.main)
+                      ? "Основной банковский счет"
+                      : "Дополнительный банковский счет"}
+                  </Typography>
+                  <div
+                    onClick={() => {
+                      setEdit(false);
+                      setContractorBankDetail &&
+                        setContractorBankDetail(details);
+                    }}
+                  >
+                    <PencilSimpleIcon color="#3B4750" />
+                  </div>
+                </div>
+
+                <Paper className={classes.paper}>
+                  {fieldsMapper.map(({ id, title, field }) => (
+                    <Details
+                      key={id}
+                      item={title}
+                      value={details[field as keyof typeof details]}
+                    />
+                  ))}
+                </Paper>
+              </div>
+            </div>
+          ))
+        : null}
       <div style={{ width: "100%" }}>
         <Button
-          onClick={() => console.log("button")}
+          onClick={() => setEdit(false)}
           variant="contained"
           color="primary"
           className={classes.btn}
@@ -76,41 +138,6 @@ export const BankDetails: React.FC<BankProps> = ({ setEdit }) => {
         >
           Добавить банковские реквизиты
         </Button>
-      </div>
-      <div style={{ width: "40%" }}>
-        <div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant={"subtitle2"}>
-              Основной банковский счет
-            </Typography>
-            <div onClick={() => setEdit(false)}>
-              <PencilSimpleIcon color="#3B4750"/>
-            </div>
-          </div>
-
-          <Paper className={classes.paper}>
-            {data.map((data) => (
-              <Details item={data.item} value={data.value} />
-            ))}
-          </Paper>
-        </div>
-      </div>
-      <div style={{ width: "40%" }}>
-        <div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant={"subtitle2"}>
-              Дополнительный банковский счет
-            </Typography>
-            <div onClick={() => setEdit(false)}>
-            <PencilSimpleIcon color="#3B4750"/>
-            </div>
-          </div>
-          <Paper className={classes.paper}>
-            {data.map((data) => (
-              <Details item={data.item} value={data.value} />
-            ))}
-          </Paper>
-        </div>
       </div>
     </div>
   );

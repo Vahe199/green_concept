@@ -51,6 +51,7 @@ export const Counterparty = () => {
               variant="contained"
               startIcon={<AddIcon />}
               className={classes.button}
+              style={{ width: 192 }}
             >
               Новый контакт
             </Button>
@@ -58,6 +59,7 @@ export const Counterparty = () => {
               onClick={() => handleClick("all contact persons")}
               variant="contained"
               className={classes.button}
+              style={{ width: 214 }}
             >
               Все контактные лица
             </Button>

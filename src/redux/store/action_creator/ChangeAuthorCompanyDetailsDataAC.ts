@@ -4,7 +4,7 @@ import {counterpartiesApi} from "../../../api/api";
 
 
 export const changeAuthorCompanyDetailsData = (formData:any, id:number,errorMessage:string) =>  async (dispatch: Dispatch<AuthorDataAction>) => {
-   debugger
+
     try {
         dispatch({
             type: AuthorDataActionType.CHANGE_AUTHOR_DATA});

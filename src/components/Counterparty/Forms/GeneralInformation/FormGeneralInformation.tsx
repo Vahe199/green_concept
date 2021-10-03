@@ -13,7 +13,6 @@ import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedC
 import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
 import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelectedType";
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
       },
       "& .MuiFormHelperText-root": {
         fontSize: 9,
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
         marginLeft: 0,
       },
       "& .MuiFormControlLabel-root": {
-        fontSize: 10,
+        fontSize: 16,
       },
       "& .MuiOutlinedInput-adornedEnd ": {
         paddingRight: 0,
@@ -49,14 +48,14 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 10,
       color: "#3B4750",
       border: "1px solid #3ab994",
-      // color: "red",
+      boxShadow: "none",
     },
     label: {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
       marginBottom: 15,
-      fontSize: 12,
+      fontSize: 16,
       fontWeight: 500,
     },
     NDASection: {
@@ -165,7 +164,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
             width: "101%",
           }}
         >
-          <span style={{ fontWeight: 500 }}>Общие сведения</span>
+          <span style={{ fontWeight: 500, fontSize: 16 }}>Общие сведения</span>
           <Button color="primary" type="submit" className={classes.saveButton}>
             Сохранить
           </Button>
@@ -176,7 +175,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
           )}
           <div style={{ marginBottom: "2%", display: "flex" }}>
             <div>
-              <span style={{ fontSize: 12, fontWeight: 500 }}>
+              <span style={{ fontSize: 16, fontWeight: 500 }}>
                 Физическое лицо
               </span>
               <Radio
@@ -192,7 +191,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
               />
             </div>
             <div>
-              <span style={{ fontSize: 12, fontWeight: 500 }}>
+              <span style={{ fontSize: 16, fontWeight: 500 }}>
                 Юридическое лицо
               </span>
               <Radio

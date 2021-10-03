@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme: Theme) =>
             width:18,
             height:18,
             marginRight:-6,
-            marginLeft:-11
+            marginLeft:-11,
+            marginBottom:-4
         }
     }),
 );

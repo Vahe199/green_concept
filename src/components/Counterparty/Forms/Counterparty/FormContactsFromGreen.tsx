@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#3B4750",
       border: "1px solid #3ab994",
       height: 270,
+      boxShadow: "none",
     },
     label: {
       display: "flex",

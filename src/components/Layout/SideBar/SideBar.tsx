@@ -21,12 +21,26 @@ import { Letters } from "../../../IMG/SVG/LettersIcon";
 import { ConterpartiesIcon } from "../../../IMG/SVG/ConterpartiesIcon";
 import { EmployeesIcon } from "../../../IMG/SVG/EmployeesIcon";
 import { TimesheetIcon } from "../../../IMG/SVG/TimesheetIcon";
-const drawerWidth = 255;
+const drawerWidth = 350;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     sidebar: {
       display: "flex",
+      fontWeight: "normal",
+      cursor: "pointer",
+      fontSize: 16,
+      "& .MuiListItem-button": {
+        fontSize: 18,
+        fontWeight: 700,
+      },
+      "& .MuiListItemIcon-root": {
+        marginRight: 7,
+        marginLeft: 12,
+      },
+      "& .MuiDrawer-paperAnchorDockedLeft": {
+        border: 0,
+      },
     },
     drawer: {
       width: drawerWidth,
@@ -53,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowY: "hidden",
       width: theme.spacing(7) + 1,
       [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9) + 1,
+        width: 96,
       },
     },
     toolbar: {

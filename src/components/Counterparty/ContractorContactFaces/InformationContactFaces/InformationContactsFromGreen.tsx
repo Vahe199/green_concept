@@ -14,16 +14,17 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 10,
       height: 270,
       color: "#3B4750",
+      boxShadow: "none",
     },
     label: {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
       marginBottom: 15,
-      fontSize: 12,
+      fontSize: 16,
     },
     spanTitle: {
-      fontSize: 12,
+      fontSize: 16,
       fontWeight: 500,
     },
     addItem: {
@@ -53,7 +54,7 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
       >
         <span className={classes.spanTitle}>Контакты со стороны Грин</span>
         <span onClick={() => setChangeContactsFromGreen(false)}>
-        <PencilSimpleIcon color="#3B4750" />
+          <PencilSimpleIcon color="#3B4750" />
         </span>
       </div>
       <Paper className={classes.paper}>
@@ -68,7 +69,7 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
         <div className={classes.label} style={{ alignItems: "self-start" }}>
           <span className={classes.spanTitle}>Дополнительная информация</span>
 
-          <span style={{ width: "60%" }}>
+          <span style={{ width: "60%", maxHeight: 164, overflowY: "auto" }}>
             Дополнительная информация .Сайт рыбатекст поможет дизайнеру,
             верстальщику, вебмастеру сгенерировать несколько абзацев более менее
             осмысленного текста рыбы на русском языке, а начинающему оратору

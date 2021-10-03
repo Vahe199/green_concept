@@ -4,8 +4,8 @@ export const XLSIcon = (props: any) => {
   const { color } = props;
   return (
     <svg
-      width="25"
-      height="29"
+      width="36"
+      height="36"
       viewBox="0 0 36 36"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

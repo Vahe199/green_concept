@@ -7,12 +7,10 @@ import axios from "axios";
 const instance = axios.create({
   baseURL: "https://green-kis.tecman.ru/api/",
   headers: {
-    "Content-Type":
-      "application/x-www-form-urlencoded; charset=UTF-8;application/json",
-    Accept: "application/json",
+    "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMyNjU0NDExLCJleHAiOjE2MzI3NDA4MTEsIm5iZiI6MTYzMjY1NDQxMSwianRpIjoiNkd4TEJBMlVTN2NxN2dDbyIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.TzyUYGjYfpdZ9YrIWzEMqveNyz5QFz2lak4ZsOoQQvU`,
+    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMzMTk2Mzk5LCJleHAiOjE2MzMyODI3OTksIm5iZiI6MTYzMzE5NjM5OSwianRpIjoiUU5Tem9jSkQzc0pqbnN4OCIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.KRR4jZaZ8Q2BEiX2Ef9z532mT6eXTE2PpHZZ1bt6uSI`,
   },
 });
 
@@ -26,9 +24,7 @@ export const counterpartiesApi = {
     return instance.get("contractors/authors_list");
   },
   fetchContractorsTypes() {
-    return instance.get("admin/contractor_types").then((res) => {
-      debugger;
-    });
+    return instance.get("admin/contractor_types").then((res) => {});
   },
   fetchContractorsServicesTypes() {
     return instance.get("admin/contractor_type_services");
@@ -44,5 +40,20 @@ export const counterpartiesApi = {
   },
   getAssetsData() {
     return instance.get("contractors/get_assets");
+  },
+};
+
+export const contractorApi = {
+  fetchContractorBankDetailsData(id) {
+    return instance.get(`bank_details/${id}`);
+  },
+  insertContractorBankDetailsData(data) {
+    return instance.post("bank_details/", data);
+  },
+  updateContractorBankDetailsData(contractor_bank_detail, data) {
+    return instance.put(`bank_details/${contractor_bank_detail}`, data);
+  },
+  insertContractorGeneralData(data) {
+    return instance.post("contractors/", data);
   },
 };

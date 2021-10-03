@@ -7,10 +7,11 @@ import { counterpartiesAuthorsListReducer } from "./reducer/conterparties/conter
 import { counterpartiesAuthorDataReducer } from "./reducer/conterparties/conterpartiesAuthorDataReducer";
 import { counterpartiesAssetsListReducer } from "./reducer/conterparties/conterpartiesAssetsTypesList";
 import { counterpartiesServicesTypesListReducer } from "./reducer/conterparties/conterpartiesServicesTypesList";
+import { contractorBankDetailsReducer } from "./reducer/contractor/contractorBankDetailsReducer";
 
 const reducer = combineReducers({
   counterparties: counterpartiesReducer,
-  //contractor:newContractorReducer,
+  contractorBankDetails: contractorBankDetailsReducer,
   assets: counterpartiesAssetsListReducer,
   servicesTypes: counterpartiesServicesTypesListReducer,
   authorsList: counterpartiesAuthorsListReducer,

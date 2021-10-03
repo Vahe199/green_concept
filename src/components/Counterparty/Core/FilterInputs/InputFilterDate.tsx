@@ -1,5 +1,4 @@
 import TextField from "@material-ui/core/TextField";
-
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 
@@ -17,7 +16,7 @@ export default function InputFilterDate(props: any): any {
   return (
     <div className={classes.root}>
       <TextField
-        style={{ width: 130 }}
+        style={{ width: 131 }}
         id="date"
         variant="outlined"
         type="date"

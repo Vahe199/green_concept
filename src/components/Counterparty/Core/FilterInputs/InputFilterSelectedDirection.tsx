@@ -1,6 +1,7 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
+import { CaretDown } from "../../../../IMG/SVG/CaretDown";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,7 +16,6 @@ export function InputFilterSelectedDirection(props: any): any {
   const classes = useStyles();
   const { assets, load } = useTypedSelector((state) => state.assets);
   let { directions }: any = assets;
-  debugger;
   return load ? (
     <span></span>
   ) : (
@@ -24,6 +24,13 @@ export function InputFilterSelectedDirection(props: any): any {
         style={{ width: "100%" }}
         id="outlined-select-currency-native"
         select
+        InputProps={{
+          endAdornment: (
+            <div style={{ position: "absolute", right: 5, top: 6 }}>
+              <CaretDown />
+            </div>
+          ),
+        }}
         onChange={props.handleChange}
         SelectProps={{
           native: true,
@@ -54,6 +61,13 @@ export function InputFilterSelectedCongratulationsType(props: any): any {
         onChange={props.handleChange}
         SelectProps={{
           native: true,
+        }}
+        InputProps={{
+          endAdornment: (
+            <div style={{ position: "absolute", right: 5, top: 6 }}>
+              <CaretDown />
+            </div>
+          ),
         }}
         variant="outlined"
       >

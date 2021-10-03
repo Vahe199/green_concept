@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
       },
       "& .MuiFormHelperText-root": {
         fontSize: 9,
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 10,
       marginBottom: 10,
       color: "#fff",
-      fontSize: 14,
+      fontSize: 18,
       paddingBottom: 4,
       textTransform: "none",
       backgroundColor: "#3AB994",
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "40px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
       },
       "& .MuiOutlinedInput-multiline": {
         padding: "7.5px 12px",
@@ -81,13 +81,14 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 10,
       marginBottom: "1%",
       border: "1px solid #3ab994",
+      boxShadow: "none",
     },
     label: {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
       marginBottom: 10,
-      fontSize: "13px",
+      fontSize: 16,
       fontWeight: 500,
     },
     addItem: {
@@ -95,7 +96,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textDecoration: "none",
       marginBottom: "2%",
       cursor: "pointer",
-      fontSize: "12px",
+      fontSize: 14,
       "&:hover": {
         textDecoration: "underline",
       },
@@ -103,7 +104,7 @@ const useStyles = makeStyles((theme: Theme) =>
     addContact: {
       textDecoration: "none",
       cursor: "pointer",
-      fontSize: "12px",
+      fontSize: 14,
       "&:hover": {
         textDecoration: "underline",
       },
@@ -123,15 +124,19 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "57%",
     },
     statusText: {
-      fontSize: 15,
+      fontSize: 16,
       marginTop: "3%",
-      marginRight: "10%",
+      marginRight: "7%",
     },
     topDiv: {
       display: "flex",
       justifyContent: "space-between",
       width: "100%",
       alignItems: "center",
+    },
+    val: {
+      fontSize: 16,
+      fontWeight: 500,
     },
     rightDivider: {
       marginLeft: "3%",
@@ -239,7 +244,7 @@ export const ContactPersonsForCreating = () => {
                 alignItems: "center",
               }}
             >
-              <span>Основные сведения</span>
+              <span className={classes.val}>Основные сведения</span>
             </div>
             <Paper className={classes.paper}>
               <div className={classes.label}>
@@ -255,7 +260,7 @@ export const ContactPersonsForCreating = () => {
                       }}
                     />
                   </span>
-                  <div style={{ display: "flex", width: "30%" }}>
+                  <div style={{ display: "flex", width: "34%" }}>
                     <span className={classes.statusText}>Статус</span>
                     <InputFilterSelectedStatus
                       handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -818,7 +823,7 @@ export const ContactPersonsForCreating = () => {
                     width: "100%",
                   }}
                 >
-                  <span>Контакты со стороны Грин</span>
+                  <span className={classes.val}>Контакты со стороны Грин</span>
                 </div>
                 <Paper className={classes.paper}>
                   <div className={classes.label}>
@@ -1085,7 +1090,7 @@ export const ContactPersonsForCreating = () => {
                   marginTop: "2%",
                 }}
               >
-                <span>Сведения о поздравлениях</span>
+                <span className={classes.val}>Сведения о поздравлениях</span>
               </div>
               <Paper className={classes.paper}>
                 <div className={classes.label}>

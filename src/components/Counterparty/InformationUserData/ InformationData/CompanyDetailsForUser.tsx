@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#3B4750",
       padding: 16,
       borderRadius: 4,
+      boxShadow: "none",
     },
     div: {
       display: "flex",
@@ -27,6 +28,11 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "50%",
       flexWrap: "wrap",
       textTransform: "none",
+      fontSize: 16,
+    },
+    val: {
+      fontSize: 16,
+      fontWeight: 500,
     },
   })
 );
@@ -51,7 +57,9 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
           marginBottom: 10,
         }}
       >
-        <Typography variant={"subtitle2"}>Сведения о компании </Typography>
+        <Typography variant={"subtitle2"} className={classes.val}>
+          Сведения о компании
+        </Typography>
         <div onClick={() => setChangeCompanyDetails(true)}>
           <PencilSimpleIcon color="#3B4750" />
         </div>
@@ -61,19 +69,23 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
           <Typography variant={"button"} className={classes.description}>
             Полное наименование компании
           </Typography>
-          <Typography variant={"body2"}>{full_name}</Typography>
+          <Typography variant={"body2"} className={classes.val}>
+            {full_name}
+          </Typography>
         </div>
         <div className={classes.div}>
           <Typography variant={"button"} className={classes.description}>
             Краткое наименование компании
           </Typography>
-          <Typography variant={"body2"}>{short_name}</Typography>
+          <Typography variant={"body2"} className={classes.val}>
+            {short_name}
+          </Typography>
         </div>
         <div className={classes.div}>
           <Typography variant={"button"} className={classes.description}>
             Группа компаний (при наличии)
           </Typography>
-          <Typography variant={"body2"}>
+          <Typography variant={"body2"} className={classes.val}>
             {group ? group.full_name : "-----------------------"}
           </Typography>
         </div>
@@ -84,7 +96,9 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
           <Typography variant={"body2"}>
             {branches.length > 0
               ? branches.map((branch: any) => (
-                  <div key={branch.id}>{branch.name}</div>
+                  <div key={branch.id} className={classes.val}>
+                    {branch.name}
+                  </div>
                 ))
               : ""}
           </Typography>

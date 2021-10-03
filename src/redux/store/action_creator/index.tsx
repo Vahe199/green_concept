@@ -8,7 +8,8 @@ import * as AuthorCompanyDetailsData from "./ChangeAuthorCompanyDetailsDataAC";
 import * as AuthorContactInfoData from "./ChangeAuthorContactInfoDataAC";
 import * as AssetsListDataAC from "./AssetsListAC";
 import * as RecoveryAuthorDataAC from "./recoveryAuthorDataState";
-
+import * as ContractorBankDetailsDataAC from "./ContractorBankDetailsDataAC";
+import * as ContractorGeneraDataAC from "./ContractorGeneralDataAC";
 
 export default {
   ...CounterpartiesActionCreators,
@@ -20,5 +21,7 @@ export default {
   ...AuthorContactInfoData,
   ...AuthorCompanyDetailsData,
   ...AssetsListDataAC,
-  ...RecoveryAuthorDataAC
+  ...RecoveryAuthorDataAC,
+  ...ContractorBankDetailsDataAC,
+  ...ContractorGeneraDataAC,
 };

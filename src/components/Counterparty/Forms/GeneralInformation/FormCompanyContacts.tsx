@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
       },
       "& .MuiFormHelperText-root": {
         fontSize: 9,
@@ -41,13 +41,14 @@ const useStyles = makeStyles((theme: Theme) =>
         marginLeft: 0,
       },
       "& .MuiFormControlLabel-root": {
-        fontSize: 10,
+        fontSize: 16,
       },
     },
     paper: {
       padding: 10,
       color: "#3B4750",
       border: "1px solid #3ab994",
+      boxShadow: "none",
     },
     label: {
       display: "flex",
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between",
       marginBottom: 10,
       fontWeight: 500,
+      fontSize: 16,
     },
     addItem: {
       marginBottom: 8,
@@ -63,6 +65,9 @@ const useStyles = makeStyles((theme: Theme) =>
     saveButton: {
       textTransform: "none",
       textDecoration: "underline",
+    },
+    title: {
+      fontSize: 16,
     },
   })
 );
@@ -184,7 +189,9 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
             width: "101%",
           }}
         >
-          <span style={{ fontWeight: 500 }}>Контакты компании</span>
+          <span style={{ fontWeight: 500, fontSize: 16 }}>
+            Контакты компании
+          </span>
           <Button color="primary" type="submit" className={classes.saveButton}>
             Сохранить
           </Button>
@@ -235,7 +242,9 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
               checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
               inputProps={{ "aria-label": "checkbox with default color" }}
             />
-            <span>Совпадает с юридическим адресом</span>
+            <span className={classes.title}>
+              Совпадает с юридическим адресом
+            </span>
           </div>
           <div className={classes.label}>
             <span>Почтовый адрес</span>
@@ -262,7 +271,9 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
               checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
               inputProps={{ "aria-label": "checkbox with default color" }}
             />
-            <span>Совпадает с юридическим адресом</span>
+            <span className={classes.title}>
+              Совпадает с юридическим адресом
+            </span>
           </div>
           <div className={classes.label} style={{ alignItems: "flex-start" }}>
             <span>Сайт компании</span>

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#3B4750",
       padding: 16,
       borderRadius: 4,
+      boxShadow: "none",
     },
     div: {
       display: "flex",
@@ -27,6 +28,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "47%",
       flexWrap: "wrap",
       textTransform: "none",
+      fontSize: 16,
+    },
+    title: {
+      fontSize: 16,
     },
   })
 );
@@ -57,73 +62,63 @@ export const CompanyContactsForUser: React.FC<Props> = ({
           marginBottom: 10,
         }}
       >
-        <Typography variant={"subtitle2"}>Контакты компании</Typography>
+        <Typography variant={"subtitle2"} className={classes.title}>
+          Контакты компании
+        </Typography>
         <div onClick={() => setChangeContacts(true)}>
-        <PencilSimpleIcon color="#3B4750" />
+          <PencilSimpleIcon color="#3B4750" />
         </div>
       </div>
       <Paper className={classes.paper}>
         <div className={classes.div}>
-          <Typography
-            variant={"button"}
-            className={classes.description}
-          >
+          <Typography variant={"button"} className={classes.description}>
             Юридический адрес
           </Typography>
-          <Typography variant={"body2"}>
+          <Typography variant={"body2"} className={classes.title}>
             {legal_registration_address}
           </Typography>
         </div>
         <div className={classes.div}>
-          <Typography
-            variant={"button"}
-            className={classes.description}
-          >
+          <Typography variant={"button"} className={classes.description}>
             Фактический адрес
           </Typography>
-          <Typography variant={"body2"}>{actual_address}</Typography>
+          <Typography variant={"body2"} className={classes.title}>
+            {actual_address}
+          </Typography>
         </div>
         <div className={classes.div}>
-          <Typography
-            variant={"button"}
-            className={classes.description}
-          >
+          <Typography variant={"button"} className={classes.description}>
             Почтовый адрес
           </Typography>
-          <Typography variant={"body2"}>{post_address}</Typography>
+          <Typography variant={"body2"} className={classes.title}>
+            {post_address}
+          </Typography>
         </div>
         <div className={classes.div}>
-          <Typography
-            variant={"button"}
-            className={classes.description}
-          >
+          <Typography variant={"button"} className={classes.description}>
             Сайт компании
           </Typography>
-          <Typography variant={"body2"}>www.сайткомпании.ru</Typography>
+          <Typography variant={"body2"} className={classes.title}>
+            www.сайткомпании.ru
+          </Typography>
         </div>
         <div className={classes.div}>
-          <Typography
-            variant={"button"}
-            className={classes.description}
-          >
+          <Typography variant={"button"} className={classes.description}>
             Телефон
           </Typography>
           <Typography variant={"body2"}>
             {phones.map((phone: any) => (
-              <div key={phone.id}>{phone.phone}</div>
+              <div key={phone.id} className={classes.title}>{phone.phone}</div>
             ))}
           </Typography>
         </div>
         <div className={classes.div}>
-          <Typography
-            variant={"button"}
-            className={classes.description}
-          >
+          <Typography variant={"button"} className={classes.description}>
             E-mail
           </Typography>
           <Typography variant={"body2"}>
             {emails.map((mail: any) => (
-              <div key={mail.id}>{mail.email}</div>
+              <div key={mail.id} className={classes.title}>{mail.email}</div>
             ))}
           </Typography>
         </div>

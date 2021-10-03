@@ -77,6 +77,8 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
     height: 14,
     color: "#5B6770",
+    fontSize: 18,
+    fontWeight: 500,
   },
   rootTabStyle: {
     padding: 0,
@@ -95,6 +97,7 @@ const CreateCounterparty = (props: any) => {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
   };
+
   console.log(edit);
   return (
     <div className={classes.container}>
@@ -153,7 +156,7 @@ const CreateCounterparty = (props: any) => {
             <Tab
               label={
                 <Typography variant="subtitle1" className={classes.tabStyle}>
-                  Официальная Переписка
+                  Официальная переписка
                 </Typography>
               }
               className={classes.rootTabStyle}
@@ -167,7 +170,7 @@ const CreateCounterparty = (props: any) => {
           <CaretDoubleLeft color="#3B4750" alt="double left icon" />
         </div>
         <Link color="inherit" onClick={() => history.push("/counterparties")}>
-          <div style={{ fontSize: 16, cursor: "pointer" }}>
+          <div style={{ fontSize: 14, cursor: "pointer" }}>
             Вернуться назад к списку
           </div>
         </Link>
@@ -181,7 +184,7 @@ const CreateCounterparty = (props: any) => {
             {selectedTab === 2 && <CreatingBankDetails />}
           </div>
         ) : props.match.params.item === "new contractor" ? (
-          <div>
+          <div >
             {selectedTab === 0 && <GeneralInformationForCreating />}
             {selectedTab === 1 && <ContactPersonsForCreating />}
             {selectedTab === 2 && <BankDetails setEdit={setEdit} />}

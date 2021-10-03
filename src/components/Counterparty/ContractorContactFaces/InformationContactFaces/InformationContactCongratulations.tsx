@@ -11,16 +11,17 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       padding: 10,
       color: "#3B4750",
+      boxShadow: "none",
     },
     label: {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
       marginBottom: 8,
-      fontSize: 12,
+      fontSize: 16,
     },
     spanTitle: {
-      fontSize: 12,
+      fontSize: 16,
       fontWeight: 500,
     },
     btnSubmit: {

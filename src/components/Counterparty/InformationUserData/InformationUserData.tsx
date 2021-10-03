@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 16,
       color: "#3B4750",
       borderRadius: 4,
+      boxShadow: "none",
     },
   })
 );

@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import logo from "../../../IMG/Green_Logo.png";
+import Logo from "../../../IMG/SVG/Logo";
 import profilePic from "../../../IMG/profilePic.png";
 import { SettingsIcon } from "../../../IMG/SVG/SettingsIcon";
 import { SignOutIcon } from "../../../IMG/SVG/SignOutIcon";
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#3B4750",
       display: "inline",
       marginRight: 12,
-      fontSize: 15,
+      fontSize: 16,
     },
     right: {
       width: 25,
@@ -65,10 +65,10 @@ export const HeaderPage = () => {
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar>
-        <img alt="Logo GREEN" src={logo} className={classes.avatarLogo} />
-        <Typography variant="h6" noWrap className={classes.typography}>
-          GREEN
-        </Typography>
+        {/* <img alt="Logo GREEN" src={logo} className={classes.avatarLogo} /> */}
+        <Link href="/">
+          <Logo style={{ width: 146, height: 32 }} />
+        </Link>
         <section className={classes.rightToolbar}>
           <Typography
             variant="h5"

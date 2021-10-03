@@ -1,7 +1,4 @@
-import {
-  Button, Checkbox, Paper, Radio,
-  TextField
-} from "@material-ui/core";
+import { Button, Checkbox, Paper, Radio, TextField } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useFormik } from "formik";
 import React from "react";
@@ -9,13 +6,16 @@ import * as yup from "yup";
 import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
+import { UseActions } from "../../../redux/type_redux_hook/ useAction";
+import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterSelectedBranches from "../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
 import InputFilterSelectedCrm from "../../Counterparty/Core/FilterInputs/InputFilterSelectedCRM";
 import InputFilterSelectedServicesType from "../Core/FilterInputs/InputFilterSelectedServicesType";
 import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelectedType";
+import get from "lodash/get";
 
 type Data = {
-  CRM: string | null;
+  CrmValue: string | null;
   CounterpartyType: string | null;
   ServiceType: string | null;
   INN: string | null;
@@ -23,7 +23,7 @@ type Data = {
   OGPN: string | null;
 };
 const validationSchema: yup.SchemaOf<Data> = yup.object({
-  CRM: yup
+  CrmValue: yup
     .string()
     .min(0, " should be of minimum 8 characters length")
     .required("Обязательное поле"),
@@ -38,15 +38,22 @@ const validationSchema: yup.SchemaOf<Data> = yup.object({
   INN: yup
     .string()
     .min(0, " should be of minimum 8 characters length")
+    .max(12, " should be of maximum 12 characters length")
     .required("Обязательное поле"),
   KPP: yup
     .string()
     .min(0, " should be of minimum 8 characters length")
+    .max(9, " should be of maximum 9 characters length")
     .required("Обязательное поле"),
   OGPN: yup
     .string()
     .min(0, " should be of minimum 8 characters length")
     .required("Обязательное поле"),
+  ActualAddress: yup.string().required("Обязательное поле"),
+  LegalAddress: yup.string().required("Обязательное поле"),
+  MailingAddress: yup.string().required("Обязательное поле"),
+  FullCompanyName: yup.string().required("Обязательное поле"),
+  ShortNameCompany: yup.string().required("Обязательное поле"),
 });
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -72,6 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: "2%",
       marginTop: 10,
       marginBottom: 10,
+      fontSize: 18,
       color: "#fff",
       paddingBottom: 4,
       backgroundColor: "#3AB994",
@@ -99,9 +107,9 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: 0,
         paddingLeft: 12,
         textAlign: "start",
-        height: "30px",
+        height: 30,
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
       },
       "& .MuiFormHelperText-root": {
         fontSize: 9,
@@ -132,76 +140,179 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 10,
       color: "#3B4750",
       border: "1px solid #3ab994",
+      boxShadow: "none",
+    },
+    val: {
+      fontSize: 16,
+      fontWeight: 500,
     },
     label: {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
       marginBottom: 15,
-      fontSize: 12,
+      fontSize: 16,
       fontWeight: 500,
     },
     check: {
       marginLeft: "-1%",
+      marginTop: -3,
     },
     checkText: {
       width: "53%",
-      fontSize: 12,
+      fontSize: 16,
+      marginTop: 5,
+      fontWeight: 500,
     },
   })
 );
 
 export const GeneralInformationForCreating = () => {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState("a");
-  const [branch, setBranch] = React.useState(1);
-  const [CRMs, setCRMs] = React.useState(1);
   const [site, setSite] = React.useState(1);
   const [phone, setPhone] = React.useState(1);
   const [email, setEmail] = React.useState(1);
-  const [CounterpartyType, setCounterpartyType] = React.useState("1");
-  const [service, setService] = React.useState("1");
-  const [CRMvalue, setCRMvalue] = React.useState("1");
-  const [CRMvalue2, setCRMvalue2] = React.useState("1");
-  const [CRMvalue3, setCRMvalue3] = React.useState("1");
-  const [branchValue, setBranchValue] = React.useState("1");
-  const [branchValue2, setBranchValue2] = React.useState("1");
-  const [branchValue3, setBranchValue3] = React.useState("1");
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.value);
-  };
+  const [branch, setBranch] = React.useState(1);
+  const [CRMs, setCRMs] = React.useState(1);
+
+  const { AuthorData } = useTypedSelector((state) => state.author);
+  const { assets } = useTypedSelector((state) => state.assets);
+  const { crms, branches, types_and_services }: any = assets;
+  const { id }: any = AuthorData;
+
+  const crmsInitial = get(crms, "[0].id", "");
+  const CounterpartyTypeInitial = get(types_and_services, "[0].id", "");
+  const IndustryInitial = get(branches, "[0].id", "");
+
+  const { insertContractorGeneralData } = UseActions();
+
   const formik = useFormik({
+    validationSchema,
     initialValues: {
-      CRM: "",
-      CounterpartyType: "",
+      CrmValue: crmsInitial,
+      CrmValue2: crmsInitial,
+      CrmValue3: crmsInitial,
+      CounterpartyType: CounterpartyTypeInitial,
+      OrganizationType: "ЮЛ",
       ServiceType: "",
       INN: "",
       KPP: "",
       OGPN: "",
-      NDA: false,
+      NDA: 1,
       FullCompanyName: "",
       ShortNameCompany: "",
       CompanyGroup: "",
-      Industry: "",
+      Industry: IndustryInitial,
+      Industry2: IndustryInitial,
+      Industry3: IndustryInitial,
       LegalAddress: "",
       ActualAddress: "",
-      MatchesAddressActualAddress: false,
+      MatchesAddressActualAddress: true,
       MailingAddress: "",
-      MatchesAddressMailingAddress: false,
+      MatchesAddressMailingAddress: true,
       SiteCompany: "",
+      SiteCompany2: "",
+      SiteCompany3: "",
       Phone: "",
-      email: "",
+      Phone2: "",
+      Phone3: "",
+      Email: "",
+      Email2: "",
+      Email3: "",
     },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: ({
+      CrmValue,
+      CrmValue2,
+      CrmValue3,
+      CounterpartyType,
+      OrganizationType,
+      ServiceType,
+      INN,
+      KPP,
+      OGPN,
+      NDA,
+      FullCompanyName,
+      ShortNameCompany,
+      CompanyGroup,
+      Industry,
+      Industry2,
+      Industry3,
+      LegalAddress,
+      ActualAddress,
+      MatchesAddressActualAddress,
+      MailingAddress,
+      MatchesAddressMailingAddress,
+      SiteCompany,
+      SiteCompany2,
+      SiteCompany3,
+      Phone,
+      Phone2,
+      Phone3,
+      Email,
+      Email2,
+      Email3,
+    }) => {
+      const crmsDraft = [CrmValue, CrmValue2, CrmValue3];
+      const branchesDraft = [Industry, Industry2, Industry3];
+      const SiteCompanyDraft = [SiteCompany, SiteCompany2, SiteCompany3];
+      const PhoneDraft = [Phone, Phone2, Phone3];
+      const EmailDraft = [Email, Email2, Email3];
+      const crms = [];
+      const branches = [];
+      const sites = [];
+      const phones = [];
+      const emails = [];
+
+      for (let i = 0; i < 3; i++) {
+        if (CRMs >= i && crmsDraft[i]) {
+          crms.push(crmsDraft[i]);
+        }
+        if (branch >= i && branchesDraft[i]) {
+          branches.push(branchesDraft[i]);
+        }
+        if (site >= i && SiteCompanyDraft[i]) {
+          sites.push({ url: SiteCompanyDraft[i] });
+        }
+        if (phone >= i && PhoneDraft[i]) {
+          phones.push({ phone: PhoneDraft[i] });
+        }
+        if (email >= i && EmailDraft[i]) {
+          emails.push({ email: EmailDraft[i] });
+        }
+      }
+
+      const formatedValues = {
+        id,
+        org_type: OrganizationType,
+        contractor_type_id: CounterpartyType,
+        service_type_id: ServiceType,
+        inn: INN,
+        kpp: KPP,
+        ogrn: OGPN,
+        nda: NDA,
+        full_name: FullCompanyName,
+        short_name: ShortNameCompany,
+        parent_id: CompanyGroup,
+        legal_registration_address: LegalAddress,
+        actual_address: ActualAddress,
+        post_address: MailingAddress,
+        crms,
+        phones,
+        emails,
+        sites,
+        branches,
+      };
+
+      insertContractorGeneralData(formatedValues);
     },
   });
+  console.log(formik.values);
+
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
         <Button
-          onClick={() => console.log("button")}
+          type="submit"
           variant="contained"
           color="primary"
           className={classes.btn}
@@ -218,36 +329,40 @@ export const GeneralInformationForCreating = () => {
                 width: "100%",
               }}
             >
-              <span>Общие сведения</span>
+              <span className={classes.val}>Общие сведения</span>
             </div>
             <Paper className={classes.paper}>
               <div style={{ marginBottom: "2%", display: "flex" }}>
                 <div>
-                  <span style={{ fontSize: 12, fontWeight: 500 }}>
+                  <span style={{ fontSize: 16, fontWeight: 500 }}>
                     Физическое лицо
                   </span>
                   <Radio
-                    checked={checked === "a"}
-                    onChange={handleChange}
-                    value="a"
+                    checked={formik.values.OrganizationType === "ФЛ"}
+                    onChange={(e) =>
+                      formik.setFieldValue("OrganizationType", e.target.value)
+                    }
+                    value="ФЛ"
                     color="default"
-                    name="radio-button-demo"
+                    name="OrganizationType"
                     size="medium"
-                    inputProps={{ "aria-label": "A" }}
+                    inputProps={{ "aria-label": "ФЛ" }}
                   />
                 </div>
                 <div>
-                  <span style={{ fontSize: 12, fontWeight: 500 }}>
+                  <span style={{ fontSize: 16, fontWeight: 500 }}>
                     Юридическое лицо
                   </span>
                   <Radio
-                    checked={checked === "b"}
-                    onChange={handleChange}
-                    value="b"
+                    checked={formik.values.OrganizationType === "ЮЛ"}
+                    onChange={(e) =>
+                      formik.setFieldValue("OrganizationType", e.target.value)
+                    }
+                    value="ЮЛ"
                     color="default"
-                    name="radio-button-demo"
+                    name="OrganizationType"
                     size="medium"
-                    inputProps={{ "aria-label": "B" }}
+                    inputProps={{ "aria-label": "ЮЛ" }}
                   />
                 </div>
               </div>
@@ -261,10 +376,16 @@ export const GeneralInformationForCreating = () => {
                   }}
                 >
                   <InputFilterSelectedCrm
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setCRMvalue(e.target.value)
+                    name="CrmValue"
+                    handleChange={(e: any) =>
+                      formik.setFieldValue("CrmValue", e.target.value)
                     }
-                    value={CRMvalue}
+                    error={
+                      formik.touched.CrmValue && Boolean(formik.errors.CrmValue)
+                    }
+                    helperText={
+                      formik.touched.CrmValue && formik.errors.CrmValue
+                    }
                   />
                 </div>
               </div>
@@ -280,10 +401,17 @@ export const GeneralInformationForCreating = () => {
                   }}
                 >
                   <InputFilterSelectedCrm
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setCRMvalue2(e.target.value)
+                    name="CrmValue2"
+                    handleChange={(e: any) =>
+                      formik.setFieldValue("CrmValue2", e.target.value)
                     }
-                    value={CRMvalue2}
+                    error={
+                      formik.touched.CrmValue2 &&
+                      Boolean(formik.errors.CrmValue2)
+                    }
+                    helperText={
+                      formik.touched.CrmValue2 && formik.errors.CrmValue2
+                    }
                   />
                   <div
                     style={{
@@ -310,10 +438,17 @@ export const GeneralInformationForCreating = () => {
                   }}
                 >
                   <InputFilterSelectedCrm
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setCRMvalue3(e.target.value)
+                    name="CrmValue3"
+                    handleChange={(e: any) =>
+                      formik.setFieldValue("CrmValue3", e.target.value)
                     }
-                    value={CRMvalue3}
+                    error={
+                      formik.touched.CrmValue3 &&
+                      Boolean(formik.errors.CrmValue3)
+                    }
+                    helperText={
+                      formik.touched.CrmValue3 && formik.errors.CrmValue3
+                    }
                   />
                   <div
                     style={{
@@ -343,10 +478,10 @@ export const GeneralInformationForCreating = () => {
                 <span>Тип контрагента</span>
                 <span style={{ width: "60%" }}>
                   <InputFilterSelectedType
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setCounterpartyType(e.target.value)
+                    name="CounterpartyType"
+                    handleChange={(e: any) =>
+                      formik.setFieldValue("CounterpartyType", e.target.value)
                     }
-                    value={CounterpartyType}
                   />
                 </span>
               </div>
@@ -354,17 +489,23 @@ export const GeneralInformationForCreating = () => {
                 <span>Тип услуг</span>
                 <span style={{ width: "60%" }}>
                   <InputFilterSelectedServicesType
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setService(e.target.value)
+                    name="ServiceType"
+                    handleChange={(e: any) =>
+                      formik.setFieldValue("ServiceType", e.target.value)
                     }
-                    value={service}
+                    error={
+                      formik.touched.ServiceType &&
+                      Boolean(formik.errors.ServiceType)
+                    }
+                    helperText={
+                      formik.touched.ServiceType && formik.errors.ServiceType
+                    }
                   />
                 </span>
                 {/* <TextField
                   variant={"outlined"}
                   name="ServiceType"
                   placeholder={"Другое"}
-                  value={formik.values.ServiceType}
                   onChange={formik.handleChange}
                 /> */}
               </div>
@@ -374,7 +515,6 @@ export const GeneralInformationForCreating = () => {
                   variant={"outlined"}
                   name="INN"
                   placeholder={"1234556789101112"}
-                  value={formik.values.INN}
                   onChange={formik.handleChange}
                   error={formik.touched.INN && Boolean(formik.errors.INN)}
                   helperText={formik.touched.INN && formik.errors.INN}
@@ -386,7 +526,6 @@ export const GeneralInformationForCreating = () => {
                   variant={"outlined"}
                   name="KPP"
                   placeholder={"1234556789101112"}
-                  value={formik.values.KPP}
                   onChange={formik.handleChange}
                   error={formik.touched.KPP && Boolean(formik.errors.KPP)}
                   helperText={formik.touched.KPP && formik.errors.KPP}
@@ -398,7 +537,6 @@ export const GeneralInformationForCreating = () => {
                   variant={"outlined"}
                   name="OGPN"
                   placeholder={"1234556789101112"}
-                  value={formik.values.OGPN}
                   onChange={formik.handleChange}
                   error={formik.touched.OGPN && Boolean(formik.errors.OGPN)}
                   helperText={formik.touched.OGPN && formik.errors.OGPN}
@@ -408,11 +546,14 @@ export const GeneralInformationForCreating = () => {
                 <span>NDA</span>
                 <span style={{ width: "63.2%" }}>
                   <Checkbox
-                    defaultChecked
                     icon={<CheckSquareChecked color="#5B6770" />}
                     checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
                     color="default"
                     inputProps={{ "aria-label": "checkbox with default color" }}
+                    value={formik.values.NDA === 1 ? true : false}
+                    onChange={(e: any) =>
+                      formik.setFieldValue("NDA", e.target.checked ? 0 : 1)
+                    }
                   />
                 </span>
               </div>
@@ -427,7 +568,7 @@ export const GeneralInformationForCreating = () => {
                 width: "101%",
               }}
             >
-              <span>Сведения о компании</span>
+              <span className={classes.val}>Сведения о компании</span>
             </div>
             <Paper className={classes.paper}>
               <div className={classes.label}>
@@ -442,7 +583,6 @@ export const GeneralInformationForCreating = () => {
                   rows={2}
                   name="FullCompanyName"
                   placeholder={'ООО "Северо-Западная компания”'}
-                  value={formik.values.FullCompanyName}
                   onChange={formik.handleChange}
                   error={
                     formik.touched.FullCompanyName &&
@@ -460,7 +600,6 @@ export const GeneralInformationForCreating = () => {
                   variant={"outlined"}
                   name="ShortNameCompany"
                   placeholder={"Краткое наименование компании"}
-                  value={formik.values.ShortNameCompany}
                   onChange={formik.handleChange}
                   error={
                     formik.touched.ShortNameCompany &&
@@ -478,7 +617,6 @@ export const GeneralInformationForCreating = () => {
                   variant={"outlined"}
                   name="CompanyGroup"
                   placeholder={"Группа компаний"}
-                  value={formik.values.CompanyGroup}
                   onChange={formik.handleChange}
                   error={
                     formik.touched.CompanyGroup &&
@@ -499,10 +637,16 @@ export const GeneralInformationForCreating = () => {
                   }}
                 >
                   <InputFilterSelectedBranches
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setBranchValue(e.target.value)
+                    name="Industry"
+                    handleChange={(e: any) =>
+                      formik.setFieldValue("Industry", e.target.value)
                     }
-                    value={branchValue}
+                    error={
+                      formik.touched.Industry && Boolean(formik.errors.Industry)
+                    }
+                    helperText={
+                      formik.touched.Industry && formik.errors.Industry
+                    }
                   />
                 </div>
               </div>
@@ -517,10 +661,17 @@ export const GeneralInformationForCreating = () => {
                     }}
                   >
                     <InputFilterSelectedBranches
-                      handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setBranchValue2(e.target.value)
+                      name="Industry2"
+                      handleChange={(e: any) =>
+                        formik.setFieldValue("Industry2", e.target.value)
                       }
-                      value={branchValue2}
+                      error={
+                        formik.touched.Industry2 &&
+                        Boolean(formik.errors.Industry2)
+                      }
+                      helperText={
+                        formik.touched.Industry2 && formik.errors.Industry2
+                      }
                     />
                     <div
                       style={{
@@ -551,10 +702,17 @@ export const GeneralInformationForCreating = () => {
                     }}
                   >
                     <InputFilterSelectedBranches
-                      handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setBranchValue3(e.target.value)
+                      name="Industry3"
+                      handleChange={(e: any) =>
+                        formik.setFieldValue("Industry3", e.target.value)
                       }
-                      value={branchValue3}
+                      error={
+                        formik.touched.Industry3 &&
+                        Boolean(formik.errors.Industry3)
+                      }
+                      helperText={
+                        formik.touched.Industry3 && formik.errors.Industry3
+                      }
                     />
                     <div
                       style={{
@@ -595,7 +753,7 @@ export const GeneralInformationForCreating = () => {
                 width: "101%",
               }}
             >
-              <span>Контакты компании</span>
+              <span className={classes.val}>Контакты компании</span>
             </div>
             <Paper className={classes.paper}>
               <div className={classes.label}>
@@ -604,8 +762,13 @@ export const GeneralInformationForCreating = () => {
                   variant={"outlined"}
                   name="LegalAddress"
                   placeholder={"123456 город улица строени дом офис"}
-                  value={formik.values.LegalAddress}
-                  onChange={formik.handleChange}
+                  onChange={(e: any) => {
+                    formik.handleChange(e);
+                    formik.values.MatchesAddressActualAddress &&
+                      formik.setFieldValue("ActualAddress", e.target.value);
+                    formik.values.MatchesAddressMailingAddress &&
+                      formik.setFieldValue("MailingAddress", e.target.value);
+                  }}
                   error={
                     formik.touched.LegalAddress &&
                     Boolean(formik.errors.LegalAddress)
@@ -622,6 +785,7 @@ export const GeneralInformationForCreating = () => {
                   variant={"outlined"}
                   name="ActualAddress"
                   placeholder={"123456 город улица строени дом офис"}
+                  disabled={formik.values.MatchesAddressActualAddress}
                   value={formik.values.ActualAddress}
                   onChange={formik.handleChange}
                   error={
@@ -641,6 +805,19 @@ export const GeneralInformationForCreating = () => {
                   name="MatchesAddressActualAddress"
                   color="default"
                   inputProps={{ "aria-label": "checkbox with default color" }}
+                  value={formik.values.MatchesAddressActualAddress}
+                  onChange={(e: any) => {
+                    if (!e.target.checked) {
+                      formik.setFieldValue(
+                        "ActualAddress",
+                        formik.values.LegalAddress
+                      );
+                    }
+                    formik.setFieldValue(
+                      "MatchesAddressActualAddress",
+                      e.target.checked ? false : true
+                    );
+                  }}
                 />
                 <span className={classes.checkText}>
                   Совпадает с юридическим адресом
@@ -652,6 +829,7 @@ export const GeneralInformationForCreating = () => {
                   variant={"outlined"}
                   name="MailingAddress"
                   placeholder={"123456 город улица строени дом офис"}
+                  disabled={formik.values.MatchesAddressMailingAddress}
                   value={formik.values.MailingAddress}
                   onChange={formik.handleChange}
                   error={
@@ -669,9 +847,22 @@ export const GeneralInformationForCreating = () => {
                   className={classes.check}
                   icon={<CheckSquareChecked color="#5B6770" />}
                   checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
-                  name="MatchesAddressActualAddress"
+                  name="MatchesAddressMailingAddress"
                   color="default"
                   inputProps={{ "aria-label": "checkbox with default color" }}
+                  value={formik.values.MatchesAddressMailingAddress}
+                  onChange={(e: any) => {
+                    if (!e.target.checked) {
+                      formik.setFieldValue(
+                        "MailingAddress",
+                        formik.values.LegalAddress
+                      );
+                    }
+                    formik.setFieldValue(
+                      "MatchesAddressMailingAddress",
+                      e.target.checked ? false : true
+                    );
+                  }}
                 />
                 <span className={classes.checkText}>
                   Совпадает с юридическим адресом
@@ -688,10 +879,9 @@ export const GeneralInformationForCreating = () => {
                 >
                   <TextField
                     variant={"outlined"}
-                    name="SiteCompany1"
+                    name="SiteCompany"
                     style={{ width: "85%" }}
                     placeholder={"www.сайткомпании.ru"}
-                    value={formik.values.SiteCompany}
                     onChange={formik.handleChange}
                     error={
                       formik.touched.SiteCompany &&
@@ -718,7 +908,6 @@ export const GeneralInformationForCreating = () => {
                       name="SiteCompany2"
                       style={{ width: "85%" }}
                       placeholder={"www.сайткомпании.ru"}
-                      value={formik.values.SiteCompany}
                       onChange={formik.handleChange}
                       error={
                         formik.touched.SiteCompany &&
@@ -758,7 +947,6 @@ export const GeneralInformationForCreating = () => {
                       name="SiteCompany3"
                       style={{ width: "85%" }}
                       placeholder={"www.сайткомпании.ru"}
-                      value={formik.values.SiteCompany}
                       onChange={formik.handleChange}
                       error={
                         formik.touched.SiteCompany &&
@@ -807,7 +995,6 @@ export const GeneralInformationForCreating = () => {
                     name="Phone"
                     placeholder={"+79991234567"}
                     style={{ width: "85%" }}
-                    value={formik.values.Phone}
                     onChange={formik.handleChange}
                     error={formik.touched.Phone && Boolean(formik.errors.Phone)}
                     helperText={formik.touched.Phone && formik.errors.Phone}
@@ -826,15 +1013,14 @@ export const GeneralInformationForCreating = () => {
                   >
                     <TextField
                       variant={"outlined"}
-                      name="Phone"
+                      name="Phone2"
                       style={{ width: "85%" }}
                       placeholder={"+79991234567"}
-                      value={formik.values.Phone}
                       onChange={formik.handleChange}
                       error={
-                        formik.touched.Phone && Boolean(formik.errors.Phone)
+                        formik.touched.Phone2 && Boolean(formik.errors.Phone2)
                       }
-                      helperText={formik.touched.Phone && formik.errors.Phone}
+                      helperText={formik.touched.Phone2 && formik.errors.Phone2}
                     />
                     <div
                       style={{ marginRight: "2%", cursor: "pointer" }}
@@ -859,15 +1045,14 @@ export const GeneralInformationForCreating = () => {
                   >
                     <TextField
                       variant={"outlined"}
-                      name="Phone"
+                      name="Phone3"
                       style={{ width: "85%" }}
                       placeholder={"+79991234567"}
-                      value={formik.values.Phone}
                       onChange={formik.handleChange}
                       error={
-                        formik.touched.Phone && Boolean(formik.errors.Phone)
+                        formik.touched.Phone3 && Boolean(formik.errors.Phone3)
                       }
-                      helperText={formik.touched.Phone && formik.errors.Phone}
+                      helperText={formik.touched.Phone3 && formik.errors.Phone3}
                     />
                     <div
                       style={{ marginRight: "2%", cursor: "pointer" }}
@@ -902,13 +1087,12 @@ export const GeneralInformationForCreating = () => {
                 >
                   <TextField
                     variant={"outlined"}
-                    name="email"
+                    name="Email"
                     style={{ width: "85%" }}
                     placeholder={"email@email.ru"}
-                    value={formik.values.email}
                     onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
+                    error={formik.touched.Email && Boolean(formik.errors.Email)}
+                    helperText={formik.touched.Email && formik.errors.Email}
                   />
                 </div>
               </div>
@@ -924,15 +1108,14 @@ export const GeneralInformationForCreating = () => {
                   >
                     <TextField
                       variant={"outlined"}
-                      name="email"
+                      name="Email2"
                       placeholder={"email@email.ru"}
                       style={{ width: "85%" }}
-                      value={formik.values.email}
                       onChange={formik.handleChange}
                       error={
-                        formik.touched.email && Boolean(formik.errors.email)
+                        formik.touched.Email2 && Boolean(formik.errors.Email2)
                       }
-                      helperText={formik.touched.email && formik.errors.email}
+                      helperText={formik.touched.Email2 && formik.errors.Email2}
                     />
                     <div
                       style={{ marginRight: "2%", cursor: "pointer" }}
@@ -957,15 +1140,14 @@ export const GeneralInformationForCreating = () => {
                   >
                     <TextField
                       variant={"outlined"}
-                      name="email"
+                      name="Email3"
                       placeholder={"email@email.ru"}
-                      value={formik.values.email}
                       style={{ width: "85%" }}
                       onChange={formik.handleChange}
                       error={
-                        formik.touched.email && Boolean(formik.errors.email)
+                        formik.touched.Email3 && Boolean(formik.errors.Email3)
                       }
-                      helperText={formik.touched.email && formik.errors.email}
+                      helperText={formik.touched.Email3 && formik.errors.Email3}
                     />
                     <div
                       style={{ marginRight: "2%", cursor: "pointer" }}

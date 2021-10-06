@@ -7,13 +7,15 @@ import { CaretDown } from "../../../../IMG/SVG/CaretDown";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      minWidth: "100px",
-      width: "100%",
+      minWidth: "110px",
     },
   })
 );
 
-export default function InputFilterSelectedStatus(props: any): any {
+export default function InputFilterSelectedStatus({
+  handleChange,
+  ...props
+}: any): any {
   const classes = useStyles();
   const { assets, load } = useTypedSelector((state) => state.assets);
   let { contact_statuses }: any = assets;
@@ -27,7 +29,7 @@ export default function InputFilterSelectedStatus(props: any): any {
         id="outlined-select-currency-native"
         select
         // value={props.value}
-        onChange={props.handleChange}
+        onChange={handleChange}
         SelectProps={{
           native: true,
         }}
@@ -39,6 +41,7 @@ export default function InputFilterSelectedStatus(props: any): any {
           ),
         }}
         variant="outlined"
+        {...props}
       >
         {contact_statuses.map((option: any) => (
           <option key={option.id} value={option.id}>

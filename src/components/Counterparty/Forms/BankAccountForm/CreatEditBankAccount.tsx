@@ -134,7 +134,6 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
 
   const { insertContractorBankDetails, updateContractorBankDetails } =
     UseActions();
-  console.log(contractorBankDetail);
 
   const formik = useFormik({
     initialValues: contractorBankDetail,

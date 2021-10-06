@@ -239,9 +239,7 @@ export const GeneralInformationForCreating = () => {
       Industry3,
       LegalAddress,
       ActualAddress,
-      MatchesAddressActualAddress,
       MailingAddress,
-      MatchesAddressMailingAddress,
       SiteCompany,
       SiteCompany2,
       SiteCompany3,
@@ -306,7 +304,6 @@ export const GeneralInformationForCreating = () => {
       insertContractorGeneralData(formatedValues);
     },
   });
-  console.log(formik.values);
 
   return (
     <>
@@ -334,7 +331,7 @@ export const GeneralInformationForCreating = () => {
             <Paper className={classes.paper}>
               <div style={{ marginBottom: "2%", display: "flex" }}>
                 <div>
-                  <span style={{ fontSize: 16, fontWeight: 500 }}>
+                  <span style={{ fontSize: 16, fontWeight: "normal" }}>
                     Физическое лицо
                   </span>
                   <Radio
@@ -350,7 +347,7 @@ export const GeneralInformationForCreating = () => {
                   />
                 </div>
                 <div>
-                  <span style={{ fontSize: 16, fontWeight: 500 }}>
+                  <span style={{ fontSize: 16, fontWeight: "normal" }}>
                     Юридическое лицо
                   </span>
                   <Radio

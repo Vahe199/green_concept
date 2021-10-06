@@ -12,7 +12,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export function InputFilterSelectedDirection(props: any): any {
+export function InputFilterSelectedDirection({
+  handleChange,
+  ...props
+}: any): any {
   const classes = useStyles();
   const { assets, load } = useTypedSelector((state) => state.assets);
   let { directions }: any = assets;
@@ -31,14 +34,15 @@ export function InputFilterSelectedDirection(props: any): any {
             </div>
           ),
         }}
-        onChange={props.handleChange}
+        onChange={handleChange}
         SelectProps={{
           native: true,
         }}
         variant="outlined"
+        {...props}
       >
         {directions.map((option: any) => (
-          <option key={option.id} value={option.id} >
+          <option key={option.id} value={option.id}>
             {option.name}
           </option>
         ))}
@@ -46,7 +50,10 @@ export function InputFilterSelectedDirection(props: any): any {
     </div>
   );
 }
-export function InputFilterSelectedCongratulationsType(props: any): any {
+export function InputFilterSelectedCongratulationsType({
+  handleChange,
+  ...props
+}: any): any {
   const classes = useStyles();
   const { assets, load } = useTypedSelector((state) => state.assets);
   let { congratulation_types }: any = assets;
@@ -58,7 +65,7 @@ export function InputFilterSelectedCongratulationsType(props: any): any {
         style={{ width: "100%" }}
         id="outlined-select-currency-native"
         select
-        onChange={props.handleChange}
+        onChange={handleChange}
         SelectProps={{
           native: true,
         }}
@@ -70,6 +77,7 @@ export function InputFilterSelectedCongratulationsType(props: any): any {
           ),
         }}
         variant="outlined"
+        {...props}
       >
         {congratulation_types.map((option: any) => (
           <option key={option.id} value={option.id}>

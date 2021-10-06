@@ -98,7 +98,6 @@ const CreateCounterparty = (props: any) => {
     setSelectedTab(newValue);
   };
 
-  console.log(edit);
   return (
     <div className={classes.container}>
       <Paper square className={classes.root}>

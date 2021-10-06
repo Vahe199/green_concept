@@ -2,7 +2,7 @@ import { Button, Checkbox, Paper, Radio, TextField } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
@@ -15,6 +15,7 @@ import InputFilterSelectedRoles from "../../Counterparty/Core/FilterInputs/Input
 import InputFilterSelectedServicesType from "../../Counterparty/Core/FilterInputs/InputFilterSelectedServicesType";
 import InputFilterSelectedStatus from "../../Counterparty/Core/FilterInputs/InputFilterSelectedStatus";
 import InputFilterSelectedType from "../../Counterparty/Core/FilterInputs/InputFilterSelectedType";
+import { UseActions } from "../../../redux/type_redux_hook/ useAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -125,8 +126,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     statusText: {
       fontSize: 16,
-      marginTop: "3%",
-      marginRight: "7%",
+      marginLeft:"-32px"
     },
     topDiv: {
       display: "flex",
@@ -160,55 +160,204 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const flexInitial = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+};
+
 export const ContactPersonsForCreating = () => {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState("a");
-  const [phoneMob, setPhoneMob] = React.useState(1);
-  const [multipleContactsFromGreen, setMultipleContactsFromGreen] =
-    React.useState(1);
-  const [congratsPart, setCongratsPart] = React.useState(1);
-  const [phone, setPhone] = React.useState(1);
-  const [email, setEmail] = React.useState(1);
-  const [status, setStatus] = React.useState("1");
-  const [congrats, setCongrats] = React.useState("1");
-  const [directionValue, setDirectionValue] = React.useState("1");
-  const [rolesValue, setRolesValue] = React.useState("1");
-  const [branchValue, setBranchValue] = React.useState("1");
-  const [service, setService] = React.useState("1");
-  const [CounterpartyType, setCounterpartyType] = React.useState("1");
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.value);
-  };
+  const { insertContractorContactData } = UseActions();
+
+  const [phone, setPhone] = useState(1);
+  const [phoneMob, setPhoneMob] = useState(1);
+  const [email, setEmail] = useState(1);
+  const [multipleContactsFromGreen, setMultipleContactsFromGreen] = useState(1);
+  const [congratsPart, setCongratsPart] = useState(1);
+
   const formik = useFormik({
     initialValues: {
-      main_contact_person: false,
-      Surname: "",
-      Name: "",
-      middle_name: "",
-      Gender: checked,
-      date_of_birth: "",
-      Role: "",
-      Position: "",
-      counterparty_type: "",
-      service_type: "",
-      Industry: "",
-      work_phone: "",
-      mobile_phone: "",
-      Email: "",
+      contractors_main: 1,
+      status_id: "",
+      contractors_role_id: "",
+      contractors_position: "",
+      contractors_contractor_id: "1",
+
+      firstname: "",
+      middlename: "",
+      surname: "",
+      sex: "male",
+      birthdate: "1970-01-01",
       delivery_address: "",
-      CRM: "",
-      CounterpartyType: "",
-      ServiceType: "",
-      INN: "",
-      KPP: "",
-      OGPN: "",
-      NDA: false,
+      contractor_type_id: "",
+      service_type_id: "",
+      branches: "",
+
+      work_phone1: "",
+      work_phone2: "",
+      work_phone3: "",
+      mobile_phone1: "",
+      mobile_phone2: "",
+      mobile_phone3: "",
+      email1: "",
+      email2: "",
+      email3: "",
+
+      employees_direction_id1: "",
+      employees_direction_id2: "",
+      employees_direction_id3: "",
+      employees_employee_id1: "",
+      employees_employee_id2: "",
+      employees_employee_id3: "",
+      employees_info1: "",
+      employees_info2: "",
+      employees_info3: "",
+
+      congratulations_name1: "",
+      congratulations_name2: "",
+      congratulations_name3: "",
+      congratulations_congratulation_type_id1: "",
+      congratulations_congratulation_type_id2: "",
+      congratulations_congratulation_type_id3: "",
+      congratulations_other1: "",
+      congratulations_other2: "",
+      congratulations_other3: "",
     },
     // validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: ({
+      contractors_main,
+      status_id,
+      contractors_role_id,
+      contractors_position,
+      contractors_contractor_id = 1,
+      branches: branch,
+      work_phone1,
+      work_phone2,
+      work_phone3,
+      mobile_phone1,
+      mobile_phone2,
+      mobile_phone3,
+      email1,
+      email2,
+      email3,
+
+      employees_direction_id1,
+      employees_direction_id2,
+      employees_direction_id3,
+      employees_employee_id1,
+      employees_employee_id2,
+      employees_employee_id3,
+      employees_info1,
+      employees_info2,
+      employees_info3,
+
+      congratulations_name1,
+      congratulations_name2,
+      congratulations_name3,
+      congratulations_congratulation_type_id1,
+      congratulations_congratulation_type_id2,
+      congratulations_congratulation_type_id3,
+      congratulations_other1,
+      congratulations_other2,
+      congratulations_other3,
+      ...rest
+    }) => {
+      const phoneWorkDraft = [
+        { phone: work_phone1, phone_type: "work" },
+        { phone: work_phone2, phone_type: "work" },
+        { phone: work_phone3, phone_type: "work" },
+      ];
+      const phoneMobileDraft = [
+        { phone: mobile_phone1, phone_type: "Мобильный" },
+        { phone: mobile_phone2, phone_type: "Мобильный" },
+        { phone: mobile_phone3, phone_type: "Мобильный" },
+      ];
+      const emailDraft = [email1, email2, email3];
+      const contactEmployees = [
+        {
+          direction_id: employees_direction_id1,
+          employee_id: employees_employee_id1,
+          info: employees_info1,
+        },
+        {
+          direction_id: employees_direction_id2,
+          employee_id: employees_employee_id2,
+          info: employees_info2,
+        },
+        {
+          direction_id: employees_direction_id3,
+          employee_id: employees_employee_id3,
+          info: employees_info3,
+        },
+      ];
+
+      const contactCongratulations = [
+        {
+          name: congratulations_name1,
+          congratulation_type_id: congratulations_congratulation_type_id1,
+          other: congratulations_other1,
+        },
+        {
+          name: congratulations_name2,
+          congratulation_type_id: congratulations_congratulation_type_id2,
+          other: congratulations_other2,
+        },
+        {
+          name: congratulations_name3,
+          congratulation_type_id: congratulations_congratulation_type_id3,
+          other: congratulations_other3,
+        },
+      ];
+
+      const phones = [];
+      const emails = [];
+      const contact_employees = [];
+      const contact_congratulations = [];
+      const contact_contractors = {
+        main: contractors_main,
+        role_id: contractors_role_id,
+        position: contractors_position,
+        contractor_id: contractors_contractor_id,
+      };
+
+      for (let i = 1; i <= 3; i++) {
+        console.log(i);
+
+        if (phone >= i && phoneWorkDraft[i]) {
+          phones.push({ phone: phoneWorkDraft[i] });
+        }
+        if (phoneMob >= i && phoneMobileDraft[i]) {
+          phones.push({ phone: phoneMobileDraft[i] });
+        }
+        if (email >= i && emailDraft[i]) {
+          emails.push({ email: emailDraft[i] });
+        }
+        if (multipleContactsFromGreen >= i && contactEmployees[i]) {
+          contact_employees.push(contactEmployees[i]);
+        }
+        if (congratsPart >= i && contactCongratulations[i]) {
+          contact_congratulations.push(contactCongratulations[i]);
+        }
+      }
+
+      const formatedValues = {
+        emails,
+        phones,
+        contact_contractors,
+        contact_employees,
+        contact_congratulations,
+        branches: [branch],
+        ...rest,
+      };
+      console.log("submit", formatedValues);
+
+      insertContractorContactData(formatedValues);
     },
   });
+
+  console.log(formik.values, formik.errors);
+
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
@@ -219,7 +368,7 @@ export const ContactPersonsForCreating = () => {
           }}
         >
           <Button
-            onClick={() => console.log("button")}
+            type="submit"
             variant="contained"
             color="primary"
             className={classes.btn}
@@ -237,37 +386,59 @@ export const ContactPersonsForCreating = () => {
         </div>
         <div className={classes.root}>
           <div className={classes.BasicInformation}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
+            <div style={flexInitial}>
               <span className={classes.val}>Основные сведения</span>
             </div>
             <Paper className={classes.paper}>
               <div className={classes.label}>
                 <div className={classes.topDiv}>
-                  <span>Основное контактное лицо </span>
-                  <span style={{ width: "20%" }}>
-                    <Checkbox
-                      name="main_contact_person"
-                      icon={<CheckSquareChecked color="#5B6770" />}
-                      checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
-                      inputProps={{
-                        "aria-label": "checkbox with default color",
+                  <span style={{ width: "40%" }}>Основное контактное лицо</span>
+                  <div
+                    style={{
+                      width: "60%",
+                      ...flexInitial,
+                    }}
+                  >
+                    <span>
+                      <Checkbox
+                        name="contractors_main"
+                        icon={<CheckSquareChecked color="#5B6770" />}
+                        checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
+                        inputProps={{
+                          "aria-label": "checkbox with default color",
+                        }}
+                        value={
+                          formik.values.contractors_main === 1 ? true : false
+                        }
+                        onChange={(e: any) =>
+                          formik.setFieldValue(
+                            "contractors_main",
+                            e.target.checked ? 0 : 1
+                          )
+                        }
+                      />
+                    </span>
+                    <div
+                      style={{
+                        width: "170px",
+                        ...flexInitial,
                       }}
-                    />
-                  </span>
-                  <div style={{ display: "flex", width: "34%" }}>
-                    <span className={classes.statusText}>Статус</span>
-                    <InputFilterSelectedStatus
-                      handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setStatus(e.target.value)
-                      }
-                      value={status}
-                    />
+                    >
+                      <span className={classes.statusText}>Статус</span>
+                      <InputFilterSelectedStatus
+                        name="status_id"
+                        handleChange={(e: any) =>
+                          formik.setFieldValue("status_id", e.target.value)
+                        }
+                        error={
+                          formik.touched.status_id &&
+                          Boolean(formik.errors.status_id)
+                        }
+                        helperText={
+                          formik.touched.status_id && formik.errors.status_id
+                        }
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -275,42 +446,43 @@ export const ContactPersonsForCreating = () => {
                 <span>Фамилия:</span>
                 <TextField
                   variant={"outlined"}
-                  name="Surname"
+                  name="surname"
                   placeholder={"Фамилия"}
-                  value={formik.values.Surname}
                   onChange={formik.handleChange}
                   error={
-                    formik.touched.Surname && Boolean(formik.errors.Surname)
+                    formik.touched.surname && Boolean(formik.errors.surname)
                   }
-                  helperText={formik.touched.Surname && formik.errors.Surname}
+                  helperText={formik.touched.surname && formik.errors.surname}
                 />
               </div>
               <div className={classes.label}>
                 <span>Имя</span>
                 <TextField
                   variant={"outlined"}
-                  name="Name"
+                  name="firstname"
                   placeholder={"Имя"}
-                  value={formik.values.Name}
                   onChange={formik.handleChange}
-                  error={formik.touched.Name && Boolean(formik.errors.Name)}
-                  helperText={formik.touched.Name && formik.errors.Name}
+                  error={
+                    formik.touched.firstname && Boolean(formik.errors.firstname)
+                  }
+                  helperText={
+                    formik.touched.firstname && formik.errors.firstname
+                  }
                 />
               </div>
               <div className={classes.label}>
                 <span>Отчество</span>
                 <TextField
                   variant={"outlined"}
-                  name="middle_name"
+                  name="middlename"
                   placeholder={"Отчество"}
-                  value={formik.values.middle_name}
                   onChange={formik.handleChange}
                   error={
-                    formik.touched.middle_name &&
-                    Boolean(formik.errors.middle_name)
+                    formik.touched.middlename &&
+                    Boolean(formik.errors.middlename)
                   }
                   helperText={
-                    formik.touched.middle_name && formik.errors.middle_name
+                    formik.touched.middlename && formik.errors.middlename
                   }
                 />
               </div>
@@ -320,11 +492,9 @@ export const ContactPersonsForCreating = () => {
                   <div>
                     <span>Мужчина</span>
                     <Radio
-                      checked={checked === "a"}
-                      onChange={handleChange}
-                      value="a"
+                      checked={formik.values.sex === "male"}
+                      onChange={() => formik.setFieldValue("sex", "male")}
                       color="default"
-                      name="radio-button-demo"
                       size="medium"
                       inputProps={{ "aria-label": "A" }}
                     />
@@ -332,9 +502,8 @@ export const ContactPersonsForCreating = () => {
                   <div>
                     <span>Женщина</span>
                     <Radio
-                      checked={checked === "b"}
-                      onChange={handleChange}
-                      value="b"
+                      checked={formik.values.sex === "female"}
+                      onChange={() => formik.setFieldValue("sex", "female")}
                       color="default"
                       name="radio-button-demo"
                       size="medium"
@@ -348,48 +517,57 @@ export const ContactPersonsForCreating = () => {
                 <div style={{ width: "60%", display: "flex" }}>
                   <TextField
                     id="date"
-                    name="date_of_birth"
+                    name="birthdate"
                     variant="outlined"
                     type="date"
-                    defaultValue="2021-01-01"
                     InputLabelProps={{
                       shrink: true,
                     }}
                     onChange={formik.handleChange}
+                    defaultValue="1970-01-01"
                   />
                 </div>
               </div>
               <div className={classes.label}>
                 <span>Роль</span>
                 <InputFilterSelectedRoles
-                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setRolesValue(e.target.value)
+                  name="contractors_role_id"
+                  handleChange={formik.handleChange}
+                  error={
+                    formik.touched.contractors_role_id &&
+                    Boolean(formik.errors.contractors_role_id)
                   }
-                  value={rolesValue}
+                  helperText={
+                    formik.touched.contractors_role_id &&
+                    formik.errors.contractors_role_id
+                  }
                 />
               </div>
               <div className={classes.label}>
                 <span>Должность</span>
                 <TextField
                   variant={"outlined"}
-                  name="Position"
+                  name="contractors_position"
                   placeholder={"Должность"}
-                  value={formik.values.Position}
                   onChange={formik.handleChange}
                   error={
-                    formik.touched.Position && Boolean(formik.errors.Position)
+                    formik.touched.contractors_position &&
+                    Boolean(formik.errors.contractors_position)
                   }
-                  helperText={formik.touched.Position && formik.errors.Position}
+                  helperText={
+                    formik.touched.contractors_position &&
+                    formik.errors.contractors_position
+                  }
                 />
               </div>
               <div className={classes.label}>
                 <span>Тип контрагента</span>
                 <span style={{ width: "60%" }}>
                   <InputFilterSelectedType
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setCounterpartyType(e.target.value)
+                    name="contractor_type_id"
+                    handleChange={(e: any) =>
+                      formik.setFieldValue("contractor_type_id", e.target.value)
                     }
-                    value={CounterpartyType}
                   />
                 </span>
               </div>
@@ -397,10 +575,18 @@ export const ContactPersonsForCreating = () => {
                 <span>Тип услуг</span>
                 <span style={{ width: "60%" }}>
                   <InputFilterSelectedServicesType
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setService(e.target.value)
+                    name="service_type_id"
+                    handleChange={(e: any) =>
+                      formik.setFieldValue("service_type_id", e.target.value)
                     }
-                    value={service}
+                    error={
+                      formik.touched.service_type_id &&
+                      Boolean(formik.errors.service_type_id)
+                    }
+                    helperText={
+                      formik.touched.service_type_id &&
+                      formik.errors.service_type_id
+                    }
                   />
                 </span>
               </div>
@@ -408,10 +594,16 @@ export const ContactPersonsForCreating = () => {
                 <span>Отрасль</span>
                 <span style={{ width: "60%" }}>
                   <InputFilterSelectedBranches
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setBranchValue(e.target.value)
+                    name="branches"
+                    handleChange={(e: any) =>
+                      formik.setFieldValue("branches", e.target.value)
                     }
-                    value={branchValue}
+                    error={
+                      formik.touched.branches && Boolean(formik.errors.branches)
+                    }
+                    helperText={
+                      formik.touched.branches && formik.errors.branches
+                    }
                   />
                 </span>
               </div>
@@ -427,17 +619,16 @@ export const ContactPersonsForCreating = () => {
                   >
                     <TextField
                       variant={"outlined"}
-                      name="work_phone"
+                      name="work_phone1"
+                      placeholder={"+79991234567"}
                       style={{ width: "85%" }}
-                      placeholder={"+79999999999"}
-                      value={formik.values.work_phone}
                       onChange={formik.handleChange}
                       error={
-                        formik.touched.work_phone &&
-                        Boolean(formik.errors.work_phone)
+                        formik.touched.work_phone1 &&
+                        Boolean(formik.errors.work_phone1)
                       }
                       helperText={
-                        formik.touched.work_phone && formik.errors.work_phone
+                        formik.touched.work_phone1 && formik.errors.work_phone1
                       }
                     />
                   </div>
@@ -456,17 +647,17 @@ export const ContactPersonsForCreating = () => {
                     >
                       <TextField
                         variant={"outlined"}
-                        name="work_phone"
+                        name="work_phone2"
+                        placeholder={"+79991234567"}
                         style={{ width: "85%" }}
-                        placeholder={"+79999999999"}
-                        value={formik.values.work_phone}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.work_phone &&
-                          Boolean(formik.errors.work_phone)
+                          formik.touched.work_phone2 &&
+                          Boolean(formik.errors.work_phone2)
                         }
                         helperText={
-                          formik.touched.work_phone && formik.errors.work_phone
+                          formik.touched.work_phone2 &&
+                          formik.errors.work_phone2
                         }
                       />
                       <div
@@ -498,17 +689,17 @@ export const ContactPersonsForCreating = () => {
                     >
                       <TextField
                         variant={"outlined"}
-                        name="work_phone"
+                        name="work_phone3"
+                        placeholder={"+79991234567"}
                         style={{ width: "85%" }}
-                        placeholder={"+79999999999"}
-                        value={formik.values.work_phone}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.work_phone &&
-                          Boolean(formik.errors.work_phone)
+                          formik.touched.work_phone3 &&
+                          Boolean(formik.errors.work_phone3)
                         }
                         helperText={
-                          formik.touched.work_phone && formik.errors.work_phone
+                          formik.touched.work_phone3 &&
+                          formik.errors.work_phone3
                         }
                       />
                       <div
@@ -549,17 +740,17 @@ export const ContactPersonsForCreating = () => {
                   >
                     <TextField
                       variant={"outlined"}
-                      name="mobile_phone"
+                      name="mobile_phone1"
+                      placeholder={"+79991234567"}
                       style={{ width: "85%" }}
-                      placeholder={"+79999999999"}
-                      value={formik.values.work_phone}
                       onChange={formik.handleChange}
                       error={
-                        formik.touched.work_phone &&
-                        Boolean(formik.errors.work_phone)
+                        formik.touched.mobile_phone1 &&
+                        Boolean(formik.errors.mobile_phone1)
                       }
                       helperText={
-                        formik.touched.work_phone && formik.errors.work_phone
+                        formik.touched.mobile_phone1 &&
+                        formik.errors.mobile_phone1
                       }
                     />
                   </div>
@@ -578,17 +769,17 @@ export const ContactPersonsForCreating = () => {
                     >
                       <TextField
                         variant={"outlined"}
-                        name="mobile_phone"
+                        name="mobile_phone2"
+                        placeholder={"+79991234567"}
                         style={{ width: "85%" }}
-                        placeholder={"+79999999999"}
-                        value={formik.values.work_phone}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.work_phone &&
-                          Boolean(formik.errors.work_phone)
+                          formik.touched.mobile_phone2 &&
+                          Boolean(formik.errors.mobile_phone2)
                         }
                         helperText={
-                          formik.touched.work_phone && formik.errors.work_phone
+                          formik.touched.mobile_phone2 &&
+                          formik.errors.mobile_phone2
                         }
                       />
                       {phoneMob === 2 ? (
@@ -626,17 +817,17 @@ export const ContactPersonsForCreating = () => {
                     >
                       <TextField
                         variant={"outlined"}
-                        name="mobile_phone"
+                        name="mobile_phone3"
+                        placeholder={"+79991234567"}
                         style={{ width: "85%" }}
-                        placeholder={"+79999999999"}
-                        value={formik.values.work_phone}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.work_phone &&
-                          Boolean(formik.errors.work_phone)
+                          formik.touched.mobile_phone3 &&
+                          Boolean(formik.errors.mobile_phone3)
                         }
                         helperText={
-                          formik.touched.work_phone && formik.errors.work_phone
+                          formik.touched.mobile_phone3 &&
+                          formik.errors.mobile_phone3
                         }
                       />
                       <div
@@ -681,15 +872,14 @@ export const ContactPersonsForCreating = () => {
                   >
                     <TextField
                       variant={"outlined"}
-                      name="Email"
-                      placeholder={"email@email.com"}
+                      name="email1"
                       style={{ width: "85%" }}
-                      value={formik.values.Email}
+                      placeholder={"email@email.ru"}
                       onChange={formik.handleChange}
                       error={
-                        formik.touched.Email && Boolean(formik.errors.Email)
+                        formik.touched.email1 && Boolean(formik.errors.email1)
                       }
-                      helperText={formik.touched.Email && formik.errors.Email}
+                      helperText={formik.touched.email1 && formik.errors.email1}
                     />
                   </div>
                 </span>
@@ -707,15 +897,16 @@ export const ContactPersonsForCreating = () => {
                     >
                       <TextField
                         variant={"outlined"}
-                        name="Email"
-                        placeholder={"email@email.com"}
+                        name="email2"
                         style={{ width: "85%" }}
-                        value={formik.values.Email}
+                        placeholder={"email@email.ru"}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.Email && Boolean(formik.errors.Email)
+                          formik.touched.email2 && Boolean(formik.errors.email2)
                         }
-                        helperText={formik.touched.Email && formik.errors.Email}
+                        helperText={
+                          formik.touched.email2 && formik.errors.email2
+                        }
                       />
                       {email === 2 ? (
                         <div
@@ -752,15 +943,16 @@ export const ContactPersonsForCreating = () => {
                     >
                       <TextField
                         variant={"outlined"}
-                        name="Email"
-                        placeholder={"email@email.com"}
+                        name="email3"
                         style={{ width: "85%" }}
-                        value={formik.values.Email}
+                        placeholder={"email@email.ru"}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.Email && Boolean(formik.errors.Email)
+                          formik.touched.email3 && Boolean(formik.errors.email3)
                         }
-                        helperText={formik.touched.Email && formik.errors.Email}
+                        helperText={
+                          formik.touched.email3 && formik.errors.email3
+                        }
                       />
                       <div
                         style={{
@@ -798,7 +990,6 @@ export const ContactPersonsForCreating = () => {
                   rows={3}
                   name="delivery_address"
                   placeholder={"Адрес доставки адрес вторая линия"}
-                  value={formik.values.delivery_address}
                   onChange={formik.handleChange}
                   error={
                     formik.touched.delivery_address &&
@@ -829,27 +1020,24 @@ export const ContactPersonsForCreating = () => {
                   <div className={classes.label}>
                     <span>Направление</span>
                     <InputFilterSelectedDirection
-                      handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setDirectionValue(e.target.value)
-                      }
-                      value={directionValue}
+                      handleChange={formik.handleChange}
+                      name="employees_direction_id1"
                     />
                   </div>
                   <div className={classes.label}>
                     <span>Контактное лицо</span>
                     <TextField
                       variant={"outlined"}
-                      name="CounterpartyType"
+                      name="employees_employee_id1"
                       placeholder={"Введите слово или часть слова"}
-                      value={formik.values.CounterpartyType}
                       onChange={formik.handleChange}
                       error={
-                        formik.touched.CounterpartyType &&
-                        Boolean(formik.errors.CounterpartyType)
+                        formik.touched.employees_employee_id1 &&
+                        Boolean(formik.errors.employees_employee_id1)
                       }
                       helperText={
-                        formik.touched.CounterpartyType &&
-                        formik.errors.CounterpartyType
+                        formik.touched.employees_employee_id1 &&
+                        formik.errors.employees_employee_id1
                       }
                     />
                   </div>
@@ -861,11 +1049,17 @@ export const ContactPersonsForCreating = () => {
                       className={classes.textArea}
                       multiline
                       rows={8}
-                      name="FullCompanyName"
+                      name="employees_info1"
                       placeholder={"Введите текст"}
                       onChange={formik.handleChange}
-                      error={formik.touched.OGPN && Boolean(formik.errors.OGPN)}
-                      helperText={formik.touched.OGPN && formik.errors.OGPN}
+                      error={
+                        formik.touched.employees_info1 &&
+                        Boolean(formik.errors.employees_info1)
+                      }
+                      helperText={
+                        formik.touched.employees_info1 &&
+                        formik.errors.employees_info1
+                      }
                     />
                   </div>
                   <div>
@@ -894,18 +1088,17 @@ export const ContactPersonsForCreating = () => {
                         <span style={{ width: "54%" }}>Направление</span>
                         <TextField
                           variant={"outlined"}
-                          name="CounterpartyType"
+                          name="employees_direction_id2"
                           style={{ minWidth: "50%" }}
                           placeholder={"Выберите"}
-                          value={formik.values.CounterpartyType}
                           onChange={formik.handleChange}
                           error={
-                            formik.touched.CounterpartyType &&
-                            Boolean(formik.errors.CounterpartyType)
+                            formik.touched.employees_direction_id2 &&
+                            Boolean(formik.errors.employees_direction_id2)
                           }
                           helperText={
-                            formik.touched.CounterpartyType &&
-                            formik.errors.CounterpartyType
+                            formik.touched.employees_direction_id2 &&
+                            formik.errors.employees_direction_id2
                           }
                         />
                         <div
@@ -923,18 +1116,17 @@ export const ContactPersonsForCreating = () => {
                         <span style={{ width: "54%" }}>Контактное лицо</span>
                         <TextField
                           variant={"outlined"}
-                          name="CounterpartyType"
+                          name="employees_employee_id2"
                           style={{ minWidth: "50%" }}
                           placeholder={"Введите слово или часть слова"}
-                          value={formik.values.CounterpartyType}
                           onChange={formik.handleChange}
                           error={
-                            formik.touched.CounterpartyType &&
-                            Boolean(formik.errors.CounterpartyType)
+                            formik.touched.employees_employee_id2 &&
+                            Boolean(formik.errors.employees_employee_id2)
                           }
                           helperText={
-                            formik.touched.CounterpartyType &&
-                            formik.errors.CounterpartyType
+                            formik.touched.employees_employee_id2 &&
+                            formik.errors.employees_employee_id2
                           }
                         />
                         <div className={classes.rightDivider}></div>
@@ -948,15 +1140,18 @@ export const ContactPersonsForCreating = () => {
                           className={classes.textArea}
                           multiline
                           rows={8}
-                          name="FullCompanyName"
+                          name="employees_info2"
                           style={{ minWidth: "50%" }}
                           placeholder={"Введите текст"}
-                          value={formik.values.OGPN}
                           onChange={formik.handleChange}
                           error={
-                            formik.touched.OGPN && Boolean(formik.errors.OGPN)
+                            formik.touched.employees_info2 &&
+                            Boolean(formik.errors.employees_info2)
                           }
-                          helperText={formik.touched.OGPN && formik.errors.OGPN}
+                          helperText={
+                            formik.touched.employees_info2 &&
+                            formik.errors.employees_info2
+                          }
                         />
                         <div className={classes.rightDivider}></div>
                       </div>
@@ -989,18 +1184,17 @@ export const ContactPersonsForCreating = () => {
                         <span style={{ width: "54%" }}>Направление</span>
                         <TextField
                           variant={"outlined"}
-                          name="CounterpartyType"
+                          name="employees_direction_id3"
                           style={{ minWidth: "50%" }}
                           placeholder={"Выберите"}
-                          value={formik.values.CounterpartyType}
                           onChange={formik.handleChange}
                           error={
-                            formik.touched.CounterpartyType &&
-                            Boolean(formik.errors.CounterpartyType)
+                            formik.touched.employees_direction_id3 &&
+                            Boolean(formik.errors.employees_direction_id3)
                           }
                           helperText={
-                            formik.touched.CounterpartyType &&
-                            formik.errors.CounterpartyType
+                            formik.touched.employees_direction_id3 &&
+                            formik.errors.employees_direction_id3
                           }
                         />
                         <div
@@ -1018,18 +1212,17 @@ export const ContactPersonsForCreating = () => {
                         <span style={{ width: "54%" }}>Контактное лицо</span>
                         <TextField
                           variant={"outlined"}
-                          name="CounterpartyType"
+                          name="employees_employee_id3"
                           style={{ minWidth: "50%" }}
                           placeholder={"Введите слово или часть слова"}
-                          value={formik.values.CounterpartyType}
                           onChange={formik.handleChange}
                           error={
-                            formik.touched.CounterpartyType &&
-                            Boolean(formik.errors.CounterpartyType)
+                            formik.touched.employees_employee_id3 &&
+                            Boolean(formik.errors.employees_employee_id3)
                           }
                           helperText={
-                            formik.touched.CounterpartyType &&
-                            formik.errors.CounterpartyType
+                            formik.touched.employees_employee_id3 &&
+                            formik.errors.employees_employee_id3
                           }
                         />
                         <div className={classes.rightDivider}></div>
@@ -1044,15 +1237,18 @@ export const ContactPersonsForCreating = () => {
                           className={classes.textArea}
                           multiline
                           rows={8}
-                          name="FullCompanyName"
+                          name="employees_info3"
                           style={{ minWidth: "50%" }}
                           placeholder={"Введите текст"}
-                          value={formik.values.OGPN}
                           onChange={formik.handleChange}
                           error={
-                            formik.touched.OGPN && Boolean(formik.errors.OGPN)
+                            formik.touched.employees_info3 &&
+                            Boolean(formik.errors.employees_info3)
                           }
-                          helperText={formik.touched.OGPN && formik.errors.OGPN}
+                          helperText={
+                            formik.touched.employees_info3 &&
+                            formik.errors.employees_info3
+                          }
                         />
                         <div className={classes.rightDivider}></div>
                       </div>
@@ -1097,17 +1293,16 @@ export const ContactPersonsForCreating = () => {
                   <span>Праздник</span>
                   <TextField
                     variant={"outlined"}
-                    name="CounterpartyType"
+                    name="congratulations_name1"
                     placeholder={"Название праздника"}
-                    value={formik.values.CounterpartyType}
                     onChange={formik.handleChange}
                     error={
-                      formik.touched.CounterpartyType &&
-                      Boolean(formik.errors.CounterpartyType)
+                      formik.touched.congratulations_name1 &&
+                      Boolean(formik.errors.congratulations_name1)
                     }
                     helperText={
-                      formik.touched.CounterpartyType &&
-                      formik.errors.CounterpartyType
+                      formik.touched.congratulations_name1 &&
+                      formik.errors.congratulations_name1
                     }
                   />
                 </div>
@@ -1115,27 +1310,24 @@ export const ContactPersonsForCreating = () => {
                 <div className={classes.label}>
                   <span>Тип поздравления</span>
                   <InputFilterSelectedCongratulationsType
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setCongrats(e.target.value)
-                    }
-                    value={congrats}
+                    handleChange={formik.handleChange}
+                    name="congratulations_congratulation_type_id1"
                   />
                 </div>
                 <div className={classes.label}>
                   <span>Другое</span>
                   <TextField
                     variant={"outlined"}
-                    name="CounterpartyType"
+                    name="congratulations_other1"
                     placeholder={"Другое"}
-                    value={formik.values.CounterpartyType}
                     onChange={formik.handleChange}
                     error={
-                      formik.touched.CounterpartyType &&
-                      Boolean(formik.errors.CounterpartyType)
+                      formik.touched.congratulations_other1 &&
+                      Boolean(formik.errors.congratulations_other1)
                     }
                     helperText={
-                      formik.touched.CounterpartyType &&
-                      formik.errors.CounterpartyType
+                      formik.touched.congratulations_other1 &&
+                      formik.errors.congratulations_other1
                     }
                   />
                 </div>
@@ -1161,18 +1353,17 @@ export const ContactPersonsForCreating = () => {
                       <span style={{ width: "54%" }}>Праздник</span>
                       <TextField
                         variant={"outlined"}
-                        name="CounterpartyType"
+                        name="congratulations_name2"
                         style={{ minWidth: "50%" }}
                         placeholder={"Название праздника"}
-                        value={formik.values.CounterpartyType}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.CounterpartyType &&
-                          Boolean(formik.errors.CounterpartyType)
+                          formik.touched.congratulations_name2 &&
+                          Boolean(formik.errors.congratulations_name2)
                         }
                         helperText={
-                          formik.touched.CounterpartyType &&
-                          formik.errors.CounterpartyType
+                          formik.touched.congratulations_name2 &&
+                          formik.errors.congratulations_name2
                         }
                       />
                       <div
@@ -1193,21 +1384,9 @@ export const ContactPersonsForCreating = () => {
                     </div>
                     <div className={classes.label}>
                       <span style={{ width: "54%" }}>Тип поздравления</span>
-                      <TextField
-                        variant={"outlined"}
-                        name="CounterpartyType"
-                        style={{ minWidth: "50%" }}
-                        placeholder={"Выберите"}
-                        value={formik.values.CounterpartyType}
-                        onChange={formik.handleChange}
-                        error={
-                          formik.touched.CounterpartyType &&
-                          Boolean(formik.errors.CounterpartyType)
-                        }
-                        helperText={
-                          formik.touched.CounterpartyType &&
-                          formik.errors.CounterpartyType
-                        }
+                      <InputFilterSelectedCongratulationsType
+                        handleChange={formik.handleChange}
+                        name="congratulations_congratulation_type_id2"
                       />
                       <div className={classes.rightDivider}></div>
                     </div>
@@ -1215,18 +1394,17 @@ export const ContactPersonsForCreating = () => {
                       <span style={{ width: "54%" }}>Другое</span>
                       <TextField
                         variant={"outlined"}
-                        name="CounterpartyType"
+                        name="congratulations_other2"
                         style={{ minWidth: "50%" }}
                         placeholder={"Другое"}
-                        value={formik.values.CounterpartyType}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.CounterpartyType &&
-                          Boolean(formik.errors.CounterpartyType)
+                          formik.touched.congratulations_other2 &&
+                          Boolean(formik.errors.congratulations_other2)
                         }
                         helperText={
-                          formik.touched.CounterpartyType &&
-                          formik.errors.CounterpartyType
+                          formik.touched.congratulations_other2 &&
+                          formik.errors.congratulations_other2
                         }
                       />
                       <div className={classes.rightDivider}></div>
@@ -1240,18 +1418,17 @@ export const ContactPersonsForCreating = () => {
                       <span style={{ width: "54%" }}>Праздник</span>
                       <TextField
                         variant={"outlined"}
-                        name="CounterpartyType"
+                        name="congratulations_name3"
                         style={{ minWidth: "50%" }}
                         placeholder={"Название праздника"}
-                        value={formik.values.CounterpartyType}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.CounterpartyType &&
-                          Boolean(formik.errors.CounterpartyType)
+                          formik.touched.congratulations_name3 &&
+                          Boolean(formik.errors.congratulations_name3)
                         }
                         helperText={
-                          formik.touched.CounterpartyType &&
-                          formik.errors.CounterpartyType
+                          formik.touched.congratulations_name3 &&
+                          formik.errors.congratulations_name3
                         }
                       />
                       <div
@@ -1272,21 +1449,9 @@ export const ContactPersonsForCreating = () => {
                     </div>
                     <div className={classes.label}>
                       <span style={{ width: "54%" }}>Тип поздравления</span>
-                      <TextField
-                        variant={"outlined"}
-                        name="CounterpartyType"
-                        style={{ minWidth: "50%" }}
-                        placeholder={"Выберите"}
-                        value={formik.values.CounterpartyType}
-                        onChange={formik.handleChange}
-                        error={
-                          formik.touched.CounterpartyType &&
-                          Boolean(formik.errors.CounterpartyType)
-                        }
-                        helperText={
-                          formik.touched.CounterpartyType &&
-                          formik.errors.CounterpartyType
-                        }
+                      <InputFilterSelectedCongratulationsType
+                        handleChange={formik.handleChange}
+                        name="congratulations_congratulation_type_id3"
                       />
                       <div className={classes.rightDivider}></div>
                     </div>
@@ -1294,18 +1459,17 @@ export const ContactPersonsForCreating = () => {
                       <span style={{ width: "54%" }}>Другое</span>
                       <TextField
                         variant={"outlined"}
-                        name="CounterpartyType"
+                        name="congratulations_other3"
                         style={{ minWidth: "50%" }}
                         placeholder={"Другое"}
-                        value={formik.values.CounterpartyType}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.CounterpartyType &&
-                          Boolean(formik.errors.CounterpartyType)
+                          formik.touched.congratulations_other3 &&
+                          Boolean(formik.errors.congratulations_other3)
                         }
                         helperText={
-                          formik.touched.CounterpartyType &&
-                          formik.errors.CounterpartyType
+                          formik.touched.congratulations_other3 &&
+                          formik.errors.congratulations_other3
                         }
                       />
                       <div className={classes.rightDivider}></div>

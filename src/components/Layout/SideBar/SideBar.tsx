@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
         fontWeight: 700,
       },
       "& .MuiListItemIcon-root": {
-        marginRight: 7,
+        marginRight: 10,
         marginLeft: 12,
       },
       "& .MuiDrawer-paperAnchorDockedLeft": {
@@ -122,6 +122,10 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
     },
+    activeLinkHover: {
+      background: "#E3DFDF",
+      marginLeft: -3,
+    },
   })
 );
 export const SideBarPage: React.FC = () => {
@@ -154,7 +158,14 @@ export const SideBarPage: React.FC = () => {
                 active === "Оповещения" ? classes.activeLink : classes.link
               }
             >
-              <ListItem button onClick={() => setActive("Оповещения")}>
+              <ListItem
+                button
+                onClick={() => setActive("Оповещения")}
+                className={
+                  active === "Оповещения" ? classes.activeLinkHover : ""
+                }
+                title="Оповещения"
+              >
                 <ListItemIcon>
                   <Badge
                     color="secondary"
@@ -179,7 +190,12 @@ export const SideBarPage: React.FC = () => {
                 active === "Проекты" ? classes.activeLink : classes.link
               }
             >
-              <ListItem button onClick={() => setActive("Проекты")}>
+              <ListItem
+                button
+                onClick={() => setActive("Проекты")}
+                className={active === "Проекты" ? classes.activeLinkHover : ""}
+                title="Проекты"
+              >
                 <ListItemIcon>
                   <ProjectsIcon
                     color={active === "Проекты" ? activeLinkIco : linkIco}
@@ -200,6 +216,12 @@ export const SideBarPage: React.FC = () => {
               <ListItem
                 button
                 onClick={() => setActive("Управление денежными")}
+                className={
+                  active === "Управление денежными"
+                    ? classes.activeLinkHover
+                    : ""
+                }
+                title="Управление денежными"
               >
                 <ListItemIcon>
                   <MoneyTransfer
@@ -223,7 +245,14 @@ export const SideBarPage: React.FC = () => {
                 active === "Задачи и заявки" ? classes.activeLink : classes.link
               }
             >
-              <ListItem button onClick={() => setActive("Задачи и заявки")}>
+              <ListItem
+                button
+                onClick={() => setActive("Задачи и заявки")}
+                className={
+                  active === "Задачи и заявки" ? classes.activeLinkHover : ""
+                }
+                title="Задачи и заявки"
+              >
                 <ListItemIcon>
                   <TaskRequest
                     color={
@@ -239,7 +268,12 @@ export const SideBarPage: React.FC = () => {
               to={"/Goods and materials"}
               className={active === "ТМЦ" ? classes.activeLink : classes.link}
             >
-              <ListItem button onClick={() => setActive("ТМЦ")}>
+              <ListItem
+                button
+                onClick={() => setActive("ТМЦ")}
+                className={active === "ТМЦ" ? classes.activeLinkHover : ""}
+                title="ТМЦ"
+              >
                 <ListItemIcon>
                   <TMC color={active === "ТМЦ" ? activeLinkIco : linkIco} />
                 </ListItemIcon>
@@ -252,7 +286,12 @@ export const SideBarPage: React.FC = () => {
                 active === "Договоры" ? classes.activeLink : classes.link
               }
             >
-              <ListItem button onClick={() => setActive("Договоры")}>
+              <ListItem
+                button
+                onClick={() => setActive("Договоры")}
+                className={active === "Договоры" ? classes.activeLinkHover : ""}
+                title="Договоры"
+              >
                 <ListItemIcon>
                   <Contracts
                     color={active === "Договоры" ? activeLinkIco : linkIco}
@@ -267,7 +306,12 @@ export const SideBarPage: React.FC = () => {
                 active === "Письма" ? classes.activeLink : classes.link
               }
             >
-              <ListItem button onClick={() => setActive("Письма")}>
+              <ListItem
+                button
+                onClick={() => setActive("Письма")}
+                className={active === "Письма" ? classes.activeLinkHover : ""}
+                title="Письма"
+              >
                 <ListItemIcon>
                   <Letters
                     color={active === "Письма" ? activeLinkIco : linkIco}
@@ -282,7 +326,14 @@ export const SideBarPage: React.FC = () => {
                 active === "Контрагенты" ? classes.activeLink : classes.link
               }
             >
-              <ListItem button onClick={() => setActive("Контрагенты")}>
+              <ListItem
+                button
+                onClick={() => setActive("Контрагенты")}
+                className={
+                  active === "Контрагенты" ? classes.activeLinkHover : ""
+                }
+                title="Контрагенты"
+              >
                 <ListItemIcon>
                   <ConterpartiesIcon
                     color={active === "Контрагенты" ? activeLinkIco : linkIco}
@@ -297,7 +348,14 @@ export const SideBarPage: React.FC = () => {
                 active === "Сотрудники" ? classes.activeLink : classes.link
               }
             >
-              <ListItem button onClick={() => setActive("Сотрудники")}>
+              <ListItem
+                button
+                onClick={() => setActive("Сотрудники")}
+                className={
+                  active === "Сотрудники" ? classes.activeLinkHover : ""
+                }
+                title="Сотрудники"
+              >
                 <ListItemIcon>
                   <EmployeesIcon
                     color={active === "Сотрудники" ? activeLinkIco : linkIco}
@@ -312,7 +370,12 @@ export const SideBarPage: React.FC = () => {
                 active === "Таймшит" ? classes.activeLink : classes.link
               }
             >
-              <ListItem button onClick={() => setActive("Таймшит")}>
+              <ListItem
+                button
+                onClick={() => setActive("Таймшит")}
+                className={active === "Таймшит" ? classes.activeLinkHover : ""}
+                title={"Таймшит"}
+              >
                 <ListItemIcon>
                   <TimesheetIcon
                     color={active === "Таймшит" ? activeLinkIco : linkIco}

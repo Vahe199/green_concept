@@ -175,7 +175,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
           )}
           <div style={{ marginBottom: "2%", display: "flex" }}>
             <div>
-              <span style={{ fontSize: 16, fontWeight: 500 }}>
+              <span style={{ fontSize: 16, fontWeight: "normal" }}>
                 Физическое лицо
               </span>
               <Radio
@@ -191,7 +191,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
               />
             </div>
             <div>
-              <span style={{ fontSize: 16, fontWeight: 500 }}>
+              <span style={{ fontSize: 16, fontWeight: "normal" }}>
                 Юридическое лицо
               </span>
               <Radio

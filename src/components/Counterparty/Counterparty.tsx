@@ -32,7 +32,12 @@ export const Counterparty = () => {
   return (
     <div className={classes.container}>
       <Paper square className={classes.root}>
-        <Typography variant="subtitle1" noWrap className={classes.typography}>
+        <Typography
+          variant="subtitle1"
+          noWrap
+          className={classes.typography}
+          style={{ fontSize: 23 }}
+        >
           Контрагенты
         </Typography>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -51,7 +56,7 @@ export const Counterparty = () => {
               variant="contained"
               startIcon={<AddIcon />}
               className={classes.button}
-              style={{ width: 192 }}
+              style={{ width: 192, marginRight: 32 }}
             >
               Новый контакт
             </Button>
@@ -59,7 +64,7 @@ export const Counterparty = () => {
               onClick={() => handleClick("all contact persons")}
               variant="contained"
               className={classes.button}
-              style={{ width: 214 }}
+              style={{ width: 214, marginRight: 32 }}
             >
               Все контактные лица
             </Button>
@@ -70,6 +75,7 @@ export const Counterparty = () => {
                 padding: 0,
                 height: 29,
                 width: 25,
+                marginRight: "1%",
               }}
             >
               <XLSIcon color="#3AB994" />

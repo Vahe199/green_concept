@@ -10,7 +10,7 @@ const instance = axios.create({
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMzMTk2Mzk5LCJleHAiOjE2MzMyODI3OTksIm5iZiI6MTYzMzE5NjM5OSwianRpIjoiUU5Tem9jSkQzc0pqbnN4OCIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.KRR4jZaZ8Q2BEiX2Ef9z532mT6eXTE2PpHZZ1bt6uSI`,
+    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjMzNDM2NzQxLCJleHAiOjE2MzM1MjMxNDEsIm5iZiI6MTYzMzQzNjc0MSwianRpIjoiNUVFcWdnbkxnbk8wTUNBUiIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.SpcIjTjZMbV-kkBCFuJ8LaSifg1YsLmtaZFsrnZLRXA`,
   },
 });
 
@@ -55,5 +55,8 @@ export const contractorApi = {
   },
   insertContractorGeneralData(data) {
     return instance.post("contractors/", data);
+  },
+  insertContractorContactData(data) {
+    return instance.post("contacts/", data);
   },
 };

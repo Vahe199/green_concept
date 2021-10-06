@@ -13,7 +13,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function InputFilterSelectedRoles(props: any): any {
+export default function InputFilterSelectedRoles({
+  handleChange,
+  ...props
+}: any): any {
   const classes = useStyles();
   const { assets, load } = useTypedSelector((state) => state.assets);
   let { contact_roles }: any = assets;
@@ -26,7 +29,7 @@ export default function InputFilterSelectedRoles(props: any): any {
         id="outlined-select-currency-native"
         select
         //value={props.value}
-        onChange={props.handleChange}
+        onChange={handleChange}
         InputProps={{
           endAdornment: (
             <div style={{ position: "absolute", right: 5, top: 6 }}>
@@ -38,6 +41,7 @@ export default function InputFilterSelectedRoles(props: any): any {
           native: true,
         }}
         variant="outlined"
+        {...props}
       >
         {contact_roles?.map((option: any) => (
           <option key={option.id} value={option.id ? option.id : "1"}>

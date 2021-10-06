@@ -10,6 +10,7 @@ import * as AssetsListDataAC from "./AssetsListAC";
 import * as RecoveryAuthorDataAC from "./recoveryAuthorDataState";
 import * as ContractorBankDetailsDataAC from "./ContractorBankDetailsDataAC";
 import * as ContractorGeneraDataAC from "./ContractorGeneralDataAC";
+import * as ContractorContactAC from "./ContractorContactAC";
 
 export default {
   ...CounterpartiesActionCreators,
@@ -24,4 +25,5 @@ export default {
   ...RecoveryAuthorDataAC,
   ...ContractorBankDetailsDataAC,
   ...ContractorGeneraDataAC,
+  ...ContractorContactAC,
 };

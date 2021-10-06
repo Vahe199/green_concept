@@ -13,56 +13,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ContactPerson = () => {
-  // const initial = {
-  //   firstname: "",
-  //   middlename: "",
-  //   surname: "",
-  //   contractor_type_id: "",
-  //   sex: "",
-  //   birthdate: "",
-  //   delivery_address: "",
-  //   emails: [
-  //     {
-  //       email: "",
-  //     },
-  //   ],
-  //   phones: [
-  //     {
-  //       phone: "",
-  //       phone_type: "",
-  //     },
-  //   ],
-  //   contact_contractors: {
-  //     main: "",
-  //     role_id: "",
-  //     position: "",
-  //     contractor_id: "",
-  //   },
-  //   contact_employees: [
-  //     {
-  //       direction_id: "",
-  //       employee_id: "",
-  //       info: "",
-  //     },
-  //     {
-  //       employee_id: "",
-  //     },
-  //   ],
-  //   contact_congratulations: [
-  //     {
-  //       name: "",
-  //       congratulation_type_id: "",
-  //       other: "",
-  //     },
-  //     {
-  //       other: "",
-  //     },
-  //   ],
-  //   status_id: "",
-  //   service_type_id: "",
-  //   branches: [],
-  // };
-
   const [changeBasicInformation, setChangeBasicInformation] =
     useState<boolean>(true);
   const [changeContactsFromGreen, setChangeContactsFromGreen] =

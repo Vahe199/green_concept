@@ -28,15 +28,30 @@ const useStyles = makeStyles({
       marginTop: 8,
       border: "1px solid #F1F2F3",
     },
+
     borderRadius: 4,
   },
+  // container: {
+  //   maxHeight: "74vh",
+  //   borderRadius: 4,
+  // },
   container: {
+    scrollbarWidth: "none" /* Firefox */,
     maxHeight: "74vh",
     borderRadius: 4,
+    "&::-webkit-scrollbar": {
+      display: "none"
+    } /* Chrome */
   },
   textField: {
     width: "75px",
     // padding:4
+  },
+  tableBody:{
+    width:'100%',
+    maxHeight: "70vh",
+    overflowX:"scroll",
+
   },
   tableCell: {
     display: "flex",
@@ -193,7 +208,8 @@ export default function CounterpartiesTable(props: any) {
               </StyledTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+
+          <TableBody >
             {contractors.map((row, index: number) => (
               <StyledTableRow
                 hover
@@ -254,6 +270,7 @@ export default function CounterpartiesTable(props: any) {
               </StyledTableRow>
             ))}
           </TableBody>
+
         </Table>
       </TableContainer>
     </Paper>

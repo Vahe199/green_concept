@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
       },
       "& .MuiFormHelperText-root": {
         fontSize: 9,
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
         marginLeft: 0,
       },
       "& .MuiFormControlLabel-root": {
-        fontSize: 10,
+        fontSize: 16,
       },
     },
     textArea: {
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "80px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
         paddingLeft: 0,
       },
       "& .MuiOutlinedInput-multiline": {
@@ -77,9 +77,11 @@ const useStyles = makeStyles((theme: Theme) =>
       textDecoration: "underline",
       boxShadow: "none",
     },
-    spanTitle: {
-      fontSize: 16,
-    },
+      spanTitle: {
+        fontSize: 16,
+        fontWeight: 500,
+      },
+
     addItem: {
       marginTop: 70,
       cursor: "pointer",
@@ -134,7 +136,7 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
         </div>
         <Paper className={classes.paper}>
           <div className={classes.label}>
-            <span>Направление</span>
+            <span className={classes.spanTitle}>Направление</span>
             {/*<TextField*/}
             {/*  variant={"outlined"}*/}
             {/*  name="direction"*/}
@@ -156,7 +158,7 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
             />
           </div>
           <div className={classes.label}>
-            <span>Контактное лицо</span>
+            <span className={classes.spanTitle}>Контактное лицо</span>
             {/*<TextField*/}
             {/*  variant={"outlined"}*/}
             {/*  name="contact_person"*/}
@@ -175,7 +177,7 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
             <SearchInput />
           </div>
           <div className={classes.label}>
-            <span>Дополнительная информация</span>
+            <span className={classes.spanTitle}>Дополнительная информация</span>
 
             <TextField
               variant={"outlined"}

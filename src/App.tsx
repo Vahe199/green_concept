@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme: Theme) =>
       "& .MuiSelect-iconOutlined": {
         opacity: 0,
       },
+        '& .MuiSvgIcon-root': {
+            fontSize: 24,
+        },
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,

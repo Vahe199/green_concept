@@ -279,7 +279,6 @@ export const GeneralInformationForCreating = () => {
       }
 
       const formatedValues = {
-        id: 1,
         org_type: OrganizationType,
         contractor_type_id: CounterpartyType,
         service_type_id: ServiceType,

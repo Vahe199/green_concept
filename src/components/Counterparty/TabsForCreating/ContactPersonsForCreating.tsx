@@ -1,6 +1,15 @@
-import { Button, Checkbox, Paper, Radio, TextField } from "@material-ui/core";
+import {
+  Button,
+  Checkbox,
+  InputAdornment,
+  Paper,
+  Radio,
+  TextField,
+} from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import SearchIcon from "@material-ui/icons/Search";
+
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import * as yup from "yup";
@@ -166,6 +175,11 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 16,
       textDecoration: "underline",
     },
+    icon: {
+      width: 18,
+      height: 18,
+      marginLeft: -1,
+    },
   })
 );
 
@@ -185,12 +199,26 @@ export const ContactPersonsForCreating = () => {
   const { id }: any = AuthorData;
 
   const { assets } = useTypedSelector((state) => state.assets);
-  const { crms, branches, types_and_services }: any = assets;
+  const {
+    contact_roles,
+    branches,
+    types_and_services,
+    contact_statuses,
+    directions,
+    congratulation_types,
+  }: any = assets;
 
-  const crmsInitial = get(crms, "[0].id", "");
-  const CounterpartyTypeInitial = get(types_and_services, "[0].id", "");
-  const ServiceTypeInitial = get(types_and_services, "[0].services[0].id", "");
-  const IndustryInitial = get(branches, "[0].id", "");
+  const contactRolesInitial = get(contact_roles, "[0].id", "");
+  const contractorTypeIdInitial = get(types_and_services, "[0].id", "");
+  const serviceTypeIdInitial = get(
+    types_and_services,
+    "[0].services[0].id",
+    ""
+  );
+  const statusIdInitial = get(contact_statuses, "[0].id", "");
+  const branchesInitial = get(branches, "[0].id", "");
+  const directionsInitial = get(directions, "[0].id", "");
+  const congratulationTypesInitial = get(congratulation_types, "[0].id", "");
 
   const classes = useStyles();
   const { insertContractorContactData } = UseActions();
@@ -204,8 +232,8 @@ export const ContactPersonsForCreating = () => {
   const formik = useFormik({
     initialValues: {
       contractors_main: 1,
-      status_id: "",
-      contractors_role_id: "",
+      status_id: statusIdInitial,
+      contractors_role_id: contactRolesInitial,
       contractors_position: "",
 
       firstname: "",
@@ -214,9 +242,9 @@ export const ContactPersonsForCreating = () => {
       sex: "Муж",
       birthdate: "1970-01-01",
       delivery_address: "",
-      contractor_type_id: "",
-      service_type_id: "",
-      branches: "",
+      contractor_type_id: contractorTypeIdInitial,
+      service_type_id: serviceTypeIdInitial,
+      branches: branchesInitial,
 
       work_phone1: "",
       work_phone2: "",
@@ -228,12 +256,12 @@ export const ContactPersonsForCreating = () => {
       email2: "",
       email3: "",
 
-      employees_direction_id1: "",
-      employees_direction_id2: "",
-      employees_direction_id3: "",
-      employees_employee_id1: "",
-      employees_employee_id2: "",
-      employees_employee_id3: "",
+      employees_direction_id1: directionsInitial,
+      employees_direction_id2: directionsInitial,
+      employees_direction_id3: directionsInitial,
+      employees_employee_id1: 30, // todo Arsen, must changed.
+      employees_employee_id2: 30, // todo Arsen, must changed.
+      employees_employee_id3: 30, // todo Arsen, must changed.
       employees_info1: "",
       employees_info2: "",
       employees_info3: "",
@@ -241,9 +269,9 @@ export const ContactPersonsForCreating = () => {
       congratulations_name1: "",
       congratulations_name2: "",
       congratulations_name3: "",
-      congratulations_congratulation_type_id1: "",
-      congratulations_congratulation_type_id2: "",
-      congratulations_congratulation_type_id3: "",
+      congratulations_congratulation_type_id1: congratulationTypesInitial,
+      congratulations_congratulation_type_id2: congratulationTypesInitial,
+      congratulations_congratulation_type_id3: congratulationTypesInitial,
       congratulations_other1: "",
       congratulations_other2: "",
       congratulations_other3: "",
@@ -251,7 +279,6 @@ export const ContactPersonsForCreating = () => {
     validationSchema: validationSchema,
     onSubmit: ({
       contractors_main,
-      status_id,
       contractors_role_id,
       contractors_position,
       branches: branch,
@@ -287,9 +314,9 @@ export const ContactPersonsForCreating = () => {
       ...rest
     }) => {
       const phoneWorkDraft = [
-        { phone: work_phone1, phone_type: "work" },
-        { phone: work_phone2, phone_type: "work" },
-        { phone: work_phone3, phone_type: "work" },
+        { phone: work_phone1, phone_type: "Рабочий" },
+        { phone: work_phone2, phone_type: "Рабочий" },
+        { phone: work_phone3, phone_type: "Рабочий" },
       ];
       const phoneMobileDraft = [
         { phone: mobile_phone1, phone_type: "Мобильный" },
@@ -344,35 +371,33 @@ export const ContactPersonsForCreating = () => {
         contractor_id: id,
       };
 
+      const formatedValues: any = rest;
+
       for (let i = 1; i <= 3; i++) {
         console.log(i);
 
-        if (phone >= i && phoneWorkDraft[i - 1]) {
-          phones.push({ phone: phoneWorkDraft[i - 1] });
+        if (phone >= i && phoneWorkDraft[i - 1].phone) {
+          phones.push(phoneWorkDraft[i - 1]);
+          formatedValues["phones"] = phones;
         }
-        if (phoneMob >= i && phoneMobileDraft[i - 1]) {
-          phones.push({ phone: phoneMobileDraft[i - 1] });
+        if (phoneMob >= i && phoneMobileDraft[i - 1].phone) {
+          phones.push(phoneMobileDraft[i - 1]);
+          formatedValues.phones = phones;
         }
         if (email >= i && emailDraft[i - 1]) {
           emails.push({ email: emailDraft[i - 1] });
+          formatedValues.emails = emails;
         }
         if (multipleContactsFromGreen >= i && contactEmployees[i - 1]) {
           contact_employees.push(contactEmployees[i - 1]);
+          formatedValues.contact_employees = contact_employees;
         }
-        if (congratsPart >= i && contactCongratulations[i - 1]) {
+        if (congratsPart >= i && contactCongratulations[i - 1].name) {
           contact_congratulations.push(contactCongratulations[i - 1]);
+          formatedValues.contact_congratulations = contact_congratulations;
         }
       }
 
-      const formatedValues = {
-        emails,
-        phones,
-        contact_contractors,
-        contact_employees,
-        contact_congratulations,
-        branches: [branch],
-        ...rest,
-      };
       console.log("submit", formatedValues);
 
       insertContractorContactData(formatedValues);
@@ -525,8 +550,8 @@ export const ContactPersonsForCreating = () => {
                   <div>
                     <span>Женщина</span>
                     <Radio
-                      checked={formik.values.sex === "Жена"}
-                      onChange={() => formik.setFieldValue("sex", "Жена")}
+                      checked={formik.values.sex === "Жен"}
+                      onChange={() => formik.setFieldValue("sex", "Жен")}
                       color="default"
                       name="radio-button-demo"
                       size="medium"
@@ -1054,6 +1079,16 @@ export const ContactPersonsForCreating = () => {
                       name="employees_employee_id1"
                       placeholder={"Введите слово или часть слова"}
                       onChange={formik.handleChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon
+                              fontSize={"small"}
+                              className={classes.icon}
+                            />
+                          </InputAdornment>
+                        ),
+                      }}
                       error={
                         formik.touched.employees_employee_id1 &&
                         Boolean(formik.errors.employees_employee_id1)

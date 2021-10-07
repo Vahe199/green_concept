@@ -81,8 +81,7 @@ export const initialBankDetails = {
   city: "",
   ks: "",
   rs: "",
-  account_active: false,
-  id: "",
+  is_active: 1,
 };
 
 export type ContractorBankDetailType = {
@@ -91,8 +90,9 @@ export type ContractorBankDetailType = {
   city: string;
   ks: string;
   rs: string;
-  account_active: boolean;
-  id: number | string;
+  is_active: number;
+  id?: number | string;
+  main?: number | string;
 };
 const validationSchema = yup.object({
   bik: yup
@@ -154,7 +154,9 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
       } else {
         insertContractorBankDetails(data);
       }
-      setEdit(true);
+      setTimeout(() => {
+        setEdit(true);
+      }, 500);
     },
   });
 
@@ -162,6 +164,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
     return () =>
       setContractorBankDetail && setContractorBankDetail(initialBankDetails);
   }, []);
+  console.log(formik.values);
 
   return (
     <div className={classes.root}>
@@ -269,12 +272,14 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
             <span>Счет активный</span>
             <span style={{ width: "75%" }}>
               <Checkbox
-                name="account_active"
                 defaultChecked
+                name="is_active"
                 color="default"
                 inputProps={{ "aria-label": "checkbox with default color" }}
-                value={formik.values.account_active}
-                onChange={formik.handleChange}
+                value={formik.values.is_active ? true : false}
+                onChange={(e) =>
+                  formik.setFieldValue("is_active", e.target.checked ? 1 : 0)
+                }
                 icon={<CheckSquareUnChecked color="#5B6770" />}
                 checkedIcon={<CheckSquareChecked color="#5B6770" />}
                 // todo, not implemented

@@ -69,7 +69,6 @@ export const BankDetails: React.FC<BankProps> = ({
     { id: 3, title: "Город", field: "city" },
     { id: 4, title: "К/с", field: "ks" },
     { id: 5, title: "Р/с", field: "rs" },
-    { id: 6, title: "account_active", field: "account_active" },
   ];
 
   const { fetchContractorBankDetails } = UseActions();
@@ -117,7 +116,12 @@ export const BankDetails: React.FC<BankProps> = ({
                   </div>
                 </div>
 
-                <Paper className={classes.paper}>
+                <Paper
+                  className={classes.paper}
+                  style={{
+                    opacity: details.is_active ? 1 : 0.5,
+                  }}
+                >
                   {fieldsMapper.map(({ id, title, field }) => (
                     <Details
                       key={id}

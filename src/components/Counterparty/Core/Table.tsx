@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     scrollbarWidth: "none" /* Firefox */,
     maxHeight: "74vh",
     borderRadius: 4,
-    "&::-webkit-scrollbar": {
+    "&::-webkit-scrollbar-track": {
       background: "green",
       border: "1px solid red !important",
       width: 100,

@@ -175,13 +175,12 @@ export const GeneralInformationForCreating = () => {
   const [branch, setBranch] = React.useState(1);
   const [CRMs, setCRMs] = React.useState(1);
 
-  const { AuthorData } = useTypedSelector((state) => state.author);
   const { assets } = useTypedSelector((state) => state.assets);
   const { crms, branches, types_and_services }: any = assets;
-  const { id }: any = AuthorData;
 
   const crmsInitial = get(crms, "[0].id", "");
   const CounterpartyTypeInitial = get(types_and_services, "[0].id", "");
+  const ServiceTypeInitial = get(types_and_services, "[0].services[0].id", "");
   const IndustryInitial = get(branches, "[0].id", "");
 
   const { insertContractorGeneralData } = UseActions();
@@ -194,7 +193,7 @@ export const GeneralInformationForCreating = () => {
       CrmValue3: crmsInitial,
       CounterpartyType: CounterpartyTypeInitial,
       OrganizationType: "ЮЛ",
-      ServiceType: "",
+      ServiceType: ServiceTypeInitial,
       INN: "",
       KPP: "",
       OGPN: "",
@@ -280,7 +279,7 @@ export const GeneralInformationForCreating = () => {
       }
 
       const formatedValues = {
-        id,
+        id: 1,
         org_type: OrganizationType,
         contractor_type_id: CounterpartyType,
         service_type_id: ServiceType,

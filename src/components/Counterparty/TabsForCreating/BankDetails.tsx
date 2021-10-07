@@ -60,6 +60,9 @@ export const BankDetails: React.FC<BankProps> = ({
     (state) => state.contractorBankDetails
   );
 
+  const { AuthorData } = useTypedSelector((state) => state.author);
+  const { id }: any = AuthorData;
+
   const fieldsMapper = [
     { id: 1, title: "БИК", field: "bik" },
     { id: 2, title: "Наименование банка", field: "name" },
@@ -68,9 +71,6 @@ export const BankDetails: React.FC<BankProps> = ({
     { id: 5, title: "Р/с", field: "rs" },
     { id: 6, title: "account_active", field: "account_active" },
   ];
-
-  const { AuthorData } = useTypedSelector((state) => state.author);
-  const { id }: any = AuthorData;
 
   const { fetchContractorBankDetails } = UseActions();
 
@@ -85,7 +85,9 @@ export const BankDetails: React.FC<BankProps> = ({
         <Typography variant={"button"} className={classes.description}>
           {props.item}
         </Typography>
-        <Typography variant={"body2"} className={classes.description}>{props.value}</Typography>
+        <Typography variant={"body2"} className={classes.description}>
+          {props.value}
+        </Typography>
       </div>
     );
   };

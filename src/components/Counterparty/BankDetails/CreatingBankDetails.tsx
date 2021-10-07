@@ -1,18 +1,9 @@
 import React, { useState } from "react";
 import CreatEditBankAccount, {
   ContractorBankDetailType,
+  initialBankDetails,
 } from "../Forms/BankAccountForm/CreatEditBankAccount";
 import { BankDetails } from "../TabsForCreating/BankDetails";
-
-export const initialBankDetails = {
-  bik: "",
-  name: "",
-  city: "",
-  ks: "",
-  rs: "",
-  account_active: false,
-  id: "",
-};
 
 const CreatingBankDetails: React.FC = () => {
   const [edit, setEdit] = useState(true);

@@ -2,11 +2,11 @@ import React, { PropsWithChildren } from "react";
 import { HeaderPage } from "./components/Layout/Header/Header";
 import { SideBarPage } from "./components/Layout/SideBar/SideBar";
 import { Counterparty } from "./components/Counterparty/Counterparty";
-import { Employees } from "./components/Employees/Employees";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Route } from "react-router-dom";
 import CreateCounterparty from "./components/Counterparty/CreateCounterparty";
+import Employees from "./components/Employees/Employees";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -48,7 +48,7 @@ const App: React.FC = (props: PropsWithChildren<any>) => {
 
         <main className={classes.content}>
           <Route path="/counterparties" render={() => <Counterparty />} />
-          <Route path="/employees" render={() => <Employees />} />
+          <Route path="/employees/:item?" render={() => <Employees />} />
           <Route
             path="/counterparty/:item?"
             render={() => <CreateCounterparty />}

@@ -3,6 +3,8 @@ import Divider from "@material-ui/core/Divider";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import * as yup from "yup";
+
 import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
@@ -16,6 +18,13 @@ import InputFilterSelectedServicesType from "../../Counterparty/Core/FilterInput
 import InputFilterSelectedStatus from "../../Counterparty/Core/FilterInputs/InputFilterSelectedStatus";
 import InputFilterSelectedType from "../../Counterparty/Core/FilterInputs/InputFilterSelectedType";
 import { UseActions } from "../../../redux/type_redux_hook/ useAction";
+import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
+import get from "lodash/get";
+
+type Data = {
+  firstname: string | null;
+  surname: string | null;
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -126,7 +135,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     statusText: {
       fontSize: 16,
-      marginLeft:"-32px"
+      marginLeft: "-32px",
     },
     topDiv: {
       display: "flex",
@@ -166,7 +175,23 @@ const flexInitial = {
   alignItems: "center",
 };
 
+const validationSchema: yup.SchemaOf<Data> = yup.object({
+  firstname: yup.string().required("Обязательное поле"),
+  surname: yup.string().required("Обязательное поле"),
+});
+
 export const ContactPersonsForCreating = () => {
+  const { AuthorData } = useTypedSelector((state) => state.author);
+  const { id }: any = AuthorData;
+
+  const { assets } = useTypedSelector((state) => state.assets);
+  const { crms, branches, types_and_services }: any = assets;
+
+  const crmsInitial = get(crms, "[0].id", "");
+  const CounterpartyTypeInitial = get(types_and_services, "[0].id", "");
+  const ServiceTypeInitial = get(types_and_services, "[0].services[0].id", "");
+  const IndustryInitial = get(branches, "[0].id", "");
+
   const classes = useStyles();
   const { insertContractorContactData } = UseActions();
 
@@ -182,12 +207,11 @@ export const ContactPersonsForCreating = () => {
       status_id: "",
       contractors_role_id: "",
       contractors_position: "",
-      contractors_contractor_id: "1",
 
       firstname: "",
       middlename: "",
       surname: "",
-      sex: "male",
+      sex: "Муж",
       birthdate: "1970-01-01",
       delivery_address: "",
       contractor_type_id: "",
@@ -224,13 +248,12 @@ export const ContactPersonsForCreating = () => {
       congratulations_other2: "",
       congratulations_other3: "",
     },
-    // validationSchema: validationSchema,
+    validationSchema: validationSchema,
     onSubmit: ({
       contractors_main,
       status_id,
       contractors_role_id,
       contractors_position,
-      contractors_contractor_id = 1,
       branches: branch,
       work_phone1,
       work_phone2,
@@ -318,26 +341,26 @@ export const ContactPersonsForCreating = () => {
         main: contractors_main,
         role_id: contractors_role_id,
         position: contractors_position,
-        contractor_id: contractors_contractor_id,
+        contractor_id: id,
       };
 
       for (let i = 1; i <= 3; i++) {
         console.log(i);
 
-        if (phone >= i && phoneWorkDraft[i]) {
-          phones.push({ phone: phoneWorkDraft[i] });
+        if (phone >= i && phoneWorkDraft[i - 1]) {
+          phones.push({ phone: phoneWorkDraft[i - 1] });
         }
-        if (phoneMob >= i && phoneMobileDraft[i]) {
-          phones.push({ phone: phoneMobileDraft[i] });
+        if (phoneMob >= i && phoneMobileDraft[i - 1]) {
+          phones.push({ phone: phoneMobileDraft[i - 1] });
         }
-        if (email >= i && emailDraft[i]) {
-          emails.push({ email: emailDraft[i] });
+        if (email >= i && emailDraft[i - 1]) {
+          emails.push({ email: emailDraft[i - 1] });
         }
-        if (multipleContactsFromGreen >= i && contactEmployees[i]) {
-          contact_employees.push(contactEmployees[i]);
+        if (multipleContactsFromGreen >= i && contactEmployees[i - 1]) {
+          contact_employees.push(contactEmployees[i - 1]);
         }
-        if (congratsPart >= i && contactCongratulations[i]) {
-          contact_congratulations.push(contactCongratulations[i]);
+        if (congratsPart >= i && contactCongratulations[i - 1]) {
+          contact_congratulations.push(contactCongratulations[i - 1]);
         }
       }
 
@@ -492,8 +515,8 @@ export const ContactPersonsForCreating = () => {
                   <div>
                     <span>Мужчина</span>
                     <Radio
-                      checked={formik.values.sex === "male"}
-                      onChange={() => formik.setFieldValue("sex", "male")}
+                      checked={formik.values.sex === "Муж"}
+                      onChange={() => formik.setFieldValue("sex", "Муж")}
                       color="default"
                       size="medium"
                       inputProps={{ "aria-label": "A" }}
@@ -502,8 +525,8 @@ export const ContactPersonsForCreating = () => {
                   <div>
                     <span>Женщина</span>
                     <Radio
-                      checked={formik.values.sex === "female"}
-                      onChange={() => formik.setFieldValue("sex", "female")}
+                      checked={formik.values.sex === "Жена"}
+                      onChange={() => formik.setFieldValue("sex", "Жена")}
                       color="default"
                       name="radio-button-demo"
                       size="medium"

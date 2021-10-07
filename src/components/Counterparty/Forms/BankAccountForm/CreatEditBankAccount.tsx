@@ -7,7 +7,6 @@ import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSele
 import * as yup from "yup";
 import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
-import { initialBankDetails } from "../../BankDetails/CreatingBankDetails";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -75,6 +74,16 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
+export const initialBankDetails = {
+  bik: "",
+  name: "",
+  city: "",
+  ks: "",
+  rs: "",
+  account_active: false,
+  id: "",
+};
 
 export type ContractorBankDetailType = {
   bik: string;

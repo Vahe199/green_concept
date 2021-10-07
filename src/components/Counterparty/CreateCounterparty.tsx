@@ -12,6 +12,10 @@ import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
 import CreatingBankDetails from "./BankDetails/CreatingBankDetails";
 import { ContractorContactFacesData } from "./ContractorContactFaces/ContractorContactFacesData";
 import { InformationUserData } from "./InformationUserData/InformationUserData";
+import CreatEditBankAccount, {
+  ContractorBankDetailType,
+  initialBankDetails,
+} from "./Forms/BankAccountForm/CreatEditBankAccount";
 import { BankDetails } from "./TabsForCreating/BankDetails";
 import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
 import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformationForCreating";
@@ -94,6 +98,9 @@ const CreateCounterparty = (props: any) => {
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [edit, setEdit] = useState(true);
+  const [contractorBankDetail, setContractorBankDetail] =
+    useState<ContractorBankDetailType>(initialBankDetails);
+
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
   };
@@ -183,10 +190,29 @@ const CreateCounterparty = (props: any) => {
             {selectedTab === 2 && <CreatingBankDetails />}
           </div>
         ) : props.match.params.item === "new contractor" ? (
-          <div >
+          <div>
             {selectedTab === 0 && <GeneralInformationForCreating />}
             {selectedTab === 1 && <ContactPersonsForCreating />}
-            {selectedTab === 2 && <BankDetails setEdit={setEdit} />}
+            {selectedTab === 2 && (
+              <div>
+                {edit ? (
+                  <BankDetails
+                    setEdit={setEdit}
+                    setContractorBankDetail={setContractorBankDetail}
+                  />
+                ) : (
+                  <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    <div style={{ width: "50%" }}>
+                      <CreatEditBankAccount
+                        setEdit={setEdit}
+                        contractorBankDetail={contractorBankDetail}
+                        setContractorBankDetail={setContractorBankDetail}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         ) : (
           <div>{props.match.params.item}</div>

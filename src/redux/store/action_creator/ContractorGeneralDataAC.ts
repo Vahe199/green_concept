@@ -1,24 +1,28 @@
 import { Dispatch } from "redux";
 import { contractorApi } from "../../../api/api";
 import {
-  ContractorGeneralDataAction,
-  ContractorGeneralDataActionType,
-} from "../../types/contractor_general_data";
+  AuthorDataAction,
+  AuthorDataActionType,
+} from "../../types/conterpart_author_data";
 
 export const insertContractorGeneralData =
-  (data: any) => async (dispatch: Dispatch<ContractorGeneralDataAction>) => {
+  (formData: any) => async (dispatch: Dispatch<AuthorDataAction>) => {
     try {
       dispatch({
-        type: ContractorGeneralDataActionType.INSERT_CONTRACTOR_GENERAL_DATA,
+        type: AuthorDataActionType.CHANGE_AUTHOR_DATA,
       });
-      await contractorApi.insertContractorGeneralData(data);
+      const { data } = await contractorApi.insertContractorGeneralData(
+        formData
+      );
       dispatch({
-        type: ContractorGeneralDataActionType.INSERT_CONTRACTOR_GENERAL_DATA_SUCCESS,
+        type: AuthorDataActionType.CHANGE_AUTHOR_DATA_SUCCESS,
+        payload: data.contractor,
       });
     } catch (e) {
       dispatch({
-        type: ContractorGeneralDataActionType.INSERT_CONTRACTOR_GENERAL_DATA_ERROR,
-        payload: "Error Happened Conterparties Table List Is Fallen",
+        type: AuthorDataActionType.CHANGE_AUTHOR_DATA_ERROR,
+        payload: "что-то пошло не так !",
+        errorMsg: "  ",
       });
     }
   };

@@ -40,18 +40,20 @@ const useStyles = makeStyles({
     maxHeight: "74vh",
     borderRadius: 4,
     "&::-webkit-scrollbar": {
-      display: "none"
-    } /* Chrome */
+      background: "green",
+      border: "1px solid red !important",
+      width: 100,
+      height: 101,
+    } /* Chrome */,
   },
   textField: {
     width: "75px",
     // padding:4
   },
-  tableBody:{
-    width:'100%',
+  tableBody: {
+    width: "100%",
     maxHeight: "70vh",
-    overflowX:"scroll",
-
+    overflowX: "scroll",
   },
   tableCell: {
     display: "flex",
@@ -208,69 +210,71 @@ export default function CounterpartiesTable(props: any) {
               </StyledTableCell>
             </TableRow>
           </TableHead>
+          <Paper
+            style={{ position: "absolute", height: "50vh", overflow: "auto" }}
+          >
+            <TableBody style={{ overflow: "auto" }}>
+              {contractors.map((row, index: number) => (
+                <StyledTableRow
+                  hover
+                  role="checkbox"
+                  onClick={() => getUserData(row)}
+                  tabIndex={-1}
+                  key={index}
+                >
+                  <TableCell align="left">{row.id}</TableCell>
+                  <TableCell align="left" className={classes.TextColor}>
+                    {row.type ? row.type.name : ""}
+                  </TableCell>
 
-          <TableBody >
-            {contractors.map((row, index: number) => (
-              <StyledTableRow
-                hover
-                role="checkbox"
-                onClick={() => getUserData(row)}
-                tabIndex={-1}
-                key={index}
-              >
-                <TableCell align="left">{row.id}</TableCell>
-                <TableCell align="left" className={classes.TextColor}>
-                  {row.type ? row.type.name : ""}
-                </TableCell>
-
-                <TableCell align="left" className={classes.TextColor}>
-                  {row.full_name}
-                </TableCell>
-                <TableCell align="left" className={classes.TextColor}>
-                  {row.branches.map((branch: any, index: number) => {
-                    return (
-                      <span key={index}>
-                        {branch.name}
-                        {index < row.branches.length - 1 ? ", " : " "}
-                      </span>
-                    );
-                  })}
-                </TableCell>
-                <TableCell align="left" className={classes.TextColor}>
-                  {row.group === null ? row.group : ""}
-                </TableCell>
-                <TableCell align="left" className={classes.TextColor}>
-                  {row.crms.firstname}
-                  {row.crms.map((crm: any, index: number) => {
-                    return (
-                      <span key={index}>
-                        {crm.firstname + " " + crm.surname && crm.surname}
-                        {index < row.crms.length - 1 ? ", " : " "}
-                      </span>
-                    );
-                  })}
-                </TableCell>
-                <TableCell align="left" className={classes.TextColor}>
-                  {row.author
-                    ? `${row.author.surname} ${row.author.firstname.substring(
-                        0,
-                        1
-                      )}. `
-                    : ""}
-                  {row.author.middlename
-                    ? `${row.author.middlename.substring(0, 1)}.`
-                    : ""}
-                </TableCell>
-                <TableCell align="left" className={classes.TextColor}>
-                  {row.created_at}
-                </TableCell>
-                <TableCell className={classes.at} align="left">
-                  {row.updated_at}
-                </TableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-
+                  <TableCell align="left" className={classes.TextColor}>
+                    {row.full_name}
+                  </TableCell>
+                  <TableCell align="left" className={classes.TextColor}>
+                    {row.branches.map((branch: any, index: number) => {
+                      return (
+                        <span key={index}>
+                          {branch.name}
+                          {index < row.branches.length - 1 ? ", " : " "}
+                        </span>
+                      );
+                    })}
+                  </TableCell>
+                  <TableCell align="left" className={classes.TextColor}>
+                    {row.group === null ? row.group : ""}
+                  </TableCell>
+                  <TableCell align="left" className={classes.TextColor}>
+                    {row.crms.firstname}
+                    {row.crms.map((crm: any, index: number) => {
+                      return (
+                        <span key={index}>
+                          {crm.firstname + " " + crm.surname && crm.surname}
+                          {index < row.crms.length - 1 ? ", " : " "}
+                        </span>
+                      );
+                    })}
+                  </TableCell>
+                  <TableCell align="left" className={classes.TextColor}>
+                    {row.author
+                      ? `${row.author.surname} ${row.author.firstname.substring(
+                          0,
+                          1
+                        )}. `
+                      : ""}
+                    {row.author.middlename
+                      ? `${row.author.middlename.substring(0, 1)}.`
+                      : ""}
+                  </TableCell>
+                  <TableCell align="left" className={classes.TextColor}>
+                    {row.created_at}
+                  </TableCell>
+                  <TableCell className={classes.at} align="left">
+                    {row.updated_at}
+                  </TableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Paper>
         </Table>
       </TableContainer>
     </Paper>

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
       },
       "& .MuiFormHelperText-root": {
         fontSize: 9,
@@ -41,6 +41,11 @@ const useStyles = makeStyles((theme: Theme) =>
       "& .MuiFormControlLabel-root": {
         fontSize: 10,
       },
+      "& .MuiLink-root": {
+        fontSize: 14,
+        marginTop: 16
+      },
+
     },
     textArea: {
       marginBottom: "6%",
@@ -55,10 +60,11 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "50px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
       },
       "& .MuiOutlinedInput-multiline": {
         padding: "7.5px 14px",
+        fontSize:16
       },
     },
     paper: {
@@ -67,16 +73,18 @@ const useStyles = makeStyles((theme: Theme) =>
       border: "1px solid #3ab994",
       boxShadow: "none",
     },
+    spanTitle: {
+      fontSize: 16,
+      fontWeight: 500,
+    },
     label: {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
-      marginBottom: 15,
+      marginBottom: 16,
       fontSize: 12,
     },
-    spanTitle: {
-      fontSize: 16,
-    },
+
   })
 );
 type InfoProps = {
@@ -141,7 +149,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
         </div>
         <Paper className={classes.paper}>
           <div className={classes.label}>
-            <span>Основное контактное лицо </span>
+            <span className={classes.spanTitle}>Основное контактное лицо </span>
             <span style={{ width: "61%" }}>
               <Checkbox
                 name="main_contact_person"
@@ -153,7 +161,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             </span>
           </div>
           <div className={classes.label}>
-            <span>Фамилия:</span>
+            <span className={classes.spanTitle}>Фамилия:</span>
             <TextField
               variant={"outlined"}
               name="Surname"
@@ -165,7 +173,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             />
           </div>
           <div className={classes.label}>
-            <span>Имя</span>
+            <span className={classes.spanTitle}>Имя</span>
             <TextField
               variant={"outlined"}
               name="Name"
@@ -177,7 +185,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             />
           </div>
           <div className={classes.label}>
-            <span>Отчество</span>
+            <span className={classes.spanTitle}>Отчество</span>
             <TextField
               variant={"outlined"}
               name="middle_name"
@@ -193,22 +201,21 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             />
           </div>
           <div className={classes.label}>
-            <span>Пол</span>
+            <span className={classes.spanTitle}>Пол</span>
             <div style={{ width: "60%", display: "flex" }}>
               <div>
-                <span>Мужчина</span>
+                <span style={{fontSize:16}}>Мужчина</span>
                 <Radio
                   checked={checked === "a"}
                   onChange={handleChange}
                   value="a"
                   color="default"
                   name="radio-button-demo"
-                  size="medium"
                   inputProps={{ "aria-label": "A" }}
                 />
               </div>
               <div>
-                <span>Женщина</span>
+                <span style={{fontSize:16}}>Женщина</span>
                 <Radio
                   checked={checked === "b"}
                   onChange={handleChange}
@@ -222,7 +229,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             </div>
           </div>
           <div className={classes.label}>
-            <span>Дата рождения</span>
+            <span className={classes.spanTitle}>Дата рождения</span>
             <div style={{ width: "60%", display: "flex" }}>
               <TextField
                 id="date"
@@ -238,7 +245,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             </div>
           </div>
           <div className={classes.label}>
-            <span>Роль</span>
+            <span className={classes.spanTitle}>Роль</span>
             <InputFilterSelectedRoles
               handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setRolesValue(e.target.value)
@@ -247,7 +254,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             />
           </div>
           <div className={classes.label}>
-            <span>Должность</span>
+            <span className={classes.spanTitle}>Должность</span>
             <TextField
               variant={"outlined"}
               name="Position"
@@ -259,7 +266,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             />
           </div>
           <div className={classes.label}>
-            <span>Тип контрагента</span>
+            <span className={classes.spanTitle}>Тип контрагента</span>
             <span style={{ width: "60%" }}>
               <InputFilterSelectedType
                 handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -270,7 +277,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             </span>
           </div>
           <div className={classes.label}>
-            <span>Тип услуг</span>
+            <span className={classes.spanTitle}>Тип услуг</span>
             <span style={{ width: "60%" }}>
               <InputFilterSelectedServicesType
                 handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -281,7 +288,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             </span>
           </div>
           <div className={classes.label}>
-            <span>Отрасль</span>
+            <span className={classes.spanTitle}>Отрасль</span>
             <div
               style={{
                 width: "60%",
@@ -298,7 +305,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             </div>
           </div>
           <div className={classes.label}>
-            <span>Телефон рабочий</span>
+            <span className={classes.spanTitle}>Телефон рабочий</span>
             <span style={{ width: "60%" }}>
               <div
                 style={{
@@ -326,7 +333,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             </span>
           </div>
           <div className={classes.label}>
-            <span>Телефон мобильный</span>
+            <span className={classes.spanTitle}>Телефон мобильный</span>
             <span style={{ width: "60%" }}>
               <div
                 style={{
@@ -354,7 +361,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             </span>
           </div>
           <div className={classes.label}>
-            <span>E-mail</span>
+            <span className={classes.spanTitle}>E-mail</span>
             <span style={{ width: "60%" }}>
               <div
                 style={{
@@ -377,7 +384,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             </span>
           </div>
           <div className={classes.label}>
-            <span>Адрес доставки</span>
+            <span className={classes.spanTitle}>Адрес доставки</span>
 
             <TextField
               variant={"outlined"}

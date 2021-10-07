@@ -8,6 +8,7 @@ import { UseActions } from "../../redux/type_redux_hook/ useAction";
 import CounterpartiesTable from "./Core/Table";
 import { useStyles } from "./Styles";
 
+
 export const Counterparty = () => {
   const { fetchCounterpartiesList, fetchAuthorsList, getAssetsListData } =
     UseActions();

@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontSize: 16,
       },
       "& .MuiFormHelperText-root": {
         fontSize: 9,
@@ -75,7 +75,8 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 500,
     },
     spanTitle: {
-      fontSize: 12,
+      fontSize: 16,
+      fontWeight: 500,
     },
     btnSubmit: {
       textTransform: "none",

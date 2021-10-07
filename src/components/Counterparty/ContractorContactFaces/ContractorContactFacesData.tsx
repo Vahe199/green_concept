@@ -25,6 +25,7 @@ export const ContractorContactFacesData = () => {
     useState<boolean>(true);
   return (
     <div className={classes.root}>
+
       <div style={{ width: "50%" }}>
         {changeBasicInformation ? (
           <InformationContactFacesData

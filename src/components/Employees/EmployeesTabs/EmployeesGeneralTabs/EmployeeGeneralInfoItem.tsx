@@ -18,7 +18,7 @@ const EmployeeGeneralInfoItem:React.FC = () => {
                     <AddIcon /> &nbsp;   Принять на работу
                 </Link>
             </div>
-            <Paper className={classes.paper}>
+            <Paper elevation={0} className={classes.paper}>
                 <div className={classes.row}>
                     <div style={{width:"100%"}}>
                         <div className={classes.column}>

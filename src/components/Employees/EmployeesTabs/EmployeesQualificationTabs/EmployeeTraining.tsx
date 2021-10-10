@@ -19,7 +19,7 @@ const EmployeeTraining:React.FC = () => {
                     <PencilSimpleIcon color="#3B4750" />
                 </div>
             </div>
-            <Paper className={classes.paper}>
+            <Paper elevation={0} className={classes.paper}>
                 <div className={classes.row}>
                     <div style={{width:"100%"}}>
                         {EducationState.map((educ:any,index:number) =><div>

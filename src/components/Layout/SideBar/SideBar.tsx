@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
     },
     activeLinkHover: {
-      background: "rgba(235 236 237 / 50%)",
+      background: "rgba(235, 236, 237, 0.5)",
       marginLeft: -3,
     },
   })

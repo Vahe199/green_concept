@@ -2,6 +2,8 @@ import TextField from "@material-ui/core/TextField";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import { InputAdornment } from "@material-ui/core";
+
+import { MagnifyingGlass } from "../../../../IMG/SVG/MagnifyingGlass";
 import { useState } from "react";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,7 +37,7 @@ export default function InputFilterSearch(props: any): any {
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon fontSize={"small"} className={classes.icon} />
+            <MagnifyingGlass className={classes.icon} />
           </InputAdornment>
         ),
       }}

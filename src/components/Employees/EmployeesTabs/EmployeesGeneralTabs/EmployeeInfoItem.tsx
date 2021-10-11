@@ -4,8 +4,11 @@ import avatar from "../../../../IMG/profilePic.png"
 import {useStylesEmployee} from "./EmployeesStyles";
 import {PencilSimpleIcon} from "../../../../IMG/SVG/PencilSimpleIcon";
 
+type EmployeeDataProps = {
+    setEmployeeData:(val:boolean)=>void
+}
 
-const EmployeeInfoItem:React.FC = () => {
+const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
     const classes = useStylesEmployee();
     return(
         <div className={classes.root}>
@@ -13,11 +16,11 @@ const EmployeeInfoItem:React.FC = () => {
                 <Typography  className={classes.typographyTitle}>
                     Данные сотрудника
                 </Typography>
-                <div onClick={() => console.log('true 11')}>
+                <div onClick={() => setEmployeeData(false)}>
                     <PencilSimpleIcon color="#3B4750" />
                 </div>
             </div>
-            <Paper className={classes.paper}>
+            <Paper elevation={0} className={classes.paper}>
                 <div className={classes.row}>
                     <div style={{width:"37%"}}>
                         <Avatar alt="Remy Sharp" src={avatar} className={classes.avatar}/>

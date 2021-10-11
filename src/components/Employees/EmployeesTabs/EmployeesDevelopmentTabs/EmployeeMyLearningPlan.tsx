@@ -13,7 +13,7 @@ const EmployeeMyLearningPlan:React.FC = () => {
                     Мой план обучения
                 </Typography>
             </div>
-            <Paper className={classes.paper}>
+            <Paper elevation={0} className={classes.paper}>
                 <div className={classes.row}>
                     <div style={{width:"100%"}}>
                         <div className={classes.column}>

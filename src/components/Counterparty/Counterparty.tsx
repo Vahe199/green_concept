@@ -8,7 +8,6 @@ import { UseActions } from "../../redux/type_redux_hook/ useAction";
 import CounterpartiesTable from "./Core/Table";
 import { useStyles } from "./Styles";
 
-
 export const Counterparty = () => {
   const { fetchCounterpartiesList, fetchAuthorsList, getAssetsListData } =
     UseActions();
@@ -42,22 +41,24 @@ export const Counterparty = () => {
           Контрагенты
         </Typography>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button
-            onClick={() => handleClick("new contractor")}
-            variant="contained"
-            color="primary"
-            startIcon={<AddIcon />}
-            className={classes.btn}
-          >
-            Новый контрагент
-          </Button>
           <span style={{ display: "flex" }}>
+            <Button
+              onClick={() => handleClick("new contractor")}
+              variant="contained"
+              color="primary"
+              startIcon={<AddIcon />}
+              className={classes.btn}
+            >
+              Новый контрагент
+            </Button>
+          </span>
+          <div style={{ width: 525 }}>
             <Button
               onClick={() => handleClick("new contact")}
               variant="contained"
               startIcon={<AddIcon />}
               className={classes.button}
-              style={{ width: 192, marginRight: 32 }}
+              style={{ width: 192 }}
             >
               Новый контакт
             </Button>
@@ -65,23 +66,23 @@ export const Counterparty = () => {
               onClick={() => handleClick("all contact persons")}
               variant="contained"
               className={classes.button}
-              style={{ width: 214, marginRight: 32 }}
+              style={{ width: 214, marginRight: 32, marginLeft: 30 }}
             >
               Все контактные лица
             </Button>
 
-            <span
+            <div
               style={{
                 minWidth: 28,
                 padding: 0,
                 height: 29,
-                width: 25,
                 marginRight: "1%",
+                float: "right",
               }}
             >
-              <XLSIcon color="#3AB994" />
-            </span>
-          </span>
+              <XLSIcon color="#3AB993" />
+            </div>
+          </div>
         </div>
       </Paper>
       <div style={{ paddingLeft: "2%", paddingTop: "1%", paddingRight: "2%" }}>

@@ -239,7 +239,7 @@ export default function CounterpartiesTable(props: any) {
         columns={columns}
         dataSource={data}
         pagination={false}
-        scroll={{ y: 820 }}
+        scroll={{ y: window.innerHeight - 328 }}
         className={classes.table}
       />
     </Paper>

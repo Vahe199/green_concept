@@ -4,8 +4,11 @@ import {Link, Paper, Typography} from "@material-ui/core";
 import {useStylesEmployee} from "./EmployeesStyles";
 import AddIcon from "@material-ui/icons/Add";
 
+type GeneralInfoProps = {
+    setEmployeeGeneralInfo:(val:boolean)=>void
+}
 
-const EmployeeGeneralInfoItem:React.FC = () => {
+const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralInfo}) => {
     const classes = useStylesEmployee();
     return(
         <div className={classes.root}>
@@ -13,7 +16,7 @@ const EmployeeGeneralInfoItem:React.FC = () => {
                 <Typography  className={classes.typographyTitle}>
                     Общие сведения
                 </Typography>
-                <Link onClick={() => console.log('true 11')}
+                <Link onClick={() => setEmployeeGeneralInfo(false)}
                   className={classes.link} >
                     <AddIcon /> &nbsp;   Принять на работу
                 </Link>

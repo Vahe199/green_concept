@@ -34,7 +34,7 @@ const EmployeeAboutItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeAbout
                     Сохранить
                 </Button>
             </div>
-            <Paper elevation={0} className={classes.paper} style={{padding:1,height:242}}>
+            <div >
                 <textarea
                     className={classes.textArea}
                     name="about"
@@ -44,7 +44,7 @@ const EmployeeAboutItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeAbout
                     // error={touched.about && Boolean(errors.about)}
                     // helperText={touched.about && errors.about}
                 >Расскажите о себе</textarea>
-            </Paper>
+            </div>
                     </div>
                     )}
             </Formik>

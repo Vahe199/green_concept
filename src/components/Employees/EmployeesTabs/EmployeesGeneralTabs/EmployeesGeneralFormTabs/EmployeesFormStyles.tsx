@@ -26,11 +26,14 @@ export const useStylesEmployeeForm = makeStyles((theme: Theme) =>
 
         },
         textArea: {
-          height:238,
-            width:"100%",
-            maxWait:"100%",
-            border:"none",
-            padding:16
+            border: "1px solid #3ab994",
+            height: 238,
+            width: "100%",
+            maxWait: "100%",
+            borderRadius: 4,
+            padding: 16,
+            resize: 'vertical',
+            fontSize:16
         },
         title:{
             display: "flex",
@@ -42,8 +45,8 @@ export const useStylesEmployeeForm = makeStyles((theme: Theme) =>
             fontWeight:400
         },
         paper: {
-            padding:16,
             border: "1px solid #3ab994",
+            padding:16,
         },
         row:{
             display:'flex',
@@ -86,12 +89,12 @@ export const useStylesEmployeeForm = makeStyles((theme: Theme) =>
             fontSize: 16,
             fontWeight:500,
             color: '#3B4750',
-            width:"42%"
+            width:"40%"
         },
         typographyValue:{
             display:'flex',
             flexDirection:'column',
-            width:"58%",
+            width:"60%",
             textAlign:"left",
              fontSize: 16,
             color: '#3B4750'

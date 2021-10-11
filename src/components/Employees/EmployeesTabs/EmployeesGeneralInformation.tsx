@@ -4,11 +4,13 @@ import EmployeeAboutItem from "./EmployeesGeneralTabs/EmployeeAboutItem";
 import EmployeeGeneralInfoItem from "./EmployeesGeneralTabs/EmployeeGeneralInfoItem";
 import EmployeeInfoItemForm from "./EmployeesGeneralTabs/EmployeesGeneralFormTabs/EmployeeInfoItemForm";
 import EmployeeAboutItemForm from "./EmployeesGeneralTabs/EmployeesGeneralFormTabs/EmployeeAboutItemForm";
+import EmployeeGeneralInfoForm from "./EmployeesGeneralTabs/EmployeesGeneralFormTabs/EmployeeGeneralInfoForm";
 
 
 const EmployeesGeneralInformation:React.FC = () => {
     const [employeeData, setEmployeeData] = useState<boolean>(true)
     const [employeeAboutData, setEmployeeAboutData] = useState<boolean>(true)
+    const [employeeGeneralInfo, setEmployeeGeneralInfo] = useState<boolean>(true)
     return(
         <div style={{display:'flex',flexWrap:"wrap",
             width:"100%", height:"100%",
@@ -22,7 +24,8 @@ const EmployeesGeneralInformation:React.FC = () => {
                     :<EmployeeAboutItemForm setEmployeeAboutData={setEmployeeAboutData}/>}
             </div>
             <div style={{width:'48%',marginRight:32}}>
-               <EmployeeGeneralInfoItem/>
+                {employeeGeneralInfo ? <EmployeeGeneralInfoItem setEmployeeGeneralInfo={setEmployeeGeneralInfo}/>
+                   : <EmployeeGeneralInfoForm setEmployeeGeneralInfo={setEmployeeGeneralInfo}/>}
             </div>
 
         </div>

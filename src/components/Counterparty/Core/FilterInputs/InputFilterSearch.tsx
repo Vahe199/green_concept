@@ -8,16 +8,12 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: "100%",
       "& .MuiOutlinedInput-adornedStart": {
-        paddingLeft: 16,
+        paddingLeft: 8,
       },
     },
 
     icon: {
-      width: 18,
-      height: 18,
-      marginRight: -6,
-      marginLeft: -11,
-      marginBottom: -4,
+      fontSize: "16px",
     },
   })
 );
@@ -30,20 +26,19 @@ export default function InputFilterSearch(props: any): any {
     console.log(value);
   };
   return (
-    <div className={classes.root}>
-      <TextField
-        id="input-with-icon-textfield"
-        variant={"outlined"}
-        value={value}
-        onChange={handleChange}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon fontSize={"small"} className={classes.icon} />
-            </InputAdornment>
-          ),
-        }}
-      />
-    </div>
+    <TextField
+      className={classes.root}
+      id="input-with-icon-textfield"
+      variant={"outlined"}
+      value={value}
+      onChange={handleChange}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon fontSize={"small"} className={classes.icon} />
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 }

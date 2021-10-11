@@ -5,7 +5,7 @@ import React from "react";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: 120,
+      width: "100%",
     },
   })
 );
@@ -16,7 +16,7 @@ export default function InputFilterDate(props: any): any {
   return (
     <div className={classes.root}>
       <TextField
-        style={{ width: 131 }}
+        style={{ width: "100%" }}
         id="date"
         variant="outlined"
         type="date"

@@ -7,6 +7,8 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Route } from "react-router-dom";
 import CreateCounterparty from "./components/Counterparty/CreateCounterparty";
 import Employees from "./components/Employees/Employees";
+import "antd/dist/antd.css";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -15,9 +17,9 @@ const useStyles = makeStyles((theme: Theme) =>
       "& .MuiSelect-iconOutlined": {
         opacity: 0,
       },
-        '& .MuiSvgIcon-root': {
-            fontSize: 24,
-        },
+      "& .MuiSvgIcon-root": {
+        fontSize: 24,
+      },
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,

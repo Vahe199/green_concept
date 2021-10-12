@@ -52,7 +52,7 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
           marginBottom: 10,
         }}
       >
-        <span className={classes.spanTitle}>Контакты со стороны Грин</span>
+        <span className={classes.spanTitle}>Контакты со стороны GREEN</span>
         <span onClick={() => setChangeContactsFromGreen(false)}>
           <PencilSimpleIcon color="#3B4750" />
         </span>

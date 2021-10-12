@@ -16,10 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function InputFilterSelectedType(props: any): any {
   const classes = useStyles();
   const { assets, load } = useTypedSelector((state) => state.assets);
-  let { types_and_services }: any = assets;
-  return load ? (
-    <Loader />
-  ) : (
+  let { types_and_services = [] }: any = assets;
+  return (
     <div className={classes.root}>
       {props.value === "ShowText" &&
         types_and_services.map((option: any) =>
@@ -37,8 +35,8 @@ export default function InputFilterSelectedType(props: any): any {
           }}
           InputProps={{
             endAdornment: (
-              <div style={{ position: "absolute", right: 5, top: 6 }}>
-                <CaretDown />
+              <div style={{ position: "absolute", right: 5, top: 9 }}>
+                {load ? <Loader size={15} /> : <CaretDown />}
               </div>
             ),
           }}

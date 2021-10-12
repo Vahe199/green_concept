@@ -1,27 +1,28 @@
-import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React from "react";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            display: 'flex',
-            alignItems:'center',
-            justifyContent:'center',
-            paddingTop:'10%',
-            '& > * + *': {
-                marginLeft: theme.spacing(2),
-            },
-        },
-    }),
+  createStyles({
+    root: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingTop: "10%",
+      "& > * + *": {
+        marginLeft: theme.spacing(2),
+      },
+    },
+  })
 );
 
-export default function Loader() {
-    const classes = useStyles();
+export default function Loader({ size }: { size?: number }) {
+  const classes = useStyles();
+  const style = size ? { width: size, height: size } : {};
 
-    return (
-        <div className={classes.root}>
-            <CircularProgress color="primary" />
-        </div>
-    );
+  return (
+    <div className={classes.root}>
+      <CircularProgress color="primary" style={style} />
+    </div>
+  );
 }

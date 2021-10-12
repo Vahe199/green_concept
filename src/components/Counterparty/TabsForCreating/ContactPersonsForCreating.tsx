@@ -106,9 +106,13 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
-      marginBottom: 10,
+      marginBottom: 16,
       fontSize: 16,
       fontWeight: 500,
+
+      "& .MuiFormHelperText-root.MuiFormHelperText-contained.Mui-error": {
+        marginTop: -2,
+      },
     },
     addItem: {
       marginLeft: "40%",
@@ -1062,7 +1066,7 @@ export const ContactPersonsForCreating = () => {
                     width: "100%",
                   }}
                 >
-                  <span className={classes.val}>Контакты со стороны Грин</span>
+                  <span className={classes.val}>Контакты со стороны GREEN</span>
                 </div>
                 <Paper className={classes.paper}>
                   <div className={classes.label}>
@@ -1121,7 +1125,7 @@ export const ContactPersonsForCreating = () => {
                     />
                   </div>
                   <div>
-                    {multipleContactsFromGreen! < 3 ? (
+                    {multipleContactsFromGreen === 1 ? (
                       <div
                         className={classes.addContact}
                         onClick={() =>
@@ -1144,20 +1148,9 @@ export const ContactPersonsForCreating = () => {
                       <Divider style={{ marginBottom: "9px" }} />
                       <div className={classes.label}>
                         <span style={{ width: "54%" }}>Направление</span>
-                        <TextField
-                          variant={"outlined"}
+                        <InputFilterSelectedDirection
+                          handleChange={formik.handleChange}
                           name="employees_direction_id2"
-                          style={{ minWidth: "50%" }}
-                          placeholder={"Выберите"}
-                          onChange={formik.handleChange}
-                          error={
-                            formik.touched.employees_direction_id2 &&
-                            Boolean(formik.errors.employees_direction_id2)
-                          }
-                          helperText={
-                            formik.touched.employees_direction_id2 &&
-                            formik.errors.employees_direction_id2
-                          }
                         />
                         <div
                           className={classes.rightDivider}
@@ -1240,20 +1233,9 @@ export const ContactPersonsForCreating = () => {
                       <Divider style={{ marginBottom: "9px" }} />
                       <div className={classes.label}>
                         <span style={{ width: "54%" }}>Направление</span>
-                        <TextField
-                          variant={"outlined"}
+                        <InputFilterSelectedDirection
+                          handleChange={formik.handleChange}
                           name="employees_direction_id3"
-                          style={{ minWidth: "50%" }}
-                          placeholder={"Выберите"}
-                          onChange={formik.handleChange}
-                          error={
-                            formik.touched.employees_direction_id3 &&
-                            Boolean(formik.errors.employees_direction_id3)
-                          }
-                          helperText={
-                            formik.touched.employees_direction_id3 &&
-                            formik.errors.employees_direction_id3
-                          }
                         />
                         <div
                           className={classes.rightDivider}

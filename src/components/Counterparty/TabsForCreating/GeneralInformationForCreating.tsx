@@ -315,7 +315,7 @@ export const GeneralInformationForCreating = () => {
           Сохранить карточку
         </Button>
         <div className={classes.root}>
-          <div style={{ width: "24%", marginLeft: "2%" }}>
+          <div style={{ width: "24%", marginLeft: "2%", minWidth: 387 }}>
             <div
               style={{
                 display: "flex",

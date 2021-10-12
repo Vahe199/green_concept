@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
     },
     activeLinkHover: {
-      background: "rgba(235, 236, 237, 0.5)",
+      background: "#e1e3e4",
       marginLeft: -3,
     },
   })
@@ -151,7 +151,7 @@ export const SideBarPage: React.FC = () => {
       >
         <div className={classes.iconsContainer}>
           <Divider />
-          <List>
+          <List style={{ background: "#EBECED" }}>
             <Link
               to={"/notifications"}
               className={

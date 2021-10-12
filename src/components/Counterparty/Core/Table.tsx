@@ -42,7 +42,6 @@ const useStyles = makeStyles({
         },
       },
     },
-
     "& tbody": {
       "& tr": {
         "&:nth-child(odd) ": {
@@ -93,12 +92,8 @@ export default function CounterpartiesTable(props: any) {
     {
       title: () => <>&#x2116;</>, //todo Arsen change icon
       dataIndex: "id",
-      width: 80,
-      render: (id: string, data: any) => (
-        <span onClick={() => getUserData(data)} style={{ color: "#3B4750" }}>
-          {id}
-        </span>
-      ),
+      width: "5%",
+      render: (id: string) => <span style={{ color: "#3B4750" }}>{id}</span>,
     },
     {
       title: () => (
@@ -111,7 +106,6 @@ export default function CounterpartiesTable(props: any) {
         </>
       ),
       dataIndex: "typeName",
-      width: 150,
     },
     {
       title: () => (
@@ -121,7 +115,7 @@ export default function CounterpartiesTable(props: any) {
         </>
       ),
       dataIndex: "full_name",
-      width: 250,
+      width: "15%",
     },
     {
       title: () => (
@@ -201,7 +195,7 @@ export default function CounterpartiesTable(props: any) {
         </>
       ),
       dataIndex: "created_at",
-      width: 200,
+      width: "15%",
     },
     {
       title: () => (
@@ -216,7 +210,7 @@ export default function CounterpartiesTable(props: any) {
         </>
       ),
       dataIndex: "updated_at",
-      width: 200,
+      width: "15%",
     },
   ];
 
@@ -229,13 +223,17 @@ export default function CounterpartiesTable(props: any) {
     };
   });
 
-  console.log(data);
-
   return loading ? (
     <Loader />
   ) : (
     <Paper className={classes.root}>
       <Table
+        onRow={(record) => ({
+          onClick: () => getUserData(record),
+          style: {
+            cursor: "pointer",
+          },
+        })}
         columns={columns}
         dataSource={data}
         pagination={false}

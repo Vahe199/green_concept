@@ -124,7 +124,7 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
             width: "101%",
           }}
         >
-          <span className={classes.spanTitle}>Контакты со стороны Грин</span>
+          <span className={classes.spanTitle}>Контакты со стороны GREEN</span>
           <Button
             color="primary"
             type="submit"

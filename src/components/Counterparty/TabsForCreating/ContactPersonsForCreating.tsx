@@ -25,7 +25,7 @@ import {
 import InputFilterSelectedRoles from "../../Counterparty/Core/FilterInputs/InputFilterSelectedRoles";
 import InputFilterSelectedServicesType from "../../Counterparty/Core/FilterInputs/InputFilterSelectedServicesType";
 import InputFilterSelectedStatus from "../../Counterparty/Core/FilterInputs/InputFilterSelectedStatus";
-import InputFilterSelectedType from "../../Counterparty/Core/FilterInputs/InputFilterSelectedType";
+import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelect";
 import { UseActions } from "../../../redux/type_redux_hook/ useAction";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import get from "lodash/get";

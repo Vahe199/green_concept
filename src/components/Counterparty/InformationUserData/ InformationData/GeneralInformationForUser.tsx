@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
-import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelectedType";
+import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -90,6 +90,9 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#3B4750",
       fontWeight: 700,
       fontSize: 13,
+      "& .MuiListItem-gutters:hover": {
+        color: "rgba(58, 185, 147, 1)",
+      },
     },
     activeLink: {
       textDecoration: "none",

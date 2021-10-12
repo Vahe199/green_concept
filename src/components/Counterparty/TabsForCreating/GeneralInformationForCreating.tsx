@@ -11,7 +11,7 @@ import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelecto
 import InputFilterSelectedBranches from "../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
 import InputFilterSelectedCrm from "../../Counterparty/Core/FilterInputs/InputFilterSelectedCRM";
 import InputFilterSelectedServicesType from "../Core/FilterInputs/InputFilterSelectedServicesType";
-import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelectedType";
+import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelect";
 import get from "lodash/get";
 
 type Data = {

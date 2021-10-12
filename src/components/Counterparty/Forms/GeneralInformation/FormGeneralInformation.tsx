@@ -11,7 +11,7 @@ import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedCRM";
 import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
-import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelectedType";
+import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

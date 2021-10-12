@@ -12,16 +12,21 @@ import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelecto
 import Loader from "../../Layout/Loader/Loader";
 import { useHistory } from "react-router-dom";
 import { UseActions } from "../../../redux/type_redux_hook/ useAction";
-import InputFilterSelectedType from "./FilterInputs/InputFilterSelectedType";
+import InputFilterSelectedType from "./FilterInputs/InputFilterSelect";
+import InputFilterDatePicker from "./FilterInputs/InputFilterDatePicker";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
 import { Space, Table } from "antd";
 
 const useStyles = makeStyles({
   root: {
     width: "100%",
-    "& .MuiInputBase-root": {
-      marginTop: 8,
-      border: "1px solid #F1F2F3",
+    color: "#3b475080",
+
+    "& .ant-select": {
+      height: "40px !important",
+    },
+    "& .ant-select-selection-item": {
+      lineHeight: "36px !important",
     },
   },
   table: {
@@ -35,10 +40,6 @@ const useStyles = makeStyles({
         "& th": {
           background: "#FFFFFF",
           "&::before": { display: "none" },
-          "& div.MuiInputBase-root": {
-            height: "40px !important",
-            color: "#3b475080",
-          },
         },
       },
     },
@@ -53,6 +54,9 @@ const useStyles = makeStyles({
       },
     },
   },
+  input: {
+    marginTop: 16,
+  },
 });
 
 export default function CounterpartiesTable(props: any) {
@@ -62,10 +66,27 @@ export default function CounterpartiesTable(props: any) {
     (state) => state.counterparties
   );
   const { authors } = useTypedSelector((state) => state.authorsList);
+  const { assets, load: assetsLoading } = useTypedSelector(
+    (state) => state.assets
+  );
+  const { types_and_services = [] }: any = assets;
+  const assetsOptions = types_and_services?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.name,
+  }));
+
+  const authorsOptions = authors?.map((option: any) => ({
+    key: option.author_id,
+    value: option.author_fio,
+    lable: option.author_fio.substring(0, 9) + "...",
+  }));
+
   const { getAuthorData } = UseActions();
   // const [page, setPage] = React.useState(0);
   // const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [services, setServices] = React.useState("Другое");
+  const [services, setServices] = React.useState(1);
+  const [author, setAuthor] = React.useState(null);
   // const [currency, setCurrency] = React.useState("All");
   // const handleChangePage = (event: unknown, newPage: number) => {
   //   setPage(newPage);
@@ -80,9 +101,7 @@ export default function CounterpartiesTable(props: any) {
   // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   setCurrency(event.target.value);
   // };
-  const handleChangeServices = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setServices(event.target.value);
-  };
+
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/${data.id}`);
     getAuthorData(data);
@@ -99,10 +118,16 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <>
           Тип
-          <InputFilterSelectedType
-            handleChange={handleChangeServices}
-            value={services}
-          />
+          <div>
+            <InputFilterSelectedType
+              className={classes.input}
+              handleChange={setServices}
+              value={services}
+              options={assetsOptions}
+              placeholder="Другое"
+              loading={assetsLoading}
+            />
+          </div>
         </>
       ),
       dataIndex: "typeName",
@@ -111,7 +136,7 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <>
           Наименование
-          <InputFilterSearch />
+          <InputFilterSearch className={classes.input} />
         </>
       ),
       dataIndex: "full_name",
@@ -121,7 +146,7 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <>
           Отрасль
-          <InputFilterSearch />
+          <InputFilterSearch className={classes.input} />
         </>
       ),
       dataIndex: "branches",
@@ -140,7 +165,7 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <>
           Группа компаний
-          <InputFilterSearch />
+          <InputFilterSearch className={classes.input} />
         </>
       ),
       dataIndex: "group",
@@ -149,7 +174,7 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <>
           Ответственный
-          <InputFilterSearch />
+          <InputFilterSearch className={classes.input} />
         </>
       ),
       dataIndex: "crms",
@@ -168,7 +193,15 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <>
           Автор записи
-          <InputFilterSelected options={authors} />
+          <div>
+            <InputFilterSelectedType
+              className={classes.input}
+              handleChange={setAuthor}
+              value={author}
+              options={authorsOptions}
+              loading={assetsLoading}
+            />
+          </div>
         </>
       ),
       dataIndex: "author",
@@ -191,7 +224,7 @@ export default function CounterpartiesTable(props: any) {
               <SortingButtons color="#5B6770" />
             </span>
           </div>
-          <InputFilterDate />
+          <InputFilterDatePicker />
         </>
       ),
       dataIndex: "created_at",

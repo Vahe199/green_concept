@@ -14,7 +14,7 @@ import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
 import InputFilterSelectedBranches from "../../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
 import InputFilterSelectedRoles from "../../Core/FilterInputs/InputFilterSelectedRoles";
 import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
-import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelectedType";
+import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

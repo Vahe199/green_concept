@@ -1,7 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
-import { InputAdornment } from "@material-ui/core";
+import { Input } from "antd";
 
 import { MagnifyingGlass } from "../../../../IMG/SVG/MagnifyingGlass";
 import { useState } from "react";
@@ -9,9 +8,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
-      "& .MuiOutlinedInput-adornedStart": {
-        paddingLeft: 8,
-      },
+      height: "40px !important",
     },
 
     icon: {
@@ -27,20 +24,13 @@ export default function InputFilterSearch(props: any): any {
     setValue(event.target.value);
     console.log(value);
   };
+
   return (
-    <TextField
-      className={classes.root}
-      id="input-with-icon-textfield"
-      variant={"outlined"}
+    <Input
+      className={classes.root + " " + props.className}
+      prefix={<MagnifyingGlass className={classes.icon} />}
       value={value}
       onChange={handleChange}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <MagnifyingGlass className={classes.icon} />
-          </InputAdornment>
-        ),
-      }}
     />
   );
 }

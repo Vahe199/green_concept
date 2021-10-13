@@ -316,20 +316,20 @@ export const FormGeneralInformation: React.FC<Props> = ({
               helperText={formik.touched.INN && formik.errors.INN}
             />
           </div>
-          <div className={classes.label}>
+          {orgType === "ЮЛ" && <div className={classes.label}>
             <span>КПП</span>
             <TextField
-              variant={"outlined"}
-              name="KPP"
-              placeholder={"1234556789101112"}
-              value={formik.values.KPP}
-              onChange={formik.handleChange}
-              error={formik.touched.KPP && Boolean(formik.errors.KPP)}
-              helperText={formik.touched.KPP && formik.errors.KPP}
+                variant={"outlined"}
+                name="KPP"
+                placeholder={"1234556789101112"}
+                value={formik.values.KPP}
+                onChange={formik.handleChange}
+                error={formik.touched.KPP && Boolean(formik.errors.KPP)}
+                helperText={formik.touched.KPP && formik.errors.KPP}
             />
-          </div>
+          </div>}
           <div className={classes.label}>
-            <span>ОГРН</span>
+            <span>{orgType === "ФЛ" ? 'ОГРНИП' : 'ОГРН'}</span>
             <TextField
               variant={"outlined"}
               name="OGPN"

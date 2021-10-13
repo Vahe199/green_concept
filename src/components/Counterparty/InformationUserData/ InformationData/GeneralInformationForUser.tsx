@@ -112,37 +112,37 @@ export const GeneralInformationForUser: React.FC<Props> = ({
             )}
           </Typography>
         </div>
+          {<div className={classes.div}>
+              <Typography
+                  variant={"button"}
+                  style={{width: "40%", flexWrap: "wrap"}}
+                  className={classes.title}
+              >
+                  ИНН
+              </Typography>
+              <Typography variant={"body2"} className={classes.title}>
+                  {inn}
+              </Typography>
+          </div>}
+          {org_type === "ЮЛ" && <div className={classes.div}>
+              <Typography
+                  variant={"button"}
+                  style={{width: "40%", flexWrap: "wrap"}}
+                  className={classes.title}
+              >
+                  КПП
+              </Typography>
+              <Typography variant={"body2"} className={classes.title}>
+                  {kpp}
+              </Typography>
+          </div>}
         <div className={classes.div}>
           <Typography
             variant={"button"}
             style={{ width: "40%", flexWrap: "wrap" }}
             className={classes.title}
           >
-            ИНН
-          </Typography>
-          <Typography variant={"body2"} className={classes.title}>
-            {inn}
-          </Typography>
-        </div>
-        <div className={classes.div}>
-          <Typography
-            variant={"button"}
-            style={{ width: "40%", flexWrap: "wrap" }}
-            className={classes.title}
-          >
-            КПП
-          </Typography>
-          <Typography variant={"body2"} className={classes.title}>
-            {kpp}
-          </Typography>
-        </div>
-        <div className={classes.div}>
-          <Typography
-            variant={"button"}
-            style={{ width: "40%", flexWrap: "wrap" }}
-            className={classes.title}
-          >
-            ОГРН
+              <span>{org_type === "ФЛ" ? 'ОГРНИП' : 'ОГРН'}</span>
           </Typography>
           <Typography variant={"body2"} className={classes.title}>
             {ogrn}

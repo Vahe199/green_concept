@@ -515,19 +515,20 @@ export const GeneralInformationForCreating = () => {
                   helperText={formik.touched.INN && formik.errors.INN}
                 />
               </div>
-              <div className={classes.label}>
+              {formik.values.OrganizationType === "ЮЛ" && <div className={classes.label}>
                 <span>КПП</span>
                 <TextField
-                  variant={"outlined"}
-                  name="KPP"
-                  placeholder={"1234556789101112"}
-                  onChange={formik.handleChange}
-                  error={formik.touched.KPP && Boolean(formik.errors.KPP)}
-                  helperText={formik.touched.KPP && formik.errors.KPP}
+                    variant={"outlined"}
+                    name="KPP"
+                    placeholder={"1234556789101112"}
+                    onChange={formik.handleChange}
+                    error={formik.touched.KPP && Boolean(formik.errors.KPP)}
+                    helperText={formik.touched.KPP && formik.errors.KPP}
                 />
-              </div>
+              </div>}
               <div className={classes.label}>
-                <span>ОГРН</span>
+
+                <span>{formik.values.OrganizationType === "ЮЛ" ? 'ОГРН' : 'ОГРНИП'}</span>
                 <TextField
                   variant={"outlined"}
                   name="OGPN"

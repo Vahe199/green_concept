@@ -28,6 +28,9 @@ const useStyles = makeStyles({
     "& .ant-select-selection-item": {
       lineHeight: "36px !important",
     },
+    "& .ant-picker": {
+      height: "40px !important",
+    },
   },
   table: {
     color: "#3B4750",
@@ -163,10 +166,10 @@ export default function CounterpartiesTable(props: any) {
     },
     {
       title: () => (
-        <>
+        <div style={{minWidth: 125}}>
           Группа компаний
-          <InputFilterSearch className={classes.input} />
-        </>
+          <InputFilterSearch className={classes.input}  />
+        </div>
       ),
       dataIndex: "group",
     },
@@ -224,7 +227,7 @@ export default function CounterpartiesTable(props: any) {
               <SortingButtons color="#5B6770" />
             </span>
           </div>
-          <InputFilterDatePicker />
+          <InputFilterDatePicker className={classes.input} />
         </>
       ),
       dataIndex: "created_at",
@@ -239,7 +242,7 @@ export default function CounterpartiesTable(props: any) {
               <SortingButtons color="#5B6770" />
             </span>
           </div>
-          <InputFilterDate />
+          <InputFilterDatePicker className={classes.input}/>
         </>
       ),
       dataIndex: "updated_at",

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: "4%",
     },
     paper: {
-      padding: 10,
+      padding: 16, //10
       color: "#3B4750",
       boxShadow: "none",
     },

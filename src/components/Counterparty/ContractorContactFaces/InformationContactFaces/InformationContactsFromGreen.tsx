@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     paper: {
-      padding: 10,
+      padding: 16, //10
       height: 270,
       color: "#3B4750",
       boxShadow: "none",

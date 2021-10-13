@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     paper: {
-      padding: 10,
+      padding: 16, //10 TODO
       color: "#3B4750",
       border: "1px solid #3ab994",
       boxShadow: "none",

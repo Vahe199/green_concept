@@ -39,10 +39,15 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     paper: {
-      padding: 10,
+      padding: 16, //10
       color: "#3B4750",
       border: "1px solid #3ab994",
       boxShadow: "none",
+    },
+    textInTable: {
+      color: "#3B4750",
+      fontWeight: 500,
+      //fontSize: 16,
     },
     label: {
       display: "flex",
@@ -58,9 +63,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     btn: {
       color: "#fff",
-      fontSize: 10,
+      //fontSize: 15,
       paddingBottom: 0,
-      padding: 4,
+     padding: 4,
+     //  paddingTop: 4.5,
+     //  paddingBottom: 4.5,
+     //  paddingRight: 16,
+     //  paddingLeft: 16,
       boxShadow: "none",
       backgroundColor: "#3AB994",
       textTransform: "none",
@@ -177,7 +186,10 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
             width: "100%",
           }}
         >
-          <span>Основной банковский счет</span>
+          <span style={{
+            color: '#3B4750',
+            fontSize: '16px',
+          }} >Основной банковский счет</span>
           <Button
             type="submit"
             color="primary"
@@ -189,7 +201,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
         </div>
         <Paper className={classes.paper}>
           <div className={classes.label}>
-            <span>БИК</span>
+            <span className={classes.textInTable}>БИК</span>
             <div
               style={{
                 width: "75%",
@@ -217,7 +229,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
             </div>
           </div>
           <div className={classes.label}>
-            <span>Наименование банка</span>
+            <span className={classes.textInTable}>Наименование банка</span>
             <TextField
               style={{ width: "75%" }}
               variant={"outlined"}
@@ -230,7 +242,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
             />
           </div>
           <div className={classes.label}>
-            <span>Город</span>
+            <span className={classes.textInTable}>Город</span>
             <TextField
               style={{ width: "75%" }}
               variant={"outlined"}
@@ -243,7 +255,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
             />
           </div>
           <div className={classes.label}>
-            <span>К/c</span>
+            <span className={classes.textInTable}>К/c</span>
             <TextField
               style={{ width: "75%" }}
               variant={"outlined"}
@@ -256,7 +268,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
             />
           </div>
           <div className={classes.label}>
-            <span>Р/c</span>
+            <span className={classes.textInTable}>Р/c</span>
             <TextField
               style={{ width: "75%" }}
               variant={"outlined"}
@@ -269,21 +281,21 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
             />
           </div>
           <div className={classes.label}>
-            <span>Счет активный</span>
+            <span className={classes.textInTable}>Счет активный</span>
             <span style={{ width: "75%" }}>
-              <Checkbox
-                defaultChecked
-                name="is_active"
-                color="default"
-                inputProps={{ "aria-label": "checkbox with default color" }}
-                value={formik.values.is_active ? true : false}
-                onChange={(e) =>
-                  formik.setFieldValue("is_active", e.target.checked ? 1 : 0)
-                }
-                icon={<CheckSquareUnChecked color="#5B6770" />}
-                checkedIcon={<CheckSquareChecked color="#5B6770" />}
-                // todo, not implemented
-              />
+                <Checkbox
+                    defaultChecked
+                    name="is_active"
+                    color="default"
+                    inputProps={{ "aria-label": "checkbox with default color" }}
+                    value={formik.values.is_active ? true : false}
+                    onChange={(e) =>
+                        formik.setFieldValue("is_active", e.target.checked ? 1 : 0)
+                    }
+                    icon={<CheckSquareUnChecked color="#ADB3B8" />}
+                    checkedIcon={<CheckSquareChecked color="#5B6770" />}
+                    // todo, not implemented
+                />
             </span>
           </div>
         </Paper>

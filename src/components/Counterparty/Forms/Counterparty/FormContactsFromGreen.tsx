@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     paper: {
-      padding: 10,
+      padding: 16, //10
       color: "#3B4750",
       border: "1px solid #3ab994",
       height: 270,
@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
 
     addItem: {
-      marginTop: 70,
+      marginTop: 58, //70
       cursor: "pointer",
       textDecoration: "underline",
     },
@@ -124,7 +124,7 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
             width: "101%",
           }}
         >
-          <span className={classes.spanTitle}>Контакты со стороны GREEN</span>
+          <span className={classes.spanTitle}>Контакты со gbdc GREEN</span>
           <Button
             color="primary"
             type="submit"
@@ -196,7 +196,7 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
             className={classes.addItem}
             // onClick={addBranch}
           >
-            + Добавить отрасль
+            + Новый контакт
           </div>
         </Paper>
       </form>

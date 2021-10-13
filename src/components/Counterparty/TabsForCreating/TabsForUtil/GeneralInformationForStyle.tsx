@@ -11,12 +11,13 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
             },
         },
         textAreaCN: {
-            marginBottom:20,
+            marginBottom:36,
 
             width: "60%",
             "& .MuiOutlinedInput-inputMultiline": {
                 height: "50px !important",
             },
+
             "& .MuiOutlinedInput-multiline": {
                 paddingBottom: 4,
                 paddingTop:4,
@@ -44,6 +45,8 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
         },
         root: {
             display: "flex",
+            flexDirection:"row",
+            justifyContent: "space-between",
             marginRight: "2%",
             width: "100%",
             height: "20%",

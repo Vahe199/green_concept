@@ -13,7 +13,12 @@ const useStyles = makeStyles((theme: Theme) =>
         height: "100% !important",
         fontSize:14,
       },
-    },
+
+      "& svg":{
+        fill:"#2c2e30",
+      }
+
+            },
   })
 );
 

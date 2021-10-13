@@ -18,6 +18,8 @@ import { Formik, getIn, FieldArray } from 'formik';
 
 export const Test = () => {
     const classes = useStylesGeneralInfo();
+    const [matchesAddressActualAddress, setMatchesAddressActualAddress] = React.useState<boolean>(true);
+    const [matchesAddressMailingAddress, setMatchesAddressMailingAddress] = React.useState<boolean>(true);
     const [site, setSite] = React.useState(1);
     const [phone, setPhone] = React.useState(1);
     const [email, setEmail] = React.useState(1);
@@ -38,6 +40,11 @@ export const Test = () => {
         label: option.name,
     }));
     const assetsOptionsServiceType = types_and_services[contractorId -1]?.services?.map((option: any) => ({
+        key: option.id,
+        value: option.id ? option.id : 0,
+        label: option.name,
+    }));
+    const assetsOptionsBranches = branches?.map((option: any) => ({
         key: option.id,
         value: option.id ? option.id : 0,
         label: option.name,
@@ -176,26 +183,16 @@ const  initialValues = {
         kpp:"",
         ogrn:"",
         nda: 1,
-        FullCompanyName: "",
-        ShortNameCompany: "",
-        CompanyGroup: "",
-        Industry: IndustryInitial,
-        Industry2: IndustryInitial,
-        Industry3: IndustryInitial,
-        LegalAddress: "",
-        ActualAddress: "",
-        MatchesAddressActualAddress: true,
-        MailingAddress: "",
-        MatchesAddressMailingAddress: true,
-        SiteCompany: "",
-        SiteCompany2: "",
-        SiteCompany3: "",
-        Phone: "",
-        Phone2: "",
-        Phone3: "",
-        Email: "",
-        Email2: "",
-        Email3: "",
+        full_name:"",
+        short_name: "",
+        parent_id: "",
+        branches:[''],
+        legal_registration_address:"",
+        actual_address:"",
+        post_address:"",
+        sites: [{url: ''}],
+        phones: [{phone: ''}],
+        emails: [{email: ''}]
     }
     return (
         <div style={{width:"100%"}}>
@@ -397,7 +394,7 @@ const  initialValues = {
                             </div>
                         </Paper>
                     </div>
-                    <div style={{ width: "34%", marginLeft: "2%", marginRight: "2%" }}>
+                    <div style={{ width: "34%",marginLeft:"1%", marginRight:"1%" }}>
                         <div
                             style={{
                                 display: "flex",
@@ -409,7 +406,7 @@ const  initialValues = {
                             <span className={classes.val}>Сведения о компании</span>
                         </div>
                         <Paper className={classes.paper}>
-                            <div className={classes.label}>
+                            <div className={classes.label} style={{alignItems:"flex-start"}}>
                 <span style={{ marginTop: "1%" }}>
                   Полное наименование компании
                 </span>
@@ -419,53 +416,40 @@ const  initialValues = {
                                     multiline
                                     className={classes.textAreaCN}
                                     rows={2}
-                                    name="FullCompanyName"
+                                    name="full_name"
+                                    value={values.full_name}
                                     placeholder={'ООО "Северо-Западная компания”'}
-                                    onChange={formik.handleChange}
-                                    error={
-                                        formik.touched.FullCompanyName &&
-                                        Boolean(formik.errors.FullCompanyName)
-                                    }
-                                    helperText={
-                                        formik.touched.FullCompanyName &&
-                                        formik.errors.FullCompanyName
-                                    }
+                                    onChange={handleChange}
+                                    error={touched.full_name && Boolean(errors.full_name)}
+                                    helperText={ touched.full_name && errors.full_name}
                                 />
                             </div>
                             <div className={classes.label}>
                                 <span>Краткое наименование компании</span>
                                 <TextField
                                     variant={"outlined"}
-                                    name="ShortNameCompany"
+                                    name="short_name"
                                     placeholder={"Краткое наименование компании"}
-                                    onChange={formik.handleChange}
+                                    onChange={handleChange}
                                     error={
-                                        formik.touched.ShortNameCompany &&
-                                        Boolean(formik.errors.ShortNameCompany)
+                                       touched.short_name &&
+                                        Boolean(errors.short_name)
                                     }
-                                    helperText={
-                                        formik.touched.ShortNameCompany &&
-                                        formik.errors.ShortNameCompany
-                                    }
+                                    helperText={touched.short_name && errors.short_name}
                                 />
                             </div>
                             <div className={classes.label}>
                                 <span>Группа компаний (при наличии)</span>
                                 <TextField
                                     variant={"outlined"}
-                                    name="CompanyGroup"
+                                    name="parent_id"
                                     placeholder={"Группа компаний"}
-                                    onChange={formik.handleChange}
-                                    error={
-                                        formik.touched.CompanyGroup &&
-                                        Boolean(formik.errors.CompanyGroup)
-                                    }
-                                    helperText={
-                                        formik.touched.CompanyGroup && formik.errors.CompanyGroup
-                                    }
+                                    onChange={handleChange}
+                                    error={ touched.parent_id && Boolean(errors.parent_id)}
+                                    helperText={touched.parent_id && errors.parent_id }
                                 />
                             </div>
-                            <div className={classes.label}>
+                            <div className={classes.label} style={{alignItems:"flex-start"}}>
                                 <span>Отрасль</span>
                                 <div
                                     style={{
@@ -474,115 +458,55 @@ const  initialValues = {
                                         justifyContent: "space-between",
                                     }}
                                 >
-                                    <InputFilterSelectedBranches
-                                        name="Industry"
-                                        handleChange={(e: any) =>
-                                            formik.setFieldValue("Industry", e.target.value)
-                                        }
-                                        error={
-                                            formik.touched.Industry && Boolean(formik.errors.Industry)
-                                        }
-                                        helperText={
-                                            formik.touched.Industry && formik.errors.Industry
-                                        }
-                                    />
+                                    <FieldArray name="branches">
+                                        {({ insert, remove, push }) => (
+                                            <div style={{width:"100%"}}>
+                                                {values.branches.length > 0 &&
+                                                values.branches.map(( branch, index) => {
+                                                    const fieldName = `branches[${index}]`;
+                                                    const touchedFieldName = getIn(touched, fieldName);
+                                                    const errorFieldName = getIn(errors, fieldName);
+                                                    return(
+                                                        <div key={index} style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
+                                                            <div style={index > 0 ? {width:"90%"}:{width:"100%"}}>
+                                                                <InputFilterSelectedType
+                                                                    className={classes.input}
+                                                                    name={fieldName}
+                                                                    handleChange={(value:any) =>
+                                                                        setFieldValue(fieldName, value)
+                                                                    }
+                                                                    value={branch}
+                                                                    options={ assetsOptionsBranches}
+                                                                    placeholder="Выберите отрасль"
+                                                                    loading={assetsLoading}
+                                                                    error={Boolean(touchedFieldName && errorFieldName)}
+                                                                    helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                                />
+                                                            </div>
+
+                                                            { index == 0 ? "":<div style={{marginLeft: 16 ,marginTop:-9}}
+                                                                                   onClick={() => remove(index)}>
+                                                                <TrashIcon/>
+                                                            </div>}
+                                                        </div>
+                                                    )
+                                                })}
+                                                <div
+                                                    className={classes.addItemCRM}
+                                                    onClick={() => push( '' )}
+                                                >
+                                                    + Добавить отрасль
+                                                </div>
+                                            </div>
+                                        )}
+                                    </FieldArray>
                                 </div>
                             </div>
-                            {branch > 1 ? (
-                                <div className={classes.label}>
-                                    <span></span>
-                                    <div
-                                        style={{
-                                            width: "60%",
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                        }}
-                                    >
-                                        <InputFilterSelectedBranches
-                                            name="Industry2"
-                                            handleChange={(e: any) =>
-                                                formik.setFieldValue("Industry2", e.target.value)
-                                            }
-                                            error={
-                                                formik.touched.Industry2 &&
-                                                Boolean(formik.errors.Industry2)
-                                            }
-                                            helperText={
-                                                formik.touched.Industry2 && formik.errors.Industry2
-                                            }
-                                        />
-                                        <div
-                                            style={{
-                                                marginRight: "1%",
-                                                marginLeft: "5%",
-                                                marginTop: 3,
-                                                cursor: "pointer",
-                                            }}
-                                            onClick={() =>
-                                                branch > 1 ? setBranch(branch - 1) : null
-                                            }
-                                        >
-                                            {branch === 2 ? <TrashIcon /> : ""}
-                                        </div>
-                                    </div>
-                                </div>
-                            ) : (
-                                ""
-                            )}
-                            {branch > 2 ? (
-                                <div className={classes.label}>
-                                    <span></span>
-                                    <div
-                                        style={{
-                                            width: "60%",
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                        }}
-                                    >
-                                        <InputFilterSelectedBranches
-                                            name="Industry3"
-                                            handleChange={(e: any) =>
-                                                formik.setFieldValue("Industry3", e.target.value)
-                                            }
-                                            error={
-                                                formik.touched.Industry3 &&
-                                                Boolean(formik.errors.Industry3)
-                                            }
-                                            helperText={
-                                                formik.touched.Industry3 && formik.errors.Industry3
-                                            }
-                                        />
-                                        <div
-                                            style={{
-                                                marginRight: "1%",
-                                                marginLeft: "5%",
-                                                marginTop: 3,
-                                                cursor: "pointer",
-                                            }}
-                                            onClick={() =>
-                                                branch > 1 ? setBranch(branch - 1) : null
-                                            }
-                                        >
-                                            <TrashIcon />
-                                        </div>
-                                    </div>
-                                </div>
-                            ) : (
-                                ""
-                            )}
-                            {branch! < 3 ? (
-                                <div
-                                    className={classes.addItemCRM}
-                                    onClick={() => (branch < 3 ? setBranch(branch + 1) : null)}
-                                >
-                                    + Добавить отрасль
-                                </div>
-                            ) : (
-                                ""
-                            )}
+
+
                         </Paper>
                     </div>
-                    <div style={{ width: "34%" }}>
+                    <div style={{ width: "34%",marginRight:"2%" }}>
                         <div
                             style={{
                                 display: "flex",
@@ -598,22 +522,12 @@ const  initialValues = {
                                 <span>Юридический адрес </span>
                                 <TextField
                                     variant={"outlined"}
-                                    name="LegalAddress"
+                                    name="legal_registration_address"
                                     placeholder={"123456 город улица строени дом офис"}
-                                    onChange={(e: any) => {
-                                        formik.handleChange(e);
-                                        formik.values.MatchesAddressActualAddress &&
-                                        formik.setFieldValue("ActualAddress", e.target.value);
-                                        formik.values.MatchesAddressMailingAddress &&
-                                        formik.setFieldValue("MailingAddress", e.target.value);
-                                    }}
-                                    error={
-                                        formik.touched.LegalAddress &&
-                                        Boolean(formik.errors.LegalAddress)
-                                    }
-                                    helperText={
-                                        formik.touched.LegalAddress && formik.errors.LegalAddress
-                                    }
+                                    value={values.legal_registration_address}
+                                    onChange={handleChange}
+                                    error={touched.legal_registration_address && Boolean(errors.legal_registration_address)}
+                                    helperText={touched.legal_registration_address && errors.legal_registration_address}
                                 />
                             </div>
                             <div className={classes.label}>
@@ -621,18 +535,13 @@ const  initialValues = {
 
                                 <TextField
                                     variant={"outlined"}
-                                    name="ActualAddress"
+                                    name="actual_address"
                                     placeholder={"123456 город улица строени дом офис"}
-                                    disabled={formik.values.MatchesAddressActualAddress}
-                                    value={formik.values.ActualAddress}
-                                    onChange={formik.handleChange}
-                                    error={
-                                        formik.touched.ActualAddress &&
-                                        Boolean(formik.errors.ActualAddress)
-                                    }
-                                    helperText={
-                                        formik.touched.ActualAddress && formik.errors.ActualAddress
-                                    }
+                                    disabled={matchesAddressActualAddress}
+                                    value={values.actual_address}
+                                    onChange={handleChange}
+                                    error={touched.actual_address && Boolean(errors.actual_address)}
+                                    helperText={touched.actual_address && errors.actual_address}
                                 />
                             </div>
                             <div style={{ justifyContent: "left", marginTop: -12 }}>
@@ -643,19 +552,8 @@ const  initialValues = {
                                     name="MatchesAddressActualAddress"
                                     color="default"
                                     inputProps={{ "aria-label": "checkbox with default color" }}
-                                    value={formik.values.MatchesAddressActualAddress}
-                                    onChange={(e: any) => {
-                                        if (!e.target.checked) {
-                                            formik.setFieldValue(
-                                                "ActualAddress",
-                                                formik.values.LegalAddress
-                                            );
-                                        }
-                                        formik.setFieldValue(
-                                            "MatchesAddressActualAddress",
-                                            e.target.checked ? false : true
-                                        );
-                                    }}
+                                    value={matchesAddressActualAddress}
+                                    onChange={()=>setMatchesAddressActualAddress(!matchesAddressActualAddress)}
                                 />
                                 <span className={classes.checkText}>
                   Совпадает с юридическим адресом
@@ -665,19 +563,13 @@ const  initialValues = {
                                 <span>Почтовый адрес</span>
                                 <TextField
                                     variant={"outlined"}
-                                    name="MailingAddress"
+                                    name="post_address"
                                     placeholder={"123456 город улица строени дом офис"}
-                                    disabled={formik.values.MatchesAddressMailingAddress}
-                                    value={formik.values.MailingAddress}
-                                    onChange={formik.handleChange}
-                                    error={
-                                        formik.touched.MailingAddress &&
-                                        Boolean(formik.errors.MailingAddress)
-                                    }
-                                    helperText={
-                                        formik.touched.MailingAddress &&
-                                        formik.errors.MailingAddress
-                                    }
+                                    disabled={matchesAddressMailingAddress}
+                                    value={values.post_address}
+                                    onChange={handleChange}
+                                    error={touched.post_address && Boolean(errors.post_address) }
+                                    helperText={touched.post_address &&errors.post_address}
                                 />
                             </div>
                             <div style={{ justifyContent: "left", marginTop: -12 }}>
@@ -688,326 +580,162 @@ const  initialValues = {
                                     name="MatchesAddressMailingAddress"
                                     color="default"
                                     inputProps={{ "aria-label": "checkbox with default color" }}
-                                    value={formik.values.MatchesAddressMailingAddress}
-                                    onChange={(e: any) => {
-                                        if (!e.target.checked) {
-                                            formik.setFieldValue(
-                                                "MailingAddress",
-                                                formik.values.LegalAddress
-                                            );
-                                        }
-                                        formik.setFieldValue(
-                                            "MatchesAddressMailingAddress",
-                                            e.target.checked ? false : true
-                                        );
-                                    }}
+                                    value={matchesAddressMailingAddress}
+                                    onChange={()=>setMatchesAddressMailingAddress(!matchesAddressMailingAddress)}
                                 />
                                 <span className={classes.checkText}>
                   Совпадает с юридическим адресом
                 </span>
                             </div>
-                            <div className={classes.label}>
+                            <div className={classes.label} style={{alignItems:"flex-start"}}>
                                 <span>Сайт компании</span>
                                 <div
                                     style={{
                                         width: "60%",
-                                        display: "flex",
-                                        justifyContent: "space-between",
+                                        // display: "flex",
+                                        // justifyContent: "space-between",
                                     }}
                                 >
-                                    <TextField
-                                        variant={"outlined"}
-                                        name="SiteCompany"
-                                        style={{ width: "85%" }}
-                                        placeholder={"www.сайткомпании.ru"}
-                                        onChange={formik.handleChange}
-                                        error={
-                                            formik.touched.SiteCompany &&
-                                            Boolean(formik.errors.SiteCompany)
-                                        }
-                                        helperText={
-                                            formik.touched.SiteCompany && formik.errors.SiteCompany
-                                        }
-                                    />
+
+                                    <FieldArray name="sites">
+                                        {({ insert, remove, push }) => (
+                                            <div style={{width:"100%"}}>
+                                                {values.sites.length > 0 &&
+                                                values.sites.map(( url, index) => {
+                                                    const fieldName = `sites[${index}].url`;
+                                                    const touchedFieldName = getIn(touched, fieldName);
+                                                    const errorFieldName = getIn(errors, fieldName);
+                                                    return(
+                                                        <div key={index} style={{display:"flex",flexDirection:"row",alignItems:"center", marginBottom:16}}>
+                                                                <TextField style={index > 0 ? {width:"90%"}:{width:"100%"}}
+                                                                    variant={"outlined"}
+                                                                    name={fieldName}
+                                                                    value={url.url}
+                                                                    placeholder={"www.сайткомпании.ru"}
+                                                                    onChange={handleChange}
+                                                                    error={Boolean(touchedFieldName && errorFieldName)}
+                                                                    helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                                />
+
+                                                            { index == 0 ? "":<div style={{marginLeft: 16 }}
+                                                                                   onClick={() => remove(index)}>
+                                                                <TrashIcon/>
+                                                            </div>}
+                                                        </div>
+                                                    )
+                                                })}
+                                                <div
+                                                    className={classes.addItemCRM}
+                                                    onClick={() => push({ url: '' })}
+                                                >
+                                                    + Добавить сайт
+                                                </div>
+                                            </div>
+                                        )}
+                                    </FieldArray>
                                 </div>
                             </div>
-                            {site > 1 ? (
-                                <div className={classes.label}>
-                                    <>&nbsp;</>
-                                    <div
-                                        style={{
-                                            width: "60%",
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                        }}
-                                    >
-                                        <TextField
-                                            variant={"outlined"}
-                                            name="SiteCompany2"
-                                            style={{ width: "85%" }}
-                                            placeholder={"www.сайткомпании.ru"}
-                                            onChange={formik.handleChange}
-                                            error={
-                                                formik.touched.SiteCompany &&
-                                                Boolean(formik.errors.SiteCompany)
-                                            }
-                                            helperText={
-                                                formik.touched.SiteCompany && formik.errors.SiteCompany
-                                            }
-                                        />
-                                        <div
-                                            style={{
-                                                marginRight: "2%",
-                                                marginTop: 3,
-                                                cursor: "pointer",
-                                            }}
-                                            onClick={() => (site > 1 ? setSite(site - 1) : null)}
-                                        >
-                                            {site === 2 ? <TrashIcon /> : ""}
-                                        </div>
-                                    </div>
-                                </div>
-                            ) : (
-                                ""
-                            )}
-                            {site > 2 ? (
-                                <div className={classes.label}>
-                                    <>&nbsp;</>
-                                    <div
-                                        style={{
-                                            width: "60%",
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                        }}
-                                    >
-                                        <TextField
-                                            variant={"outlined"}
-                                            name="SiteCompany3"
-                                            style={{ width: "85%" }}
-                                            placeholder={"www.сайткомпании.ru"}
-                                            onChange={formik.handleChange}
-                                            error={
-                                                formik.touched.SiteCompany &&
-                                                Boolean(formik.errors.SiteCompany)
-                                            }
-                                            helperText={
-                                                formik.touched.SiteCompany && formik.errors.SiteCompany
-                                            }
-                                        />
-                                        <div
-                                            style={{
-                                                marginRight: "2%",
-                                                marginTop: 3,
-                                                cursor: "pointer",
-                                            }}
-                                            onClick={() => (site > 1 ? setSite(site - 1) : null)}
-                                        >
-                                            <TrashIcon />
-                                        </div>
-                                    </div>
-                                </div>
-                            ) : (
-                                ""
-                            )}
-                            {site! < 3 ? (
-                                <div
-                                    className={classes.addItem}
-                                    onClick={() => (site < 3 ? setSite(site + 1) : null)}
-                                >
-                                    + Добавить сайт
-                                </div>
-                            ) : (
-                                ""
-                            )}
-                            <div className={classes.label}>
+                            <div className={classes.label} style={{alignItems:"flex-start"}}>
                                 <span>Телефон</span>
                                 <div
                                     style={{
                                         width: "60%",
-                                        display: "flex",
-                                        justifyContent: "space-between",
+                                        // display: "flex",
+                                        // justifyContent: "space-between",
                                     }}
                                 >
-                                    <TextField
-                                        variant={"outlined"}
-                                        name="Phone"
-                                        placeholder={"+79991234567"}
-                                        style={{ width: "85%" }}
-                                        onChange={formik.handleChange}
-                                        error={formik.touched.Phone && Boolean(formik.errors.Phone)}
-                                        helperText={formik.touched.Phone && formik.errors.Phone}
-                                    />
+                                    <FieldArray name="phones">
+                                        {({ insert, remove, push }) => (
+                                            <div>
+                                                {values.phones.length > 0 &&
+                                                values.phones.map(( phone, index) => {
+                                                    const fieldName = `phones[${index}].phone`;
+                                                    const touchedFieldName = getIn(touched, fieldName);
+                                                    const errorFieldName = getIn(errors, fieldName);
+                                                    return(
+                                                        <div key={index} style={{display:"flex",flexDirection:"row"}}>
+                                                            <TextField
+                                                                fullWidth
+                                                                style={{ width: "90%", marginBottom:16}}
+                                                                placeholder={"+79991234567"}
+                                                                variant={"outlined"}
+                                                                name={fieldName}
+                                                                value={phone.phone}
+                                                                onChange={handleChange}
+                                                                error={Boolean(touchedFieldName && errorFieldName)}
+                                                                helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                            />
+                                                            <div style={{marginLeft:16}}
+                                                                 onClick={() => remove(index)}>
+                                                                <TrashIcon />
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })}
+                                                <div
+                                                    className={classes.addItemCRM}
+                                                    onClick={() => push({ phone: '' })}
+                                                >
+                                                    + Добавить телефон
+                                                </div>
+                                            </div>
+                                        )}
+                                    </FieldArray>
                                 </div>
                             </div>
-                            {phone > 1 ? (
-                                <div className={classes.label}>
-                                    <>&nbsp;</>
-                                    <div
-                                        style={{
-                                            width: "60%",
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                        }}
-                                    >
-                                        <TextField
-                                            variant={"outlined"}
-                                            name="Phone2"
-                                            style={{ width: "85%" }}
-                                            placeholder={"+79991234567"}
-                                            onChange={formik.handleChange}
-                                            error={
-                                                formik.touched.Phone2 && Boolean(formik.errors.Phone2)
-                                            }
-                                            helperText={formik.touched.Phone2 && formik.errors.Phone2}
-                                        />
-                                        <div
-                                            style={{ marginRight: "2%", cursor: "pointer" }}
-                                            onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
-                                        >
-                                            {phone === 2 ? <TrashIcon /> : ""}
-                                        </div>
-                                    </div>
-                                </div>
-                            ) : (
-                                ""
-                            )}
-                            {phone > 2 ? (
-                                <div className={classes.label}>
-                                    <>&nbsp;</>
-                                    <div
-                                        style={{
-                                            width: "60%",
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                        }}
-                                    >
-                                        <TextField
-                                            variant={"outlined"}
-                                            name="Phone3"
-                                            style={{ width: "85%" }}
-                                            placeholder={"+79991234567"}
-                                            onChange={formik.handleChange}
-                                            error={
-                                                formik.touched.Phone3 && Boolean(formik.errors.Phone3)
-                                            }
-                                            helperText={formik.touched.Phone3 && formik.errors.Phone3}
-                                        />
-                                        <div
-                                            style={{ marginRight: "2%", cursor: "pointer" }}
-                                            onClick={() => (phone > 1 ? setPhone(phone - 1) : null)}
-                                        >
-                                            <TrashIcon />
-                                        </div>
-                                    </div>
-                                </div>
-                            ) : (
-                                ""
-                            )}
-                            {phone! < 3 ? (
-                                <div
-                                    className={classes.addItem}
-                                    onClick={() => (phone < 3 ? setPhone(phone + 1) : null)}
-                                >
-                                    + Добавить телефон
-                                </div>
-                            ) : (
-                                ""
-                            )}
-                            <div className={classes.label}>
+
+
+                            <div className={classes.label} style={{alignItems:"flex-start"}}>
                                 <span>E-mail</span>
                                 <div
                                     style={{
                                         width: "60%",
-                                        display: "flex",
-                                        justifyContent: "space-between",
+                                        // display: "flex",
+                                        // justifyContent: "space-between",
                                     }}
-                                    onClick={() => (email < 3 ? setEmail(email + 1) : null)}
                                 >
-                                    <TextField
-                                        variant={"outlined"}
-                                        name="Email"
-                                        style={{ width: "85%" }}
-                                        placeholder={"email@email.ru"}
-                                        onChange={formik.handleChange}
-                                        error={formik.touched.Email && Boolean(formik.errors.Email)}
-                                        helperText={formik.touched.Email && formik.errors.Email}
-                                    />
+                                    <FieldArray name="emails">
+                                        {({ insert, remove, push }) => (
+                                            <div>
+                                                {values.emails.length > 0 &&
+                                                values.emails.map(( email, index) => {
+                                                    const fieldName = `emails[${index}].email`;
+                                                    const touchedFieldName = getIn(touched, fieldName);
+                                                    const errorFieldName = getIn(errors, fieldName);
+                                                    return(
+                                                        <div key={index} style={{display:"flex",flexDirection:"row"}}>
+                                                            <TextField
+                                                                 fullWidth
+                                                               style={{ width: "90%", marginBottom:16}}
+                                                                placeholder={`email${index + 1}@email.com`}
+                                                                variant={"outlined"}
+                                                                name={fieldName}
+                                                                type="email"
+                                                                value={email.email}
+                                                                onChange={handleChange}
+                                                                error={Boolean(touchedFieldName && errorFieldName)}
+                                                                helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                            />
+                                                            <div style={{marginLeft:16}}
+                                                                 onClick={() => remove(index)}>
+                                                                <TrashIcon />
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })}
+                                                <div
+                                                    className={classes.addItemCRM}
+                                                    onClick={() => push({ email: '' })}
+                                                >
+                                                    + Добавить email
+                                                </div>
+                                            </div>
+                                        )}
+                                    </FieldArray>
                                 </div>
                             </div>
-                            {email > 1 ? (
-                                <div className={classes.label}>
-                                    <>&nbsp;</>
-                                    <div
-                                        style={{
-                                            width: "60%",
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                        }}
-                                    >
-                                        <TextField
-                                            variant={"outlined"}
-                                            name="Email2"
-                                            placeholder={"email@email.ru"}
-                                            style={{ width: "85%" }}
-                                            onChange={formik.handleChange}
-                                            error={
-                                                formik.touched.Email2 && Boolean(formik.errors.Email2)
-                                            }
-                                            helperText={formik.touched.Email2 && formik.errors.Email2}
-                                        />
-                                        <div
-                                            style={{ marginRight: "2%", cursor: "pointer" }}
-                                            onClick={() => (email > 1 ? setEmail(email - 1) : null)}
-                                        >
-                                            {email === 2 ? <TrashIcon /> : ""}
-                                        </div>
-                                    </div>
-                                </div>
-                            ) : (
-                                ""
-                            )}
-                            {email > 2 ? (
-                                <div className={classes.label}>
-                                    <>&nbsp;</>
-                                    <div
-                                        style={{
-                                            width: "60%",
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                        }}
-                                    >
-                                        <TextField
-                                            variant={"outlined"}
-                                            name="Email3"
-                                            placeholder={"email@email.ru"}
-                                            style={{ width: "85%" }}
-                                            onChange={formik.handleChange}
-                                            error={
-                                                formik.touched.Email3 && Boolean(formik.errors.Email3)
-                                            }
-                                            helperText={formik.touched.Email3 && formik.errors.Email3}
-                                        />
-                                        <div
-                                            style={{ marginRight: "2%", cursor: "pointer" }}
-                                            onClick={() => (email > 1 ? setEmail(email - 1) : null)}
-                                        >
-                                            <TrashIcon />
-                                        </div>
-                                    </div>
-                                </div>
-                            ) : (
-                                ""
-                            )}
-                            {email! < 3 ? (
-                                <div
-                                    className={classes.addItem}
-                                    onClick={() => (email < 3 ? setEmail(email + 1) : null)}
-                                >
-                                    + Добавить email
-                                </div>
-                            ) : (
-                                ""
-                            )}
+
+
                         </Paper>
                     </div>
                 </div>

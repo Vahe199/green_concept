@@ -23,7 +23,7 @@ export const Test = () => {
     const [email, setEmail] = React.useState(1);
     const [branch, setBranch] = React.useState(1);
     const [CRMs, setCRMs] = React.useState(1);
-
+    const [contractorId, setContractorId] = React.useState(1);
     const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
     const { crms, branches, types_and_services }: any = assets;
 
@@ -31,6 +31,16 @@ export const Test = () => {
         key: option.id,
         value: option.id ? option.id : 0,
         label: option.full_name,
+    }));
+    const assetsOptionsCounterpartyType = types_and_services?.map((option: any) => ({
+        key: option.id,
+        value: option.id ? option.id : 0,
+        label: option.name,
+    }));
+    const assetsOptionsServiceType = types_and_services[contractorId -1]?.services?.map((option: any) => ({
+        key: option.id,
+        value: option.id ? option.id : 0,
+        label: option.name,
     }));
     const crmsInitial = get(crms, "[0].id", "");
     const CounterpartyTypeInitial = get(types_and_services, "[0].id", "");
@@ -158,16 +168,14 @@ export const Test = () => {
     });
 const  initialValues = {
         // CrmValue: crmsInitial,
+       org_type: "ЮЛ",
         crms: [''],
-        CrmValue2: crmsInitial,
-        CrmValue3: crmsInitial,
-        CounterpartyType: CounterpartyTypeInitial,
-        OrganizationType: "ЮЛ",
-        ServiceType: ServiceTypeInitial,
-        INN: "",
-        KPP: "",
-        OGPN: "",
-        NDA: 1,
+        contractor_type_id:"",
+        service_type_id:"",
+        inn:"",
+        kpp:"",
+        ogrn:"",
+        nda: 1,
         FullCompanyName: "",
         ShortNameCompany: "",
         CompanyGroup: "",
@@ -227,13 +235,13 @@ const  initialValues = {
                     Физическое лицо
                   </span>
                                     <Radio
-                                        checked={values.OrganizationType === "ФЛ"}
+                                        checked={values.org_type === "ФЛ"}
                                         onChange={(e) =>
-                                            setFieldValue("OrganizationType", e.target.value)
+                                            setFieldValue("org_type", e.target.value)
                                         }
                                         value="ФЛ"
                                         color="default"
-                                        name="OrganizationType"
+                                        name="org_type"
                                         size="medium"
                                         inputProps={{ "aria-label": "ФЛ" }}
                                     />
@@ -243,20 +251,20 @@ const  initialValues = {
                     Юридическое лицо
                   </span>
                                     <Radio
-                                        checked={values.OrganizationType === "ЮЛ"}
+                                        checked={values.org_type === "ЮЛ"}
                                         onChange={(e) =>
-                                            setFieldValue("OrganizationType", e.target.value)
+                                            setFieldValue("org_type", e.target.value)
                                         }
                                         value="ЮЛ"
                                         color="default"
-                                        name="OrganizationType"
+                                        name="org_type"
                                         size="medium"
                                         inputProps={{ "aria-label": "ЮЛ" }}
                                     />
                                 </div>
                             </div>
-                            <div className={classes.label}>
-                                <span>CRM</span>
+                            <div className={classes.label} style={{alignItems:"flex-start"}}>
+                                <span >CRM</span>
                                 <Typography >
                                     <FieldArray name="crms">
                                         {({ insert, remove, push }) => (
@@ -268,18 +276,7 @@ const  initialValues = {
                                                     const errorFieldName = getIn(errors, fieldName);
                                                     return(
                                                         <div key={index} style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
-                                                            {/*<TextField*/}
-                                                            {/*    fullWidth*/}
-                                                            {/*    style={{ width: "80%", marginBottom:16}}*/}
-                                                            {/*    placeholder={`email${index + 1}@email.com`}*/}
-                                                            {/*    variant={"outlined"}*/}
-                                                            {/*    name={fieldName}*/}
-                                                            {/*    type="email"*/}
-                                                            {/*    value={crm[index]}*/}
-                                                            {/*    onChange={handleChange}*/}
-                                                            {/*    error={Boolean(touchedFieldName && errorFieldName)}*/}
-                                                            {/*    helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}*/}
-                                                            {/*/>*/}
+                                                            <div style={index > 0 ? {width:"80%"}:{width:"100%"}}>
                                                             <InputFilterSelectedType
                                                                 className={classes.input}
                                                                 name={fieldName}
@@ -288,11 +285,14 @@ const  initialValues = {
                                                                 }
                                                                 value={crm}
                                                                 options={ assetsOptionsCRMS}
-                                                                placeholder="Другое"
+                                                                placeholder="Фамилия Имя"
                                                                 loading={assetsLoading}
+                                                                error={Boolean(touchedFieldName && errorFieldName)}
+                                                                helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
                                                             />
+                                                            </div>
 
-                                                            { index == 0 ? "":<div style={{marginLeft: "3%" ,height: 16}}
+                                                            { index == 0 ? "":<div style={{marginLeft: 16 ,marginTop:-9}}
                                                                   onClick={() => remove(index)}>
                                                                 <TrashIcon/>
                                                             </div>}
@@ -309,180 +309,75 @@ const  initialValues = {
                                         )}
                                     </FieldArray>
                                 </Typography>
-                                {/*<div*/}
-                                {/*    style={{*/}
-                                {/*        width: "60%",*/}
-                                {/*        display: "flex",*/}
-                                {/*        justifyContent: "space-between",*/}
-                                {/*    }}*/}
-                                {/*>*/}
-                            {/*        <InputFilterSelectedCrm*/}
-                            {/*            name="CrmValue"*/}
-                            {/*            handleChange={(e: any) =>*/}
-                            {/*                setFieldValue("CrmValue", e.target.value)*/}
-                            {/*            }*/}
-                            {/*            error={*/}
-                            {/*                touched.CrmValue && Boolean(errors.CrmValue)*/}
-                            {/*            }*/}
-                            {/*            helperText={*/}
-                            {/*                touched.CrmValue && errors.CrmValue*/}
-                            {/*            }*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*{CRMs > 1 ? (*/}
-                            {/*    <div*/}
-                            {/*        style={{*/}
-                            {/*            width: "60%",*/}
-                            {/*            display: "flex",*/}
-                            {/*            justifyContent: "space-between",*/}
-                            {/*            marginLeft: "40%",*/}
-                            {/*            marginTop: "3%",*/}
-                            {/*            marginBottom: "5%",*/}
-                            {/*        }}*/}
-                            {/*    >*/}
-                            {/*        <InputFilterSelectedCrm*/}
-                            {/*            name="CrmValue2"*/}
-                            {/*            handleChange={(e: any) =>*/}
-                            {/*                formik.setFieldValue("CrmValue2", e.target.value)*/}
-                            {/*            }*/}
-                            {/*            error={*/}
-                            {/*                formik.touched.CrmValue2 &&*/}
-                            {/*                Boolean(formik.errors.CrmValue2)*/}
-                            {/*            }*/}
-                            {/*            helperText={*/}
-                            {/*                formik.touched.CrmValue2 && formik.errors.CrmValue2*/}
-                            {/*            }*/}
-                            {/*        />*/}
-                            {/*        <div*/}
-                            {/*            style={{*/}
-                            {/*                marginLeft: "3%",*/}
-                            {/*                marginTop: "1%",*/}
-                            {/*                cursor: "pointer",*/}
-                            {/*            }}*/}
-                            {/*            onClick={() => (CRMs > 1 ? setCRMs(CRMs - 1) : null)}*/}
-                            {/*        >*/}
-                            {/*            {CRMs === 2 ? <TrashIcon /> : ""}*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*) : (*/}
-                            {/*    ""*/}
-                            {/*)}*/}
-                            {/*{CRMs > 2 ? (*/}
-                            {/*    <div*/}
-                            {/*        style={{*/}
-                            {/*            width: "60%",*/}
-                            {/*            display: "flex",*/}
-                            {/*            justifyContent: "space-between",*/}
-                            {/*            marginLeft: "40%",*/}
-                            {/*            marginBottom: "5%",*/}
-                            {/*        }}*/}
-                            {/*    >*/}
-                            {/*        <InputFilterSelectedCrm*/}
-                            {/*            name="CrmValue3"*/}
-                            {/*            handleChange={(e: any) =>*/}
-                            {/*                formik.setFieldValue("CrmValue3", e.target.value)*/}
-                            {/*            }*/}
-                            {/*            error={*/}
-                            {/*                formik.touched.CrmValue3 &&*/}
-                            {/*                Boolean(formik.errors.CrmValue3)*/}
-                            {/*            }*/}
-                            {/*            helperText={*/}
-                            {/*                formik.touched.CrmValue3 && formik.errors.CrmValue3*/}
-                            {/*            }*/}
-                            {/*        />*/}
-                            {/*        <div*/}
-                            {/*            style={{*/}
-                            {/*                marginLeft: "3%",*/}
-                            {/*                marginTop: "1%",*/}
-                            {/*                cursor: "pointer",*/}
-                            {/*            }}*/}
-                            {/*            onClick={() => (CRMs > 1 ? setCRMs(CRMs - 1) : null)}*/}
-                            {/*        >*/}
-                            {/*            <TrashIcon />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*) : (*/}
-                            {/*    ""*/}
-                            {/*)}*/}
-                            {/*{CRMs! < 3 ? (*/}
-                            {/*    <div*/}
-                            {/*        className={classes.addItemCRM}*/}
-                            {/*        onClick={() => (CRMs < 3 ? setCRMs(CRMs + 1) : null)}*/}
-                            {/*    >*/}
-                            {/*        + Добавить еще CRM*/}
-                            {/*    </div>*/}
-                            {/*) : (*/}
-                            {/*    ""*/}
-                            {/*)}*/}
                             </div>
                             <div className={classes.label}>
                                 <span>Тип контрагента</span>
                                 <span style={{ width: "60%" }}>
-                  <InputFilterSelectedType
-                      name="CounterpartyType"
-                      handleChange={(e: any) =>
-                          setFieldValue("CounterpartyType", e.target.value)
-                      }
-                  />
+                                    <InputFilterSelectedType
+                                        // className={classes.input}
+                                        name="contractor_type_id"
+                                        handleChange={(value:any) => {
+                                            setFieldValue("contractor_type_id", value)
+                                            setContractorId(value)
+                                        }
+                                        }
+                                         value={values.contractor_type_id}
+                                         options={assetsOptionsCounterpartyType}
+                                        placeholder="Другое"
+                                        loading={assetsLoading}
+                                        error={touched.contractor_type_id && Boolean(errors.contractor_type_id)}
+                                        helperText={touched.contractor_type_id && errors.contractor_type_id}
+                                    />
                 </span>
                             </div>
                             <div className={classes.label}>
                                 <span>Тип услуг</span>
                                 <span style={{ width: "60%" }}>
-                  <InputFilterSelectedServicesType
-                      name="ServiceType"
-                      handleChange={(e: any) =>
-                          formik.setFieldValue("ServiceType", e.target.value)
-                      }
-                      error={
-                          formik.touched.ServiceType &&
-                          Boolean(formik.errors.ServiceType)
-                      }
-                      helperText={
-                          formik.touched.ServiceType && formik.errors.ServiceType
-                      }
-                  />
+                   <InputFilterSelectedType
+                       // className={classes.input}
+                       name="service_type_id"
+                       handleChange={(value:any) => setFieldValue("service_type_id", value)}
+                       value={values.service_type_id}
+                       options={assetsOptionsServiceType}
+                       placeholder="Другое"
+                       loading={assetsLoading}
+                       error={touched.service_type_id && Boolean(errors.service_type_id)}
+                       helperText={touched.service_type_id && errors.service_type_id}
+                   />
                 </span>
-                                {/* <TextField
-                  variant={"outlined"}
-                  name="ServiceType"
-                  placeholder={"Другое"}
-                  onChange={formik.handleChange}
-                /> */}
                             </div>
                             <div className={classes.label}>
                                 <span>ИНН</span>
                                 <TextField
                                     variant={"outlined"}
-                                    name="INN"
+                                    name="inn"
                                     placeholder={"1234556789101112"}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.INN && Boolean(formik.errors.INN)}
-                                    helperText={formik.touched.INN && formik.errors.INN}
+                                    onChange={handleChange}
+                                    error={touched.inn && Boolean(errors.inn)}
+                                    helperText={touched.inn && errors.inn}
                                 />
                             </div>
-                            {formik.values.OrganizationType === "ЮЛ" && <div className={classes.label}>
+                            {values.org_type === "ЮЛ" && <div className={classes.label}>
                                 <span>КПП</span>
                                 <TextField
                                     variant={"outlined"}
-                                    name="KPP"
+                                    name="kpp"
                                     placeholder={"1234556789101112"}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.KPP && Boolean(formik.errors.KPP)}
-                                    helperText={formik.touched.KPP && formik.errors.KPP}
+                                    onChange={handleChange}
+                                    error={touched.kpp && Boolean(errors.kpp)}
+                                    helperText={touched.kpp && errors.kpp}
                                 />
                             </div>}
                             <div className={classes.label}>
 
-                                <span>{formik.values.OrganizationType === "ЮЛ" ? 'ОГРН' : 'ОГРНИП'}</span>
+                                <span>{values.org_type === "ЮЛ" ? 'ОГРН' : 'ОГРНИП'}</span>
                                 <TextField
                                     variant={"outlined"}
-                                    name="OGPN"
+                                    name="ogrn"
                                     placeholder={"1234556789101112"}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.OGPN && Boolean(formik.errors.OGPN)}
-                                    helperText={formik.touched.OGPN && formik.errors.OGPN}
+                                    onChange={handleChange}
+                                    error={touched.ogrn && Boolean(errors.ogrn)}
+                                    helperText={touched.ogrn && errors.ogrn}
                                 />
                             </div>
                             <div className={classes.label}>
@@ -493,9 +388,9 @@ const  initialValues = {
                       checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
                       color="default"
                       inputProps={{ "aria-label": "checkbox with default color" }}
-                      value={formik.values.NDA === 1 ? true : false}
+                      value={values.nda === 1 ? true : false}
                       onChange={(e: any) =>
-                          formik.setFieldValue("NDA", e.target.checked ? 0 : 1)
+                          setFieldValue("nda", e.target.checked ? 0 : 1)
                       }
                   />
                 </span>

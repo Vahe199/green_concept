@@ -11,13 +11,17 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
             },
         },
         textAreaCN: {
-            marginBottom: "4%",
+            marginBottom:20,
+
             width: "60%",
             "& .MuiOutlinedInput-inputMultiline": {
                 height: "50px !important",
             },
             "& .MuiOutlinedInput-multiline": {
-                padding: 1,
+                paddingBottom: 4,
+                paddingTop:4,
+                paddingLeft: 12,
+                paddingRight:12,
             },
         },
         btn: {
@@ -68,6 +72,15 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
                width:"60%",
                 maxWait:"60%"
             },
+            "& .makeStyles-select-62 .ant-select-selector": {
+              fontSize:16,
+                fontWeight:400,
+                height:"30px !important",
+            },
+            // "&  .ant-select .makeStyles-select-62  .ant-select-single .ant-select-show-arrow": {
+            //    width:"80% !important",
+            //     height:"30px !important"
+            // },
         },
         addItem: {
             marginLeft: "40%",
@@ -78,16 +91,15 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
             },
         },
         addItemCRM: {
-            // marginLeft: "40%",
-            marginTop:16,
-            marginBottom: 8,
+            fontSize:14,
+            fontWeight:400,
             cursor: "pointer",
             "&:hover": {
                 textDecoration: "underline",
             },
         },
         paper: {
-            padding: 10,
+            padding: 16,
             color: "#3B4750",
             border: "1px solid #3ab994",
             boxShadow: "none",
@@ -100,7 +112,7 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            marginBottom: 15,
+            marginBottom: 16,
             fontSize: 16,
             fontWeight: 500,
         },
@@ -115,7 +127,7 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
             fontWeight: 500,
         },
         input: {
-            marginTop: 16,
+            marginBottom:16
         },
     })
 );

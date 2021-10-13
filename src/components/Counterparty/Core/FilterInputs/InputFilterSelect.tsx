@@ -31,7 +31,7 @@ export default function InputFilterSelect({
   return (
     <Select
       placeholder={placeholder}
-      allowClear
+      // allowClear
       className={classes.select + " " + className}
       value={value}
       onChange={handleChange}

@@ -54,6 +54,7 @@ export const contractorApi = {
     return instance.put(`bank_details/${contractor_bank_detail}`, data);
   },
   insertContractorGeneralData(data) {
+    debugger
     return instance.post("contractors/", data);
   },
   insertContractorContactData(data) {

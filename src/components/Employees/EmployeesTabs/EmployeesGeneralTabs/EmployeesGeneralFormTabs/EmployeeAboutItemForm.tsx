@@ -1,9 +1,8 @@
 import React from "react";
-import {Button, Paper, TextField, Typography} from "@material-ui/core";
-import { Formik, getIn, FieldArray } from 'formik';
+import {Button, Typography} from "@material-ui/core";
+import {Formik} from 'formik';
 
 import {useStylesEmployeeForm} from "./EmployeesFormStyles";
-import {TrashIcon} from "../../../../../IMG/SVG/TrashIcon";
 
 const initialValues = {
     about:""

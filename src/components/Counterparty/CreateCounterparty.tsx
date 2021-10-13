@@ -19,6 +19,7 @@ import CreatEditBankAccount, {
 import { BankDetails } from "./TabsForCreating/BankDetails";
 import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
 import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformationForCreating";
+import {Test} from "./TabsForCreating/test";
 
 // interface TabPanelProps {
 //   children?: React.ReactNode;
@@ -191,7 +192,8 @@ const CreateCounterparty = (props: any) => {
           </div>
         ) : props.match.params.item === "new contractor" ? (
           <div>
-            {selectedTab === 0 && <GeneralInformationForCreating />}
+            {/*{selectedTab === 0 && <GeneralInformationForCreating />}*/}
+            {selectedTab === 0 && <Test/>}
             {selectedTab === 1 && <ContactPersonsForCreating />}
             {selectedTab === 2 && (
               <div>

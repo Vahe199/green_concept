@@ -1,5 +1,4 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import { Select } from "antd";
 
 const useStyles = makeStyles((theme: Theme) =>

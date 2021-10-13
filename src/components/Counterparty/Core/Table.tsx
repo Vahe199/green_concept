@@ -41,8 +41,10 @@ const useStyles = makeStyles({
     "& thead": {
       "& tr": {
         "& th": {
+           alignItems:"flex-start",
           background: "#FFFFFF",
           "&::before": { display: "none" },
+            minHeight:104
         },
       },
     },
@@ -112,7 +114,7 @@ export default function CounterpartiesTable(props: any) {
 
   const columns = [
     {
-      title: () => <>&#x2116;</>, //todo Arsen change icon
+      title: () => <div style={{minHeight:75,alignItems:'flex-start'}}>&#x2116;</div>, //todo Arsen change icon
       dataIndex: "id",
       width: "5%",
       render: (id: string) => <span style={{ color: "#3B4750" }}>{id}</span>,

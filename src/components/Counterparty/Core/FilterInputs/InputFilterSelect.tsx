@@ -7,10 +7,12 @@ const useStyles = makeStyles((theme: Theme) =>
     select: {
       "& .ant-select": {
         height: "100%",
+        fontSize:14,
         border: "1px solid #F1F2F3",
       },
       "& .ant-select-selector": {
         height: "100% !important",
+        fontSize:14,
       },
     },
   })

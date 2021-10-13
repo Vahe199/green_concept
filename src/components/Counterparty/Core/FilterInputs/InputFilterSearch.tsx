@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: "100%",
       height: "40px !important",
+        fontSize:20,
     },
 
     icon: {

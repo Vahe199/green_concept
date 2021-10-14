@@ -6,10 +6,10 @@ import {
 } from "../../types/counterparties";
 
 export const fetchCounterpartiesList =
-  () => async (dispatch: Dispatch<CounterpartiesAction>) => {
+  (config: any) => async (dispatch: Dispatch<CounterpartiesAction>) => {
     try {
       dispatch({ type: CounterpartiesActionType.FETCH_COUNTERPARTIES_LIST });
-      const { data } = await counterpartiesApi.fetchContractorsList();
+      const { data } = await counterpartiesApi.fetchContractorsList(config);
       dispatch({
         type: CounterpartiesActionType.FETCH_COUNTERPARTIES_LIST_SUCCESS,
         payload: data.contractors,

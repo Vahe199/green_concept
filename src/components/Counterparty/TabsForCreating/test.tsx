@@ -1,6 +1,6 @@
 import {Button, Checkbox, Paper, Radio, TextField, Typography} from "@material-ui/core";
 import {FieldArray, Form, Formik, getIn} from "formik";
-import React from "react";
+import React, {useEffect} from "react";
 import {CheckSquareChecked} from "../../../IMG/SVG/CheckSquareChecked";
 import {CheckSquareUnChecked} from "../../../IMG/SVG/CheckSquareUnChecked";
 import {TrashIcon} from "../../../IMG/SVG/TrashIcon";
@@ -9,7 +9,8 @@ import {useTypedSelector} from "../../../redux/type_redux_hook/useTypedSelector"
 import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelect";
 import {useStylesGeneralInfo} from "./TabsForUtil/GeneralInformationForStyle";
 import {validationSchema} from "./TabsForUtil/GeneralInformationForValidate";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Test = () => {
     const classes = useStylesGeneralInfo();
@@ -19,7 +20,33 @@ export const Test = () => {
 
     const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
     const { crms, branches, types_and_services }: any = assets;
-
+     const {success,error}:any = useTypedSelector(state => state.author)
+    const notifyError = () => toast.error("некорректные данные",{
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: 0,
+    });
+    const notifySuccess = () => toast.success("подрядчик успешно добавлен",{
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: 0,
+    });
+    useEffect(()=>{
+        if(error){
+            notifyError()
+        }
+        if(success){
+            notifySuccess()
+        }
+    },[success,error])
     const assetsOptionsCRMS = crms?.map((option: any) => ({
         key: option.id,
         value: option.id ? option.id : 0,
@@ -65,13 +92,16 @@ const  initialValues = {
     }
     return (
         <div style={{width:"100%"}}>
+            <ToastContainer />
             <Formik
                 initialValues={initialValues}
                  validationSchema={validationSchema}
                 onSubmit={async (values,action) => {
                     console.log(values,"values")
                       insertContractorGeneralData(values);
-                    action.resetForm()
+                    {
+                        success && action.resetForm()
+                    }
                 }}
             >
                 {({ values, touched,handleSubmit, handleChange,errors,setFieldValue }) => (

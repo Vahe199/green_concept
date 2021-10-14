@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import moment from "moment"
-// import Divider from "@material-ui/core/Divider";
-import { StyledTableRow } from "./utils/TableRow";
-import { StyledTableCell } from "./utils/TableCell";
-import InputFilterSelected from "./FilterInputs/InputFilterSelected";
+import moment from "moment";
+import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
+
 import InputFilterSearch from "./FilterInputs/InputFilterSearch";
-import InputFilterDate from "./FilterInputs/InputFilterDate";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
-import Loader from "../../Layout/Loader/Loader";
 import { useHistory } from "react-router-dom";
 import { useActions } from "../../../redux/type_redux_hook/useAction";
-import InputFilterSelectedType from "./FilterInputs/InputFilterSelect";
+import InputFilterSelect from "./FilterInputs/InputFilterSelect";
 import InputFilterDatePicker from "./FilterInputs/InputFilterDatePicker";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
-import { Space, Table } from "antd";
+import { Table } from "antd";
 
 const useStyles = makeStyles({
   root: {
@@ -50,17 +46,30 @@ const useStyles = makeStyles({
     },
     "& tbody": {
       "& tr": {
+        cursor: "pointer",
+
         "&:nth-child(odd) ": {
           background: " #F2F3F4",
         },
+
         "&:nth-child(even) ": {
           background: " #FFFFFF",
+        },
+        "&:hover": {
+          boxShadow:
+            "0px 0px 12px rgba(51, 63, 79, 0.08), 0px 0px 2px rgba(51, 63, 79, 0.32)",
+        },
+        "&:active": {
+          boxShadow: "0px 0px 6px 0px #333F4F3D inset",
         },
       },
     },
   },
   input: {
     marginTop: 16,
+  },
+  icon: {
+    fontSize: "16px",
   },
 });
 
@@ -72,17 +81,17 @@ export default function CounterpartiesTable(props: any) {
   const { contractors, loading } = useTypedSelector(
     (state) => state.counterparties
   );
-  const { authors } = useTypedSelector((state) => state.authorsList);
+  const { authors: crms } = useTypedSelector((state) => state.authorsList);
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
-  const { types_and_services = [] }: any = assets;
+  const { types_and_services = [], branches = [] }: any = assets;
   const assetsOptions = types_and_services?.map((option: any) => ({
     key: option.id,
     value: option.id ? option.id : 0,
     label: option.name,
   }));
-  const authorsOptions = authors?.map((option: any) => ({
+  const crmsOptions = crms?.map((option: any) => ({
     key: option.author_id,
     value: option.author_id,
     label: option.author_fio,
@@ -91,17 +100,22 @@ export default function CounterpartiesTable(props: any) {
   const { getAuthorData } = useActions();
 
   const [params, setParams] = useState<any>({
-    "filter[full_name]": "",
     include: "type,crms,branches,service,sites,emails,phones,author,group",
   });
-  const [services, setServices] = useState(1);
+  const [services, setServices] = useState("");
   const [author, setAuthor] = useState(null);
   const [fullName, setFullName] = useState("");
-  const [branches, setBranches] = useState("");
+  const [branch, setBranch] = useState("");
   const [group, setGroup] = useState("");
-  const [crms, setCrms] = useState("");
-  const [createdAt, setCreatedAt] = useState<any>(moment('2015-01-01', 'YYYY-MM-DD'));
-  const [updatedAt, setUpdatedAt] = useState<any>(moment('2015-01-01', 'YYYY-MM-DD'));
+  const [crm, setCrm] = useState("");
+  const [createdAt, setCreatedAt] = useState<any>(null);
+  const [updatedAt, setUpdatedAt] = useState<any>(null);
+
+  const filteredBranches =
+    branch.length === 0 || branch.length > 3
+      ? branches.filter(({ name }: { name: string }) => name.includes(branch))
+      : branches;
+  console.log(filteredBranches);
 
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/${data.id}`);
@@ -122,8 +136,7 @@ export default function CounterpartiesTable(props: any) {
         <>
           Тип
           <div>
-            <InputFilterSelectedType
-              allowClear
+            <InputFilterSelect
               className={classes.input}
               handleChange={(id: any) => {
                 setServices(id);
@@ -144,12 +157,15 @@ export default function CounterpartiesTable(props: any) {
         <>
           Наименование
           <InputFilterSearch
-              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                 setFullName(e.target.value);
-                 setParams({ ...params, "filter[full_name]": e.target.value });
-              }}
-               value={fullName}
-              className={classes.input} />
+            handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              const { value } = e.target;
+              setFullName(value);
+              (value.length === 0 || value.length > 3) &&
+                setParams({ ...params, "filter[full_name]": value });
+            }}
+            value={fullName}
+            className={classes.input}
+          />
         </>
       ),
       dataIndex: "full_name",
@@ -159,13 +175,25 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <>
           Отрасль
-          <InputFilterSearch
-              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setBranches(e.target.value);
-                 setParams({ ...params, "filter[branches.id]": e.target.value });
-              }}
-              value={branches}
-              className={classes.input} />
+          <InputFilterSelect
+            options={filteredBranches.map((option: any) => ({
+              key: option.id,
+              value: option.id,
+              label: option.name,
+            }))}
+            filterOption={false}
+            onSearch={(value: string) => {
+              setBranch(value);
+            }}
+            onSelect={(id: number) => {
+              setParams({ ...params, "filter[branches.id]": id });
+            }}
+            notFoundContent={null}
+            value={branch}
+            className={classes.input}
+            prefix={<MagnifyingGlass className={classes.icon} />}
+            showSearch
+          />
         </>
       ),
       dataIndex: "branches",
@@ -186,12 +214,15 @@ export default function CounterpartiesTable(props: any) {
         <div style={{ minWidth: 125 }}>
           Группа компаний
           <InputFilterSearch
-              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setGroup(e.target.value);
-                setParams({ ...params, "filter[parent_id]": e.target.value });
-              }}
-              value={group}
-              className={classes.input} />
+            handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              const { value } = e.target;
+              setGroup(value);
+              (value.length === 0 || value.length > 3) &&
+                setParams({ ...params, "filter[parent_id]": value });
+            }}
+            value={group}
+            className={classes.input}
+          />
         </div>
       ),
       dataIndex: "group",
@@ -200,13 +231,17 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <>
           Ответственный
-          <InputFilterSearch
-              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCrms(e.target.value);
-                setParams({ ...params, "filter[parent_id]": e.target.value });
-              }}
-              value={crms}
-              className={classes.input} />
+          <InputFilterSelect
+            className={classes.input}
+            placeholder="Все"
+            value={author}
+            handleChange={(val: any) => {
+              setAuthor(val);
+              setParams({ ...params, "filter[created_by]": val });
+            }}
+            options={[]}
+            loading={assetsLoading}
+          />
         </>
       ),
       dataIndex: "crms",
@@ -226,16 +261,16 @@ export default function CounterpartiesTable(props: any) {
         <>
           Автор записи
           <div>
-            <InputFilterSelectedType
+            <InputFilterSelect
               className={classes.input}
-              // handleChange={setAuthor}
-              value={author}
+              placeholder="Все"
+              value={crm}
               handleChange={(val: any) => {
-                 setAuthor(val);
-                 setParams({ ...params, "filter[created_by]": val });
+                setCrm(val);
+                setParams({ ...params, "filter[created_by]": val }); // Todo Arsen, check backend field
               }}
-              options={authorsOptions}
-               loading={assetsLoading}
+              options={crmsOptions}
+              loading={assetsLoading}
             />
           </div>
         </>
@@ -261,13 +296,14 @@ export default function CounterpartiesTable(props: any) {
             </span>
           </div>
           <InputFilterDatePicker
-              value={createdAt}
-            handleChange={(value:any)=> {
-              setCreatedAt(value)
-               setParams({ ...params, "filter[created_at]": value })
-              console.log(value, "data value")
+            placeholder="01.01.2020"
+            value={createdAt ? moment(createdAt) : null}
+            handleChange={(_: any, value: string) => {
+              setCreatedAt(value);
+              setParams({ ...params, "filter[created_at]": value });
             }}
-              className={classes.input} />
+            className={classes.input}
+          />
         </>
       ),
       dataIndex: "created_at",
@@ -283,13 +319,14 @@ export default function CounterpartiesTable(props: any) {
             </span>
           </div>
           <InputFilterDatePicker
-              value={updatedAt}
-              handleChange={(value:any)=> {
-                setUpdatedAt(value)
-                setParams({ ...params, "filter[updated_at]": value })
-                console.log(value, "data value")
-              }}
-              className={classes.input} />
+            placeholder="01.01.2020"
+            value={updatedAt ? moment(updatedAt) : null}
+            handleChange={(_: any, value: string) => {
+              setUpdatedAt(value);
+              setParams({ ...params, "filter[updated_at]": value });
+            }}
+            className={classes.input}
+          />
         </>
       ),
       dataIndex: "updated_at",
@@ -343,27 +380,19 @@ export default function CounterpartiesTable(props: any) {
     });
   }, [params]);
 
-  return loading ? (
-    <Loader />
-  ) : (
+  return (
     <Paper className={classes.root}>
-      {contractors ? (
-        <Table
-          onRow={(record) => ({
-            onClick: () => getUserData(record),
-            style: {
-              cursor: "pointer",
-              boxShadow:
-                "0px 0px 12px rgba(51, 63, 79, 0.08), 0px 0px 2px rgba(51, 63, 79, 0.32)",
-            },
-          })}
-          columns={columns}
-          dataSource={data}
-          pagination={false}
-          scroll={{ y: window.innerHeight - 328 }}
-          className={classes.table}
-        />
-      ) : null}
+      <Table
+        onRow={(record) => ({
+          onClick: () => getUserData(record),
+        })}
+        columns={columns}
+        dataSource={data}
+        pagination={false}
+        scroll={{ y: window.innerHeight - 328 }}
+        className={classes.table}
+        loading={loading}
+      />
     </Paper>
   );
 }

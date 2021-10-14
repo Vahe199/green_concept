@@ -1,35 +1,95 @@
 import * as yup from "yup";
 
-export const validationSchema = yup.object({
-    CrmValue: yup
+export const validationSchema = yup.object().shape({
+
+    // crms: yup.array()
+    //     // .of(
+    //     //     yup.object().shape({
+    //     //         crms[0]: yup.string().required('Required'),
+    //     //     })
+    //     // )
+    //     .required("Обязательное поле"),
+    contractor_type_id: yup
         .string()
-        .min(0, " should be of minimum 8 characters length")
+        .min(0, " должен состоять минимум из 10 символов")
         .required("Обязательное поле"),
-    CounterpartyType: yup
+    service_type_id: yup
         .string()
-        .min(0, " should be of minimum 8 characters length")
+        .min(0, "должен состоять минимум из 10 символов")
         .required("Обязательное поле"),
-    ServiceType: yup
+    inn: yup
         .string()
-        .min(0, " should be of minimum 8 characters length")
+        .min(0, "должен состоять минимум из 10 символов")
+        .max(18, "должен состоять максимум из 18 символов")
         .required("Обязательное поле"),
-    INN: yup
+    kpp: yup
         .string()
-        .min(0, " should be of minimum 8 characters length")
-        .max(12, " should be of maximum 12 characters length")
+        .min(0, "должен состоять минимум из 10 символов")
+        .max(18, "должен состоять максимум из 18 символов")
         .required("Обязательное поле"),
-    KPP: yup
+    ogrn: yup
         .string()
-        .min(0, " should be of minimum 8 characters length")
-        .max(9, " should be of maximum 9 characters length")
+        .min(0, "должен состоять минимум из 10 символов")
+        .max(18, "должен состоять максимум из 18 символов")
         .required("Обязательное поле"),
-    OGPN: yup
-        .string()
-        .min(0, " should be of minimum 8 characters length")
+    // actual_address: yup.string().min(0, "должен состоять минимум из 10 символов")
+    //     .max(18, "должен состоять максимум из 18 символов")
+    //     .required("Обязательное поле"),
+    legal_registration_address: yup.string()
+        .min(0, "должен состоять минимум из 10 символов")
+        .max(18, "должен состоять максимум из 18 символов")
         .required("Обязательное поле"),
-    ActualAddress: yup.string().required("Обязательное поле"),
-    LegalAddress: yup.string().required("Обязательное поле"),
-    MailingAddress: yup.string().required("Обязательное поле"),
-    FullCompanyName: yup.string().required("Обязательное поле"),
-    ShortNameCompany: yup.string().required("Обязательное поле"),
+    // post_address: yup.string().min(0, "должен состоять минимум из 10 символов")
+    //     .max(250, "должен состоять максимум из 250 символов")
+    //     .required("Обязательное поле"),
+    full_name: yup.string().min(0, "должен состоять минимум из 10 символов")
+        .max(250, "должен состоять максимум из 250 символов")
+        .required("Обязательное поле"),
+    short_name: yup.string() .min(0, "должен состоять минимум из 10 символов")
+        .max(250, "должен состоять максимум из 250 символов")
+        .required("Обязательное поле"),
+    sites: yup.array()
+        .of(
+            yup.object().shape({
+               url: yup.string().min(3, 'Слишком короткый').required("Обязательное поле"),
+                // salary: yup.string().min(3, 'cmon').required('Required'),
+            })
+        )
+        .required("Обязательное поле"),
+    phones: yup.array()
+        .of(
+            yup.object().shape({
+               phone: yup.string().min(10, 'Слишком короткый').required("Обязательное поле"),
+                // salary: yup.string().min(3, 'cmon').required('Required'),
+            })
+        )
+        .required("Обязательное поле"),
+    emails: yup.array()
+        .of(
+            yup.object().shape({
+                email: yup.string().email('Неверный адрес электронной почты').required("Обязательное поле"),
+                // salary: yup.string().min(3, 'cmon').required('Required'),
+            })
+        )
+        .required("Обязательное поле")
 });
+
+
+// org_type: "ЮЛ",
+    // crms: [''],
+    // contractor_type_id:"",
+    // service_type_id:"",
+    // inn:"",
+    // kpp:"",
+    // ogrn:"",
+    // nda: 1,
+    // full_name:"",
+    // short_name: "",
+    // parent_id: "",
+    // branches:[''],
+    // legal_registration_address:"",
+    // actual_address:"",
+    // post_address:"",
+    // sites: [{url: ''}],
+    // phones: [{phone: ''}],
+    // emails: [{email: ''}]

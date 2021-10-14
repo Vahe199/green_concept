@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
-        fontSize: 13,
+        fontWeight:400,
+        fontSize: 16,
       },
       "& .MuiFormHelperText-root": {
         fontSize: 9,
@@ -65,12 +66,15 @@ const useStyles = makeStyles((theme: Theme) =>
     btn: {
       color: "#fff",
       fontSize: 15,
-      paddingBottom: 0,
-      padding: 4,
-     //  paddingTop: 4.5,
-     //  paddingBottom: 4.5,
-     //  paddingRight: 16,
-     //  paddingLeft: 16,
+      fontWeight: 400,
+      marginLeft: 24,
+      height:30,
+      width: 170,
+       whiteSpace:"nowrap",
+      paddingTop: 4.5,
+      paddingBottom: 4.5,
+      paddingRight: 16,
+      paddingLeft: 16,
       boxShadow: "none",
       backgroundColor: "#3AB994",
       textTransform: "none",
@@ -283,7 +287,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
           </div>
           <div className={classes.label}>
             <span className={classes.textInTable}>Счет активный</span>
-            <span style={{ width: "75%" }}>
+            <span style={{ width: "82%" }}>
                 <Checkbox
                     defaultChecked
                     name="is_active"

@@ -41,7 +41,7 @@ export default function InputFilterSelect({
       value={value}
       onChange={handleChange}
       options={options}
-      loading={loading}
+      // loading={loading}
       style={{ width: "100%" }}
       {...props}
     />

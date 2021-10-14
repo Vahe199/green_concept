@@ -9,7 +9,7 @@ export const fetchAuthorsList =
   () => async (dispatch: Dispatch<AuthorsListAction>) => {
     try {
       dispatch({ type: AuthorsListActionType.FETCH_AUTHORS_LIST });
-      const { data } = await counterpartiesApi.fetchContractorsAuthor();
+      const { data }:any = await counterpartiesApi.fetchContractorsAuthor();
       dispatch({
         type: AuthorsListActionType.FETCH_AUTHORS_LIST_SUCCESS,
         payload: data.authors,

@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { XLSIcon } from "../../IMG/SVG/XLS";
 import { UseActions } from "../../redux/type_redux_hook/ useAction";
-import CounterpartiesTable from "./Core/Table";
+import Table from "./Core/Table";
 import { useStyles } from "./Styles";
 import ModalListOfContacts from "../Modals/ModalListOfContacts";
 
@@ -19,8 +19,9 @@ export const Counterparty = () => {
     await getAssetsListData();
   };
   useEffect(() => {
-    getData();
-  });
+     getData();
+  }, []);
+
   let history = useHistory();
   const classes = useStyles();
   // const [value, setValue] = React.useState(0);
@@ -88,7 +89,7 @@ export const Counterparty = () => {
         </div>
       </Paper>
       <div style={{ paddingLeft: "2%", paddingTop: "1%", paddingRight: "2%" }}>
-        <CounterpartiesTable />
+        <Table />
       </div>
     </div>
   );

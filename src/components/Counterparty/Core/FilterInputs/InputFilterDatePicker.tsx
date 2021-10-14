@@ -40,10 +40,10 @@ export default function InputFilterDatePicker({
     <DatePicker
       placeholder={placeholder}
       allowClear
-      defaultValue={moment('2015-01-01', 'YYYY-MM-DD')}
+      // defaultValue={moment('2015-01-01', 'YYYY-MM-DD')}
       className={classes.select + " " + className}
-      // value={value}
-      // onChange={handleChange}
+        value={value}
+       onChange={handleChange}
       style={{ width: "100%" }}
       suffixIcon={<Calendar/>}
       {...props}

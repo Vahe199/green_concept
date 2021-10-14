@@ -95,7 +95,7 @@ export const BankDetails: React.FC<BankProps> = ({
     <div className={classes.root}>
       {data.length && !loading
         ? data.map((details) => (
-            <div style={{ width: "40%" }}>
+            <div style={{ width: "45%", marginRight:16 }}>
               <div>
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}

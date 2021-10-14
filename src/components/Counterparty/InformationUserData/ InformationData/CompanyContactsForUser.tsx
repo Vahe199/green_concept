@@ -44,12 +44,13 @@ export const CompanyContactsForUser: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
   const { AuthorData } = useTypedSelector((state) => state.author);
+  debugger
   const {
     legal_registration_address,
     actual_address,
     post_address,
-    emails,
-    phones,
+    emails=[],
+    phones=[],
   }: any = AuthorData;
   return (
     <div className={classes.root}>
@@ -107,7 +108,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
             Телефон
           </Typography>
           <Typography variant={"body2"}>
-            {phones.map((phone: any) => (
+            {phones?.map((phone: any) => (
               <div key={phone.id} className={classes.title}>{phone.phone}</div>
             ))}
           </Typography>
@@ -117,7 +118,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
             E-mail
           </Typography>
           <Typography variant={"body2"}>
-            {emails.map((mail: any) => (
+            {emails?.map((mail: any) => (
               <div key={mail.id} className={classes.title}>{mail.email}</div>
             ))}
           </Typography>

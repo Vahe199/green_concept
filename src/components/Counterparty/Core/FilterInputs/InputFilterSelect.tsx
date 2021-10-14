@@ -6,19 +6,18 @@ const useStyles = makeStyles((theme: Theme) =>
     select: {
       "& .ant-select": {
         height: "100%",
-        fontSize:14,
+        fontSize: 14,
         border: "1px solid #F1F2F3",
       },
       "& .ant-select-selector": {
         height: "100% !important",
-        fontSize:14,
+        fontSize: 14,
       },
 
-      "& svg":{
-        fill:"#2c2e30",
-      }
-
-            },
+      "& svg": {
+        fill: "#2c2e30",
+      },
+    },
   })
 );
 
@@ -26,7 +25,6 @@ export default function InputFilterSelect({
   value = "",
   handleChange,
   options = [],
-  placeholder = "",
   className = "",
   loading = false,
   ...props
@@ -35,13 +33,10 @@ export default function InputFilterSelect({
 
   return (
     <Select
-      placeholder={placeholder}
-      // allowClear
       className={classes.select + " " + className}
-      value={value}
+      value={value === "" ? null : value}
       onChange={handleChange}
       options={options}
-      // loading={loading}
       style={{ width: "100%" }}
       {...props}
     />

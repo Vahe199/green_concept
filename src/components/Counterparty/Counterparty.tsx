@@ -10,12 +10,12 @@ import { useStyles } from "./Styles";
 
 export const Counterparty = () => {
   const { fetchAuthorsList, getAssetsListData } = UseActions();
-  const getData = async () => {
-    await fetchAuthorsList();
-    await getAssetsListData();
+  const getData =  () => {
+    fetchAuthorsList();
+     getAssetsListData();
   };
   useEffect(() => {
-    // getData();
+     getData();
   }, []);
 
   let history = useHistory();

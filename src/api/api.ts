@@ -54,7 +54,7 @@ export const counterpartiesApi = {
     });
   },
   fetchContractorsAuthor() {
-    return axios.request({ method: "get", url: "contractors/authors_list" });
+    return axios.request({ method: "get", url: "contractors/authors_list" })
   },
   fetchContractorsTypes() {
     return axios

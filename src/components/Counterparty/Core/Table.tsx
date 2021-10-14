@@ -82,11 +82,11 @@ export default function CounterpartiesTable(props: any) {
     value: option.id ? option.id : 0,
     label: option.name,
   }));
-
+debugger
   const authorsOptions = authors?.map((option: any) => ({
     key: option.author_id,
-    value: option.author_fio,
-    lable: option.author_fio.substring(0, 9) + "...",
+    value: option.author_id,
+    label: option.author_fio,
   }));
 
   const { getAuthorData } = UseActions();
@@ -198,10 +198,14 @@ export default function CounterpartiesTable(props: any) {
           <div>
             <InputFilterSelectedType
               className={classes.input}
-              handleChange={setAuthor}
+              // handleChange={setAuthor}
               value={author}
+              handleChange={(val: any) => {
+                 setAuthor(val);
+                 setParams({ ...params, "filter[created_by]": val });
+              }}
               options={authorsOptions}
-              loading={assetsLoading}
+               loading={assetsLoading}
             />
           </div>
         </>

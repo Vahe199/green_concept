@@ -2,7 +2,7 @@ import { Button, Checkbox, Paper, TextField } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
-import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
+import { useActions } from "../../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import * as yup from "yup";
 import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
@@ -156,7 +156,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
   const classes = useStyles();
 
   const { insertContractorBankDetails, updateContractorBankDetails } =
-    UseActions();
+    useActions();
 
   const formik = useFormik({
     initialValues: contractorBankDetail,

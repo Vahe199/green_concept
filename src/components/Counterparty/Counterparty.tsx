@@ -4,19 +4,19 @@ import AddIcon from "@material-ui/icons/Add";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { XLSIcon } from "../../IMG/SVG/XLS";
-import { UseActions } from "../../redux/type_redux_hook/ useAction";
+import { useActions } from "../../redux/type_redux_hook/useAction";
 import Table from "./Core/Table";
 import { useStyles } from "./Styles";
 import ModalListOfContacts from "../Modals/ModalListOfContacts";
 
 export const Counterparty = () => {
-  const { fetchCounterpartiesList, fetchAuthorsList, getAssetsListData } =
-    UseActions();
+  const { fetchAuthorsList, getAssetsListData } =
+    useActions();
   //const [showModal, setShowModal] = React.useState(true); //TODO modal put here for testing
-  const getData = async () => {
-    await fetchCounterpartiesList();
-    await fetchAuthorsList();
-    await getAssetsListData();
+  const getData =  () => {
+     // fetchCounterpartiesList();
+    fetchAuthorsList();
+    getAssetsListData();
   };
   useEffect(() => {
      getData();

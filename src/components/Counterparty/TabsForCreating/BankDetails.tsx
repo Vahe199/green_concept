@@ -2,7 +2,7 @@ import { Button, Paper, Typography } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import React, { useEffect } from "react";
-import { UseActions } from "../../../redux/type_redux_hook/ useAction";
+import { useActions } from "../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import { PencilSimpleIcon } from "../../../IMG/SVG/PencilSimpleIcon";
 import { ContractorBankDetailType } from "../Forms/BankAccountForm/CreatEditBankAccount";
@@ -71,7 +71,7 @@ export const BankDetails: React.FC<BankProps> = ({
     { id: 5, title: "Р/с", field: "rs" },
   ];
 
-  const { fetchContractorBankDetails } = UseActions();
+  const { fetchContractorBankDetails } = useActions();
 
   useEffect(() => {
     fetchContractorBankDetails(id);

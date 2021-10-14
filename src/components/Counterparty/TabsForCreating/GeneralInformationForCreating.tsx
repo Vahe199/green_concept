@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
-import { UseActions } from "../../../redux/type_redux_hook/ useAction";
+import { useActions } from "../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterSelectedBranches from "../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
 import InputFilterSelectedCrm from "../../Counterparty/Core/FilterInputs/InputFilterSelectedCRM";
@@ -34,7 +34,7 @@ export const GeneralInformationForCreating = () => {
   const ServiceTypeInitial = get(types_and_services, "[0].services[0].id", "");
   const IndustryInitial = get(branches, "[0].id", "");
 
-  const { insertContractorGeneralData } = UseActions();
+  const { insertContractorGeneralData } = useActions();
 
   const formik = useFormik({
     validationSchema,

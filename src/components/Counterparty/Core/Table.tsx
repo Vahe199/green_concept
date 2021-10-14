@@ -11,7 +11,7 @@ import InputFilterDate from "./FilterInputs/InputFilterDate";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import Loader from "../../Layout/Loader/Loader";
 import { useHistory } from "react-router-dom";
-import { UseActions } from "../../../redux/type_redux_hook/ useAction";
+import { useActions } from "../../../redux/type_redux_hook/useAction";
 import InputFilterSelectedType from "./FilterInputs/InputFilterSelect";
 import InputFilterDatePicker from "./FilterInputs/InputFilterDatePicker";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
@@ -65,7 +65,7 @@ const useStyles = makeStyles({
 });
 
 export default function CounterpartiesTable(props: any) {
-  const { fetchCounterpartiesList } = UseActions();
+  const { fetchCounterpartiesList } = useActions();
 
   let history = useHistory();
   const classes = useStyles();
@@ -88,7 +88,7 @@ export default function CounterpartiesTable(props: any) {
     label: option.author_fio,
   }));
 
-  const { getAuthorData } = UseActions();
+  const { getAuthorData } = useActions();
 
   const [params, setParams] = useState<any>({
     "filter[full_name]": "",

@@ -7,7 +7,7 @@ import React, { useEffect } from "react";
 import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
 import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
-import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
+import { useActions } from "../../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedCRM";
 import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
@@ -74,7 +74,7 @@ type Props = {
 export const FormGeneralInformation: React.FC<Props> = ({
   setChangeGeneralInformation,
 }) => {
-  const { changeAuthorGeneralData, recoveryAuthorDataState } = UseActions();
+  const { changeAuthorGeneralData, recoveryAuthorDataState } = useActions();
   const classes = useStyles();
 
   const { AuthorData, error, isChange } = useTypedSelector(

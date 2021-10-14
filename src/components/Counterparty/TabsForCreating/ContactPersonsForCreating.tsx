@@ -26,7 +26,7 @@ import InputFilterSelectedRoles from "../../Counterparty/Core/FilterInputs/Input
 import InputFilterSelectedServicesType from "../../Counterparty/Core/FilterInputs/InputFilterSelectedServicesType";
 import InputFilterSelectedStatus from "../../Counterparty/Core/FilterInputs/InputFilterSelectedStatus";
 import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelect";
-import { UseActions } from "../../../redux/type_redux_hook/ useAction";
+import { useActions } from "../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import get from "lodash/get";
 
@@ -225,7 +225,7 @@ export const ContactPersonsForCreating = () => {
   const congratulationTypesInitial = get(congratulation_types, "[0].id", "");
 
   const classes = useStyles();
-  const { insertContractorContactData } = UseActions();
+  const { insertContractorContactData } = useActions();
 
   const [phone, setPhone] = useState(1);
   const [phoneMob, setPhoneMob] = useState(1);

@@ -5,7 +5,7 @@ import { Checkbox, TextField, Paper, Button } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
-import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
+import { useActions } from "../../../../redux/type_redux_hook/useAction";
 import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
 import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
 
@@ -77,7 +77,7 @@ type Props = {
 };
 export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
   const classes = useStyles();
-  const { changeAuthorContactInfoData, recoveryAuthorDataState } = UseActions();
+  const { changeAuthorContactInfoData, recoveryAuthorDataState } = useActions();
   const { AuthorData, error, isChange, errorMsg } = useTypedSelector(
     (state) => state.author
   );

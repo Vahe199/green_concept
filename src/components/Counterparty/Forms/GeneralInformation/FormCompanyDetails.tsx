@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import * as yup from "yup";
 import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
-import { UseActions } from "../../../../redux/type_redux_hook/ useAction";
+import { useActions } from "../../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterSelectedBranches from "../../Core/FilterInputs/InputFilterSelectedBranches";
 
@@ -107,7 +107,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
   setChangeCompanyDetails,
 }) => {
   const { changeAuthorCompanyDetailsData, recoveryAuthorDataState } =
-    UseActions();
+    useActions();
   const { AuthorData, error, isChange, errorMsg } = useTypedSelector(
     (state) => state.author
   );

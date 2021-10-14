@@ -86,8 +86,8 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
     legal_registration_address,
     actual_address,
     post_address,
-    emails,
-    phones,
+    emails = [],
+    phones =[],
   }: any = AuthorData;
 
   const [site1, setSite1] = React.useState("");
@@ -119,10 +119,10 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
       SiteCompany: "",
       SiteCompany1: "",
       SiteCompany2: "",
-      phone: phones[0].phone,
+      phone: phones.length > 0 ?phones[0].phone : "",
       phone1: phone1,
       phone2: phone2,
-      email: emails[0].email,
+      email: emails.length > 0 ?emails[0].email : "",
       email1: email1,
       email2: email2,
     },

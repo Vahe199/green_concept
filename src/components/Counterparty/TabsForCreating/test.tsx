@@ -13,7 +13,7 @@ import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelect";
 import get from "lodash/get";
 import {useStylesGeneralInfo} from "./TabsForUtil/GeneralInformationForStyle";
 import {validationSchema} from "./TabsForUtil/GeneralInformationForValidate";
-import { Formik, getIn, FieldArray } from 'formik';
+import { Formik,Form, getIn, FieldArray } from 'formik';
 
 
 export const Test = () => {
@@ -174,7 +174,6 @@ export const Test = () => {
         },
     });
 const  initialValues = {
-        // CrmValue: crmsInitial,
        org_type: "ЮЛ",
         crms: [''],
         contractor_type_id:"",
@@ -198,14 +197,18 @@ const  initialValues = {
         <div style={{width:"100%"}}>
             <Formik
                 initialValues={initialValues}
+                // validationSchema={validationSchema}
                 onSubmit={async (values) => {
-                    await new Promise((r) => setTimeout(r, 500));
-                    alert(JSON.stringify(values, null, 2));
+                    console.log(values,"values")
+                     insertContractorGeneralData(values);
+                    // await new Promise((r) => setTimeout(r, 500));
+                    // alert(JSON.stringify(values, null, 2));
                 }}
             >
-                {({ values, touched,handleChange,errors,setFieldValue }) => (
-               <div>
+                {({ values, touched,handleSubmit, handleChange,errors,setFieldValue }) => (
+               <Form>
                 <Button
+                     // onClick={handleSubmit}
                     type="submit"
                     variant="contained"
                     color="primary"
@@ -739,7 +742,7 @@ const  initialValues = {
                         </Paper>
                     </div>
                 </div>
-               </div>
+               </Form>
                     )}
                     </Formik>
         </div>

@@ -1,31 +1,22 @@
 import {Button, Checkbox, Paper, Radio, TextField, Typography} from "@material-ui/core";
-import {useFormik} from "formik";
+import {FieldArray, Form, Formik, getIn} from "formik";
 import React from "react";
 import {CheckSquareChecked} from "../../../IMG/SVG/CheckSquareChecked";
 import {CheckSquareUnChecked} from "../../../IMG/SVG/CheckSquareUnChecked";
 import {TrashIcon} from "../../../IMG/SVG/TrashIcon";
 import {UseActions} from "../../../redux/type_redux_hook/ useAction";
 import {useTypedSelector} from "../../../redux/type_redux_hook/useTypedSelector";
-import InputFilterSelectedBranches from "../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
-import InputFilterSelectedCrm from "../../Counterparty/Core/FilterInputs/InputFilterSelectedCRM";
-import InputFilterSelectedServicesType from "../Core/FilterInputs/InputFilterSelectedServicesType";
 import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelect";
-import get from "lodash/get";
 import {useStylesGeneralInfo} from "./TabsForUtil/GeneralInformationForStyle";
 import {validationSchema} from "./TabsForUtil/GeneralInformationForValidate";
-import { Formik,Form, getIn, FieldArray } from 'formik';
 
 
 export const Test = () => {
     const classes = useStylesGeneralInfo();
     const [matchesAddressActualAddress, setMatchesAddressActualAddress] = React.useState<boolean>(true);
     const [matchesAddressMailingAddress, setMatchesAddressMailingAddress] = React.useState<boolean>(true);
-    const [site, setSite] = React.useState(1);
-    const [phone, setPhone] = React.useState(1);
-    const [email, setEmail] = React.useState(1);
-    const [branch, setBranch] = React.useState(1);
-    const [CRMs, setCRMs] = React.useState(1);
     const [contractorId, setContractorId] = React.useState(1);
+
     const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
     const { crms, branches, types_and_services }: any = assets;
 
@@ -49,130 +40,9 @@ export const Test = () => {
         value: option.id ? option.id : 0,
         label: option.name,
     }));
-    const crmsInitial = get(crms, "[0].id", "");
-    const CounterpartyTypeInitial = get(types_and_services, "[0].id", "");
-    const ServiceTypeInitial = get(types_and_services, "[0].services[0].id", "");
-    const IndustryInitial = get(branches, "[0].id", "");
 
     const { insertContractorGeneralData } = UseActions();
 
-    const formik = useFormik({
-        validationSchema,
-        initialValues: {
-            CrmValue: crmsInitial,
-            CrmValue2: crmsInitial,
-            CrmValue3: crmsInitial,
-            CounterpartyType: CounterpartyTypeInitial,
-            OrganizationType: "ЮЛ",
-            ServiceType: ServiceTypeInitial,
-            INN: "",
-            KPP: "",
-            OGPN: "",
-            NDA: 1,
-            FullCompanyName: "",
-            ShortNameCompany: "",
-            CompanyGroup: "",
-            Industry: IndustryInitial,
-            Industry2: IndustryInitial,
-            Industry3: IndustryInitial,
-            LegalAddress: "",
-            ActualAddress: "",
-            MatchesAddressActualAddress: true,
-            MailingAddress: "",
-            MatchesAddressMailingAddress: true,
-            SiteCompany: "",
-            SiteCompany2: "",
-            SiteCompany3: "",
-            Phone: "",
-            Phone2: "",
-            Phone3: "",
-            Email: "",
-            Email2: "",
-            Email3: "",
-        },
-        onSubmit: ({
-                       CrmValue,
-                       CrmValue2,
-                       CrmValue3,
-                       CounterpartyType,
-                       OrganizationType,
-                       ServiceType,
-                       INN,
-                       KPP,
-                       OGPN,
-                       NDA,
-                       FullCompanyName,
-                       ShortNameCompany,
-                       CompanyGroup,
-                       Industry,
-                       Industry2,
-                       Industry3,
-                       LegalAddress,
-                       ActualAddress,
-                       MailingAddress,
-                       SiteCompany,
-                       SiteCompany2,
-                       SiteCompany3,
-                       Phone,
-                       Phone2,
-                       Phone3,
-                       Email,
-                       Email2,
-                       Email3,
-                   }) => {
-            const crmsDraft = [CrmValue, CrmValue2, CrmValue3];
-            const branchesDraft = [Industry, Industry2, Industry3];
-            const SiteCompanyDraft = [SiteCompany, SiteCompany2, SiteCompany3];
-            const PhoneDraft = [Phone, Phone2, Phone3];
-            const EmailDraft = [Email, Email2, Email3];
-            const crms = [];
-            const branches = [];
-            const sites = [];
-            const phones = [];
-            const emails = [];
-
-            for (let i = 0; i < 3; i++) {
-                if (CRMs >= i && crmsDraft[i]) {
-                    crms.push(crmsDraft[i]);
-                }
-                if (branch >= i && branchesDraft[i]) {
-                    branches.push(branchesDraft[i]);
-                }
-                if (site >= i && SiteCompanyDraft[i]) {
-                    sites.push({ url: SiteCompanyDraft[i] });
-                }
-                if (phone >= i && PhoneDraft[i]) {
-                    phones.push({ phone: PhoneDraft[i] });
-                }
-                if (email >= i && EmailDraft[i]) {
-                    emails.push({ email: EmailDraft[i] });
-                }
-            }
-
-            const formatedValues = {
-                org_type: OrganizationType,
-                contractor_type_id: CounterpartyType,
-                service_type_id: ServiceType,
-                inn: INN,
-                kpp: KPP,
-                ogrn: OGPN,
-                nda: NDA,
-                full_name: FullCompanyName,
-                short_name: ShortNameCompany,
-                parent_id: CompanyGroup,
-                legal_registration_address: LegalAddress,
-                actual_address: ActualAddress,
-                post_address: MailingAddress,
-                crms,
-                phones,
-                emails,
-                sites,
-                branches,
-            };
-
-            insertContractorGeneralData(formatedValues);
-        },
-    });
 const  initialValues = {
        org_type: "ЮЛ",
         crms: [''],
@@ -197,12 +67,11 @@ const  initialValues = {
         <div style={{width:"100%"}}>
             <Formik
                 initialValues={initialValues}
-                // validationSchema={validationSchema}
-                onSubmit={async (values) => {
+                 validationSchema={validationSchema}
+                onSubmit={async (values,action) => {
                     console.log(values,"values")
-                     insertContractorGeneralData(values);
-                    // await new Promise((r) => setTimeout(r, 500));
-                    // alert(JSON.stringify(values, null, 2));
+                      insertContractorGeneralData(values);
+                    action.resetForm()
                 }}
             >
                 {({ values, touched,handleSubmit, handleChange,errors,setFieldValue }) => (
@@ -352,6 +221,7 @@ const  initialValues = {
                                     variant={"outlined"}
                                     name="inn"
                                     placeholder={"1234556789101112"}
+                                    value={values.inn}
                                     onChange={handleChange}
                                     error={touched.inn && Boolean(errors.inn)}
                                     helperText={touched.inn && errors.inn}
@@ -363,6 +233,7 @@ const  initialValues = {
                                     variant={"outlined"}
                                     name="kpp"
                                     placeholder={"1234556789101112"}
+                                    value={values.kpp}
                                     onChange={handleChange}
                                     error={touched.kpp && Boolean(errors.kpp)}
                                     helperText={touched.kpp && errors.kpp}
@@ -375,6 +246,7 @@ const  initialValues = {
                                     variant={"outlined"}
                                     name="ogrn"
                                     placeholder={"1234556789101112"}
+                                    value={values.ogrn}
                                     onChange={handleChange}
                                     error={touched.ogrn && Boolean(errors.ogrn)}
                                     helperText={touched.ogrn && errors.ogrn}
@@ -433,6 +305,7 @@ const  initialValues = {
                                     variant={"outlined"}
                                     name="short_name"
                                     placeholder={"Краткое наименование компании"}
+                                    value={values.short_name}
                                     onChange={handleChange}
                                     error={
                                        touched.short_name &&
@@ -446,6 +319,7 @@ const  initialValues = {
                                 <TextField
                                     variant={"outlined"}
                                     name="parent_id"
+                                    disabled={true}
                                     placeholder={"Группа компаний"}
                                     onChange={handleChange}
                                     error={ touched.parent_id && Boolean(errors.parent_id)}

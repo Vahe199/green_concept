@@ -8,7 +8,7 @@ const headers = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjM0MTExODgxLCJleHAiOjE2MzQxOTgyODEsIm5iZiI6MTYzNDExMTg4MSwianRpIjoiaUJaQ1g3VWpmN0QxNjk0ciIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.tsgHh7JdBq4WQ_hD26h6uIDR5XItxHiB9e2wCq6yqyE`,
+  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjM0MjAxMjMxLCJleHAiOjE2MzQyODc2MzEsIm5iZiI6MTYzNDIwMTIzMSwianRpIjoiTndLd2s5cXJ5U1Z4V1hiUSIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.Vms1sfbaTJG-s2E5xb4A4CmI2NlCU9KbWvuKEhCaSDo`,
 };
 
 const createAxios = () => {
@@ -67,21 +67,21 @@ export const counterpartiesApi = {
       url: "admin/contractor_type_services",
     });
   },
-  changeContractorsGeneralData(formData, id) {
+  changeContractorsGeneralData(formData:any, id:any) {
     return axios.request({
       method: "put",
       url: `contractors/general_info/${id}`,
       data: formData,
     });
   },
-  changeContractorsCompanyDetailsData(formData, id) {
+  changeContractorsCompanyDetailsData(formData:any, id:any) {
     return axios.request({
       method: "put",
       url: `contractors/about_company/${id}`,
       data: formData,
     });
   },
-  changeContractorsContactInfoData(formData, id) {
+  changeContractorsContactInfoData(formData:any, id:any) {
     return axios.request({
       method: "put",
       url: `contractors/contacts_info/${id}`,
@@ -94,24 +94,24 @@ export const counterpartiesApi = {
 };
 
 export const contractorApi = {
-  fetchContractorBankDetailsData(id) {
+  fetchContractorBankDetailsData(id:any) {
     return axios.request({ method: "get", url: `bank_details/${id}` });
   },
-  insertContractorBankDetailsData(data) {
+  insertContractorBankDetailsData(data:any) {
     return axios.request({ method: "post", url: "bank_details/", data });
   },
-  updateContractorBankDetailsData(contractor_bank_detail, data) {
+  updateContractorBankDetailsData(contractor_bank_detail:any, data:any) {
     return axios.request({
       method: "put",
       url: `bank_details/${contractor_bank_detail}`,
       data,
     });
   },
-  insertContractorGeneralData(data) {
-    debugger;
-    return axios.request({ method: "post", url: "contractors/", data });
+  insertContractorGeneralData(data:any) {
+    return axios.request({ method: "post", url: "contractors/", data })
+
   },
-  insertContractorContactData(data) {
+  insertContractorContactData(data:any) {
     return axios.request({ method: "post", url: "contacts/", data });
   },
 };

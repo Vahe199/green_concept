@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-
+import moment from "moment"
 // import Divider from "@material-ui/core/Divider";
 import { StyledTableRow } from "./utils/TableRow";
 import { StyledTableCell } from "./utils/TableCell";
@@ -82,7 +82,6 @@ export default function CounterpartiesTable(props: any) {
     value: option.id ? option.id : 0,
     label: option.name,
   }));
-debugger
   const authorsOptions = authors?.map((option: any) => ({
     key: option.author_id,
     value: option.author_id,
@@ -97,6 +96,12 @@ debugger
   });
   const [services, setServices] = useState(1);
   const [author, setAuthor] = useState(null);
+  const [fullName, setFullName] = useState("");
+  const [branches, setBranches] = useState("");
+  const [group, setGroup] = useState("");
+  const [crms, setCrms] = useState("");
+  const [createdAt, setCreatedAt] = useState<any>(moment('2015-01-01', 'YYYY-MM-DD'));
+  const [updatedAt, setUpdatedAt] = useState<any>(moment('2015-01-01', 'YYYY-MM-DD'));
 
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/${data.id}`);
@@ -138,7 +143,13 @@ debugger
       title: () => (
         <>
           Наименование
-          <InputFilterSearch className={classes.input} />
+          <InputFilterSearch
+              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                 setFullName(e.target.value);
+                 setParams({ ...params, "filter[full_name]": e.target.value });
+              }}
+               value={fullName}
+              className={classes.input} />
         </>
       ),
       dataIndex: "full_name",
@@ -148,10 +159,17 @@ debugger
       title: () => (
         <>
           Отрасль
-          <InputFilterSearch className={classes.input} />
+          <InputFilterSearch
+              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setBranches(e.target.value);
+                 setParams({ ...params, "filter[branches.id]": e.target.value });
+              }}
+              value={branches}
+              className={classes.input} />
         </>
       ),
       dataIndex: "branches",
+      width: "13%",
       render: (branches: any[]) => {
         return branches?.map((branch: any, index: number) => {
           return (
@@ -167,7 +185,13 @@ debugger
       title: () => (
         <div style={{ minWidth: 125 }}>
           Группа компаний
-          <InputFilterSearch className={classes.input} />
+          <InputFilterSearch
+              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setGroup(e.target.value);
+                setParams({ ...params, "filter[parent_id]": e.target.value });
+              }}
+              value={group}
+              className={classes.input} />
         </div>
       ),
       dataIndex: "group",
@@ -176,7 +200,13 @@ debugger
       title: () => (
         <>
           Ответственный
-          <InputFilterSearch className={classes.input} />
+          <InputFilterSearch
+              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setCrms(e.target.value);
+                setParams({ ...params, "filter[parent_id]": e.target.value });
+              }}
+              value={crms}
+              className={classes.input} />
         </>
       ),
       dataIndex: "crms",
@@ -230,11 +260,18 @@ debugger
               <SortingButtons color="#5B6770" />
             </span>
           </div>
-          <InputFilterDatePicker className={classes.input} />
+          <InputFilterDatePicker
+              value={createdAt}
+            handleChange={(value:any)=> {
+              setCreatedAt(value)
+               setParams({ ...params, "filter[created_at]": value })
+              console.log(value, "data value")
+            }}
+              className={classes.input} />
         </>
       ),
       dataIndex: "created_at",
-      width: "15%",
+      width: "11%",
     },
     {
       title: () => (
@@ -245,11 +282,18 @@ debugger
               <SortingButtons color="#5B6770" />
             </span>
           </div>
-          <InputFilterDatePicker className={classes.input} />
+          <InputFilterDatePicker
+              value={updatedAt}
+              handleChange={(value:any)=> {
+                setUpdatedAt(value)
+                setParams({ ...params, "filter[updated_at]": value })
+                console.log(value, "data value")
+              }}
+              className={classes.input} />
         </>
       ),
       dataIndex: "updated_at",
-      width: "15%",
+      width: "11%",
     },
   ];
 
@@ -265,18 +309,18 @@ debugger
       created_at,
       updated_at,
     }) => {
-      console.log({
-        key: id,
-        id,
-        typeName: type.name,
-        full_name,
-        branches,
-        group,
-        crms,
-        author,
-        created_at,
-        updated_at,
-      });
+      // console.log({
+      //   key: id,
+      //   id,
+      //   typeName: type.name,
+      //   full_name,
+      //   branches,
+      //   group,
+      //   crms,
+      //   author,
+      //   created_at,
+      //   updated_at,
+      // });
 
       return {
         key: id,

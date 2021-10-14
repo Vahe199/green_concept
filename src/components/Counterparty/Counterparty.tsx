@@ -7,10 +7,12 @@ import { XLSIcon } from "../../IMG/SVG/XLS";
 import { UseActions } from "../../redux/type_redux_hook/ useAction";
 import CounterpartiesTable from "./Core/Table";
 import { useStyles } from "./Styles";
+import ModalListOfContacts from "../Modals/ModalListOfContacts";
 
 export const Counterparty = () => {
   const { fetchCounterpartiesList, fetchAuthorsList, getAssetsListData } =
     UseActions();
+  //const [showModal, setShowModal] = React.useState(true); //TODO modal put here for testing
   const getData = async () => {
     await fetchCounterpartiesList();
     await fetchAuthorsList();
@@ -29,7 +31,7 @@ export const Counterparty = () => {
   const handleClick = (path: string) => {
     history.push(`/counterparty/${path}`);
   };
-  return (
+  return  (
     <div className={classes.container}>
       <Paper square className={classes.root}>
         <Typography

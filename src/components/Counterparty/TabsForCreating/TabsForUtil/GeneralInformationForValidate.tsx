@@ -2,13 +2,13 @@ import * as yup from "yup";
 
 export const validationSchema = yup.object().shape({
 
-    crms: yup.array()
-        .of(
-            yup.object().shape({
-                crms: yup.string().required('Required'),
-            })
-        )
-        .required("Обязательное поле"),
+    // crms: yup.array()
+    //     // .of(
+    //     //     yup.object().shape({
+    //     //         crms[0]: yup.string().required('Required'),
+    //     //     })
+    //     // )
+    //     .required("Обязательное поле"),
     contractor_type_id: yup
         .string()
         .min(0, " должен состоять минимум из 10 символов")
@@ -20,26 +20,34 @@ export const validationSchema = yup.object().shape({
     inn: yup
         .string()
         .min(0, "должен состоять минимум из 10 символов")
-        .max(18, "должен состоять максимум из 18 символов"),
+        .max(18, "должен состоять максимум из 18 символов")
+        .required("Обязательное поле"),
     kpp: yup
         .string()
         .min(0, "должен состоять минимум из 10 символов")
-        .max(18, "должен состоять максимум из 18 символов"),
+        .max(18, "должен состоять максимум из 18 символов")
+        .required("Обязательное поле"),
     ogrn: yup
         .string()
         .min(0, "должен состоять минимум из 10 символов")
-        .max(18, "должен состоять максимум из 18 символов"),
-    actual_address: yup.string().min(0, "должен состоять минимум из 10 символов")
-        .max(18, "должен состоять максимум из 18 символов"),
+        .max(18, "должен состоять максимум из 18 символов")
+        .required("Обязательное поле"),
+    // actual_address: yup.string().min(0, "должен состоять минимум из 10 символов")
+    //     .max(18, "должен состоять максимум из 18 символов")
+    //     .required("Обязательное поле"),
     legal_registration_address: yup.string()
         .min(0, "должен состоять минимум из 10 символов")
-        .max(18, "должен состоять максимум из 18 символов"),
-    post_address: yup.string().min(0, "должен состоять минимум из 10 символов")
-        .max(250, "должен состоять максимум из 250 символов"),
+        .max(18, "должен состоять максимум из 18 символов")
+        .required("Обязательное поле"),
+    // post_address: yup.string().min(0, "должен состоять минимум из 10 символов")
+    //     .max(250, "должен состоять максимум из 250 символов")
+    //     .required("Обязательное поле"),
     full_name: yup.string().min(0, "должен состоять минимум из 10 символов")
-        .max(250, "должен состоять максимум из 250 символов"),
+        .max(250, "должен состоять максимум из 250 символов")
+        .required("Обязательное поле"),
     short_name: yup.string() .min(0, "должен состоять минимум из 10 символов")
-        .max(250, "должен состоять максимум из 250 символов"),
+        .max(250, "должен состоять максимум из 250 символов")
+        .required("Обязательное поле"),
     sites: yup.array()
         .of(
             yup.object().shape({
@@ -51,7 +59,7 @@ export const validationSchema = yup.object().shape({
     phones: yup.array()
         .of(
             yup.object().shape({
-               phone: yup.string().min(12, 'Слишком короткый').required("Обязательное поле"),
+               phone: yup.string().min(10, 'Слишком короткый').required("Обязательное поле"),
                 // salary: yup.string().min(3, 'cmon').required('Required'),
             })
         )

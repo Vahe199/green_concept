@@ -47,7 +47,8 @@ const useStyles = makeStyles((theme: Theme) =>
     textInTable: {
       color: "#3B4750",
       fontWeight: 500,
-      //fontSize: 16,
+      fontSize: 16,
+      width: '25%',
     },
     label: {
       display: "flex",
@@ -63,9 +64,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     btn: {
       color: "#fff",
-      //fontSize: 15,
+      fontSize: 15,
       paddingBottom: 0,
-     padding: 4,
+      padding: 4,
      //  paddingTop: 4.5,
      //  paddingBottom: 4.5,
      //  paddingRight: 16,

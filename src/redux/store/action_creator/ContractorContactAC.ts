@@ -7,6 +7,7 @@ import {
 
 export const insertContractorContactData =
   (data: any) => async (dispatch: Dispatch<ContractorContactDataAction>) => {
+    console.log(data,'data data')
     try {
       dispatch({
         type: ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA,

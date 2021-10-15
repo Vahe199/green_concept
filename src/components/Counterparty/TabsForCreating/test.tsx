@@ -9,8 +9,9 @@ import {useTypedSelector} from "../../../redux/type_redux_hook/useTypedSelector"
 import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelect";
 import {useStylesGeneralInfo} from "./TabsForUtil/GeneralInformationForStyle";
 import {validationSchema} from "./TabsForUtil/GeneralInformationForValidate";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {notifyError, notifySuccess} from "../Core/utils/ToastNotify";
 
 export const Test = () => {
     const classes = useStylesGeneralInfo();
@@ -21,24 +22,7 @@ export const Test = () => {
     const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
     const { crms, branches, types_and_services }: any = assets;
      const {success,error}:any = useTypedSelector(state => state.author)
-    const notifyError = () => toast.error("некорректные данные",{
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: 0,
-    });
-    const notifySuccess = () => toast.success("подрядчик успешно добавлен",{
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: 0,
-    });
+
     useEffect(()=>{
         if(error){
             notifyError()
@@ -92,22 +76,20 @@ const  initialValues = {
     }
     return (
         <div style={{width:"100%"}}>
-            <ToastContainer />
+            <ToastContainer style={{fontSize:20, marginTop:"5%"}} />
             <Formik
                 initialValues={initialValues}
                  validationSchema={validationSchema}
                 onSubmit={async (values,action) => {
                     console.log(values,"values")
                       insertContractorGeneralData(values);
-                    {
-                        success && action.resetForm()
-                    }
+                    {success && action.resetForm()}
                 }}
             >
-                {({ values, touched,handleSubmit, handleChange,errors,setFieldValue }) => (
+                {({ values, touched, handleChange,errors,setFieldValue }) => (
                <Form>
                 <Button
-                     // onClick={handleSubmit}
+                    // onClick={()=>console.log(errors)}
                     type="submit"
                     variant="contained"
                     color="primary"

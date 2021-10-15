@@ -31,85 +31,7 @@ import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelecto
 import get from "lodash/get";
 import ModalListOfContacts from "../../Modals/ModalListOfContacts";
 
-type Data = {
-  firstname: string | null;
-  surname: string | null;
-};
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: "flex",
-      marginLeft: "2%",
-      marginRight: "2%",
-      "& .MuiTextField-root": {
-        minWidth: "60%",
-        height: "30px",
-        backgroundColor: theme.palette.common.white,
-      },
-      "& .MuiOutlinedInput-input": {
-        padding: 0,
-        paddingLeft: 12,
-        textAlign: "start",
-        height: "30px",
-        backgroundColor: "transparent",
-        fontSize: 16,
-      },
-      "& .MuiFormHelperText-root": {
-        fontSize: 9,
-        marginLeft: 0,
-      },
-      "& .MuiFormControlLabel-root": {
-        fontSize: 10,
-      },
-    },
-    btn: {
-      marginLeft: "2%",
-      marginTop: 10,
-      marginBottom: 10,
-      color: "#fff",
-      fontSize: 18,
-      paddingBottom: 4,
-      textTransform: "none",
-      backgroundColor: "#3AB994",
-      "&:hover": {
-        backgroundColor: "#36AD8B",
-      },
-      "&:active": {
-        backgroundColor: "#32A886",
-      },
-    },
-    textArea: {
-      marginBottom: "6%",
-      "& .MuiTextField-root": {
-        minWidth: "60%",
-        height: "50px",
-        backgroundColor: theme.palette.common.white,
-      },
-      "& .MuiOutlinedInput-input": {
-        padding: 0,
-        textAlign: "start",
-        height: "40px",
-        backgroundColor: "transparent",
-        fontSize: 16,
-      },
-      "& .MuiOutlinedInput-multiline": {
-        padding: "7.5px 12px",
-      },
-    },
-    paper: {
-      padding: 10,
-      marginBottom: "1%",
-      border: "1px solid #3ab994",
-      boxShadow: "none",
-    },
-    label: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginBottom: 16,
-      fontSize: 16,
-      fontWeight: 500,
 
       "& .MuiFormHelperText-root.MuiFormHelperText-contained.Mui-error": {
         marginTop: -2,
@@ -195,10 +117,7 @@ const flexInitial = {
   alignItems: "center",
 };
 
-const validationSchema: yup.SchemaOf<Data> = yup.object({
-  firstname: yup.string().required("Обязательное поле"),
-  surname: yup.string().required("Обязательное поле"),
-});
+
 
 export const ContactPersonsForCreating = () => {
   const { AuthorData } = useTypedSelector((state) => state.author);
@@ -227,7 +146,7 @@ export const ContactPersonsForCreating = () => {
   const congratulationTypesInitial = get(congratulation_types, "[0].id", "");
   const [showModal, setShowModal] = useState(false);
 
-  const classes = useStyles();
+  const classes = useStylesContactPersons();
   const { insertContractorContactData } = useActions();
 
   const [phone, setPhone] = useState(1);
@@ -283,7 +202,7 @@ export const ContactPersonsForCreating = () => {
       congratulations_other2: "",
       congratulations_other3: "",
     },
-    validationSchema: validationSchema,
+    validationSchema: validationSchemaContactPerson,
     onSubmit: ({
       contractors_main,
       contractors_role_id,

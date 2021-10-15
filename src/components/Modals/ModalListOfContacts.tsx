@@ -117,6 +117,7 @@ export default function ModalListOfContacts(props: any) {
     const [branch, setBranch] = useState("");
     const [group, setGroup] = useState("");
     const [crm, setCrm] = useState("");
+    const [selectedValue, setSelectedValue] = useState(false);
     const [createdAt, setCreatedAt] = useState<any>(null);
     const [updatedAt, setUpdatedAt] = useState<any>(null);
 
@@ -139,7 +140,7 @@ export default function ModalListOfContacts(props: any) {
             typeName: 'Прочие промышленные',
             full_name: 'Подрядчик',
             branches: 'Подрядчик',
-            group: 'Подрядчик',
+            group: Math.random(),
         },
         {
             id: '000001',
@@ -147,7 +148,7 @@ export default function ModalListOfContacts(props: any) {
             typeName: 'Прочие промышленные',
             full_name: 'Подрядчик',
             branches: 'Подрядчик',
-            group: 'Подрядчик',
+            group: Math.random(),
         },
         {
             id: '000001',
@@ -155,7 +156,7 @@ export default function ModalListOfContacts(props: any) {
             typeName: 'Прочие промышленные',
             full_name: 'Подрядчик',
             branches: 'Подрядчик',
-            group: 'Подрядчик',
+            group: Math.random(),
         },
         {
             id: '000001',
@@ -163,7 +164,7 @@ export default function ModalListOfContacts(props: any) {
             typeName: 'Прочие промышленные',
             full_name: 'Подрядчик',
             branches: 'Подрядчик',
-            group: 'Подрядчик',
+            group: Math.random(),
         },
         {
             id: '000001',
@@ -171,7 +172,7 @@ export default function ModalListOfContacts(props: any) {
             typeName: 'Прочие промышленные',
             full_name: 'Подрядчик',
             branches: 'Подрядчик',
-            group: 'Подрядчик',
+            group: Math.random(),
         },
         {
             id: '000001',
@@ -179,7 +180,7 @@ export default function ModalListOfContacts(props: any) {
             typeName: 'Прочие промышленные',
             full_name: 'Подрядчик',
             branches: 'Подрядчик',
-            group: 'Подрядчик',
+            group: Math.random(),
         },
     ];
 
@@ -270,7 +271,7 @@ export default function ModalListOfContacts(props: any) {
                     />
                 </div>
             ),
-            dataIndex: "group",
+            dataIndex: "full_name",
             render: (group: string) => <span style={{ color: "#3B4750", whiteSpace: 'nowrap', textAlign: 'center' }}>{group}</span>
         },
         {
@@ -279,14 +280,14 @@ export default function ModalListOfContacts(props: any) {
                     <div style={{minHeight:75,alignItems:'flex-start'}}>Выбрать</div>
                 </>
             ),
-            dataIndex: "crms",
-            render: (crms: string) => <div>
+            dataIndex: "group",
+            render: (group: string) => <div>
                 <RadioGroup
-                    aria-label="choose-contact"
-                    defaultValue="aaa"
+                    aria-label="group"
+                    defaultValue="group"
                     name="radio-buttons-group"
                 >
-                    <FormControlLabel checked={true} value="other" control={<Radio style={{ color: '#5B6770'}} />} label="" />
+                    <FormControlLabel checked={selectedValue ? true : false} onClick={() => setSelectedValue(!selectedValue)} value={selectedValue} control={<Radio style={{ color: '#5B6770'}} />} label="" />
                 </RadioGroup>
             </div>
         },

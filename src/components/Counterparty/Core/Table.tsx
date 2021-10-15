@@ -125,7 +125,7 @@ export default function CounterpartiesTable(props: any) {
   const columns = [
     {
       title: () => (
-        <div style={{ minHeight: 75, alignItems: "flex-start" }}>&#x2116;</div>
+        <div style={{ minHeight: 77, alignItems: "flex-start" }}>&#x2116;</div>
       ), //todo Arsen change icon
       dataIndex: "id",
       width: "5%",

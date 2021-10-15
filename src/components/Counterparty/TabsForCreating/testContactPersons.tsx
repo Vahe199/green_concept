@@ -154,8 +154,8 @@ export const TestContactPersons:React.FC = () => {
                     </span>
                                                 <div className={classes.flexInitial} style={{ width: "170px"}}>
                                                     <span className={classes.statusText}>Статус</span>
+                                                    <div style={{width:120}}>
                                                     <InputFilterSelectedType
-                                                        className={classes.inputStatus}
                                                         name="status_id"
                                                         handleChange={(value: any) =>
                                                             setFieldValue("status_id", value)
@@ -167,6 +167,7 @@ export const TestContactPersons:React.FC = () => {
                                                         error={touched.status_id && Boolean(errors.status_id)}
                                                         helperText={touched.status_id && errors.status_id}
                                                     />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

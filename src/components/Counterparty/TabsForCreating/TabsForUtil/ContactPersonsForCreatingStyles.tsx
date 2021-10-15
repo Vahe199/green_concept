@@ -176,9 +176,7 @@ export const useStylesContactPersons = makeStyles((theme: Theme) =>
                 textDecoration: "underline",
             }
         },
-        inputStatus: {
-            marginLeft:16
-        },
+
         input:{
             width: "60% !important"
         }

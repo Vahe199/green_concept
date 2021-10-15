@@ -14,12 +14,18 @@ import {useActions} from "../../redux/type_redux_hook/useAction";
 import {useHistory} from "react-router-dom";
 import {MagnifyingGlass} from "../../IMG/SVG/MagnifyingGlass";
 import InputFilterSelect from "../Counterparty/Core/FilterInputs/InputFilterSelect";
-
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles({
     root: {
         width: "100%",
-        color: "#D6D9DC",
+        height:"100%",
+        minHeight:"100vh",
+        background: "#d6d9dcbf",
+        // opacity: 0.75,
+        position:"absolute",
+        top:190,
+        paddingLeft:32,
 
 
         "& .ant-select": {
@@ -31,6 +37,16 @@ const useStyles = makeStyles({
         "& .ant-picker": {
             height: "40px !important",
         },
+    },
+    modal:{
+        height:"100vh",
+        width:"66%",
+        marginLeft:32
+        ,marginTop:16,
+         backgroundColor:"#fff",
+        opacity:1,
+        padding:16,
+        borderRadius:4
     },
     table: {
         color: "#3B4750",
@@ -302,15 +318,16 @@ export default function ModalListOfContacts(props: any) {
             {/*    <p>Найдено 12 из 112</p>*/}
             {/*    <img src={close} />*/}
             {/*</div>*/}
-            <Modal
-                title="Найдено 12 из 112"
-                visible={props.showModal}
-                width={'80%'}
-                style={{marginTop: 0}}
-                footer={null}
-                closeIcon={<div onClick={() => props.setShowModal(false)}><img src={close} /></div>}
-                maskStyle={{backgroundColor: '#D6D9DC'}}
-            >
+            <div className={classes.modal}>
+                <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginRight:16,marginLeft:16}}>
+                  <span style={{fontSize:16, fontWeight:500}}>
+                       Найдено 12 из 1112
+                  </span>
+                    <div onClick={()=> props.setShowModal(!props.showModal)}>
+                       <img src={close} width={"20"} height={"20"}/>
+                    </div>
+                </div>
+                <Divider style={{height:1,marginRight:16,marginLeft:16,marginBottom:8,marginTop:21}}/>
                 <Table
                     onRow={(record) => ({
                         style: {
@@ -320,10 +337,10 @@ export default function ModalListOfContacts(props: any) {
                     dataSource={data}
                     columns={columns}
                     pagination={false}
-                    //scroll={{ y: window.innerHeight - 328 }}
+                    // scroll={{ y: window.innerHeight - 328 }}
                     className={classes.table}
                 />
-                </Modal >
+            </div >
         </Paper>
     );
 }

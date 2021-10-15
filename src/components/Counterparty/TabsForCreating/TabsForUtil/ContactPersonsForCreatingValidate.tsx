@@ -45,4 +45,5 @@ export const validationSchemaContactPerson = yup.object({
     service_type_id: yup.string().required("Обязательное поле"),
     sex: yup.string().required("Обязательное поле"),
     status_id:yup.string().required("Обязательное поле"),
+    contractors_role_id:yup.string().required("Обязательное поле"),
 });

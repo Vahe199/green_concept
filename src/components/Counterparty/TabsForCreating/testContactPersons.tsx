@@ -22,6 +22,7 @@ import InputFilterDatePicker from "../Core/FilterInputs/InputFilterDatePicker";
 import moment from "moment";
 import {validationSchemaContactPerson} from "./TabsForUtil/ContactPersonsForCreatingValidate";
 import {useActions} from "../../../redux/type_redux_hook/useAction";
+import ModalListOfContacts from "../../Modals/ModalListOfContacts";
 
 
 export const TestContactPersons:React.FC = () => {
@@ -31,6 +32,7 @@ export const TestContactPersons:React.FC = () => {
     const [contractorId, setContractorId] = React.useState(1);
     const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
     const { crms,congratulation_types, branches,types_and_services, contact_roles ,contact_statuses}: any = assets;
+    const [showModal, setShowModal] = useState(false);
     const { insertContractorContactData } = useActions();
     const initialValues = {
         birthdate:birthdate,
@@ -117,7 +119,7 @@ export const TestContactPersons:React.FC = () => {
                             <span className={classes.selectListItem}>
             <span className={classes.addListItem}>
               <span style={{ fontSize: 17, marginTop: 15 }}> + </span>
-              <span className={classes.selectItem} style={{ marginTop: 15 }}>
+              <span onClick={() => setShowModal(true)} className={classes.selectItem} style={{ marginTop: 15 }}>
                 Выбрать из списка
               </span>
             </span>
@@ -720,7 +722,7 @@ export const TestContactPersons:React.FC = () => {
                                 </div>
                             </div>
                         </div>
-
+                        {showModal && <ModalListOfContacts showModal={showModal} setShowModal={setShowModal}/>}
                     </Form>
                 )}
             </Formik>

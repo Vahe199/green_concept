@@ -20,6 +20,7 @@ import { BankDetails } from "./TabsForCreating/BankDetails";
 import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
 import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformationForCreating";
 import {Test} from "./TabsForCreating/test";
+import {TestContactPersons} from "./TabsForCreating/testContactPersons";
 
 // interface TabPanelProps {
 //   children?: React.ReactNode;
@@ -194,7 +195,8 @@ const CreateCounterparty = (props: any) => {
           <div>
             {/*{selectedTab === 0 && <GeneralInformationForCreating />}*/}
             {selectedTab === 0 && <Test/>}
-            {selectedTab === 1 && <ContactPersonsForCreating />}
+            {/*{selectedTab === 1 && <ContactPersonsForCreating />}*/}
+            {selectedTab === 1 && <TestContactPersons/>}
             {selectedTab === 2 && (
               <div>
                 {edit ? (

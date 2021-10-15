@@ -29,6 +29,7 @@ import InputFilterSelectedType from "../Core/FilterInputs/InputFilterSelect";
 import { useActions } from "../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import get from "lodash/get";
+import ModalListOfContacts from "../../Modals/ModalListOfContacts";
 
 type Data = {
   firstname: string | null;
@@ -178,6 +179,7 @@ const useStyles = makeStyles((theme: Theme) =>
     selectItem: {
       fontSize: 16,
       textDecoration: "underline",
+      cursor: 'pointer',
     },
     icon: {
       width: 18,
@@ -223,6 +225,7 @@ export const ContactPersonsForCreating = () => {
   const branchesInitial = get(branches, "[0].id", "");
   const directionsInitial = get(directions, "[0].id", "");
   const congratulationTypesInitial = get(congratulation_types, "[0].id", "");
+  const [showModal, setShowModal] = useState(false);
 
   const classes = useStyles();
   const { insertContractorContactData } = useActions();
@@ -410,7 +413,7 @@ export const ContactPersonsForCreating = () => {
 
   console.log(formik.values, formik.errors);
 
-  return (
+  return showModal ? (<ModalListOfContacts showModal={showModal} setShowModal={setShowModal} /> ) : (
     <>
       <form onSubmit={formik.handleSubmit}>
         <div
@@ -430,7 +433,7 @@ export const ContactPersonsForCreating = () => {
           <span className={classes.selectListItem}>
             <span className={classes.addListItem}>
               <span style={{ fontSize: 17, marginTop: 15 }}> + </span>
-              <span className={classes.selectItem} style={{ marginTop: 15 }}>
+              <span onClick={() => setShowModal(true)}  className={classes.selectItem} style={{ marginTop: 15 }}>
                 Выбрать из списка
               </span>
             </span>

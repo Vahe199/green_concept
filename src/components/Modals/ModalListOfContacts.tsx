@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import {Table, Modal, Button} from "antd";
@@ -10,6 +10,10 @@ import Loader from "../Layout/Loader/Loader";
 import {useTypedSelector} from "../../redux/type_redux_hook/useTypedSelector";
 import {Radio, RadioGroup, FormControlLabel} from "@material-ui/core";
 import close from "../../IMG/icons/close.png";
+import {useActions} from "../../redux/type_redux_hook/useAction";
+import {useHistory} from "react-router-dom";
+import {MagnifyingGlass} from "../../IMG/SVG/MagnifyingGlass";
+import InputFilterSelect from "../Counterparty/Core/FilterInputs/InputFilterSelect";
 
 
 const useStyles = makeStyles({
@@ -50,13 +54,16 @@ const useStyles = makeStyles({
             "& tr": {
                 "&:nth-child(odd) ": {
                     background: " #F2F3F4",
-                    // display: 'flex',
-                    // alignItems: 'center',
                 },
                 "&:nth-child(even) ": {
                     background: " #FFFFFF",
-                    // display: 'flex',
-                    // alignItems: 'center',
+                },
+                "&:hover": {
+                    boxShadow:
+                        "0px 0px 12px rgba(51, 63, 79, 0.08), 0px 0px 2px rgba(51, 63, 79, 0.32)",
+                },
+                "&:active": {
+                    boxShadow: "0px 0px 6px 0px #333F4F3D inset",
                 },
             },
         },
@@ -68,16 +75,62 @@ const useStyles = makeStyles({
         backgroundColor: 'red',
         height: 200,
         width: '100%',
-    }
+    },
+    icon: {
+        fontSize: "16px",
+    },
 });
 
 export default function ModalListOfContacts(props: any) {
+    const { fetchCounterpartiesList } = useActions();
     const classes = useStyles();
     const [services, setServices] = React.useState(1);
     const [author, setAuthor] = React.useState(null);
     const { assets, load: assetsLoading } = useTypedSelector(
         (state) => state.assets
     );
+
+    let history = useHistory();
+    const { contractors, loading } = useTypedSelector(
+        (state) => state.counterparties
+    );
+    const { authors: crms } = useTypedSelector((state) => state.authorsList);
+
+    const { types_and_services = [], branches = [] }: any = assets;
+    const assetsOptions = types_and_services?.map((option: any) => ({
+        key: option.id,
+        value: option.id ? option.id : 0,
+        label: option.name,
+    }));
+    const crmsOptions = crms?.map((option: any) => ({
+        key: option.author_id,
+        value: option.author_id,
+        label: option.author_fio,
+    }));
+
+    const { getAuthorData } = useActions();
+
+    const [params, setParams] = useState<any>({
+        include: "type,crms,branches,service,sites,emails,phones,author,group",
+    });
+    const [fullName, setFullName] = useState("");
+    const [branch, setBranch] = useState("");
+    const [group, setGroup] = useState("");
+    const [crm, setCrm] = useState("");
+    const [createdAt, setCreatedAt] = useState<any>(null);
+    const [updatedAt, setUpdatedAt] = useState<any>(null);
+
+    const filteredBranches =
+        branch.length === 0 || branch.length > 3
+            ? branches.filter(({ name }: { name: string }) => name.includes(branch))
+            : branches;
+    console.log(filteredBranches);
+
+    const getUserData = (data: any) => {
+        history.push(`/counterparty/author/${data.id}`);
+        getAuthorData(data);
+    };
+
 
     const data = [
         {
@@ -155,12 +208,24 @@ export default function ModalListOfContacts(props: any) {
             title: () => (
                 <>
                     Отрасль
-                    <InputFilterSelectedType
+                    <InputFilterSelect
+                        options={filteredBranches.map((option: any) => ({
+                            key: option.id,
+                            value: option.id,
+                            label: option.name,
+                        }))}
+                        filterOption={false}
+                        onSearch={(value: string) => {
+                            setBranch(value);
+                        }}
+                        onSelect={(id: number) => {
+                            setParams({ ...params, "filter[branches.id]": id });
+                        }}
+                        notFoundContent={null}
+                        value={branch}
                         className={classes.input}
-                        handleChange={setServices}
-                        value={services}
-                        placeholder="Другое"
-                        loading={assetsLoading}
+                        prefix={<MagnifyingGlass className={classes.icon}  />}
+                        showSearch
                     />
                 </>
             ),
@@ -172,10 +237,14 @@ export default function ModalListOfContacts(props: any) {
             title: () => (
                 <>
                     Тип контрагента
-                    <InputFilterSelectedType
+                    <InputFilterSelect
                         className={classes.input}
-                        handleChange={setServices}
+                        handleChange={(id: any) => {
+                            setServices(id);
+                            setParams({ ...params, "filter[contractor_type_id]": id });
+                        }}
                         value={services}
+                        options={assetsOptions}
                         placeholder="Другое"
                         loading={assetsLoading}
                     />
@@ -188,10 +257,14 @@ export default function ModalListOfContacts(props: any) {
             title: () => (
                 <div style={{minWidth: 125}}>
                     Тип услуг
-                    <InputFilterSelectedType
+                    <InputFilterSelect
                         className={classes.input}
-                        handleChange={setServices}
+                        handleChange={(id: any) => {
+                            setServices(id);
+                            setParams({ ...params, "filter[contractor_type_id]": id });
+                        }}
                         value={services}
+                        options={assetsOptions}
                         placeholder="Другое"
                         loading={assetsLoading}
                     />
@@ -209,11 +282,11 @@ export default function ModalListOfContacts(props: any) {
             dataIndex: "crms",
             render: (crms: string) => <div>
                 <RadioGroup
-                    aria-label="gender"
-                    defaultValue="female"
+                    aria-label="choose-contact"
+                    defaultValue="aaa"
                     name="radio-buttons-group"
                 >
-                    <FormControlLabel value="other" control={<Radio style={{ color: '#5B6770'}} />} label="Other" />
+                    <FormControlLabel checked={true} value="other" control={<Radio style={{ color: '#5B6770'}} />} label="" />
                 </RadioGroup>
             </div>
         },

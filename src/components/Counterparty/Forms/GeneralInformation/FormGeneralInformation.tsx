@@ -1,72 +1,17 @@
-import { Button, Checkbox, Paper, Radio, TextField } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
+import {Button, Checkbox, Paper, Radio, TextField} from "@material-ui/core";
 import clsx from "clsx";
-import { useFormik } from "formik";
-import React, { useEffect } from "react";
-import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
-import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
-import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
-import { useActions } from "../../../../redux/type_redux_hook/useAction";
-import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
-import InputFilterSelectedCrm from "../../Core/FilterInputs/InputFilterSelectedCRM";
-import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
+import {FieldArray, Form, Formik, getIn} from "formik";
+import React, {useEffect} from "react";
+import {CheckSquareChecked} from "../../../../IMG/SVG/CheckSquareChecked";
+import {CheckSquareUnChecked} from "../../../../IMG/SVG/CheckSquareUnChecked";
+import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
+import {useActions} from "../../../../redux/type_redux_hook/useAction";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
+import {validationSchemaGeneralInfo} from "./GeneralInformationValidationSchema";
+import {useStylesGeneralInformation} from "./GeneralInformationStyles";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      marginLeft: "7%",
-      // marginRight: "7%",
-      "& .MuiTextField-root": {
-        minWidth: "60%",
-        height: "30px",
-        backgroundColor: theme.palette.common.white,
-      },
-      "& .MuiOutlinedInput-input": {
-        padding: 0,
-        paddingLeft: 12,
-        textAlign: "start",
-        height: "30px",
-        backgroundColor: "transparent",
-        fontSize: 16,
-      },
-      "& .MuiFormHelperText-root": {
-        fontSize: 9,
-        marginTop: -2,
-        marginLeft: 0,
-      },
-      "& .MuiFormControlLabel-root": {
-        fontSize: 16,
-      },
-      "& .MuiOutlinedInput-adornedEnd ": {
-        paddingRight: 0,
-      },
-      "& .makeStyles-label": {},
-    },
-    paper: {
-      padding: 10,
-      color: "#3B4750",
-      border: "1px solid #3ab994",
-      boxShadow: "none",
-    },
-    label: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginBottom: 15,
-      fontSize: 16,
-      fontWeight: 500,
-    },
-    NDASection: {
-      marginTop: "-10px",
-    },
-    saveButton: {
-      textTransform: "none",
-      textDecoration: "underline",
-    },
-  })
-);
+
 type Props = {
   // change: boolean;
   setChangeGeneralInformation: (val: boolean) => void;
@@ -75,14 +20,13 @@ export const FormGeneralInformation: React.FC<Props> = ({
   setChangeGeneralInformation,
 }) => {
   const { changeAuthorGeneralData, recoveryAuthorDataState } = useActions();
-  const classes = useStyles();
+  const classes = useStylesGeneralInformation();
 
   const { AuthorData, error, isChange } = useTypedSelector(
     (state) => state.author
   );
   let {
     id,
-    crms,
     org_type,
     inn,
     kpp,
@@ -92,25 +36,13 @@ export const FormGeneralInformation: React.FC<Props> = ({
     service,
     errorMsg,
   }: any = AuthorData;
-  const [orgType, setOrgType] = React.useState(org_type);
-  const [srm, setCRM] = React.useState(`${crms[0]?.id}`);
-  const [srm1, setCRM1] = React.useState("");
-  const [srm2, setCRM2] = React.useState("");
+  const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
+  const { crms, types_and_services }: any = assets;
+
+
+  const [contractorId, setContractorId] = React.useState(1);
   let errorMessage: string = "General";
-  const addCRMInput = () => {
-    if (!srm1) {
-      setCRM1("1");
-    }
-    if (!srm2 && srm1) {
-      setCRM2("1");
-    }
-  };
-  const [counterparty, setCounterparty] = React.useState(
-    !type ? 1 : type && type.length > 0 ? type[0].id : type.id
-  );
-  const [services, setServices] = React.useState(
-    !service ? 1 : service && service.length > 0 ? service[0].id : service.id
-  );
+
   useEffect(() => {
     if (error) {
       setChangeGeneralInformation(true);
@@ -123,39 +55,44 @@ export const FormGeneralInformation: React.FC<Props> = ({
       recoveryAuthorDataState();
     }
   }, [error, isChange]);
-  const formik = useFormik({
-    initialValues: {
-      org_type: orgType,
-      CRM: srm,
-      CounterpartyType: counterparty,
-      ServiceType: services,
-      INN: inn,
-      KPP: kpp,
-      OGPN: ogrn,
-      NDA: nda,
-    },
-    // validationSchema: validationSchema,
-    onSubmit: (values) => {
-      changeAuthorGeneralData(
-        {
-          org_type: orgType,
-          contractor_type_id: counterparty,
-          crms: [srm, srm1, srm2].filter((tiem) => tiem.length > 0),
-          service_type_id: services,
-          inn: values.INN,
-          kpp: values.KPP,
-          ogrn: values.OGPN,
-          nda: values.NDA,
-        },
-        id,
-        errorMessage
-      );
-    },
-  });
 
+  const assetsOptionsCounterpartyType = types_and_services?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.name,
+  }));
+  const assetsOptionsCRMS = crms?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.full_name,
+  }));
+  const assetsOptionsServiceType = types_and_services[contractorId -1]?.services?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.name,
+  }));
+const initialValues =  {
+  org_type: org_type,
+  contractor_type_id:type,
+  crms: [""],
+  service_type_id:service,
+  inn:inn,
+  kpp: kpp,
+  ogrn: ogrn,
+  nda:nda,
+}
   return (
     <div className={classes.root}>
-      <form onSubmit={formik.handleSubmit}>
+      <Formik
+           initialValues={initialValues}
+            validationSchema={validationSchemaGeneralInfo}
+          onSubmit={async (values,action) => {
+            console.log(values,"values")
+            changeAuthorGeneralData(values, id, errorMessage);
+          }}
+      >
+        {({ values, touched, handleChange,errors,setFieldValue }) => (
+            <Form>
         <div
           style={{
             display: "flex",
@@ -179,10 +116,10 @@ export const FormGeneralInformation: React.FC<Props> = ({
                 Физическое лицо
               </span>
               <Radio
-                checked={orgType === "ФЛ"}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setOrgType(e.target.value)
-                }
+                  checked={values.org_type === "ФЛ"}
+                  onChange={(e) =>
+                      setFieldValue("org_type", e.target.value)
+                  }
                 value="ФЛ"
                 color="default"
                 name="org_type"
@@ -195,10 +132,10 @@ export const FormGeneralInformation: React.FC<Props> = ({
                 Юридическое лицо
               </span>
               <Radio
-                checked={orgType === "ЮЛ"}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setOrgType(e.target.value)
-                }
+                  checked={values.org_type === "ЮЛ"}
+                  onChange={(e) =>
+                      setFieldValue("org_type", e.target.value)
+                  }
                 value="ЮЛ"
                 color="default"
                 name="org_type"
@@ -207,7 +144,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
               />
             </div>
           </div>
-          <div className={classes.label}>
+          <div className={classes.label} style={{alignItems:"flex-start"}}>
             <span>CRM</span>
             <div
               style={{
@@ -216,91 +153,85 @@ export const FormGeneralInformation: React.FC<Props> = ({
                 justifyContent: "space-between",
               }}
             >
-              <InputFilterSelectedCrm
-                name="CRM"
-                style={{ width: "83%" }}
-                placeholder={"Фамилия Имя"}
-                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setCRM(e.target.value)
-                }
-              />
-              {srm && srm1 && srm2 ? (
-                <span style={{ width: 25 }}></span>
-              ) : (
-                <AddIcon onClick={addCRMInput} />
-              )}
+              <FieldArray name="crms">
+                {({ remove, push }) => (
+                    <div style={{width:"100%",alignItems:"center"}}>
+                      {values. crms.length > 0 &&
+                      values.crms.map(( crm, index) => {
+                        const fieldName = `crms[${index}]`;
+                        const touchedFieldName = getIn(touched, fieldName);
+                        const errorFieldName = getIn(errors, fieldName);
+                        return(
+                            <div key={index} style={{display:"flex",flexDirection:"row"}}>
+                              <div style={index > 0 ? {width:"80%"}:{width:"100%"}}>
+                                <InputFilterSelectedType
+                                    className={classes.input}
+                                    name={fieldName}
+                                    handleChange={(value:any) =>
+                                        setFieldValue(fieldName, value)
+                                    }
+                                    value={crm}
+                                    options={ assetsOptionsCRMS}
+                                    placeholder="Фамилия Имя"
+                                    error={Boolean(touchedFieldName && errorFieldName)}
+                                    helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                />
+                              </div>
+
+                              { index == 0 ? "":<div style={{marginLeft: 16,}}
+                                                     onClick={() => remove(index)}>
+                                <TrashIcon/>
+                              </div>}
+                            </div>
+                        )
+                      })}
+                      <div
+                          className={classes.addItemCRM}
+                          onClick={() => push( '' )}
+                      >
+                        + Добавить еще CRM
+                      </div>
+                    </div>
+                )}
+              </FieldArray>
+
             </div>
           </div>
-          {srm1 && (
-            <div className={classes.label}>
-              <span></span>
-              <div
-                style={{
-                  width: "60%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <InputFilterSelectedCrm
-                  name="CRM1"
-                  style={{ width: "83%" }}
-                  placeholder={"Фамилия Имя"}
-                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setCRM1(e.target.value)
-                  }
-                />
-                <span onClick={() => setCRM1("")}>
-                  <TrashIcon />
-                </span>
-              </div>
-            </div>
-          )}
-          {srm2 && (
-            <div className={classes.label}>
-              <span></span>
-              <div
-                style={{
-                  width: "60%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <InputFilterSelectedCrm
-                  name="CRM2"
-                  style={{ width: "83%" }}
-                  placeholder={"Фамилия Имя"}
-                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setCRM2(e.target.value)
-                  }
-                />
-                <span onClick={() => setCRM2("")}>
-                  <TrashIcon />
-                </span>
-              </div>
-            </div>
-          )}
+
+
           <div className={classes.label}>
             <span>Тип контрагента</span>
             <span style={{ width: "60%" }}>
               <InputFilterSelectedType
-                name="CounterpartyType"
-                value={counterparty}
-                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setCounterparty(e.target.value)
-                }
+                  // className={classes.input}
+                  name="contractor_type_id"
+                  handleChange={(value:any) => {
+                    setFieldValue("contractor_type_id", value)
+                    setContractorId(value)
+                  }
+                  }
+                  value={values.contractor_type_id}
+                  options={assetsOptionsCounterpartyType}
+                  placeholder="Другое"
+                  loading={assetsLoading}
+                  error={touched.contractor_type_id && Boolean(errors.contractor_type_id)}
+                  helperText={touched.contractor_type_id && errors.contractor_type_id}
               />
             </span>
           </div>
           <div className={classes.label}>
             <span>Тип услуг</span>
             <span style={{ width: "60%" }}>
-              <InputFilterSelectedServicesType
-                value={services}
-                name="ServiceType"
-                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setServices(e.target.value)
-                }
-                // options={authors}
+              <InputFilterSelectedType
+                  // className={classes.input}
+                  name="service_type_id"
+                  handleChange={(value:any) => setFieldValue("service_type_id", value)}
+                  value={values.service_type_id}
+                  options={assetsOptionsServiceType}
+                  placeholder="Другое"
+                  loading={assetsLoading}
+                  error={touched.service_type_id && Boolean(errors.service_type_id)}
+                  helperText={touched.service_type_id && errors.service_type_id}
               />
             </span>
           </div>
@@ -308,43 +239,48 @@ export const FormGeneralInformation: React.FC<Props> = ({
             <span>ИНН</span>
             <TextField
               variant={"outlined"}
-              name="INN"
+              name="inn"
               placeholder={"1234556789101112"}
-              value={formik.values.INN}
-              onChange={formik.handleChange}
-              error={formik.touched.INN && Boolean(formik.errors.INN)}
-              helperText={formik.touched.INN && formik.errors.INN}
+              value={values.inn}
+              onChange={handleChange}
+              error={touched.inn && Boolean(errors.inn)}
+              helperText={touched.inn && errors.inn}
             />
           </div>
-          {orgType === "ЮЛ" && <div className={classes.label}>
+          {values.org_type === "ЮЛ" && <div className={classes.label}>
             <span>КПП</span>
             <TextField
                 variant={"outlined"}
-                name="KPP"
+                name="kpp"
                 placeholder={"1234556789101112"}
-                value={formik.values.KPP}
-                onChange={formik.handleChange}
-                error={formik.touched.KPP && Boolean(formik.errors.KPP)}
-                helperText={formik.touched.KPP && formik.errors.KPP}
+                value={values.kpp}
+                onChange={handleChange}
+                error={touched.kpp && Boolean(errors.kpp)}
+                helperText={touched.kpp && errors.kpp}
             />
           </div>}
           <div className={classes.label}>
-            <span>{orgType === "ФЛ" ? 'ОГРНИП' : 'ОГРН'}</span>
+            <span>{values.org_type === "ФЛ" ? 'ОГРНИП' : 'ОГРН'}</span>
             <TextField
               variant={"outlined"}
-              name="OGPN"
+              name="ogrn"
               placeholder={"1234556789101112"}
-              value={formik.values.OGPN}
-              onChange={formik.handleChange}
-              error={formik.touched.OGPN && Boolean(formik.errors.OGPN)}
-              helperText={formik.touched.OGPN && formik.errors.OGPN}
+              value={values.ogrn}
+              onChange={handleChange}
+              error={touched.ogrn && Boolean(errors.ogrn)}
+              helperText={touched.ogrn && errors.ogrn}
             />
           </div>
           <div className={clsx(classes.label, classes.NDASection)}>
             <span>NDA</span>
             <span style={{ width: "63.2%" }}>
               <Checkbox
-                defaultChecked
+
+               name={"nda"}
+               value={values.nda === 1 ? true : false}
+               onChange={(e: any) =>
+                   setFieldValue("nda", e.target.checked ? 0 : 1)
+               }
                 color="default"
                 icon={<CheckSquareChecked color="#5B6770" />}
                 checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
@@ -353,7 +289,9 @@ export const FormGeneralInformation: React.FC<Props> = ({
             </span>
           </div>
         </Paper>
-      </form>
+            </Form>
+        )}
+      </Formik>
     </div>
   );
 };

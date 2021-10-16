@@ -13,6 +13,7 @@ import {validationSchema} from "./TabsForUtil/GeneralInformationForValidate";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {notifyError, notifySuccess} from "../Core/utils/ToastNotify";
+import ValidationErrorWrapper from "../Core/FilterInputs/ValidationErrorWrapper";
 
 export const GeneralInformationForCreating = () => {
   const classes = useStylesGeneralInfo();
@@ -157,10 +158,14 @@ export const GeneralInformationForCreating = () => {
                                     const touchedFieldName = getIn(touched, fieldName);
                                     const errorFieldName = getIn(errors, fieldName);
                                     return(
-                                        <div key={index} style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
+                                        <div key={index} style={{display:"flex",flexDirection:"row",alignItems:"center",marginBottom:16}}>
                                           <div style={index > 0 ? {width:"80%"}:{width:"100%"}}>
+                                              <ValidationErrorWrapper
+                                                  inputClassName="ant-select-selector"
+                                                  error={Boolean(touchedFieldName && errorFieldName)}
+                                                  helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                              >
                                             <InputFilterSelectedType
-                                                className={classes.input}
                                                 name={fieldName}
                                                 handleChange={(value:any) =>
                                                     setFieldValue(fieldName, value)
@@ -169,9 +174,9 @@ export const GeneralInformationForCreating = () => {
                                                 options={ assetsOptionsCRMS}
                                                 placeholder="Фамилия Имя"
                                                 loading={assetsLoading}
-                                                error={Boolean(touchedFieldName && errorFieldName)}
-                                                helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+
                                             />
+                                              </ValidationErrorWrapper>
                                           </div>
 
                                           { index == 0 ? "":<div style={{marginLeft: 16 ,marginTop:-9}}

@@ -2,13 +2,10 @@ import * as yup from "yup";
 
 export const validationSchema = yup.object().shape({
 
-    // crms: yup.array()
-    //     // .of(
-    //     //     yup.object().shape({
-    //     //         crms[0]: yup.string().required('Required'),
-    //     //     })
-    //     // )
-    //     .required("Обязательное поле"),
+    crms: yup.array()
+        .of(yup.number().required("Обязательное поле"))
+        .strict()
+        .required("Обязательное поле"),
     contractor_type_id: yup
         .string()
         .min(0, " должен состоять минимум из 10 символов")

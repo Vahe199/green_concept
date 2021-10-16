@@ -194,6 +194,13 @@ export const ContactPersonsForCreating: React.FC = () => {
                         >
                           <span className={classes.statusText}>Статус</span>
                           <div style={{ width: 120 }}>
+                            <ValidationErrorWrapper
+                                inputClassName="ant-select-selector"
+                                error={
+                                  touched.status_id && Boolean(errors.status_id)
+                                }
+                                helperText={touched.status_id && errors.status_id}
+                            >
                             <InputFilterSelectedType
                               name="status_id"
                               handleChange={(value: any) =>
@@ -203,11 +210,9 @@ export const ContactPersonsForCreating: React.FC = () => {
                               options={assetsOptionsStatus}
                               placeholder="Выберите отрасль"
                               loading={assetsLoading}
-                              error={
-                                touched.status_id && Boolean(errors.status_id)
-                              }
-                              helperText={touched.status_id && errors.status_id}
+
                             />
+                            </ValidationErrorWrapper>
                           </div>
                         </div>
                       </div>
@@ -305,29 +310,31 @@ export const ContactPersonsForCreating: React.FC = () => {
                   </div>
                   <div className={classes.label}>
                     <span>Роль</span>
-                    <ValidationErrorWrapper
-                      inputClassName="ant-select-selector"
-                      error={
-                        touched.contractors_role_id &&
-                        Boolean(errors.contractors_role_id)
-                      }
-                      helperText={
-                        touched.contractors_role_id &&
-                        errors.contractors_role_id
-                      }
-                    >
-                      <InputFilterSelectedType
-                        name="contractors_role_id"
-                        handleChange={(value: any) =>
-                          setFieldValue("contractors_role_id", value)
-                        }
-                        value={values.contractors_role_id}
-                        options={assetsOptionsRoles}
-                        placeholder="Выберите"
-                        loading={assetsLoading}
-                        className={classes.input}
-                      />
-                    </ValidationErrorWrapper>
+                 <div style={{width:"60%"}}>
+                   <ValidationErrorWrapper
+                       inputClassName="ant-select-selector"
+                       error={
+                         touched.contractors_role_id &&
+                         Boolean(errors.contractors_role_id)
+                       }
+                       helperText={
+                         touched.contractors_role_id &&
+                         errors.contractors_role_id
+                       }
+                   >
+                     <InputFilterSelectedType
+                         name="contractors_role_id"
+                         handleChange={(value: any) =>
+                             setFieldValue("contractors_role_id", value)
+                         }
+                         value={values.contractors_role_id}
+                         options={assetsOptionsRoles}
+                         placeholder="Выберите"
+                         loading={assetsLoading}
+
+                     />
+                   </ValidationErrorWrapper>
+                 </div>
                   </div>
                   <div className={classes.label}>
                     <span>Должность</span>
@@ -349,7 +356,18 @@ export const ContactPersonsForCreating: React.FC = () => {
                   </div>
                   <div className={classes.label}>
                     <span>Тип контрагента</span>
-                    <span style={{ width: "60%" }}>
+                    <div style={{width:"60%"}}>
+                      <ValidationErrorWrapper
+                          inputClassName="ant-select-selector"
+                          error={
+                            touched.contractor_type_id &&
+                            Boolean(errors.contractor_type_id)
+                          }
+                          helperText={
+                            touched.contractor_type_id &&
+                            errors.contractor_type_id
+                          }
+                      >
                       <InputFilterSelectedType
                         // className={classes.input}
                         name="contractor_type_id"
@@ -361,20 +379,23 @@ export const ContactPersonsForCreating: React.FC = () => {
                         options={assetsOptionsCounterpartyType}
                         placeholder="Выберите"
                         loading={assetsLoading}
-                        error={
-                          touched.contractor_type_id &&
-                          Boolean(errors.contractor_type_id)
-                        }
-                        helperText={
-                          touched.contractor_type_id &&
-                          errors.contractor_type_id
-                        }
                       />
-                    </span>
+                      </ValidationErrorWrapper>
+                    </div>
                   </div>
                   <div className={classes.label}>
                     <span>Тип услуг</span>
-                    <span style={{ width: "60%" }}>
+                    <div style={{width:"60%"}}>
+                      <ValidationErrorWrapper
+                          inputClassName="ant-select-selector"
+                          error={
+                            touched.service_type_id &&
+                            Boolean(errors.service_type_id)
+                          }
+                          helperText={
+                            touched.service_type_id && errors.service_type_id
+                          }
+                      >
                       <InputFilterSelectedType
                         // className={classes.input}
                         name="service_type_id"
@@ -385,19 +406,19 @@ export const ContactPersonsForCreating: React.FC = () => {
                         options={assetsOptionsServiceType}
                         placeholder="Выберите"
                         loading={assetsLoading}
-                        error={
-                          touched.service_type_id &&
-                          Boolean(errors.service_type_id)
-                        }
-                        helperText={
-                          touched.service_type_id && errors.service_type_id
-                        }
+
                       />
-                    </span>
+                      </ValidationErrorWrapper>
+                    </div>
                   </div>
                   <div className={classes.label}>
                     <span>Отрасль</span>
-                    <span style={{ width: "60%" }}>
+                    <div style={{width:"60%"}}>
+                      <ValidationErrorWrapper
+                          inputClassName="ant-select-selector"
+                          error={touched.branches && Boolean(errors.branches)}
+                          helperText={touched.branches && errors.branches}
+                      >
                       <InputFilterSelectedType
                         // className={classes.input}
                         name="branches"
@@ -408,10 +429,10 @@ export const ContactPersonsForCreating: React.FC = () => {
                         options={assetsOptionsBranches}
                         placeholder="Выберите"
                         loading={assetsLoading}
-                        error={touched.branches && Boolean(errors.branches)}
-                        helperText={touched.branches && errors.branches}
+
                       />
-                    </span>
+                      </ValidationErrorWrapper>
+                    </div>
                   </div>
                   <div
                     className={classes.label}
@@ -453,8 +474,8 @@ export const ContactPersonsForCreating: React.FC = () => {
                                           <TextField
                                             fullWidth
                                             style={{
-                                              width: "90%",
-                                              marginBottom: 16,
+                                              width: "100%",
+                                               marginBottom: 16,
                                             }}
                                             placeholder={"+79999999999"}
                                             variant={"outlined"}
@@ -766,6 +787,19 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                     : { width: "63%" }
                                                 }
                                               >
+                                                  <ValidationErrorWrapper
+                                                      inputClassName="ant-select-selector"
+                                                      helperText={
+                                                        touchedFieldDirection &&
+                                                        errorFieldDirection
+                                                            ? errorFieldDirection
+                                                            : ""
+                                                      }
+                                                      error={Boolean(
+                                                          touchedFieldDirection &&
+                                                          errorFieldDirection
+                                                      )}
+                                                  >
                                                 <InputFilterSelectedType
                                                   // className={classes.input}
                                                   name={fieldDirection}
@@ -781,17 +815,8 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                   }
                                                   placeholder="Выберите"
                                                   loading={assetsLoading}
-                                                  helperText={
-                                                    touchedFieldDirection &&
-                                                    errorFieldDirection
-                                                      ? errorFieldDirection
-                                                      : ""
-                                                  }
-                                                  error={Boolean(
-                                                    touchedFieldDirection &&
-                                                      errorFieldDirection
-                                                  )}
                                                 />
+                                                  </ValidationErrorWrapper>
                                               </div>
                                             </div>
                                             <div className={classes.label}>
@@ -867,17 +892,22 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                     : { width: "63%" }
                                                 }
                                               >
+                                                <ValidationErrorWrapper
+                                                    inputClassName="makeStyles-textAreas-70"
+                                                    error={Boolean(touchedFieldInfo && errorFieldInfo)}
+                                                    helperText={touchedFieldInfo && errorFieldInfo ? errorFieldInfo : ""}
+                                                >
                                                 <textarea
                                                   className={classes.textAreas}
                                                   name={fieldInfo}
                                                   placeholder={"Введите текст"}
                                                   value={employees.info}
                                                   onChange={handleChange}
-                                                  // error={Boolean(touchedFieldInfo && errorFieldInfo)}
-                                                  // helperText={touchedFieldInfo && errorFieldInfo ? errorFieldInfo : ""}
+
                                                 >
                                                   Расскажите о себе
                                                 </textarea>
+                                                </ValidationErrorWrapper>
                                               </div>
                                             </div>
                                           </div>
@@ -1035,6 +1065,19 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                   : { width: "63%" }
                                               }
                                             >
+                                              <ValidationErrorWrapper
+                                                  inputClassName="ant-select-selector"
+                                                  helperText={
+                                                    touchedFieldCongratulation_type &&
+                                                    errorFieldCongratulation_type
+                                                        ? errorFieldCongratulation_type
+                                                        : ""
+                                                  }
+                                                  error={Boolean(
+                                                      touchedFieldCongratulation_type &&
+                                                      errorFieldCongratulation_type
+                                                  )}
+                                              >
                                               <InputFilterSelectedType
                                                 // className={classes.input}
                                                 name={fieldCongratulation_type}
@@ -1052,17 +1095,8 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                 }
                                                 placeholder="Выберите"
                                                 loading={assetsLoading}
-                                                helperText={
-                                                  touchedFieldCongratulation_type &&
-                                                  errorFieldCongratulation_type
-                                                    ? errorFieldCongratulation_type
-                                                    : ""
-                                                }
-                                                error={Boolean(
-                                                  touchedFieldCongratulation_type &&
-                                                    errorFieldCongratulation_type
-                                                )}
                                               />
+                                              </ValidationErrorWrapper>
                                             </div>
                                           </div>
                                           <div className={classes.label}>

@@ -14,8 +14,56 @@ export const useStylesContactPersons = makeStyles((theme: Theme) =>
           position: "absolute",
           backgroundColor: "red",
         },
-        "& .ant-modal-wrap": {
-          position: "absolute",
+          "& .ant-modal-wrap": {
+              position: "absolute",
+          },
+          topDiv: {
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            alignItems: "center",
+        },
+        val: {
+            fontSize: 16,
+            fontWeight: 500,
+        },
+        rightDivider: {
+            marginLeft: "3%",
+            marginTop: "1%",
+            cursor: "pointer",
+            width: "10%",
+        },
+        selectListItem: {
+            marginLeft: "3%",
+        },
+        addListItem: {
+            fontSize: 23,
+            border: "none",
+            background: "none",
+            color: "#3AB994",
+        },
+        selectItem: {
+            fontSize: 16,
+            textDecoration: "underline",
+        },
+        icon: {
+            width: 18,
+            height: 18,
+            marginLeft: -1,
+        },
+        flexInitial:{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+        },
+        addItemCRM: {
+            marginTop:-2,
+            fontSize:14,
+            fontWeight:400,
+            cursor: "pointer",
+            "&:hover": {
+                textDecoration: "underline",
+            }
         },
       },
     },

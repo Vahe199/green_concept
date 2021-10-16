@@ -1,10 +1,12 @@
 import * as yup from "yup";
 
 export const validationSchemaContactPerson = yup.object({
+
   firstname: yup.string().required("Обязательное поле"),
   surname: yup.string().required("Обязательное поле"),
   birthdate: yup.string().required("Обязательное поле"),
-
+    branches:yup.string()
+        .required("Обязательное поле"),
   contact_congratulations: yup
     .array()
     .of(

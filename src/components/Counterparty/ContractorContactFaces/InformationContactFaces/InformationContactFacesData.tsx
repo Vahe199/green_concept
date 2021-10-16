@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       margin: "4%",
       "& .MuiIconButton-root.Mui-disabled":{
-        control:"#5B6770 !important"
+        color:"#5B6770 !important"
       }
     },
     paper: {

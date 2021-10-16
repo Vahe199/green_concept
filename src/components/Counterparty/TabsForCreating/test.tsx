@@ -18,7 +18,7 @@
 //
 //
 //
-// export const GeneralInformationForCreating = () => {
+// export const Test = () => {
 //   const classes = useStylesGeneralInfo();
 //   const [site, setSite] = React.useState(1);
 //   const [phone, setPhone] = React.useState(1);
@@ -1024,3 +1024,9 @@
 //     </>
 //   );
 // };
+import React from "react";
+const Test = () => {
+  return(<div>
+    test
+  </div>)
+}

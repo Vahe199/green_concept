@@ -8,7 +8,7 @@ const headers = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjM0Mjg4OTU4LCJleHAiOjE2MzQzNzUzNTgsIm5iZiI6MTYzNDI4ODk1OCwianRpIjoiQ05OSEVtaXRncjV4cHoxeSIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.SZw0Lp9gnv0VcBXebA88T-cKv5qbGyvR1GS7CnJzLTE`,
+  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjM0Mzc4ODgyLCJleHAiOjE2MzQ0NjUyODIsIm5iZiI6MTYzNDM3ODg4MiwianRpIjoicjVlZm04Y2hxSzI4aHZFSSIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.Oj1_xuHIb8MlNFaePMEPNLzlLgBQsXshUSTRHgSOke0`,
 };
 
 const createAxios = () => {
@@ -54,7 +54,7 @@ export const counterpartiesApi = {
     });
   },
   fetchContractorsAuthor() {
-    return axios.request({ method: "get", url: "contractors/authors_list" })
+    return axios.request({ method: "get", url: "contractors/authors_list" });
   },
   fetchContractorsTypes() {
     return axios
@@ -67,21 +67,21 @@ export const counterpartiesApi = {
       url: "admin/contractor_type_services",
     });
   },
-  changeContractorsGeneralData(formData:any, id:any) {
+  changeContractorsGeneralData(formData: any, id: any) {
     return axios.request({
       method: "put",
       url: `contractors/general_info/${id}`,
       data: formData,
     });
   },
-  changeContractorsCompanyDetailsData(formData:any, id:any) {
+  changeContractorsCompanyDetailsData(formData: any, id: any) {
     return axios.request({
       method: "put",
       url: `contractors/about_company/${id}`,
       data: formData,
     });
   },
-  changeContractorsContactInfoData(formData:any, id:any) {
+  changeContractorsContactInfoData(formData: any, id: any) {
     return axios.request({
       method: "put",
       url: `contractors/contacts_info/${id}`,
@@ -94,24 +94,23 @@ export const counterpartiesApi = {
 };
 
 export const contractorApi = {
-  fetchContractorBankDetailsData(id:any) {
+  fetchContractorBankDetailsData(id: any) {
     return axios.request({ method: "get", url: `bank_details/${id}` });
   },
-  insertContractorBankDetailsData(data:any) {
+  insertContractorBankDetailsData(data: any) {
     return axios.request({ method: "post", url: "bank_details/", data });
   },
-  updateContractorBankDetailsData(contractor_bank_detail:any, data:any) {
+  updateContractorBankDetailsData(contractor_bank_detail: any, data: any) {
     return axios.request({
       method: "put",
       url: `bank_details/${contractor_bank_detail}`,
       data,
     });
   },
-  insertContractorGeneralData(data:any) {
-    return axios.request({ method: "post", url: "contractors/", data })
-
+  insertContractorGeneralData(data: any) {
+    return axios.request({ method: "post", url: "contractors/", data });
   },
-  insertContractorContactData(data:any) {
+  insertContractorContactData(data: any) {
     return axios.request({ method: "post", url: "contacts/", data });
   },
 };

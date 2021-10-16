@@ -44,7 +44,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
   const { AuthorData } = useTypedSelector((state) => state.author);
-  debugger
+
   const {
     legal_registration_address,
     actual_address,

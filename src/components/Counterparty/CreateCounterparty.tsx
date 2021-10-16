@@ -1,26 +1,23 @@
-import { Link, Typography } from "@material-ui/core";
+import {Link, Typography} from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
-import { CancelPresentationOutlined } from "@material-ui/icons";
-import React, { useState } from "react";
-import { useHistory, withRouter } from "react-router-dom";
-import { CaretDoubleLeft } from "../../IMG/SVG/CaretDoubleLeft";
-import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
+import React, {useState} from "react";
+import {useHistory, withRouter} from "react-router-dom";
+import {CaretDoubleLeft} from "../../IMG/SVG/CaretDoubleLeft";
+import {useTypedSelector} from "../../redux/type_redux_hook/useTypedSelector";
 import CreatingBankDetails from "./BankDetails/CreatingBankDetails";
-import { ContractorContactFacesData } from "./ContractorContactFaces/ContractorContactFacesData";
-import { InformationUserData } from "./InformationUserData/InformationUserData";
+import {ContractorContactFacesData} from "./ContractorContactFaces/ContractorContactFacesData";
+import {InformationUserData} from "./InformationUserData/InformationUserData";
 import CreatEditBankAccount, {
   ContractorBankDetailType,
   initialBankDetails,
 } from "./Forms/BankAccountForm/CreatEditBankAccount";
-import { BankDetails } from "./TabsForCreating/BankDetails";
-import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
-import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformationForCreating";
-import {Test} from "./TabsForCreating/test";
-import {TestContactPersons} from "./TabsForCreating/testContactPersons";
+import {BankDetails} from "./TabsForCreating/BankDetails";
+import {ContactPersonsForCreating} from "./TabsForCreating/ContactPersonsForCreating";
+import {GeneralInformationForCreating} from "./TabsForCreating/GeneralInformationForCreating";
 
 // interface TabPanelProps {
 //   children?: React.ReactNode;
@@ -193,10 +190,8 @@ const CreateCounterparty = (props: any) => {
           </div>
         ) : props.match.params.item === "new contractor" ? (
           <div>
-            {/*{selectedTab === 0 && <GeneralInformationForCreating />}*/}
-            {selectedTab === 0 && <Test/>}
-            {/*{selectedTab === 1 && <ContactPersonsForCreating />}*/}
-            {selectedTab === 1 && <TestContactPersons/>}
+            {selectedTab === 0 && <GeneralInformationForCreating />}
+            {selectedTab === 1 && <ContactPersonsForCreating />}
             {selectedTab === 2 && (
               <div>
                 {edit ? (

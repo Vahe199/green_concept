@@ -1,82 +1,21 @@
-import React, { useEffect } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { Checkbox, TextField, Paper, Button } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
-import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
-import { useActions } from "../../../../redux/type_redux_hook/useAction";
-import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
-import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
+import React, {useEffect} from "react";
+import {FieldArray, Form, Formik, getIn} from "formik";
+import {Button, Checkbox, Paper, TextField} from "@material-ui/core";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
+import {useActions} from "../../../../redux/type_redux_hook/useAction";
+import {CheckSquareUnChecked} from "../../../../IMG/SVG/CheckSquareUnChecked";
+import {CheckSquareChecked} from "../../../../IMG/SVG/CheckSquareChecked";
+import {useStylesCompanyContacts} from "./GeneralInformationStyles";
+import {validationSchemaCompanyContacts} from "./GeneralInformationValidationSchema";
 
-const validationSchema = yup.object({
-  phone: yup
-    .string()
-    .min(0, " should be of minimum 8 characters length")
-    .required("Обязательное поле"),
-  email: yup
-    .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
-});
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      "& .MuiTextField-root": {
-        minWidth: "60%",
-        height: "30px",
-        backgroundColor: theme.palette.common.white,
-      },
-      "& .MuiOutlinedInput-input": {
-        padding: 0,
-        paddingLeft: 12,
-        textAlign: "start",
-        height: "30px",
-        backgroundColor: "transparent",
-        fontSize: 16,
-      },
-      "& .MuiFormHelperText-root": {
-        fontSize: 9,
-        marginTop: -2,
-        marginLeft: 0,
-      },
-      "& .MuiFormControlLabel-root": {
-        fontSize: 16,
-      },
-    },
-    paper: {
-      padding: 10,
-      color: "#3B4750",
-      border: "1px solid #3ab994",
-      boxShadow: "none",
-    },
-    label: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginBottom: 10,
-      fontWeight: 500,
-      fontSize: 16,
-    },
-    addItem: {
-      marginBottom: 8,
-      cursor: "pointer",
-    },
-    saveButton: {
-      textTransform: "none",
-      textDecoration: "underline",
-    },
-    title: {
-      fontSize: 16,
-    },
-  })
-);
+
 type Props = {
   // change: boolean;
   setChangeContacts: (val: boolean) => void;
 };
 export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
-  const classes = useStyles();
+  const classes = useStylesCompanyContacts();
   const { changeAuthorContactInfoData, recoveryAuthorDataState } = useActions();
   const { AuthorData, error, isChange, errorMsg } = useTypedSelector(
     (state) => state.author
@@ -87,15 +26,10 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
     actual_address,
     post_address,
     emails = [],
+    sites=[],
     phones =[],
   }: any = AuthorData;
 
-  const [site1, setSite1] = React.useState("");
-  const [site2, setSite2] = React.useState("");
-  const [phone1, setPhone1] = React.useState("");
-  const [phone2, setPhone2] = React.useState("");
-  const [email1, setEmail1] = React.useState("");
-  const [email2, setEmail2] = React.useState("");
   let errorMessage: string = "ContactInfo";
   useEffect(() => {
     if (error) {
@@ -109,78 +43,26 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
       recoveryAuthorDataState();
     }
   }, [error, isChange]);
-  const formik = useFormik({
-    initialValues: {
-      LegalAddress: legal_registration_address,
-      ActualAddress: actual_address,
-      MatchesAddressActualAddress: false,
-      MailingAddress: post_address,
-      MatchesAddressMailingAddress: false,
-      SiteCompany: "",
-      SiteCompany1: "",
-      SiteCompany2: "",
-      phone: phones.length > 0 ?phones[0].phone : "",
-      phone1: phone1,
-      phone2: phone2,
-      email: emails.length > 0 ?emails[0].email : "",
-      email1: email1,
-      email2: email2,
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      changeAuthorContactInfoData(
-        {
-          legal_registration_address: values.LegalAddress,
-          actual_address: values.ActualAddress,
-          post_address: values.MailingAddress,
-          phones: [
-            { phone: values.phone },
-            { phone: phone1 },
-            { phone: phone2 },
-          ].filter((phon) => phon.phone.length > 0),
-          emails: [
-            { email: values.email },
-            { email: email1 },
-            { email: email2 },
-          ].filter((mail) => mail.email.length > 0),
-          sites: [
-            { url: values.SiteCompany },
-            { url: site1 },
-            { url: site2 },
-          ].filter((url) => url.url.length > 0),
-        },
-        id,
-        errorMessage
-      );
-    },
-  });
-  const addSiteCompany = () => {
-    if (!site1) {
-      setSite1("1");
-    }
-    if (!site2 && site1) {
-      setSite2("1");
-    }
-  };
-  const addPhone = () => {
-    if (!phone1) {
-      setPhone1("1");
-    }
-    if (!phone2 && phone1) {
-      setPhone2("1");
-    }
-  };
-  const addEmail = () => {
-    if (!email1) {
-      setEmail1("1");
-    }
-    if (!email2 && email1) {
-      setEmail2("1");
-    }
-  };
+  const initialValues = {
+    legal_registration_address:legal_registration_address,
+    actual_address:actual_address,
+    post_address:post_address,
+    phones:[{phone:phones.length > 0 ?phones[0]?.phone : ""}],
+    emails:[{email:emails.length > 0 ?emails[0]?.email : ""}],
+    sites:[{url:sites.length > 0 ?sites[0]?.url : ""}]
+  }
   return (
     <div className={classes.root}>
-      <form onSubmit={formik.handleSubmit}>
+      <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchemaCompanyContacts}
+          onSubmit={async (values,action) => {
+            console.log(values,"values")
+            changeAuthorContactInfoData(values, id, errorMessage)
+          }}
+      >
+        {({ values, touched, handleChange,errors,setFieldValue }) => (
+            <Form>
         <div
           style={{
             display: "flex",
@@ -204,34 +86,24 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
             <span>Юридический адрес </span>
             <TextField
               variant={"outlined"}
-              name="LegalAddress"
+              name="legal_registration_address"
               placeholder={"123456 город улица строени дом офис"}
-              value={formik.values.LegalAddress}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.LegalAddress &&
-                Boolean(formik.errors.LegalAddress)
-              }
-              helperText={
-                formik.touched.LegalAddress && formik.errors.LegalAddress
-              }
+              value={values.legal_registration_address}
+              onChange={handleChange}
+              error={touched.legal_registration_address && Boolean(errors.legal_registration_address)}
+              helperText={touched.legal_registration_address && errors.legal_registration_address}
             />
           </div>
           <div className={classes.label}>
             <span>Фактический адрес</span>
             <TextField
               variant={"outlined"}
-              name="ActualAddress"
+              name="actual_address"
               placeholder={"123456 город улица строени дом офис"}
-              value={formik.values.ActualAddress}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.ActualAddress &&
-                Boolean(formik.errors.ActualAddress)
-              }
-              helperText={
-                formik.touched.ActualAddress && formik.errors.ActualAddress
-              }
+              value={values.actual_address}
+              onChange={handleChange}
+              error={touched.actual_address && Boolean(errors.actual_address)}
+              helperText={touched.actual_address && errors.actual_address}
             />
           </div>
           <div>
@@ -250,17 +122,12 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
             <span>Почтовый адрес</span>
             <TextField
               variant={"outlined"}
-              name="MailingAddress"
+              name="post_address"
               placeholder={"123456 город улица строени дом офис"}
-              value={formik.values.MailingAddress}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.MailingAddress &&
-                Boolean(formik.errors.MailingAddress)
-              }
-              helperText={
-                formik.touched.MailingAddress && formik.errors.MailingAddress
-              }
+              value={values.post_address}
+              onChange={handleChange}
+              error={touched.post_address && Boolean(errors.post_address)}
+              helperText={touched.post_address && errors.post_address}
             />
           </div>
           <div>
@@ -278,134 +145,88 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
           <div className={classes.label} style={{ alignItems: "flex-start" }}>
             <span>Сайт компании</span>
             <span style={{ width: "60%", flexDirection: "column" }}>
-              <div style={{ marginBottom: 15 }}>
-                <TextField
-                  style={{ width: "100%" }}
-                  variant={"outlined"}
-                  name="SiteCompany"
-                  placeholder={"www.сайткомпании.ru"}
-                  value={formik.values.SiteCompany}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.SiteCompany &&
-                    Boolean(formik.errors.SiteCompany)
-                  }
-                  helperText={
-                    formik.touched.SiteCompany && formik.errors.SiteCompany
-                  }
-                />
-              </div>
-              {site1 && (
-                <div style={{ marginBottom: 15 }}>
-                  <TextField
-                    style={{ width: "90%" }}
-                    variant={"outlined"}
-                    name="SiteCompany1"
-                    placeholder={"www.сайткомпании.ru"}
-                    value={site1}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setSite1(e.target.value)
-                    }
-                    helperText={
-                      formik.touched.SiteCompany && formik.errors.SiteCompany
-                    }
-                  />
-                  <span onClick={() => setSite1("")}>
-                    <TrashIcon />
-                  </span>
-                </div>
-              )}
-              {site2 && (
-                <div style={{ marginBottom: 15 }}>
-                  <TextField
-                    style={{ width: "90%" }}
-                    variant={"outlined"}
-                    name="SiteCompany2"
-                    placeholder={"www.сайткомпании.ru"}
-                    value={site2}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setSite2(e.target.value)
-                    }
-                    helperText={
-                      formik.touched.SiteCompany && formik.errors.SiteCompany
-                    }
-                  />
-                  <span onClick={() => setSite2("")}>
-                    <TrashIcon />
-                  </span>
-                </div>
-              )}
-              {site1 && site2 ? (
-                <span></span>
-              ) : (
-                <div className={classes.addItem} onClick={addSiteCompany}>
-                  + Добавить сайт
-                </div>
-              )}
+              <FieldArray name="sites">
+                   {({insert, remove, push}) => (
+                       <div style={{width: "100%"}}>
+                         {values.sites.length > 0 &&
+                         values.sites.map((url, index) => {
+                           const fieldName = `sites[${index}].url`;
+                           const touchedFieldName = getIn(touched, fieldName);
+                           const errorFieldName = getIn(errors, fieldName);
+                           return (
+                               <div key={index} style={{display: "flex", flexDirection: "row"}}>
+                                 <TextField style={index > 0 ? {width: "90%"} : {width: "100%"}}
+                                            variant={"outlined"}
+                                            className={classes.input}
+                                            name={fieldName}
+                                            value={url.url}
+                                            placeholder={"www.сайткомпании.ru"}
+                                            onChange={handleChange}
+                                            error={Boolean(touchedFieldName && errorFieldName)}
+                                            helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                 />
+
+                                 {index == 0 ? "" : <div style={{marginLeft: 16}}
+                                                         onClick={() => remove(index)}>
+                                   <TrashIcon/>
+                                 </div>}
+                               </div>
+                           )
+                         })}
+                         <div
+                             className={classes.addItemCRM}
+                             onClick={() => push({url: ''})}
+                         >
+                           + Добавить сайт
+                         </div>
+                       </div>
+                   )}
+                                    </FieldArray>
             </span>
           </div>
 
           <div className={classes.label} style={{ alignItems: "flex-start" }}>
             <span>Телефон</span>
             <span style={{ width: "60%", flexDirection: "column" }}>
-              <div style={{ marginBottom: 15 }}>
-                <TextField
-                  style={{ width: "100%" }}
-                  variant={"outlined"}
-                  name="phone"
-                  placeholder={"+79991234567"}
-                  value={formik.values.phone}
-                  onChange={formik.handleChange}
-                  error={formik.touched.phone && Boolean(formik.errors.phone)}
-                  helperText={formik.touched.phone && formik.errors.phone}
-                />
-              </div>
+               <FieldArray name="phones">
+                                        {({ insert, remove, push }) => (
+                                            <div>
+                                              {values.phones.length > 0 &&
+                                              values.phones.map(( phone, index) => {
+                                                const fieldName = `phones[${index}].phone`;
+                                                const touchedFieldName = getIn(touched, fieldName);
+                                                const errorFieldName = getIn(errors, fieldName);
+                                                return(
+                                                    <div key={index} style={{display:"flex",flexDirection:"row"}}>
+                                                      <TextField
+                                                          fullWidth
+                                                          style={{ width: "100%", marginBottom:16}}
+                                                          placeholder={"+79991234567"}
+                                                          variant={"outlined"}
+                                                          name={fieldName}
+                                                          value={phone.phone}
+                                                          onChange={handleChange}
+                                                          error={Boolean(touchedFieldName && errorFieldName)}
+                                                          helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                      />
+                                                      {index == 0 ? "" : <div style={{marginLeft: 16}}
+                                                                              onClick={() => remove(index)}>
+                                                        <TrashIcon/>
+                                                      </div>}
+                                                    </div>
+                                                )
+                                              })}
+                                              <div
+                                                  className={classes.addItemCRM}
+                                                  onClick={() => push({ phone: '' })}
+                                              >
+                                                + Добавить телефон
+                                              </div>
+                                            </div>
+                                        )}
+                                    </FieldArray>
               <div>
-                {phone1 && (
-                  <div style={{ marginBottom: 15 }}>
-                    <TextField
-                      style={{ width: "90%" }}
-                      variant={"outlined"}
-                      name="phone1"
-                      placeholder={"+79991234567"}
-                      value={phone1}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setPhone1(e.target.value)
-                      }
-                      helperText={formik.touched.phone && formik.errors.phone}
-                    />
-                    <span onClick={() => setPhone1("")}>
-                      <TrashIcon />
-                    </span>
-                  </div>
-                )}
-                <div>
-                  {phone2 && (
-                    <div style={{ marginBottom: 15 }}>
-                      <TextField
-                        style={{ width: "90%" }}
-                        variant={"outlined"}
-                        name="phone2"
-                        placeholder={"+79991234567"}
-                        value={phone2}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setPhone2(e.target.value)
-                        }
-                        helperText={formik.touched.phone && formik.errors.phone}
-                      />
-                      <span onClick={() => setPhone2("")}>
-                        <TrashIcon />
-                      </span>
-                    </div>
-                  )}
-                  {phone1 && phone2 ? (
-                    <span></span>
-                  ) : (
-                    <div className={classes.addItem} onClick={addPhone}>
-                      + Добавить телефон
-                    </div>
-                  )}
-                </div>
+
               </div>
             </span>
           </div>
@@ -413,71 +234,53 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
           <div className={classes.label} style={{ alignItems: "flex-start" }}>
             <span>E-mail</span>
             <span style={{ width: "60%", flexDirection: "column" }}>
-              <div>
-                <div style={{ marginBottom: 15 }}>
-                  <TextField
-                    style={{ width: "100%" }}
-                    variant={"outlined"}
-                    name="email"
-                    placeholder={"email@email.ru"}
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
-                  />
-                </div>
-              </div>
-              <div>
-                {email1 && (
-                  <div style={{ marginBottom: 15 }}>
-                    <TextField
-                      style={{ width: "90%" }}
-                      variant={"outlined"}
-                      name="email1"
-                      placeholder={"email@email.ru"}
-                      value={email1}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setEmail1(e.target.value)
-                      }
-                      helperText={formik.touched.email && formik.errors.email}
-                    />
-                    <span onClick={() => setEmail1("")}>
-                      <TrashIcon />
-                    </span>
-                  </div>
-                )}
-              </div>
-              <div>
-                {email2 && (
-                  <div style={{ marginBottom: 15 }}>
-                    <TextField
-                      style={{ width: "90%" }}
-                      variant={"outlined"}
-                      name="email2"
-                      placeholder={"email@email.ru"}
-                      value={email2}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setEmail2(e.target.value)
-                      }
-                      helperText={formik.touched.email && formik.errors.email}
-                    />
-                    <span onClick={() => setEmail2("")}>
-                      <TrashIcon />
-                    </span>
-                  </div>
-                )}
-              </div>
-              {email1 && email2 ? (
-                <span></span>
-              ) : (
-                <div className={classes.addItem} onClick={addEmail}>
-                  + Добавить email
-                </div>
-              )}
+          <FieldArray name="emails">
+                                        {({ remove, push }) => (
+                                            <div>
+                                              {values.emails.length > 0 &&
+                                              values.emails.map(( email, index) => {
+                                                const fieldName = `emails[${index}].email`;
+                                                const touchedFieldName = getIn(touched, fieldName);
+                                                const errorFieldName = getIn(errors, fieldName);
+                                                return(
+                                                    <div key={index} style={{display:"flex",flexDirection:"row"}}>
+                                                      <TextField
+                                                          fullWidth
+                                                          style={{ width: "100%", marginBottom:16}}
+                                                          placeholder={`email${index + 1}@email.com`}
+                                                          variant={"outlined"}
+                                                          name={fieldName}
+                                                          type="email"
+                                                          value={email.email}
+                                                          onChange={handleChange}
+                                                          error={Boolean(touchedFieldName && errorFieldName)}
+                                                          helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                      />
+                                                      {index == 0 ? "" : <div style={{marginLeft: 16}}
+                                                                              onClick={() => remove(index)}>
+                                                        <TrashIcon/>
+                                                      </div>}
+                                                    </div>
+                                                )
+                                              })}
+                                              <div
+                                                  className={classes.addItemCRM}
+                                                  onClick={() => push({ email: '' })}
+                                              >
+                                                + Добавить email
+                                              </div>
+                                            </div>
+                                        )}
+                                    </FieldArray>
+
+
+
             </span>
           </div>
         </Paper>
-      </form>
+            </Form>
+        )}
+      </Formik>
     </div>
   );
 };

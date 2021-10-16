@@ -1,6 +1,6 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { DatePicker } from "antd";
-import { Calendar } from "../../../../IMG/SVG/calendar";
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {DatePicker} from "antd";
+import {Calendar} from "../../../../IMG/SVG/calendar";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

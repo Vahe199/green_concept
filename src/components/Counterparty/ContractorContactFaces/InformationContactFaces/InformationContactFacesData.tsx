@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       margin: "4%",
+      "& .MuiIconButton-root.Mui-disabled":{
+        control:"#5B6770 !important"
+      }
     },
     paper: {
       padding: 16, //10
@@ -59,6 +62,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
           <span className={classes.spanTitle}>Основное контактное лицо</span>
           <span style={{ width: "61%" }}>
             <Checkbox
+                disabled={true}
               name="main_contact_person"
               color="default"
               inputProps={{ "aria-label": "checkbox with default color" }}
@@ -84,6 +88,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
               <span>Мужчина</span>
               <Radio
                 checked={checked === "a"}
+                disabled={true}
                 onChange={handleChange}
                 value="a"
                 color="default"
@@ -97,6 +102,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
               <Radio
                 checked={checked === "b"}
                 onChange={handleChange}
+                disabled={true}
                 value="b"
                 color="default"
                 name="radio-button-demo"

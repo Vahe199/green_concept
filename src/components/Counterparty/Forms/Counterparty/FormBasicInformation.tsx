@@ -1,92 +1,16 @@
-import {
-  Button,
-  Checkbox,
-  Link,
-  Paper,
-  Radio,
-  TextField,
-} from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { useFormik } from "formik";
-import React from "react";
-import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
-import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
-import InputFilterSelectedBranches from "../../../Counterparty/Core/FilterInputs/InputFilterSelectedBranches";
-import InputFilterSelectedRoles from "../../Core/FilterInputs/InputFilterSelectedRoles";
-import InputFilterSelectedServicesType from "../../Core/FilterInputs/InputFilterSelectedServicesType";
+import {Button, Checkbox, Paper, Radio, TextField,} from "@material-ui/core";
+import {FieldArray, Form, Formik, getIn} from "formik";
+import React, {useState} from "react";
+import {CheckSquareChecked} from "../../../../IMG/SVG/CheckSquareChecked";
+import {CheckSquareUnChecked} from "../../../../IMG/SVG/CheckSquareUnChecked";
 import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
+import moment from "moment";
+import InputFilterDatePicker from "../../Core/FilterInputs/InputFilterDatePicker";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
+import {useStylesBasicInformation} from "./BasicInformationFormStyles";
+import {validationSchemaBasicInformation} from "./BasicInformationFormValidationSchema";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      margin: "4%",
-      "& .MuiTextField-root": {
-        minWidth: "60%",
-        height: "30px",
-        backgroundColor: theme.palette.common.white,
-      },
-      "& .MuiOutlinedInput-input": {
-        padding: 0,
-        paddingLeft: 12,
-        textAlign: "start",
-        height: "30px",
-        backgroundColor: "transparent",
-        fontSize: 16,
-      },
-      "& .MuiFormHelperText-root": {
-        fontSize: 9,
-        marginTop: -2,
-        marginLeft: 0,
-      },
-      "& .MuiFormControlLabel-root": {
-        fontSize: 10,
-      },
-      "& .MuiLink-root": {
-        fontSize: 14,
-        marginTop: 16
-      },
-
-    },
-    textArea: {
-      marginBottom: "6%",
-      "& .MuiTextField-root": {
-        minWidth: "60%",
-        height: "50px",
-        backgroundColor: theme.palette.common.white,
-      },
-      "& .MuiOutlinedInput-input": {
-        padding: 0,
-        paddingLeft: 7,
-        textAlign: "start",
-        height: "50px",
-        backgroundColor: "transparent",
-        fontSize: 16,
-      },
-      "& .MuiOutlinedInput-multiline": {
-        padding: "7.5px 14px",
-        fontSize:16
-      },
-    },
-    paper: {
-      padding: 16, //10
-      color: "#3B4750",
-      border: "1px solid #3ab994",
-      boxShadow: "none",
-    },
-    spanTitle: {
-      fontSize: 16,
-      fontWeight: 500,
-    },
-    label: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginBottom: 16,
-      fontSize: 12,
-    },
-
-  })
-);
 type InfoProps = {
   // change: boolean;
   setChangeBasicInformation: (val: boolean) => void;
@@ -94,42 +18,62 @@ type InfoProps = {
 export const FormBasicInformation: React.FC<InfoProps> = ({
   setChangeBasicInformation,
 }) => {
-  const classes = useStyles();
-  const [checked, setChecked] = React.useState("a");
-  const [rolesValue, setRolesValue] = React.useState("1");
-  const [branchValue, setBranchValue] = React.useState("1");
-  const [service, setService] = React.useState("1");
-  const [CounterpartyType, setCounterpartyType] = React.useState("1");
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.value);
-  };
-  const formik = useFormik({
-    initialValues: {
-      main_contact_person: false,
-      Surname: "",
-      Name: "",
-      middle_name: "",
-      Gender: checked,
-      date_of_birth: "",
-      Role: "",
-      Position: "",
-      counterparty_type: "",
-      service_type: "",
-      Industry: "",
-      work_phone: "",
-      mobile_phone: "",
-      Email: "",
-      delivery_address: "",
-    },
-    // validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
+  const classes = useStylesBasicInformation();
+  const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
+  const { branches,types_and_services, contact_roles }: any = assets;
+  const [birthdate, setBirthdatet] = useState<any>(moment('2015-01-01', 'YYYY-MM-DD'));
+  const [contractorId, setContractorId] = React.useState(1);
+
+
+  const assetsOptionsRoles = contact_roles?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.name,
+  }));
+  const assetsOptionsCounterpartyType = types_and_services?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.name,
+  }));
+  const assetsOptionsServiceType = types_and_services[contractorId -1]?.services?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.name,
+  }));
+  const assetsOptionsBranches = branches?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.name,
+  }));
+  const initialValues = {
+    birthdate:birthdate,
+    contractor_type_id: "",
+    delivery_address: "",
+    emails:[{ email: '' }],
+    firstname: "",
+    middlename: "",
+    phones:[{phone: '', phone_type: 'Рабочий'},{phone: '', phone_type: 'Мобильный'}],
+    service_type_id: "",
+    sex: "Муж",
+    surname: "",
+    contractors_main:1,
+    contractors_role_id:"",
+    contractors_position:"",
+    branches:""
+  }
 
   return (
     <div className={classes.root}>
-      <form onSubmit={formik.handleSubmit}>
+      <Formik
+           initialValues={initialValues}
+          validationSchema={validationSchemaBasicInformation}
+          onSubmit={async (values,action) => {
+            console.log(values,"values")
+            // insertContractorContactData(values);
+          }}
+      >
+        {({ values, touched, handleChange,errors,setFieldValue }) => (
+            <Form>
         <div
           style={{
             display: "flex",
@@ -151,53 +95,60 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
           <div className={classes.label}>
             <span className={classes.spanTitle}>Основное контактное лицо </span>
             <span style={{ width: "61%" }}>
+
               <Checkbox
-                name="main_contact_person"
-                icon={<CheckSquareChecked color="#5B6770" />}
-                checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
-                color="default"
-                inputProps={{ "aria-label": "checkbox with default color" }}
+                  name="contractors_main"
+                  icon={<CheckSquareChecked color="#5B6770" />}
+                  checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
+                  inputProps={{
+                    "aria-label": "checkbox with default color",
+                  }}
+                  value={
+                    values.contractors_main === 1 ? true : false
+                  }
+                  onChange={(e: any) =>
+                      setFieldValue(
+                          "contractors_main",
+                          e.target.checked ? 0 : 1
+                      )
+                  }
               />
             </span>
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Фамилия:</span>
             <TextField
-              variant={"outlined"}
-              name="Surname"
-              placeholder={"Фамилия"}
-              value={formik.values.Surname}
-              onChange={formik.handleChange}
-              error={formik.touched.Surname && Boolean(formik.errors.Surname)}
-              helperText={formik.touched.Surname && formik.errors.Surname}
+                variant={"outlined"}
+                name="surname"
+                placeholder={"Фамилия"}
+                value={values.surname}
+                onChange={handleChange}
+                error={touched.surname && Boolean(errors.surname)}
+                helperText={touched.surname && errors.surname}
             />
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Имя</span>
             <TextField
-              variant={"outlined"}
-              name="Name"
-              placeholder={"Имя"}
-              value={formik.values.Name}
-              onChange={formik.handleChange}
-              error={formik.touched.Name && Boolean(formik.errors.Name)}
-              helperText={formik.touched.Name && formik.errors.Name}
+                variant={"outlined"}
+                name="firstname"
+                placeholder={"Имя"}
+                value={values.firstname}
+                onChange={handleChange}
+                error={touched.firstname && Boolean(errors.firstname)}
+                helperText={touched.firstname && errors.firstname}
             />
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Отчество</span>
             <TextField
-              variant={"outlined"}
-              name="middle_name"
-              placeholder={"Отчество"}
-              value={formik.values.middle_name}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.middle_name && Boolean(formik.errors.middle_name)
-              }
-              helperText={
-                formik.touched.middle_name && formik.errors.middle_name
-              }
+                variant={"outlined"}
+                name="middlename"
+                placeholder={"Отчество"}
+                value={values.middlename}
+                onChange={handleChange}
+                error={touched.middlename && Boolean(errors.middlename)}
+                helperText={touched.middlename && errors.middlename }
             />
           </div>
           <div className={classes.label}>
@@ -206,24 +157,22 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
               <div>
                 <span style={{fontSize:16}}>Мужчина</span>
                 <Radio
-                  checked={checked === "a"}
-                  onChange={handleChange}
-                  value="a"
-                  color="default"
-                  name="radio-button-demo"
-                  inputProps={{ "aria-label": "A" }}
+                    checked={values.sex === "Муж"}
+                    onChange={() => setFieldValue("sex", "Муж")}
+                    color="default"
+                    size="medium"
+                    inputProps={{ "aria-label": "A" }}
                 />
               </div>
               <div>
                 <span style={{fontSize:16}}>Женщина</span>
                 <Radio
-                  checked={checked === "b"}
-                  onChange={handleChange}
-                  value="b"
-                  color="default"
-                  name="radio-button-demo"
-                  size="medium"
-                  inputProps={{ "aria-label": "B" }}
+                    checked={values.sex === "Жен"}
+                    onChange={() => setFieldValue("sex", "Жен")}
+                    color="default"
+                    name="radio-button-demo"
+                    size="medium"
+                    inputProps={{ "aria-label": "B" }}
                 />
               </div>
             </div>
@@ -231,59 +180,78 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
           <div className={classes.label}>
             <span className={classes.spanTitle}>Дата рождения</span>
             <div style={{ width: "60%", display: "flex" }}>
-              <TextField
-                id="date"
-                name="date_of_birth"
-                variant="outlined"
-                type="date"
-                defaultValue="2021-01-01"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={formik.handleChange}
-              />
+              <InputFilterDatePicker
+                  name="birthdate"
+                  value={birthdate}
+                  handleChange={(_:any,value:string)=> {
+                    // setBirthdatet(value)
+
+                    console.log(value, "data value")
+                  }}
+                  className={classes.input} />
             </div>
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Роль</span>
-            <InputFilterSelectedRoles
-              handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setRolesValue(e.target.value)
-              }
-              value={rolesValue}
+            <InputFilterSelectedType
+                name="contractors_role_id"
+                handleChange={(value: any) =>
+                    setFieldValue("contractors_role_id", value)
+                }
+                value={values.contractors_role_id}
+                options={assetsOptionsRoles}
+                placeholder="Выберите"
+                loading={assetsLoading}
+                error={touched.contractors_role_id && Boolean(errors.contractors_role_id)}
+                helperText={touched.contractors_role_id && errors.contractors_role_id}
+                className={classes.input}
             />
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Должность</span>
             <TextField
-              variant={"outlined"}
-              name="Position"
-              placeholder={"Должность"}
-              value={formik.values.Position}
-              onChange={formik.handleChange}
-              error={formik.touched.Position && Boolean(formik.errors.Position)}
-              helperText={formik.touched.Position && formik.errors.Position}
+                variant={"outlined"}
+                name="contractors_position"
+                placeholder={"Должность"}
+                value={values.contractors_position}
+                onChange={handleChange}
+                error={touched.contractors_position &&Boolean(errors.contractors_position)}
+                helperText={ touched.contractors_position && errors.contractors_position}
             />
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Тип контрагента</span>
             <span style={{ width: "60%" }}>
               <InputFilterSelectedType
-                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setCounterpartyType(e.target.value)
-                }
-                value={CounterpartyType}
+                  // className={classes.input}
+                  name="contractor_type_id"
+                  handleChange={(value:any) => {
+                    setFieldValue("contractor_type_id", value)
+                    setContractorId(value)
+                  }
+                  }
+                  value={values.contractor_type_id}
+                  options={assetsOptionsCounterpartyType}
+                  placeholder="Выберите"
+                  loading={assetsLoading}
+                  error={touched.contractor_type_id && Boolean(errors.contractor_type_id)}
+                  helperText={touched.contractor_type_id && errors.contractor_type_id}
               />
             </span>
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Тип услуг</span>
             <span style={{ width: "60%" }}>
-              <InputFilterSelectedServicesType
-                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setService(e.target.value)
-                }
-                value={service}
+              <InputFilterSelectedType
+                  // className={classes.input}
+                  name="service_type_id"
+                  handleChange={(value:any) => setFieldValue("service_type_id", value)}
+                  value={values.service_type_id}
+                  options={assetsOptionsServiceType}
+                  placeholder="Выберите"
+                  loading={assetsLoading}
+                  error={touched.service_type_id && Boolean(errors.service_type_id)}
+                  helperText={touched.service_type_id && errors.service_type_id}
               />
             </span>
           </div>
@@ -296,15 +264,20 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                 justifyContent: "space-between",
               }}
             >
-              <InputFilterSelectedBranches
-                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setBranchValue(e.target.value)
-                }
-                value={branchValue}
+              <InputFilterSelectedType
+                  // className={classes.input}
+                  name="branches"
+                  handleChange={(value:any) => setFieldValue("branches", value)}
+                  value={values.branches}
+                  options={assetsOptionsBranches}
+                  placeholder="Выберите"
+                  loading={assetsLoading}
+                  error={touched.branches && Boolean(errors.branches)}
+                  helperText={touched.branches && errors.branches}
               />
             </div>
           </div>
-          <div className={classes.label}>
+          <div className={classes.label} style={{alignItems:"flex-start"}}>
             <span className={classes.spanTitle}>Телефон рабочий</span>
             <span style={{ width: "60%" }}>
               <div
@@ -314,25 +287,48 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                   flexDirection: "column",
                 }}
               >
-                <TextField
-                  variant={"outlined"}
-                  name="work_phone"
-                  placeholder={"+79999999999"}
-                  value={formik.values.work_phone}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.work_phone &&
-                    Boolean(formik.errors.work_phone)
-                  }
-                  helperText={
-                    formik.touched.work_phone && formik.errors.work_phone
-                  }
-                />
-                <Link color="inherit">+ Добавить телефон</Link>
+               <FieldArray name="phones">
+                                        {({ remove, push }) => {
+                                          return (<div>
+                                                {values.phones.length > 0 &&
+                                                values.phones?.map((phone, index) => {
+                                                  const fieldName = `phones[${index}].phone`;
+                                                  const touchedFieldName = getIn(touched, fieldName);
+                                                  const errorFieldName = getIn(errors, fieldName);
+                                                  return (phone.phone_type == 'Рабочий' &&
+                                                      <div key={index}
+                                                           style={{display: "flex", flexDirection: "row"}}>
+                                                        <TextField
+                                                            fullWidth
+                                                            style={{width: "100%", marginBottom: 16}}
+                                                            placeholder={"+79999999999"}
+                                                            variant={"outlined"}
+                                                            name={fieldName}
+                                                            value={phone.phone}
+                                                            onChange={handleChange}
+                                                            error={Boolean(touchedFieldName && errorFieldName)}
+                                                            helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                        />
+                                                         <div style={{marginLeft: 16}}
+                                                              onClick={() => remove(index)}>
+                                                          <TrashIcon/>
+                                                        </div>
+                                                      </div>
+                                                  )
+                                                })}
+                                                <div
+                                                    className={classes.addItemCRM}
+                                                    onClick={() => push({phone: '', phone_type: 'Рабочий'})}
+                                                >
+                                                  + Добавить телефон
+                                                </div>
+                                              </div>
+                                          )}}
+                                    </FieldArray>
               </div>
             </span>
           </div>
-          <div className={classes.label}>
+          <div className={classes.label} style={{alignItems:"flex-start"}}>
             <span className={classes.spanTitle}>Телефон мобильный</span>
             <span style={{ width: "60%" }}>
               <div
@@ -342,21 +338,46 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                   flexDirection: "column",
                 }}
               >
-                <TextField
-                  variant={"outlined"}
-                  name="mobile_phone"
-                  placeholder={"+79999999999"}
-                  value={formik.values.mobile_phone}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.mobile_phone &&
-                    Boolean(formik.errors.mobile_phone)
-                  }
-                  helperText={
-                    formik.touched.mobile_phone && formik.errors.mobile_phone
-                  }
-                />
-                <Link color="inherit">+ Добавить телефон</Link>
+              <FieldArray name="phones">
+                                        {({ remove, push }) => {
+
+                                          return(
+                                              <div>
+                                                {values.phones.length > 0 &&
+                                                values.phones?.map(( phone, index) => {
+                                                  const fieldName = `phones[${index}].phone`;
+                                                  const touchedFieldName = getIn(touched, fieldName);
+                                                  const errorFieldName = getIn(errors, fieldName);
+                                                  return( phone.phone_type == 'Мобильный' &&
+                                                      <div key={index} style={{display:"flex",flexDirection:"row"}}>
+                                                        <TextField
+                                                            fullWidth
+                                                            style={{ width: "100%", marginBottom:16}}
+                                                            placeholder={"+79999999999"}
+                                                            variant={"outlined"}
+                                                            name={fieldName}
+                                                            value={phone.phone}
+                                                            onChange={handleChange}
+                                                            error={Boolean(touchedFieldName && errorFieldName)}
+                                                            helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                        />
+                                                       <div style={{marginLeft: 16}}
+                                                                           onClick={() => remove(index)}>
+                                                          <TrashIcon/>
+                                                        </div>
+                                                      </div>
+                                                  )
+                                                })}
+                                                <div
+                                                    className={classes.addItemCRM}
+                                                    onClick={() => push({phone: '', phone_type: 'Мобильный'})}
+                                                >
+                                                  + Добавить телефон
+                                                </div>
+                                              </div>
+                                          )
+                                        }}
+                                    </FieldArray>
               </div>
             </span>
           </div>
@@ -370,16 +391,44 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                   flexDirection: "column",
                 }}
               >
-                <TextField
-                  variant={"outlined"}
-                  name="Email"
-                  placeholder={"email@email.com"}
-                  value={formik.values.Email}
-                  onChange={formik.handleChange}
-                  error={formik.touched.Email && Boolean(formik.errors.Email)}
-                  helperText={formik.touched.Email && formik.errors.Email}
-                />
-                <Link color="inherit">+ Добавить email</Link>
+                <FieldArray name="emails">
+                                        {({  remove, push }) => (
+                                            <div>
+                                              {values.emails.length > 0 &&
+                                              values.emails.map(( email, index) => {
+                                                const fieldName = `emails[${index}].email`;
+                                                const touchedFieldName = getIn(touched, fieldName);
+                                                const errorFieldName = getIn(errors, fieldName);
+                                                return(
+                                                    <div key={index} style={{display:"flex",flexDirection:"row"}}>
+                                                      <TextField
+                                                          fullWidth
+                                                          style={{ width: "90%", marginBottom:16}}
+                                                          placeholder={`email${index + 1}@email.com`}
+                                                          variant={"outlined"}
+                                                          name={fieldName}
+                                                          type="email"
+                                                          value={email.email}
+                                                          onChange={handleChange}
+                                                          error={Boolean(touchedFieldName && errorFieldName)}
+                                                          helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                      />
+                                                      <div style={{marginLeft:16}}
+                                                           onClick={() => remove(index)}>
+                                                        <TrashIcon />
+                                                      </div>
+                                                    </div>
+                                                )
+                                              })}
+                                              <div
+                                                  className={classes.addItemCRM}
+                                                  onClick={() => push({ email: '' })}
+                                              >
+                                                + Добавить email
+                                              </div>
+                                            </div>
+                                        )}
+                                    </FieldArray>
               </div>
             </span>
           </div>
@@ -387,26 +436,22 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
             <span className={classes.spanTitle}>Адрес доставки</span>
 
             <TextField
-              variant={"outlined"}
-              className={classes.textArea}
-              multiline
-              rows={3}
-              name="delivery_address"
-              placeholder={"Адрес доставки адрес вторая линия"}
-              value={formik.values.delivery_address}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.delivery_address &&
-                Boolean(formik.errors.delivery_address)
-              }
-              helperText={
-                formik.touched.delivery_address &&
-                formik.errors.delivery_address
-              }
+                variant={"outlined"}
+                className={classes.textArea}
+                multiline
+                rows={3}
+                name="delivery_address"
+                placeholder={"Адрес доставки адрес вторая линия"}
+                value={values.delivery_address}
+                onChange={handleChange}
+                error={touched.delivery_address && Boolean(errors.delivery_address)}
+                helperText={touched.delivery_address && errors.delivery_address}
             />
           </div>
         </Paper>
-      </form>
+            </Form>
+        )}
+      </Formik>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Input } from "antd";
 
@@ -9,7 +8,8 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: "100%",
       height: "40px !important",
-        fontSize:20,
+      fontSize: 20,
+      paddingLeft: 8,
     },
 
     icon: {

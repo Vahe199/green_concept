@@ -24,6 +24,9 @@ const useStyles = makeStyles({
     "& .ant-select-selection-item": {
       lineHeight: "36px !important",
     },
+    "& .ant-select-selection-placeholder": {
+      lineHeight: "36px !important",
+    },
     "& .ant-picker": {
       height: "40px !important",
     },
@@ -81,6 +84,10 @@ const useStyles = makeStyles({
       top: 4,
       left: 24,
     },
+    "& .searchMode .ant-select-selection-item": {
+      top: 0,
+      left: 15,
+    },
     "& svg": {
       position: "absolute",
       left: 8,
@@ -93,7 +100,7 @@ const useStyles = makeStyles({
 export default function CounterpartiesTable(props: any) {
   const { fetchCounterpartiesList } = useActions();
 
-  let history = useHistory();
+  const history = useHistory();
   const classes = useStyles();
   const { contractors, loading } = useTypedSelector(
     (state) => state.counterparties
@@ -124,7 +131,6 @@ export default function CounterpartiesTable(props: any) {
     include: "type,crms,branches,service,sites,emails,phones,author,group",
   });
   const [services, setServices] = useState("");
-  const [author, setAuthor] = useState(null);
   const [fullName, setFullName] = useState("");
   const [branch, setBranch] = useState("");
   const [group, setGroup] = useState("");
@@ -202,23 +208,26 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <>
           Отрасль
-          <InputFilterSelect
-            options={filteredBranches.map((option: any) => ({
-              key: option.id,
-              value: option.id,
-              label: option.name,
-            }))}
-            filterOption={false}
-            onSearch={setBranch}
-            onSelect={(id: number) => {
-              setParams({ ...params, "filter[branches.id]": id });
-            }}
-            notFoundContent={null}
-            value={branch}
-            className={classes.input}
-            prefix={<MagnifyingGlass className={classes.icon} />}
-            showSearch
-          />
+          <div className={classes.searchWraper}>
+            <MagnifyingGlass className="searchIcon" />
+            <InputFilterSelect
+              options={filteredBranches.map((option: any) => ({
+                key: option.id,
+                value: option.id,
+                label: option.name,
+              }))}
+              filterOption={false}
+              onSearch={setBranch}
+              onSelect={(id: number) => {
+                setParams({ ...params, "filter[branches.id]": id });
+              }}
+              notFoundContent={null}
+              value={params["filter[branches.id]"]}
+              className={"searchMode " + classes.input}
+              prefix={<MagnifyingGlass className={classes.icon} />}
+              showSearch
+            />
+          </div>
         </>
       ),
       dataIndex: "branches",
@@ -242,7 +251,7 @@ export default function CounterpartiesTable(props: any) {
             <MagnifyingGlass className="searchIcon" />
             <InputFilterSelect
               onSearch={setGroup}
-              value={group}
+              value={params["filter[parent_id]"]}
               options={companyGroupFilter.map((option: any) => ({
                 key: option.id,
                 value: option.id,
@@ -265,17 +274,26 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <>
           Ответственный
-          <InputFilterSelect
-            className={classes.input}
-            placeholder="Все"
-            value={author}
-            handleChange={(val: any) => {
-              setAuthor(val);
-              setParams({ ...params, "filter[created_by]": val });
-            }}
-            options={[]}
-            loading={assetsLoading}
-          />
+          <div className={classes.searchWraper}>
+            <MagnifyingGlass className="searchIcon" />
+            <InputFilterSelect
+              options={[].map((option: any) => ({
+                key: option.id,
+                value: option.id,
+                label: option.name,
+              }))}
+              filterOption={false}
+              onSelect={(id: number) => {
+                setParams({ ...params, "filter[created_by]": id });
+              }}
+              notFoundContent={null}
+              value={params["filter[created_by]"]}
+              className={"searchMode " + classes.input}
+              prefix={<MagnifyingGlass className={classes.icon} />}
+              loading={assetsLoading}
+              showSearch
+            />
+          </div>
         </>
       ),
       dataIndex: "crms",

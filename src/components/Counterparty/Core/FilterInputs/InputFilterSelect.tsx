@@ -25,7 +25,7 @@ export default function InputFilterSelect({
   value = "",
   handleChange,
   options = [],
-  className = "",
+  className = "searchMode",
   loading = false,
   ...props
 }: any): any {

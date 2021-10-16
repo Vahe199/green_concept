@@ -26,9 +26,7 @@ export default function InputFilterDatePicker({
 
   return (
     <DatePicker
-
-      // allowClear
-      // defaultValue={moment('2015-01-01', 'YYYY-MM-DD')}
+      allowClear={false}
       className={classes.select + " " + className}
       value={value === "" ? null : value}
       onChange={handleChange}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import moment from "moment";
@@ -71,6 +71,23 @@ const useStyles = makeStyles({
   icon: {
     fontSize: "16px",
   },
+  searchWraper: {
+    position: "relative",
+
+    "& .searchMode .ant-select-arrow": {
+      display: "none",
+    },
+    "& .searchMode .ant-select-selection-search": {
+      top: 4,
+      left: 24,
+    },
+    "& svg": {
+      position: "absolute",
+      left: 8,
+      top: 28,
+      zIndex: 4,
+    },
+  },
 });
 
 export default function CounterpartiesTable(props: any) {
@@ -99,6 +116,10 @@ export default function CounterpartiesTable(props: any) {
 
   const { getAuthorData } = useActions();
 
+  const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
+    []
+  );
+
   const [params, setParams] = useState<any>({
     include: "type,crms,branches,service,sites,emails,phones,author,group",
   });
@@ -115,7 +136,13 @@ export default function CounterpartiesTable(props: any) {
     branch.length === 0 || branch.length > 3
       ? branches.filter(({ name }: { name: string }) => name.includes(branch))
       : branches;
-  console.log(filteredBranches);
+
+  const companyGroupFilter =
+    group.length === 0 || group.length > 3
+      ? companyGroupFilterInital.filter(
+          ({ full_name }: { full_name: string }) => full_name.includes(group)
+        )
+      : companyGroupFilterInital;
 
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/${data.id}`);
@@ -182,9 +209,7 @@ export default function CounterpartiesTable(props: any) {
               label: option.name,
             }))}
             filterOption={false}
-            onSearch={(value: string) => {
-              setBranch(value);
-            }}
+            onSearch={setBranch}
             onSelect={(id: number) => {
               setParams({ ...params, "filter[branches.id]": id });
             }}
@@ -213,16 +238,25 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <div style={{ minWidth: 125 }}>
           Группа компаний
-          <InputFilterSearch
-            handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const { value } = e.target;
-              setGroup(value);
-              (value.length === 0 || value.length > 3) &&
-                setParams({ ...params, "filter[parent_id]": value });
-            }}
-            value={group}
-            className={classes.input}
-          />
+          <div className={classes.searchWraper}>
+            <MagnifyingGlass className="searchIcon" />
+            <InputFilterSelect
+              onSearch={setGroup}
+              value={group}
+              options={companyGroupFilter.map((option: any) => ({
+                key: option.id,
+                value: option.id,
+                label: option.full_name,
+              }))}
+              filterOption={false}
+              onSelect={(id: number) => {
+                setParams({ ...params, "filter[parent_id]": id });
+              }}
+              notFoundContent={null}
+              className={"searchMode " + classes.input}
+              showSearch
+            />
+          </div>
         </div>
       ),
       dataIndex: "group",
@@ -379,6 +413,11 @@ export default function CounterpartiesTable(props: any) {
       params,
     });
   }, [params]);
+
+  useEffect(() => {
+    !companyGroupFilterInital.length &&
+      setCompanyGroupFilterInital(contractors);
+  }, [contractors]);
 
   return (
     <Paper className={classes.root}>

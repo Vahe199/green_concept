@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FieldArray, Form, Formik, getIn, Field } from "formik";
 import {
   Button,
@@ -22,8 +22,10 @@ import { validationSchemaContactPerson } from "./TabsForUtil/ContactPersonsForCr
 import { useActions } from "../../../redux/type_redux_hook/useAction";
 import ModalListOfContacts from "../../Modals/ModalListOfContacts";
 import ValidationErrorWrapper from "../Core/FilterInputs/ValidationErrorWrapper";
+import { Modal } from "antd";
 
 export const ContactPersonsForCreating: React.FC = () => {
+  const parentRef = useRef<any>({});
   const classes = useStylesContactPersons();
 
   const [contractorId, setContractorId] = React.useState(1);
@@ -107,7 +109,11 @@ export const ContactPersonsForCreating: React.FC = () => {
     })
   );
   return (
-    <div style={{ height: "max-content" }}>
+    <div
+      className={classes.mainContainer}
+      style={{ height: "max-content", position: "relative" }}
+      ref={parentRef}
+    >
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchemaContactPerson}
@@ -1136,12 +1142,13 @@ export const ContactPersonsForCreating: React.FC = () => {
           </Form>
         )}
       </Formik>
-      {showModal && (
-        <ModalListOfContacts
-          showModal={showModal}
-          setShowModal={setShowModal}
-        />
-      )}
+      <ModalListOfContacts
+        visible={showModal}
+        getContainer={parentRef.current}
+        onCancel={() => setShowModal(false)}
+        footer={null}
+        closable={false}
+      />
     </div>
   );
 };

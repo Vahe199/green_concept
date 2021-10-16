@@ -10,6 +10,7 @@ import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSele
 import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
 import { validationSchemaGeneralInfo } from "./GeneralInformationValidationSchema";
 import { useStylesGeneralInformation } from "./GeneralInformationStyles";
+import ValidationErrorWrapper from "../../Core/FilterInputs/ValidationErrorWrapper";
 
 type Props = {
   // change: boolean;
@@ -170,6 +171,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
                                 style={{
                                   display: "flex",
                                   flexDirection: "row",
+                                  marginBottom:16
                                 }}
                               >
                                 <div
@@ -179,8 +181,19 @@ export const FormGeneralInformation: React.FC<Props> = ({
                                       : { width: "100%" }
                                   }
                                 >
+                                  <ValidationErrorWrapper
+                                      inputClassName="ant-select-selector"
+                                      error={Boolean(
+                                          touchedFieldName && errorFieldName
+                                      )}
+                                      helperText={
+                                        touchedFieldName && errorFieldName
+                                            ? errorFieldName
+                                            : ""
+                                      }
+                                  >
                                   <InputFilterSelectedType
-                                    className={classes.input}
+
                                     name={fieldName}
                                     handleChange={(value: any) =>
                                       setFieldValue(fieldName, value)
@@ -188,15 +201,9 @@ export const FormGeneralInformation: React.FC<Props> = ({
                                     value={crm}
                                     options={assetsOptionsCRMS}
                                     placeholder="Фамилия Имя"
-                                    error={Boolean(
-                                      touchedFieldName && errorFieldName
-                                    )}
-                                    helperText={
-                                      touchedFieldName && errorFieldName
-                                        ? errorFieldName
-                                        : ""
-                                    }
+
                                   />
+                                  </ValidationErrorWrapper>
                                 </div>
 
                                 {index == 0 ? (
@@ -227,6 +234,16 @@ export const FormGeneralInformation: React.FC<Props> = ({
               <div className={classes.label}>
                 <span>Тип контрагента</span>
                 <span style={{ width: "60%" }}>
+                    <ValidationErrorWrapper
+                        inputClassName="ant-select-selector"
+                        error={
+                          touched.contractor_type_id &&
+                          Boolean(errors.contractor_type_id)
+                        }
+                        helperText={
+                          touched.contractor_type_id && errors.contractor_type_id
+                        }
+                    >
                   <InputFilterSelectedType
                     // className={classes.input}
                     name="contractor_type_id"
@@ -238,19 +255,23 @@ export const FormGeneralInformation: React.FC<Props> = ({
                     options={assetsOptionsCounterpartyType}
                     placeholder="Другое"
                     loading={assetsLoading}
-                    error={
-                      touched.contractor_type_id &&
-                      Boolean(errors.contractor_type_id)
-                    }
-                    helperText={
-                      touched.contractor_type_id && errors.contractor_type_id
-                    }
+
                   />
+                    </ValidationErrorWrapper>
                 </span>
               </div>
               <div className={classes.label}>
                 <span>Тип услуг</span>
                 <span style={{ width: "60%" }}>
+                    <ValidationErrorWrapper
+                        inputClassName="ant-select-selector"
+                        error={
+                          touched.service_type_id && Boolean(errors.service_type_id)
+                        }
+                        helperText={
+                          touched.service_type_id && errors.service_type_id
+                        }
+                    >
                   <InputFilterSelectedType
                     // className={classes.input}
                     name="service_type_id"
@@ -261,13 +282,8 @@ export const FormGeneralInformation: React.FC<Props> = ({
                     options={assetsOptionsServiceType}
                     placeholder="Другое"
                     loading={assetsLoading}
-                    error={
-                      touched.service_type_id && Boolean(errors.service_type_id)
-                    }
-                    helperText={
-                      touched.service_type_id && errors.service_type_id
-                    }
                   />
+                    </ValidationErrorWrapper>
                 </span>
               </div>
               <div className={classes.label}>

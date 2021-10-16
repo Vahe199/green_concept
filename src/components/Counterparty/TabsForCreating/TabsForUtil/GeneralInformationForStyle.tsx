@@ -130,7 +130,37 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
             fontWeight: 500,
         },
         input: {
-            marginBottom:16
+             marginBottom:16
+        },
+        searchWraper: {
+            position: "relative",
+
+            "& .ant-select-selection-search-input": {
+                fontSize:16,
+                paddingLeft:8,
+            },
+            "& .searchMode .ant-select-arrow": {
+                display: "none",
+            },
+            "& .searchMode .ant-select-selection-search": {
+                // top: 4,
+                left: 24,
+                "& .ant-select-selection-search-input": {
+                    fontSize:16,
+                    paddingLeft:8,
+                    fontWeight:400
+                },
+            },
+            "& .searchMode .ant-select-selection-item": {
+                top: 0,
+                left: 15,
+            },
+            "& svg": {
+                position: "absolute",
+                 left: 8,
+                 top: 8,
+                zIndex: 4,
+            },
         },
     })
 );

@@ -6,13 +6,15 @@ export const validationSchema = yup.object().shape({
         .of(yup.number().required("Обязательное поле"))
         .strict()
         .required("Обязательное поле"),
+       branches: yup.array()
+        .of(yup.number().required("Обязательное поле"))
+        .strict()
+        .required("Обязательное поле"),
     contractor_type_id: yup
         .string()
-        .min(0, " должен состоять минимум из 10 символов")
         .required("Обязательное поле"),
     service_type_id: yup
         .string()
-        .min(0, "должен состоять минимум из 10 символов")
         .required("Обязательное поле"),
     inn: yup
         .string()

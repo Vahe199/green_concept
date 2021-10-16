@@ -5,16 +5,14 @@ export const validationSchemaGeneralInfo = yup.object().shape({
 
     crms: yup.array()
         .of(
-                yup.string().required("Обязательное поле"),
+                yup.number().required("Обязательное поле"),
         )
         .required("Обязательное поле"),
     contractor_type_id: yup
         .string()
-        .min(0, " должен состоять минимум из 10 символов")
         .required("Обязательное поле"),
     service_type_id: yup
         .string()
-        .min(0, "должен состоять минимум из 10 символов")
         .required("Обязательное поле"),
     inn: yup
         .string()

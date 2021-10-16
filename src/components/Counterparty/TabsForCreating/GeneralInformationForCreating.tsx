@@ -1,7 +1,7 @@
 
 import {Button, Checkbox, Paper, Radio, TextField, Typography} from "@material-ui/core";
 import {FieldArray, Form, Formik, getIn} from "formik";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {CheckSquareChecked} from "../../../IMG/SVG/CheckSquareChecked";
 import {CheckSquareUnChecked} from "../../../IMG/SVG/CheckSquareUnChecked";
 import {TrashIcon} from "../../../IMG/SVG/TrashIcon";
@@ -14,17 +14,34 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {notifyError, notifySuccess} from "../Core/utils/ToastNotify";
 import ValidationErrorWrapper from "../Core/FilterInputs/ValidationErrorWrapper";
+import {MagnifyingGlass} from "../../../IMG/SVG/MagnifyingGlass";
+import InputFilterSelect from "../Core/FilterInputs/InputFilterSelect";
 
 export const GeneralInformationForCreating = () => {
   const classes = useStylesGeneralInfo();
   const [matchesAddressActualAddress, setMatchesAddressActualAddress] = React.useState<boolean>(true);
   const [matchesAddressMailingAddress, setMatchesAddressMailingAddress] = React.useState<boolean>(true);
   const [contractorId, setContractorId] = React.useState(1);
-
+  const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
+      []
+  );
+  const [group, setGroup] = useState("");
   const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
   const { crms, branches, types_and_services }: any = assets;
   const {success,error}:any = useTypedSelector(state => state.author)
-
+  const { contractors, loading } = useTypedSelector(
+      (state) => state.counterparties
+  );
+  const companyGroupFilter =
+      group.length === 0 || group.length > 3
+          ? companyGroupFilterInital.filter(
+              ({ full_name }: { full_name: string }) => full_name.includes(group)
+          )
+          : companyGroupFilterInital;
+  useEffect(() => {
+    !companyGroupFilterInital.length &&
+    setCompanyGroupFilterInital(contractors);
+  }, [contractors]);
   useEffect(()=>{
     if(error){
       notifyError()
@@ -67,7 +84,7 @@ export const GeneralInformationForCreating = () => {
     nda: 1,
     full_name:"",
     short_name: "",
-    parent_id: "",
+    parent_id: null,
     branches:[''],
     legal_registration_address:"",
     actual_address:"",
@@ -150,7 +167,7 @@ export const GeneralInformationForCreating = () => {
                         <span >CRM</span>
                         <Typography >
                           <FieldArray name="crms">
-                            {({ insert, remove, push }) => (
+                            {({remove, push }) => (
                                 <div style={{width:"100%"}}>
                                   {values. crms.length > 0 &&
                                   values.crms.map(( crm, index) => {
@@ -200,6 +217,11 @@ export const GeneralInformationForCreating = () => {
                       <div className={classes.label}>
                         <span>Тип контрагента</span>
                         <span style={{ width: "60%" }}>
+                              <ValidationErrorWrapper
+                                  inputClassName="ant-select-selector"
+                                  error={touched.contractor_type_id && Boolean(errors.contractor_type_id)}
+                                  helperText={touched.contractor_type_id && errors.contractor_type_id}
+                              >
                                     <InputFilterSelectedType
                                         // className={classes.input}
                                         name="contractor_type_id"
@@ -212,14 +234,19 @@ export const GeneralInformationForCreating = () => {
                                         options={assetsOptionsCounterpartyType}
                                         placeholder="Другое"
                                         loading={assetsLoading}
-                                        error={touched.contractor_type_id && Boolean(errors.contractor_type_id)}
-                                        helperText={touched.contractor_type_id && errors.contractor_type_id}
                                     />
+                              </ValidationErrorWrapper>
                 </span>
                       </div>
                       <div className={classes.label}>
                         <span>Тип услуг</span>
                         <span style={{ width: "60%" }}>
+                             <ValidationErrorWrapper
+                                 inputClassName="ant-select-selector"
+                                 error={touched.service_type_id && Boolean(errors.service_type_id)}
+                                 helperText={touched.service_type_id && errors.service_type_id}
+
+                             >
                    <InputFilterSelectedType
                        // className={classes.input}
                        name="service_type_id"
@@ -228,9 +255,8 @@ export const GeneralInformationForCreating = () => {
                        options={assetsOptionsServiceType}
                        placeholder="Другое"
                        loading={assetsLoading}
-                       error={touched.service_type_id && Boolean(errors.service_type_id)}
-                       helperText={touched.service_type_id && errors.service_type_id}
                    />
+                             </ValidationErrorWrapper>
                 </span>
                       </div>
                       <div className={classes.label}>
@@ -332,17 +358,37 @@ export const GeneralInformationForCreating = () => {
                             helperText={touched.short_name && errors.short_name}
                         />
                       </div>
-                      <div className={classes.label}>
-                        <span>Группа компаний (при наличии)</span>
-                        <TextField
-                            variant={"outlined"}
-                            name="parent_id"
-                            disabled={true}
-                            placeholder={"Группа компаний"}
-                            onChange={handleChange}
-                            error={ touched.parent_id && Boolean(errors.parent_id)}
-                            helperText={touched.parent_id && errors.parent_id }
-                        />
+                      <div className={classes.label} style={{alignItems:"flex-start"}}>
+                        <span style={{width:"40%"}}>Группа компаний (при наличии)</span>
+                        {/*<TextField*/}
+                        {/*    variant={"outlined"}*/}
+                        {/*    name="parent_id"*/}
+                        {/*    disabled={true}*/}
+                        {/*    placeholder={"Группа компаний"}*/}
+                        {/*    onChange={handleChange}*/}
+                        {/*    error={ touched.parent_id && Boolean(errors.parent_id)}*/}
+                        {/*    helperText={touched.parent_id && errors.parent_id }*/}
+                        {/*/>*/}
+                        <div className={classes.searchWraper} style={{width:"60%"}}>
+                          <MagnifyingGlass className="searchIcon" />
+                          <InputFilterSelect
+                              name="parent_id"
+                              onSearch={setGroup}
+                                value={values.parent_id}
+                              options={companyGroupFilter.map((option: any) => ({
+                                key: option.id,
+                                value: option.id,
+                                label: option.full_name,
+                              }))}
+                              filterOption={false}
+                              onSelect={(id: number) => {
+                                setFieldValue("parent_id", id)
+                              }}
+                              notFoundContent={null}
+                              className={"searchMode "}
+                              showSearch
+                          />
+                        </div>
                       </div>
                       <div className={classes.label} style={{alignItems:"flex-start"}}>
                         <span>Отрасль</span>
@@ -354,7 +400,7 @@ export const GeneralInformationForCreating = () => {
                             }}
                         >
                           <FieldArray name="branches">
-                            {({ insert, remove, push }) => (
+                            {({ remove, push }) => (
                                 <div style={{width:"100%"}}>
                                   {values.branches.length > 0 &&
                                   values.branches.map(( branch, index) => {
@@ -362,10 +408,14 @@ export const GeneralInformationForCreating = () => {
                                     const touchedFieldName = getIn(touched, fieldName);
                                     const errorFieldName = getIn(errors, fieldName);
                                     return(
-                                        <div key={index} style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
+                                        <div key={index} style={{display:"flex",flexDirection:"row",marginBottom:16}}>
                                           <div style={index > 0 ? {width:"90%"}:{width:"100%"}}>
+                                            <ValidationErrorWrapper
+                                                inputClassName="ant-select-selector"
+                                                error={Boolean(touchedFieldName && errorFieldName)}
+                                                helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                            >
                                             <InputFilterSelectedType
-                                                className={classes.input}
                                                 name={fieldName}
                                                 handleChange={(value:any) =>
                                                     setFieldValue(fieldName, value)
@@ -377,9 +427,10 @@ export const GeneralInformationForCreating = () => {
                                                 error={Boolean(touchedFieldName && errorFieldName)}
                                                 helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
                                             />
+                                            </ValidationErrorWrapper>
                                           </div>
 
-                                          { index == 0 ? "":<div style={{marginLeft: 16 ,marginTop:-9}}
+                                          { index == 0 ? "":<div style={{marginLeft: 16}}
                                                                  onClick={() => remove(index)}>
                                             <TrashIcon/>
                                           </div>}

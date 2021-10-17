@@ -10,6 +10,7 @@ import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelect
 import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 import {useStylesBasicInformation} from "./BasicInformationFormStyles";
 import {validationSchemaBasicInformation} from "./BasicInformationFormValidationSchema";
+import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
 
 type InfoProps = {
   // change: boolean;
@@ -46,20 +47,27 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
     label: option.name,
   }));
   const initialValues = {
-    birthdate:birthdate,
-    contractor_type_id: "",
-    delivery_address: "",
-    emails:[{ email: '' }],
     firstname: "",
     middlename: "",
-    phones:[{phone: '', phone_type: 'Рабочий'},{phone: '', phone_type: 'Мобильный'}],
+    surname: "",
+    contractor_type_id: "",
     service_type_id: "",
     sex: "Муж",
-    surname: "",
+    birthdate:"",
+    delivery_address: "",
+    emails:[{ email: '' }],
+    phones:[{phone: '', phone_type: 'Рабочий'},{phone: '', phone_type: 'Мобильный'}],
+
+    branches:"",
+
+
+
+
+
+
     contractors_main:1,
     contractors_role_id:"",
     contractors_position:"",
-    branches:""
   }
 
   return (
@@ -84,7 +92,8 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
           <span className={classes.spanTitle}>Основные сведения</span>
           <Button
             color="primary"
-            onClick={() => setChangeBasicInformation(true)}
+            // onClick={() => setChangeBasicInformation(true)}
+            onClick={() => console.log(errors)}
             type="submit"
             style={{ textTransform: "none", boxShadow: "none" }}
           >
@@ -179,33 +188,59 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Дата рождения</span>
-            <div style={{ width: "60%", display: "flex" }}>
-              <InputFilterDatePicker
-                  name="birthdate"
-                  value={birthdate}
-                  handleChange={(_:any,value:string)=> {
-                    // setBirthdatet(value)
-
-                    console.log(value, "data value")
-                  }}
-                  className={classes.input} />
+            <div style={{ width: "60%" }}>
+              <ValidationErrorWrapper
+                  inputClassName="ant-picker"
+                  error={touched.birthdate && Boolean(errors.birthdate)}
+                  helperText={touched.birthdate && errors.birthdate}
+              >
+                <InputFilterDatePicker
+                    name={"birthdate"}
+                    value={
+                      values.birthdate
+                          ? moment(values.birthdate, "YYYY-MM-DD")
+                          : null
+                    }
+                    handleChange={(date: any) =>
+                        setFieldValue(
+                            "birthdate",
+                            moment(date).format("YYYY-MM-DD")
+                        )
+                    }
+                    className={classes.input}
+                    placeholder="01.01.1970"
+                    format="DD.MM.YYYY"
+                />
+              </ValidationErrorWrapper>
             </div>
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Роль</span>
-            <InputFilterSelectedType
-                name="contractors_role_id"
-                handleChange={(value: any) =>
-                    setFieldValue("contractors_role_id", value)
-                }
-                value={values.contractors_role_id}
-                options={assetsOptionsRoles}
-                placeholder="Выберите"
-                loading={assetsLoading}
-                error={touched.contractors_role_id && Boolean(errors.contractors_role_id)}
-                helperText={touched.contractors_role_id && errors.contractors_role_id}
-                className={classes.input}
-            />
+            <div style={{width:"60%"}}>
+              <ValidationErrorWrapper
+                  inputClassName="ant-select-selector"
+                  error={
+                    touched.contractors_role_id &&
+                    Boolean(errors.contractors_role_id)
+                  }
+                  helperText={
+                    touched.contractors_role_id &&
+                    errors.contractors_role_id
+                  }
+              >
+                <InputFilterSelectedType
+                    name="contractors_role_id"
+                    handleChange={(value: any) =>
+                        setFieldValue("contractors_role_id", value)
+                    }
+                    value={values.contractors_role_id}
+                    options={assetsOptionsRoles}
+                    placeholder="Выберите"
+                    loading={assetsLoading}
+
+                />
+              </ValidationErrorWrapper>
+            </div>
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Должность</span>
@@ -221,60 +256,82 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Тип контрагента</span>
-            <span style={{ width: "60%" }}>
-              <InputFilterSelectedType
-                  // className={classes.input}
-                  name="contractor_type_id"
-                  handleChange={(value:any) => {
-                    setFieldValue("contractor_type_id", value)
-                    setContractorId(value)
+            <div style={{width:"60%"}}>
+              <ValidationErrorWrapper
+                  inputClassName="ant-select-selector"
+                  error={
+                    touched.contractor_type_id &&
+                    Boolean(errors.contractor_type_id)
                   }
+                  helperText={
+                    touched.contractor_type_id &&
+                    errors.contractor_type_id
                   }
-                  value={values.contractor_type_id}
-                  options={assetsOptionsCounterpartyType}
-                  placeholder="Выберите"
-                  loading={assetsLoading}
-                  error={touched.contractor_type_id && Boolean(errors.contractor_type_id)}
-                  helperText={touched.contractor_type_id && errors.contractor_type_id}
-              />
-            </span>
+              >
+                <InputFilterSelectedType
+                    // className={classes.input}
+                    name="contractor_type_id"
+                    handleChange={(value: any) => {
+                      setFieldValue("contractor_type_id", value);
+                      setContractorId(value);
+                    }}
+                    value={values.contractor_type_id}
+                    options={assetsOptionsCounterpartyType}
+                    placeholder="Выберите"
+                    loading={assetsLoading}
+                />
+              </ValidationErrorWrapper>
+            </div>
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Тип услуг</span>
-            <span style={{ width: "60%" }}>
-              <InputFilterSelectedType
-                  // className={classes.input}
-                  name="service_type_id"
-                  handleChange={(value:any) => setFieldValue("service_type_id", value)}
-                  value={values.service_type_id}
-                  options={assetsOptionsServiceType}
-                  placeholder="Выберите"
-                  loading={assetsLoading}
-                  error={touched.service_type_id && Boolean(errors.service_type_id)}
-                  helperText={touched.service_type_id && errors.service_type_id}
-              />
-            </span>
+            <div style={{width:"60%"}}>
+              <ValidationErrorWrapper
+                  inputClassName="ant-select-selector"
+                  error={
+                    touched.service_type_id &&
+                    Boolean(errors.service_type_id)
+                  }
+                  helperText={
+                    touched.service_type_id && errors.service_type_id
+                  }
+              >
+                <InputFilterSelectedType
+                    // className={classes.input}
+                    name="service_type_id"
+                    handleChange={(value: any) =>
+                        setFieldValue("service_type_id", value)
+                    }
+                    value={values.service_type_id}
+                    options={assetsOptionsServiceType}
+                    placeholder="Выберите"
+                    loading={assetsLoading}
+
+                />
+              </ValidationErrorWrapper>
+            </div>
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Отрасль</span>
-            <div
-              style={{
-                width: "60%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <InputFilterSelectedType
-                  // className={classes.input}
-                  name="branches"
-                  handleChange={(value:any) => setFieldValue("branches", value)}
-                  value={values.branches}
-                  options={assetsOptionsBranches}
-                  placeholder="Выберите"
-                  loading={assetsLoading}
+            <div style={{width:"60%"}}>
+              <ValidationErrorWrapper
+                  inputClassName="ant-select-selector"
                   error={touched.branches && Boolean(errors.branches)}
                   helperText={touched.branches && errors.branches}
-              />
+              >
+                <InputFilterSelectedType
+                    // className={classes.input}
+                    name="branches"
+                    handleChange={(value: any) =>
+                        setFieldValue("branches", value)
+                    }
+                    value={values.branches}
+                    options={assetsOptionsBranches}
+                    placeholder="Выберите"
+                    loading={assetsLoading}
+
+                />
+              </ValidationErrorWrapper>
             </div>
           </div>
           <div className={classes.label} style={{alignItems:"flex-start"}}>

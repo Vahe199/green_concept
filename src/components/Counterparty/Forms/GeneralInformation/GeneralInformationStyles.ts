@@ -29,6 +29,13 @@ export const useStylesGeneralInformation = makeStyles((theme: Theme) =>
             "& .MuiOutlinedInput-adornedEnd ": {
                 paddingRight: 0,
             },
+            "& .ant-select-selection-placeholder":{
+                fontSize:16
+            },
+            "& .ant-select-selection-item":{
+                fontSize:16,
+                fontWeight:400
+            },
             "& .makeStyles-label": {},
         },
         paper: {
@@ -87,6 +94,13 @@ export const useStylesCompanyDetails = makeStyles((theme: Theme) =>
                 marginTop: -2,
                 marginLeft: 0,
             },
+            "& .ant-select-selection-placeholder":{
+                fontSize:16
+            },
+            "& .ant-select-selection-item":{
+                fontSize:16,
+                fontWeight:400
+            },
         },
         textArea: {
             marginBottom: "6%",
@@ -105,6 +119,7 @@ export const useStylesCompanyDetails = makeStyles((theme: Theme) =>
             "& .MuiOutlinedInput-multiline": {
                 padding: "7.5px 14px",
             },
+
         },
         paper: {
             padding: 16,
@@ -140,6 +155,43 @@ export const useStylesCompanyDetails = makeStyles((theme: Theme) =>
         input: {
             marginBottom:16
         },
+        searchWraper: {
+            position: "relative",
+
+            "& .ant-select-selection-search-input": {
+                fontSize:16,
+                paddingLeft:8,
+            },
+            "& .searchMode .ant-select-arrow": {
+                display: "none",
+            },
+            "& .ant-select-selection-placeholder":{
+                fontSize:16,
+                marginLeft:18,
+            },
+            "& .searchMode .ant-select-selection-search": {
+                // top: 4,
+                left: 24,
+
+                "& .ant-select-selection-search-input": {
+                    fontSize:16,
+                    paddingLeft:8,
+                    fontWeight:400,
+
+                },
+
+            },
+            "& .searchMode .ant-select-selection-item": {
+                top: 0,
+                left: 15,
+            },
+            "& svg": {
+                position: "absolute",
+                left: 8,
+                top: 8,
+                zIndex: 4,
+            },
+        },
     })
 );
 export const useStylesCompanyContacts = makeStyles((theme: Theme) =>
@@ -166,6 +218,9 @@ export const useStylesCompanyContacts = makeStyles((theme: Theme) =>
             "& .MuiFormControlLabel-root": {
                 fontSize: 16,
             },
+            "& .ant-select-selection-placeholder":{
+                fontSize:16
+            }
         },
         paper: {
             padding: 16,

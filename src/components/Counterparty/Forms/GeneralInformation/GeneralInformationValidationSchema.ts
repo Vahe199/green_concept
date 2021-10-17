@@ -5,7 +5,7 @@ export const validationSchemaGeneralInfo = yup.object().shape({
 
     crms: yup.array()
         .of(
-                yup.number().required("Обязательное поле"),
+            yup.number().required("Обязательное поле"),
         )
         .required("Обязательное поле"),
     contractor_type_id: yup

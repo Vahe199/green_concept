@@ -1,12 +1,11 @@
 import * as yup from "yup";
-import {FormContactsFromGreen} from "./FormContactsFromGreen";
-import {FormInformationCongratulations} from "./FormInformationCongratulations";
 
 export const validationSchemaBasicInformation = yup.object({
     firstname: yup.string().required("Обязательное поле"),
     surname: yup.string().required("Обязательное поле"),
     birthdate:yup.string().required("Обязательное поле"),
     contractor_type_id: yup.string().required("Обязательное поле"),
+    branches: yup.string().required("Обязательное поле"),
     delivery_address: yup.string().required("Обязательное поле"),
     emails: yup.array()
         .of(

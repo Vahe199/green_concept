@@ -10,9 +10,13 @@ const useStyles = (inputClassName: string) =>
         width: "100%",
         position: "relative",
 
-        [`& .${inputClassName}`]: {
+        // [`& .${inputClassName}`]: {
+        //   borderColor: "#f44336 !important",
+        //   // boxShadow: "0 0 0 2px rgb(185 58 58 / 20%) !important",
+        // },
+        [`& [class^="${inputClassName}"] `]: {
           borderColor: "#f44336 !important",
-          boxShadow: "0 0 0 2px rgb(185 58 58 / 20%) !important",
+          // boxShadow: "0 0 0 2px rgb(185 58 58 / 20%) !important",
         },
 
         "& .errorText": {

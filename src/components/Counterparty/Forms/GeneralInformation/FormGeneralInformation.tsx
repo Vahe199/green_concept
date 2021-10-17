@@ -10,7 +10,7 @@ import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSele
 import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
 import { validationSchemaGeneralInfo } from "./GeneralInformationValidationSchema";
 import { useStylesGeneralInformation } from "./GeneralInformationStyles";
-import ValidationErrorWrapper from "../../Core/FilterInputs/ValidationErrorWrapper";
+import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
 
 type Props = {
   // change: boolean;
@@ -68,15 +68,16 @@ export const FormGeneralInformation: React.FC<Props> = ({
     label: option.name,
   }));
   const initialValues = {
-    org_type: org_type,
+    org_type: org_type ? org_type : "ЮЛ",
     contractor_type_id: type,
     crms: [""],
     service_type_id: service,
     inn: inn,
-    kpp: kpp,
+    kpp:kpp,
     ogrn: ogrn,
-    nda: nda,
+    nda: nda ? nda : 0,
   };
+
   return (
     <div className={classes.root}>
       <Formik
@@ -329,10 +330,14 @@ export const FormGeneralInformation: React.FC<Props> = ({
                 <span style={{ width: "63.2%" }}>
                   <Checkbox
                     name={"nda"}
-                    value={values.nda === 1 ? true : false}
-                    onChange={(e: any) =>
+
+                     value={values.nda === 1 ? true : false}
+                    onChange={(e: any) => {
                       setFieldValue("nda", e.target.checked ? 0 : 1)
+                      console.log(e.target.checked ? 0 : 1,values.nda, "e.target.checked")
                     }
+                    }
+
                     color="default"
                     icon={<CheckSquareChecked color="#5B6770" />}
                     checkedIcon={<CheckSquareUnChecked color="#5B6770" />}

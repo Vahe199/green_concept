@@ -6,17 +6,18 @@ import {
 } from "../../types/contractor_contact_data";
 
 export const insertContractorContactData =
-  (data: any) => async (dispatch: Dispatch<ContractorContactDataAction>) => {
-    console.log(data,'data data')
+  (formData: any) => async (dispatch: Dispatch<ContractorContactDataAction>) => {
+  debugger
     try {
       dispatch({
         type: ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA,
       });
-      await contractorApi.insertContractorContactData(data);
+     const {data} = await contractorApi.insertContractorContactData(formData);
       dispatch({
         type: ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA_SUCCESS,
       });
-    } catch (e) {
+    } catch (e:any) {
+      console.log(e.response)
       dispatch({
         type: ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA_ERROR,
         payload: "Error Happened Conterparties Table List Is Fallen",

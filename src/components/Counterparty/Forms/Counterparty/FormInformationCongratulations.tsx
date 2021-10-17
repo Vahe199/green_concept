@@ -6,6 +6,8 @@ import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import {useStylesInformationCongratulations} from "./BasicInformationFormStyles";
 import {validationSchemaInformationCongratulations} from "./BasicInformationFormValidationSchema";
+import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
+import {counterpartiesApi} from "../../../../api/api";
 
 
 type InfoCongratulations = {
@@ -36,7 +38,14 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
             validationSchema={validationSchemaInformationCongratulations}
             onSubmit={async (values,action) => {
               console.log(values,"values")
-              // insertContractorContactData(values);
+                counterpartiesApi.changeContactCongratulationsData(values,31).then(res =>{
+                    console.log(res)
+                    debugger
+                })
+                    .catch((e)=>{
+                        console.log(e.response)
+                        debugger
+                    })
             }}
         >
           {({ values, touched, handleChange,errors,setFieldValue }) => (
@@ -51,7 +60,8 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
                   <span className={classes.spanTitle}>Сведения о поздравлениях</span>
                   <Button
                       color="primary"
-                      onClick={() => setChangeCongratulations(true)}
+                      // onClick={() => setChangeCongratulations(true)}
+                      onClick={() => console.log(errors)}
                       type="submit"
                       style={{ textTransform: "none" }}
                   >
@@ -94,19 +104,46 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
                                         </div>
                                         <div className={classes.label}>
                                           <span style={index == 0 ?{width:"35%"}:{width:"37%"}}>Тип поздравления</span>
-                                          <div style={index == 0 ?{width:"65%"}:{width:"63%"}}>
-                                            <InputFilterSelectedType
-                                                // className={classes.input}
-                                                name={fieldCongratulation_type}
-                                                value={congratulations.congratulation_type_id}
-                                                handleChange={(value:any) => setFieldValue(fieldCongratulation_type, value)}
-                                                options={assetsOptionsCongratulation}
-                                                placeholder="Выберите"
-                                                loading={assetsLoading}
-                                                helperText={touchedFieldCongratulation_type && errorFieldCongratulation_type ? errorFieldCongratulation_type : ""}
-                                                error={Boolean(touchedFieldCongratulation_type && errorFieldCongratulation_type)}
-                                            />
-                                          </div>
+                                            <div
+                                                style={
+                                                    index == 0
+                                                        ? { width: "65%" }
+                                                        : { width: "63%" }
+                                                }
+                                            >
+                                                <ValidationErrorWrapper
+                                                    inputClassName="ant-select-selector"
+                                                    helperText={
+                                                        touchedFieldCongratulation_type &&
+                                                        errorFieldCongratulation_type
+                                                            ? errorFieldCongratulation_type
+                                                            : ""
+                                                    }
+                                                    error={Boolean(
+                                                        touchedFieldCongratulation_type &&
+                                                        errorFieldCongratulation_type
+                                                    )}
+                                                >
+                                                    <InputFilterSelectedType
+                                                        // className={classes.input}
+                                                        name={fieldCongratulation_type}
+                                                        value={
+                                                            congratulations.congratulation_type_id
+                                                        }
+                                                        handleChange={(value: any) =>
+                                                            setFieldValue(
+                                                                fieldCongratulation_type,
+                                                                value
+                                                            )
+                                                        }
+                                                        options={
+                                                            assetsOptionsCongratulation
+                                                        }
+                                                        placeholder="Выберите"
+                                                        loading={assetsLoading}
+                                                    />
+                                                </ValidationErrorWrapper>
+                                            </div>
                                         </div>
                                         <div className={classes.label}>
                                           <span style={index == 0 ?{width:"35%"}:{width:"37%"} }>Другое</span>

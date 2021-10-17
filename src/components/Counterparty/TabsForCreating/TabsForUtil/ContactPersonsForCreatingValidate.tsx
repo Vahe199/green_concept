@@ -5,14 +5,16 @@ export const validationSchemaContactPerson = yup.object({
   firstname: yup.string().required("Обязательное поле"),
   surname: yup.string().required("Обязательное поле"),
   birthdate: yup.string().required("Обязательное поле"),
-    branches:yup.string()
+    branches: yup.array()
+        .of(yup.number().required("Обязательное поле"))
+        .strict()
         .required("Обязательное поле"),
   contact_congratulations: yup
     .array()
     .of(
       yup.object().shape({
         name: yup.string().required("Обязательное поле"),
-        congratulation_type_id: yup.string().required("Обязательное поле"),
+        congratulation_type_id: yup.number().nullable(true).required("Обязательное поле"),
         other: yup.string().required("Обязательное поле"),
       })
     )
@@ -23,8 +25,20 @@ export const validationSchemaContactPerson = yup.object({
     .of(
       yup.object().shape({
         direction_id: yup.string().required("Обязательное поле"),
-        employee_id: yup.string().required("Обязательное поле"),
+        employee_id: yup.number().nullable(true).required("Обязательное поле"),
         info: yup.string().required("Обязательное поле"),
+      })
+    )
+    .required("Обязательное поле"),
+    contact_contractors: yup
+    .array()
+    .of(
+      yup.object().shape({
+          role_id: yup.number()
+              .nullable(true)
+              .required("Обязательное поле"),
+          position: yup.string().required("Обязательное поле"),
+          main: yup.number().nullable(true).required("Обязательное поле"),
       })
     )
     .required("Обязательное поле"),
@@ -55,8 +69,7 @@ export const validationSchemaContactPerson = yup.object({
       })
     )
     .required("Обязательное поле"),
-  service_type_id: yup.string().required("Обязательное поле"),
+  service_type_id: yup.number().nullable(true).required("Обязательное поле"),
   sex: yup.string().required("Обязательное поле"),
-  status_id: yup.string().required("Обязательное поле"),
-  contractors_role_id: yup.string().required("Обязательное поле"),
+  status_id: yup.number().nullable(true).required("Обязательное поле"),
 });

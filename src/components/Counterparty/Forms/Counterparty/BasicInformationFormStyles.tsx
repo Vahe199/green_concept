@@ -29,6 +29,13 @@ export const useStylesBasicInformation = makeStyles((theme: Theme) =>
                 fontSize: 14,
                 marginTop: 16
             },
+            "& .ant-select-selection-placeholder":{
+                fontSize:16
+            },
+            "& .ant-select-selection-item":{
+                fontSize:16,
+                fontWeight:400
+            },
 
         },
         textArea: {
@@ -107,6 +114,13 @@ export const useStylesContactsFromGreen = makeStyles((theme: Theme) =>
             },
             "& .MuiFormControlLabel-root": {
                 fontSize: 16,
+            },
+            "& .ant-select-selection-placeholder":{
+                fontSize:16
+            },
+            "& .ant-select-selection-item":{
+                fontSize:16,
+                fontWeight:400
             },
         },
         textArea: {
@@ -208,6 +222,13 @@ export const useStylesInformationCongratulations = makeStyles((theme: Theme) =>
             },
             "& .MuiFormControlLabel-root": {
                 fontSize: 10,
+            },
+            "& .ant-select-selection-placeholder":{
+                fontSize:16
+            },
+            "& .ant-select-selection-item":{
+                fontSize:16,
+                fontWeight:400
             },
         },
         paper: {

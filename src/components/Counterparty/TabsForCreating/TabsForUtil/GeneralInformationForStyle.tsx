@@ -142,14 +142,21 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
             "& .searchMode .ant-select-arrow": {
                 display: "none",
             },
+            "& .ant-select-selection-placeholder":{
+                fontSize:16,
+                marginLeft:18,
+            },
             "& .searchMode .ant-select-selection-search": {
                 // top: 4,
                 left: 24,
+
                 "& .ant-select-selection-search-input": {
                     fontSize:16,
                     paddingLeft:8,
-                    fontWeight:400
+                    fontWeight:400,
+
                 },
+
             },
             "& .searchMode .ant-select-selection-item": {
                 top: 0,

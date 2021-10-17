@@ -13,7 +13,7 @@ import {validationSchema} from "./TabsForUtil/GeneralInformationForValidate";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {notifyError, notifySuccess} from "../Core/utils/ToastNotify";
-import ValidationErrorWrapper from "../Core/FilterInputs/ValidationErrorWrapper";
+import ValidationErrorWrapper from "../Core/utils/ValidationErrorWrapper";
 import {MagnifyingGlass} from "../../../IMG/SVG/MagnifyingGlass";
 import InputFilterSelect from "../Core/FilterInputs/InputFilterSelect";
 
@@ -33,11 +33,10 @@ export const GeneralInformationForCreating = () => {
       (state) => state.counterparties
   );
   const companyGroupFilter =
-      group.length === 0 || group.length > 3
-          ? companyGroupFilterInital.filter(
+     companyGroupFilterInital.filter(
               ({ full_name }: { full_name: string }) => full_name.includes(group)
           )
-          : companyGroupFilterInital;
+
   useEffect(() => {
     !companyGroupFilterInital.length &&
     setCompanyGroupFilterInital(contractors);
@@ -175,7 +174,7 @@ export const GeneralInformationForCreating = () => {
                                     const touchedFieldName = getIn(touched, fieldName);
                                     const errorFieldName = getIn(errors, fieldName);
                                     return(
-                                        <div key={index} style={{display:"flex",flexDirection:"row",alignItems:"center",marginBottom:16}}>
+                                        <div key={index} style={{display:"flex",flexDirection:"row",marginBottom:16}}>
                                           <div style={index > 0 ? {width:"80%"}:{width:"100%"}}>
                                               <ValidationErrorWrapper
                                                   inputClassName="ant-select-selector"
@@ -196,7 +195,7 @@ export const GeneralInformationForCreating = () => {
                                               </ValidationErrorWrapper>
                                           </div>
 
-                                          { index == 0 ? "":<div style={{marginLeft: 16 ,marginTop:-9}}
+                                          { index == 0 ? "":<div style={{marginLeft: 16 }}
                                                                  onClick={() => remove(index)}>
                                             <TrashIcon/>
                                           </div>}
@@ -373,6 +372,7 @@ export const GeneralInformationForCreating = () => {
                           <MagnifyingGlass className="searchIcon" />
                           <InputFilterSelect
                               name="parent_id"
+                              placeholder={"Группа компаний"}
                               onSearch={setGroup}
                                 value={values.parent_id}
                               options={companyGroupFilter.map((option: any) => ({

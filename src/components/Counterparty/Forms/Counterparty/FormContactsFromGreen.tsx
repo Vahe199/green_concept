@@ -8,6 +8,7 @@ import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import {validationSchemaContactsFromGreen} from "./BasicInformationFormValidationSchema";
 import {useStylesContactsFromGreen} from "./BasicInformationFormStyles";
+import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
 
 
 type InfoProps = {
@@ -56,7 +57,8 @@ const initialValues = {
             color="primary"
             type="submit"
             className={classes.btnSubmit}
-            onClick={() => setChangeContactsFromGreen(true)}
+            // onClick={() => setChangeContactsFromGreen(true)}
+            onClick={() => console.log(errors)}
           >
             Сохранить
           </Button>
@@ -85,17 +87,36 @@ const initialValues = {
                                 <div className={classes.label}>
                                   <span style={index == 0 ?{width:"35%"}:{width:"37%"}}>Направление</span>
                                   <div style={index == 0 ?{width:"65%"}:{width:"63%"}}>
-                                    <InputFilterSelectedType
-                                        // className={classes.input}
-                                        name={fieldDirection}
-                                        value={employees.direction_id}
-                                        handleChange={(value:any) => setFieldValue(fieldDirection, value)}
-                                        options={assetsOptionsDirections}
-                                        placeholder="Выберите"
-                                        loading={assetsLoading}
-                                        helperText={touchedFieldDirection && errorFieldDirection ? errorFieldDirection : ""}
-                                        error={Boolean(touchedFieldDirection && errorFieldDirection)}
-                                    />
+                                      <ValidationErrorWrapper
+                                          inputClassName="ant-select-selector"
+                                          helperText={
+                                              touchedFieldDirection &&
+                                              errorFieldDirection
+                                                  ? errorFieldDirection
+                                                  : ""
+                                          }
+                                          error={Boolean(
+                                              touchedFieldDirection &&
+                                              errorFieldDirection
+                                          )}
+                                      >
+                                          <InputFilterSelectedType
+                                              // className={classes.input}
+                                              name={fieldDirection}
+                                              value={employees.direction_id}
+                                              handleChange={(value: any) =>
+                                                  setFieldValue(
+                                                      fieldDirection,
+                                                      value
+                                                  )
+                                              }
+                                              options={
+                                                  assetsOptionsDirections
+                                              }
+                                              placeholder="Выберите"
+                                              loading={assetsLoading}
+                                          />
+                                      </ValidationErrorWrapper>
                                   </div>
                                 </div>
                                 <div className={classes.label}>
@@ -126,16 +147,22 @@ const initialValues = {
                                 <div className={classes.label} style={{alignItems:"flex-start"}}>
                                   <span style={index == 0 ?{width:"35%"}:{width:"37%"}}>Дополнительная информация</span>
                                   <div style={index == 0 ?{width:"65%"}:{width:"63%"}}>
+                                      <ValidationErrorWrapper
+                                          inputClassName="makeStyles-textAreas"
+                                          error={Boolean(touchedFieldInfo && errorFieldInfo)}
+                                          helperText={touchedFieldInfo && errorFieldInfo ? errorFieldInfo : ""}
+                                      >
+                                                <textarea
+                                                    className={classes.textAreas}
+                                                    name={fieldInfo}
+                                                    placeholder={"Введите текст"}
+                                                    value={employees.info}
+                                                    onChange={handleChange}
 
-                                                                                <textarea
-                                                                                    className={classes.textAreas}
-                                                                                    name={fieldInfo}
-                                                                                    placeholder={"Введите текст"}
-                                                                                    value={employees.info}
-                                                                                    onChange={handleChange}
-                                                                                    // error={Boolean(touchedFieldInfo && errorFieldInfo)}
-                                                                                    // helperText={touchedFieldInfo && errorFieldInfo ? errorFieldInfo : ""}
-                                                                                >Расскажите о себе</textarea>
+                                                >
+                                                  Расскажите о себе
+                                                </textarea>
+                                      </ValidationErrorWrapper>
                                   </div>
                                 </div>
                               </div>

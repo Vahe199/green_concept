@@ -8,7 +8,7 @@ const headers = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjM0NDY1NjEwLCJleHAiOjE2MzQ1NTIwMTAsIm5iZiI6MTYzNDQ2NTYxMCwianRpIjoiSEg0VnJ1S3pUb3p5MkprNiIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.URqcBrDqJMgXUNtUqUiqXxz1n0bB9EWGXq7W2wlMjKI`,
+  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9ncmVlbi1raXMudGVjbWFuLnJ1XC9hcGlcL2xvZ2luIiwiaWF0IjoxNjM0NDY1NDQ0LCJleHAiOjE2MzQ1NTE4NDQsIm5iZiI6MTYzNDQ2NTQ0NCwianRpIjoicjV3SHNZWk1LSE1tMHRYTSIsInN1YiI6MTU2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.Dwa4VddUZtWLIXG977YMym_DnocVUCln9PQlUlv79lI`,
 };
 
 const createAxios = () => {
@@ -85,6 +85,28 @@ export const counterpartiesApi = {
     return axios.request({
       method: "put",
       url: `contractors/contacts_info/${id}`,
+      data: formData,
+    });
+  },
+
+  changeContactGeneralInfoData(formData: any, id: any) {
+    return axios.request({
+      method: "put",
+      url: `contacts/general_info/${id}`,
+      data: formData,
+    });
+  },
+  changeContactCongratulationsData(formData: any, id: any) {
+    return axios.request({
+      method: "put",
+      url: `contacts/congratulations_info/${id}`,
+      data: formData,
+    });
+  },
+  changeContactEmployeesData(formData: any, id: any) {
+    return axios.request({
+      method: "put",
+      url: `contacts/green_employee_info/${id}`,
       data: formData,
     });
   },

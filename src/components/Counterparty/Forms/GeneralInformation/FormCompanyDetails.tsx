@@ -1,12 +1,15 @@
 import {Button, Paper, TextField} from "@material-ui/core";
 import {FieldArray, Form, Formik, getIn} from "formik";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 import {useActions} from "../../../../redux/type_redux_hook/useAction";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import {validationSchemaFormCompanyDetails} from "./GeneralInformationValidationSchema";
 import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
 import {useStylesCompanyDetails} from "./GeneralInformationStyles";
+import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
+import {MagnifyingGlass} from "../../../../IMG/SVG/MagnifyingGlass";
+import InputFilterSelect from "../../Core/FilterInputs/InputFilterSelect";
 
 type Props = {
   // change: boolean;
@@ -25,8 +28,24 @@ export const FormCompanyDetails: React.FC<Props> = ({
     AuthorData;
   const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
   const { branches,}: any = assets;
+  const { contractors, loading } = useTypedSelector(
+      (state) => state.counterparties
+  );
   const classes = useStylesCompanyDetails();
-
+  const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
+      []
+  );
+  const [group, setGroup] = useState("");
+  const companyGroupFilter =
+      group.length === 0 || group.length > 3
+          ? companyGroupFilterInital.filter(
+              ({ full_name }: { full_name: string }) => full_name.includes(group)
+          )
+          : companyGroupFilterInital;
+  useEffect(() => {
+    !companyGroupFilterInital.length &&
+    setCompanyGroupFilterInital(contractors);
+  }, [contractors]);
   let errorMessage: string = "CompanyDetails";
   useEffect(() => {
     if (error) {
@@ -50,9 +69,10 @@ export const FormCompanyDetails: React.FC<Props> = ({
   const initialValues = {
     full_name: full_name,
     short_name: short_name,
-    parent_id: parent_id,
+    parent_id: parent_id ? parent_id : null,
     branches: ['']
   }
+
   return (
     <div className={classes.root}>
       <Formik
@@ -114,16 +134,28 @@ export const FormCompanyDetails: React.FC<Props> = ({
             />
           </div>
           <div className={classes.label}>
-            <span>Группа компаний (при наличии)</span>
-            <TextField
-              variant={"outlined"}
-              name="parent_id"
-              placeholder={"Группа компаний"}
-              value={values.parent_id}
-              onChange={handleChange}
-              error={touched.parent_id && Boolean(errors.parent_id)}
-              helperText={touched.parent_id && errors.parent_id}
-            />
+            <span style={{width:"40%"}}>Группа компаний (при наличии)</span>
+            <div className={classes.searchWraper} style={{width:"60%"}}>
+              <MagnifyingGlass className="searchIcon" />
+              <InputFilterSelect
+                  name="parent_id"
+                  placeholder={"Группа компаний"}
+                  onSearch={setGroup}
+                  value={values.parent_id}
+                  options={companyGroupFilter.map((option: any) => ({
+                    key: option.id,
+                    value: option.id,
+                    label: option.full_name,
+                  }))}
+                  filterOption={false}
+                  onSelect={(id: number) => {
+                    setFieldValue("parent_id", id)
+                  }}
+                  notFoundContent={null}
+                  className={"searchMode "}
+                  showSearch
+              />
+            </div>
           </div>
           <div className={classes.label} style={{ alignItems: "flex-start" }}>
             <span>Отрасль</span>
@@ -140,11 +172,16 @@ export const FormCompanyDetails: React.FC<Props> = ({
                                                     <div key={index} style={{
                                                       display: "flex",
                                                       flexDirection: "row",
-                                                      alignItems: "center"
+                                                      alignItems: "center",
+                                                      marginBottom:16
                                                     }}>
                                                       <div style={index > 0 ? {width: "90%"} : {width: "100%"}}>
+                                                        <ValidationErrorWrapper
+                                                            inputClassName="ant-select-selector"
+                                                            error={Boolean(touchedFieldName && errorFieldName)}
+                                                            helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                        >
                                                         <InputFilterSelectedType
-                                                             className={classes.input}
                                                             name={fieldName}
                                                             handleChange={(value: any) =>
                                                                 setFieldValue(fieldName, value)
@@ -153,9 +190,8 @@ export const FormCompanyDetails: React.FC<Props> = ({
                                                             options={assetsOptionsBranches}
                                                             placeholder="Выберите отрасль"
                                                             loading={assetsLoading}
-                                                            error={Boolean(touchedFieldName && errorFieldName)}
-                                                            helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
                                                         />
+                                                        </ValidationErrorWrapper>
                                                       </div>
 
                                                       {index == 0 ? "" : <div style={{marginLeft: 16, marginTop: -9}}

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { FieldArray, Form, Formik, getIn, Field } from "formik";
+import { FieldArray, Form, Formik, getIn } from "formik";
 import {
   Button,
   Checkbox,
@@ -21,93 +21,59 @@ import moment from "moment";
 import { validationSchemaContactPerson } from "./TabsForUtil/ContactPersonsForCreatingValidate";
 import { useActions } from "../../../redux/type_redux_hook/useAction";
 import ModalListOfContacts from "../../Modals/ModalListOfContacts";
-import ValidationErrorWrapper from "../Core/FilterInputs/ValidationErrorWrapper";
+import ValidationErrorWrapper from "../Core/utils/ValidationErrorWrapper";
 import { Modal } from "antd";
+import {InputAssetsOptions} from "../Core/utils/InputAssetsOptions";
+
 
 export const ContactPersonsForCreating: React.FC = () => {
+
+  const { insertContractorContactData } = useActions();
+  const { assets, load: assetsLoading } = useTypedSelector(
+      (state) => state.assets);
+  const {types_and_services,}: any = assets;
+  const { AuthorData } = useTypedSelector((state) => state.author);
+  const { id }: any = AuthorData;
   const parentRef = useRef<any>({});
   const classes = useStylesContactPersons();
+  const Options = InputAssetsOptions();
 
   const [contractorId, setContractorId] = React.useState(1);
-  const { assets, load: assetsLoading } = useTypedSelector(
-    (state) => state.assets
-  );
-  const {
-    crms,
-    congratulation_types,
-    branches,
-    types_and_services,
-    contact_roles,
-    contact_statuses,
-  }: any = assets;
   const [showModal, setShowModal] = useState(false);
-  const { insertContractorContactData } = useActions();
+
+  const assetsOptionsServiceType = types_and_services[
+  contractorId - 1
+      ]?.services?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.name,
+  }));
+
   const initialValues = {
-    birthdate: "",
-    contact_congratulations: [
-      { name: "", congratulation_type_id: "", other: "" },
-    ],
-    contact_employees: [{ direction_id: "", employee_id: "", info: "" }],
-    contractor_type_id: "",
-    delivery_address: "",
-    emails: [{ email: "" }],
     firstname: "",
     middlename: "",
+    surname: "",
+    contractor_type_id: "",
+    sex: "Муж",
+    birthdate: "",
+    delivery_address: "",
+    emails: [{ email: "" }],
     phones: [
       { phone: "", phone_type: "Рабочий" },
       { phone: "", phone_type: "Мобильный" },
     ],
-    service_type_id: "",
-    sex: "Муж",
-    status_id: "",
-    surname: "",
+    contact_contractors:[{main:1,role_id:null,position:"",contractor_id:id}],
+    contact_employees: [{ direction_id: "", employee_id: null, info: "" }],
+    contact_congratulations: [
+      { name: "", congratulation_type_id: null, other: "" },
+    ],
+    status_id: null,
+    service_type_id: null,
+    branches: [''],
 
-    contractors_main: 1,
-    contractors_role_id: "",
-    contractors_position: "",
-    branches: "",
+
   };
-  const assetsOptionsStatus = contact_statuses?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
-  const assetsOptionsRoles = contact_roles?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
-  const assetsOptionsCounterpartyType = types_and_services?.map(
-    (option: any) => ({
-      key: option.id,
-      value: option.id ? option.id : 0,
-      label: option.name,
-    })
-  );
-  const assetsOptionsServiceType = types_and_services[
-    contractorId - 1
-  ]?.services?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
-  const assetsOptionsBranches = branches?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
-  const assetsOptionsDirections = branches?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
-  const assetsOptionsCongratulation = congratulation_types?.map(
-    (option: any) => ({
-      key: option.id,
-      value: option.id ? option.id : 0,
-      label: option.name,
-    })
-  );
+
   return (
     <div
       className={classes.mainContainer}
@@ -170,8 +136,13 @@ export const ContactPersonsForCreating: React.FC = () => {
                         style={{ width: "60%" }}
                       >
                         <span>
+                          <FieldArray name="contact_contractors">
+                     {() => {
+                       const fieldName = `contact_contractors[0].main`;
+
+                     return(
                           <Checkbox
-                            name="contractors_main"
+                            name={fieldName}
                             icon={<CheckSquareChecked color="#5B6770" />}
                             checkedIcon={
                               <CheckSquareUnChecked color="#5B6770" />
@@ -179,14 +150,18 @@ export const ContactPersonsForCreating: React.FC = () => {
                             inputProps={{
                               "aria-label": "checkbox with default color",
                             }}
-                            value={values.contractors_main === 1 ? true : false}
-                            onChange={(e: any) =>
+                            value={values.contact_contractors[0].main === 1 ? true : false}
+                            onChange={(e: any) => {
                               setFieldValue(
-                                "contractors_main",
-                                e.target.checked ? 0 : 1
+                                  fieldName,
+                                  e.target.checked ? 0 : 1
                               )
+                              console.log(values.contact_contractors[0].main)
+                            }
                             }
                           />
+                     )}}
+                          </FieldArray>
                         </span>
                         <div
                           className={classes.flexInitial}
@@ -207,7 +182,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                 setFieldValue("status_id", value)
                               }
                               value={values.status_id}
-                              options={assetsOptionsStatus}
+                              options={Options.assetsOptionsStatus}
                               placeholder="Выберите отрасль"
                               loading={assetsLoading}
 
@@ -304,55 +279,70 @@ export const ContactPersonsForCreating: React.FC = () => {
                           placeholder="01.01.1970"
                           format="DD.MM.YYYY"
                         />
-                        <span></span>
                       </ValidationErrorWrapper>
                     </div>
                   </div>
                   <div className={classes.label}>
                     <span>Роль</span>
                  <div style={{width:"60%"}}>
-                   <ValidationErrorWrapper
-                       inputClassName="ant-select-selector"
-                       error={
-                         touched.contractors_role_id &&
-                         Boolean(errors.contractors_role_id)
-                       }
-                       helperText={
-                         touched.contractors_role_id &&
-                         errors.contractors_role_id
-                       }
-                   >
-                     <InputFilterSelectedType
-                         name="contractors_role_id"
-                         handleChange={(value: any) =>
-                             setFieldValue("contractors_role_id", value)
-                         }
-                         value={values.contractors_role_id}
-                         options={assetsOptionsRoles}
-                         placeholder="Выберите"
-                         loading={assetsLoading}
+                   <FieldArray name="contact_contractors">
+                     {() => {
+                       const fieldName = `contact_contractors[0].role_id`;
+                       const touchedFieldName = getIn(touched, fieldName);
+                       const errorFieldName = getIn(errors, fieldName);
 
-                     />
-                   </ValidationErrorWrapper>
+                       return( <ValidationErrorWrapper
+                           inputClassName="ant-select-selector"
+                           error={Boolean(
+                               touchedFieldName && errorFieldName
+                           )}
+                           helperText={
+                             touchedFieldName && errorFieldName
+                                 ? errorFieldName
+                                 : ""
+                           }
+                       >
+                         <InputFilterSelectedType
+                             name={fieldName}
+                             handleChange={(value: any) =>
+                                 setFieldValue(fieldName, value)
+                             }
+                             value={values.contact_contractors[0].role_id}
+                             options={Options.assetsOptionsRoles}
+                             placeholder="Выберите"
+                             loading={assetsLoading}
+
+                         />
+                       </ValidationErrorWrapper>
+                       )}}
+                   </FieldArray>
                  </div>
                   </div>
                   <div className={classes.label}>
                     <span>Должность</span>
+                    <FieldArray name="contact_contractors">
+                      {() => {
+                        const fieldName = `contact_contractors[0].position`;
+                        const touchedFieldName = getIn(touched, fieldName);
+                        const errorFieldName = getIn(errors, fieldName);
+
+                        return(
                     <TextField
                       variant={"outlined"}
-                      name="contractors_position"
+                      name={fieldName}
                       placeholder={"Должность"}
-                      value={values.contractors_position}
+                      value={values.contact_contractors[0].position}
                       onChange={handleChange}
-                      error={
-                        touched.contractors_position &&
-                        Boolean(errors.contractors_position)
-                      }
+                      error={Boolean(
+                          touchedFieldName && errorFieldName
+                      )}
                       helperText={
-                        touched.contractors_position &&
-                        errors.contractors_position
+                        touchedFieldName && errorFieldName
+                            ? errorFieldName
+                            : ""
                       }
-                    />
+                    />)}}
+                    </FieldArray>
                   </div>
                   <div className={classes.label}>
                     <span>Тип контрагента</span>
@@ -376,7 +366,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                           setContractorId(value);
                         }}
                         value={values.contractor_type_id}
-                        options={assetsOptionsCounterpartyType}
+                        options={Options.assetsOptionsCounterpartyType}
                         placeholder="Выберите"
                         loading={assetsLoading}
                       />
@@ -414,24 +404,41 @@ export const ContactPersonsForCreating: React.FC = () => {
                   <div className={classes.label}>
                     <span>Отрасль</span>
                     <div style={{width:"60%"}}>
+                      <FieldArray name="branches">
+                        {() => {
+                          const fieldName = `branches[${0}]`;
+                          const touchedFieldName = getIn(touched, fieldName);
+                          const errorFieldName = getIn(errors, fieldName);
+
+                          return(
                       <ValidationErrorWrapper
                           inputClassName="ant-select-selector"
-                          error={touched.branches && Boolean(errors.branches)}
-                          helperText={touched.branches && errors.branches}
+                          helperText={
+                            touchedFieldName &&
+                            errorFieldName
+                                ? errorFieldName
+                                : ""
+                          }
+                          error={Boolean(
+                              touchedFieldName &&
+                              errorFieldName
+                          )}
                       >
                       <InputFilterSelectedType
                         // className={classes.input}
-                        name="branches"
+                        name={fieldName}
                         handleChange={(value: any) =>
-                          setFieldValue("branches", value)
+                          setFieldValue(fieldName, value)
                         }
-                        value={values.branches}
-                        options={assetsOptionsBranches}
+                        value={values.branches[0]}
+                        options={Options.assetsOptionsBranches}
                         placeholder="Выберите"
                         loading={assetsLoading}
 
                       />
                       </ValidationErrorWrapper>
+                              )}}
+                      </FieldArray>
                     </div>
                   </div>
                   <div
@@ -608,7 +615,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                     <span style={{ width: "60%" }}>
                       <div
                         style={{
-                          width: "80%",
+                          width: "100%",
                           display: "flex",
                           justifyContent: "space-between",
                         }}
@@ -638,7 +645,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                       <TextField
                                         fullWidth
                                         style={{
-                                          width: "90%",
+                                          width: "100%",
                                           marginBottom: 16,
                                         }}
                                         placeholder={`email${
@@ -811,7 +818,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                     )
                                                   }
                                                   options={
-                                                    assetsOptionsDirections
+                                                    Options.assetsOptionsDirections
                                                   }
                                                   placeholder="Выберите"
                                                   loading={assetsLoading}
@@ -893,7 +900,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                 }
                                               >
                                                 <ValidationErrorWrapper
-                                                    inputClassName="makeStyles-textAreas-70"
+                                                    inputClassName="makeStyles-textAreas"
                                                     error={Boolean(touchedFieldInfo && errorFieldInfo)}
                                                     helperText={touchedFieldInfo && errorFieldInfo ? errorFieldInfo : ""}
                                                 >
@@ -1091,7 +1098,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                   )
                                                 }
                                                 options={
-                                                  assetsOptionsCongratulation
+                                                  Options.assetsOptionsCongratulation
                                                 }
                                                 placeholder="Выберите"
                                                 loading={assetsLoading}

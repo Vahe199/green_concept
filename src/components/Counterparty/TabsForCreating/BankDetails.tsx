@@ -6,6 +6,7 @@ import { useActions } from "../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import { PencilSimpleIcon } from "../../../IMG/SVG/PencilSimpleIcon";
 import { ContractorBankDetailType } from "../Forms/BankAccountForm/CreatEditBankAccount";
+import clsx from "clsx";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,10 +20,12 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     paper: {
-      padding: 16,
+      padding: "8px 16px",
       color: "#3B4750",
       borderRadius: 4,
       boxShadow: "none",
+      width: 608,
+      height: 191,
     },
     btn: {
       textTransform: "none",
@@ -44,6 +47,9 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "40.1%",
       flexWrap: "wrap",
       textTransform: "none",
+    },
+    textSmall: {
+      fontWeight: 400,
     },
   })
 );
@@ -80,11 +86,14 @@ export const BankDetails: React.FC<BankProps> = ({
   const classes = useStyles();
   const Details = (props: any) => {
     return (
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", marginTop: "1%" }}>
         <Typography variant={"button"} className={classes.description}>
           {props.item}
         </Typography>
-        <Typography variant={"body2"} className={classes.description}>
+        <Typography
+          variant={"button"}
+          className={clsx(classes.description, classes.textSmall)}
+        >
           {props.value}
         </Typography>
       </div>
@@ -95,7 +104,7 @@ export const BankDetails: React.FC<BankProps> = ({
     <div className={classes.root}>
       {data.length && !loading
         ? data.map((details) => (
-            <div style={{ width: "45%", marginRight:16 }}>
+            <div style={{ width: 608, marginRight: 16 }}>
               <div>
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}

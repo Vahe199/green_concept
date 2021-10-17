@@ -1,20 +1,15 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import { Table, Modal } from "antd";
-import InputFilterSelectedType from "../Counterparty/Core/FilterInputs/InputFilterSelect";
-import InputFilterSearch from "../Counterparty/Core/FilterInputs/InputFilterSearch";
-import { SortingButtons } from "../../IMG/SVG/sortingButtonsIcon";
-import InputFilterDatePicker from "../Counterparty/Core/FilterInputs/InputFilterDatePicker";
-import Loader from "../Layout/Loader/Loader";
-import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
-import { Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
-import close from "../../IMG/icons/close.png";
-import { useActions } from "../../redux/type_redux_hook/useAction";
-import { useHistory } from "react-router-dom";
-import { MagnifyingGlass } from "../../IMG/SVG/MagnifyingGlass";
-import InputFilterSelect from "../Counterparty/Core/FilterInputs/InputFilterSelect";
+import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
+import { makeStyles } from "@material-ui/core/styles";
+import { Modal, Table } from "antd";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import close from "../../IMG/icons/close.png";
+import { MagnifyingGlass } from "../../IMG/SVG/MagnifyingGlass";
+import { useActions } from "../../redux/type_redux_hook/useAction";
+import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
+import InputFilterSearch from "../Counterparty/Core/FilterInputs/InputFilterSearch";
+import InputFilterSelect from "../Counterparty/Core/FilterInputs/InputFilterSelect";
 
 const useStyles = makeStyles({
   root: {

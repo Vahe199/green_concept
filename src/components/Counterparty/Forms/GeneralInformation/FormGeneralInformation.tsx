@@ -11,6 +11,7 @@ import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
 import { validationSchemaGeneralInfo } from "./GeneralInformationValidationSchema";
 import { useStylesGeneralInformation } from "./GeneralInformationStyles";
 import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
+import {InputAssetsOptions} from "../../Core/utils/InputAssetsOptions";
 
 type Props = {
   // change: boolean;
@@ -30,12 +31,22 @@ export const FormGeneralInformation: React.FC<Props> = ({
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
-  const { crms, types_and_services }: any = assets;
+  const { types_and_services }: any = assets;
 
   const [contractorId, setContractorId] = React.useState(1);
   let errorMessage: string = "General";
 
   const [validateValue, setValidateValue] = React.useState<string>();
+
+const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
+
+  const assetsOptionsServiceType = types_and_services[
+  contractorId - 1
+      ]?.services?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.name,
+  }));
 
   useEffect(() => {
     if (error) {
@@ -50,25 +61,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
     }
   }, [error, isChange, validateValue]);
 
-  const assetsOptionsCounterpartyType = types_and_services?.map(
-    (option: any) => ({
-      key: option.id,
-      value: option.id ? option.id : 0,
-      label: option.name,
-    })
-  );
-  const assetsOptionsCRMS = crms?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.full_name,
-  }));
-  const assetsOptionsServiceType = types_and_services[
-    contractorId - 1
-  ]?.services?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
+
   const initialValues = {
     org_type: org_type ? org_type : "ЮЛ",
     contractor_type_id: type,

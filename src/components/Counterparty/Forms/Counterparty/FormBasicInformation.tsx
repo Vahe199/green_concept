@@ -105,6 +105,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                        return(
                            <Checkbox
                                name={fieldName}
+
                                icon={<CheckSquareChecked color="#5B6770" />}
                                checkedIcon={
                                  <CheckSquareUnChecked color="#5B6770" />

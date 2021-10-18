@@ -33,7 +33,7 @@ import InputFilterSelect from "../Core/FilterInputs/InputFilterSelect";
 
 export const ContactPersonsForCreating: React.FC = () => {
 
-  const { insertContractorContactData,recoveryContractorContactState } = useActions();
+  const { insertContractorContactData,recoveryContractorContactState,getContactPersonsListData } = useActions();
   const { assets, load: assetsLoading } = useTypedSelector(
       (state) => state.assets);
   const {types_and_services,}: any = assets;
@@ -132,8 +132,10 @@ const searchOptions = SearchContactPerson()
                 <span className={classes.addListItem}>
                   <span style={{ fontSize: 17, marginTop: 15 }}> + </span>
                   <span
-                    // onClick={() => setShowModal(true)}
-                     onClick={() => search.fetchContactPerson()}
+                     onClick={() => {
+                       // setShowModal(true)
+                       getContactPersonsListData()
+                     }}
                     className={classes.selectItem}
                     style={{ marginTop: 15 }}
                   >

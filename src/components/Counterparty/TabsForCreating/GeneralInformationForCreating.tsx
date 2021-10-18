@@ -29,6 +29,9 @@ export const GeneralInformationForCreating = () => {
   );
   const [group, setGroup] = useState("");
 
+  //Now I work
+  const [legalRegistrationAddress, setLegalRegistrationAddress] = useState<string>('')
+
   const Options = InputAssetsOptions();
   const { insertContractorGeneralData,recoveryAuthorDataState } = useActions();
   const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
@@ -471,8 +474,10 @@ export const GeneralInformationForCreating = () => {
                             placeholder={"123456 город улица строени дом офис"}
                             value={values.legal_registration_address}
                             onChange={handleChange}
+                            onBlur={() => setLegalRegistrationAddress(values.legal_registration_address)}
                             error={touched.legal_registration_address && Boolean(errors.legal_registration_address)}
                             helperText={touched.legal_registration_address && errors.legal_registration_address}
+                            //onFocus={() => setLegalRegistrationAddress(values.legal_registration_address)}
                         />
                       </div>
                       <div className={classes.label}>
@@ -482,8 +487,9 @@ export const GeneralInformationForCreating = () => {
                             variant={"outlined"}
                             name="actual_address"
                             placeholder={"123456 город улица строени дом офис"}
-                            disabled={matchesAddressActualAddress}
-                            value={values.actual_address}
+                            //disabled={matchesAddressActualAddress}
+                            //value={values.actual_address}
+                            value={!matchesAddressActualAddress ? legalRegistrationAddress : 'values.actual_address'}
                             onChange={handleChange}
                             error={touched.actual_address && Boolean(errors.actual_address)}
                             helperText={touched.actual_address && errors.actual_address}
@@ -498,7 +504,7 @@ export const GeneralInformationForCreating = () => {
                             color="default"
                             inputProps={{ "aria-label": "checkbox with default color" }}
                             value={matchesAddressActualAddress}
-                            onChange={()=>setMatchesAddressActualAddress(!matchesAddressActualAddress)}
+                            onChange={() => setMatchesAddressActualAddress(!matchesAddressActualAddress)}
                         />
                         <span className={classes.checkText}>
                   Совпадает с юридическим адресом
@@ -510,8 +516,9 @@ export const GeneralInformationForCreating = () => {
                             variant={"outlined"}
                             name="post_address"
                             placeholder={"123456 город улица строени дом офис"}
-                            disabled={matchesAddressMailingAddress}
-                            value={values.post_address}
+                            //disabled={matchesAddressMailingAddress}
+                            //value={values.post_address}
+                            value={!matchesAddressActualAddress ? legalRegistrationAddress : 'values.post_address'}
                             onChange={handleChange}
                             error={touched.post_address && Boolean(errors.post_address) }
                             helperText={touched.post_address &&errors.post_address}
@@ -526,7 +533,7 @@ export const GeneralInformationForCreating = () => {
                             color="default"
                             inputProps={{ "aria-label": "checkbox with default color" }}
                             value={matchesAddressMailingAddress}
-                            onChange={()=>setMatchesAddressMailingAddress(!matchesAddressMailingAddress)}
+                            onChange={() => setMatchesAddressMailingAddress(!matchesAddressMailingAddress)}
                         />
                         <span className={classes.checkText}>
                   Совпадает с юридическим адресом

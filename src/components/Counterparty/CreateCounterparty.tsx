@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import {makeStyles} from "@material-ui/core/styles";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useHistory, withRouter} from "react-router-dom";
 import {CaretDoubleLeft} from "../../IMG/SVG/CaretDoubleLeft";
 import {useTypedSelector} from "../../redux/type_redux_hook/useTypedSelector";
@@ -18,6 +18,7 @@ import CreatEditBankAccount, {
 import {BankDetails} from "./TabsForCreating/BankDetails";
 import {ContactPersonsForCreating} from "./TabsForCreating/ContactPersonsForCreating";
 import {GeneralInformationForCreating} from "./TabsForCreating/GeneralInformationForCreating";
+import {useActions} from "../../redux/type_redux_hook/useAction";
 
 // interface TabPanelProps {
 //   children?: React.ReactNode;
@@ -93,6 +94,10 @@ const useStyles = makeStyles((theme) => ({
 const CreateCounterparty = (props: any) => {
   const { AuthorData } = useTypedSelector((state) => state.author);
   let { id }: any = AuthorData;
+  const {getContactPersonsDataWithId} = useActions()
+  useEffect(()=>{
+    getContactPersonsDataWithId(110)
+  },[])
   let history = useHistory();
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);

@@ -42,6 +42,8 @@ export const GeneralInformationForCreating = () => {
           ({ full_name }: { full_name: string }) => full_name.includes(group)
       )
 
+  const [validateValue, setValidateValue] = useState<string>("ЮЛ")
+
   useEffect(() => {
     !companyGroupFilterInital.length &&
     setCompanyGroupFilterInital(contractors);
@@ -55,7 +57,7 @@ export const GeneralInformationForCreating = () => {
       notifySuccess()
       recoveryAuthorDataState()
     }
-  },[success,error])
+  },[success,error,validateValue])
 
   const assetsOptionsServiceType = types_and_services[
   contractorId - 1
@@ -71,7 +73,7 @@ export const GeneralInformationForCreating = () => {
     contractor_type_id:"",
     service_type_id:"",
     inn:"",
-    kpp:"",
+    kpp:null,
     ogrn:"",
     nda: 1,
     full_name:"",
@@ -90,7 +92,7 @@ export const GeneralInformationForCreating = () => {
         <ToastContainer style={{fontSize:20, marginTop:"5%"}} />
         <Formik
             initialValues={initialValues}
-            validationSchema={validationSchema}
+            validationSchema={() => validationSchema(validateValue)}
             onSubmit={async (values,action) => {
               console.log(values,"values")
               insertContractorGeneralData(values);
@@ -128,8 +130,10 @@ export const GeneralInformationForCreating = () => {
                   </span>
                           <Radio
                               checked={values.org_type === "ФЛ"}
-                              onChange={(e) =>
-                                  setFieldValue("org_type", e.target.value)
+                              onChange={(e) => {
+                                setFieldValue("org_type", e.target.value);
+                                setValidateValue("ФЛ")
+                              }
                               }
                               value="ФЛ"
                               color="default"
@@ -144,8 +148,10 @@ export const GeneralInformationForCreating = () => {
                   </span>
                           <Radio
                               checked={values.org_type === "ЮЛ"}
-                              onChange={(e) =>
-                                  setFieldValue("org_type", e.target.value)
+                              onChange={(e) => {
+                                setFieldValue("org_type", e.target.value);
+                                setValidateValue("ЮЛ")
+                              }
                               }
                               value="ЮЛ"
                               color="default"

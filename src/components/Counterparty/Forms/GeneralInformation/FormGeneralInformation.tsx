@@ -35,6 +35,8 @@ export const FormGeneralInformation: React.FC<Props> = ({
   const [contractorId, setContractorId] = React.useState(1);
   let errorMessage: string = "General";
 
+  const [validateValue, setValidateValue] = React.useState<string>();
+
   useEffect(() => {
     if (error) {
       setChangeGeneralInformation(true);
@@ -46,7 +48,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
       setChangeGeneralInformation(false);
       recoveryAuthorDataState();
     }
-  }, [error, isChange]);
+  }, [error, isChange, validateValue]);
 
   const assetsOptionsCounterpartyType = types_and_services?.map(
     (option: any) => ({
@@ -73,7 +75,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
     crms: [""],
     service_type_id: service,
     inn: inn,
-    kpp:kpp,
+    kpp:kpp ? kpp : null,
     ogrn: ogrn,
     nda: nda ? nda : 0,
   };
@@ -82,7 +84,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
     <div className={classes.root}>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchemaGeneralInfo}
+        validationSchema={() => validationSchemaGeneralInfo(validateValue)}
         onSubmit={async (values, action) => {
           console.log(values, "values");
           changeAuthorGeneralData(values, id, errorMessage);
@@ -123,7 +125,10 @@ export const FormGeneralInformation: React.FC<Props> = ({
                   </span>
                   <Radio
                     checked={values.org_type === "ФЛ"}
-                    onChange={(e) => setFieldValue("org_type", e.target.value)}
+                    onChange={(e) => {
+                      setFieldValue("org_type", e.target.value);
+                      setValidateValue("ФЛ")
+                    }}
                     value="ФЛ"
                     color="default"
                     name="org_type"
@@ -137,7 +142,10 @@ export const FormGeneralInformation: React.FC<Props> = ({
                   </span>
                   <Radio
                     checked={values.org_type === "ЮЛ"}
-                    onChange={(e) => setFieldValue("org_type", e.target.value)}
+                    onChange={(e) => {
+                      setFieldValue("org_type", e.target.value);
+                      setValidateValue("ЮЛ")
+                    }}
                     value="ЮЛ"
                     color="default"
                     name="org_type"

@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-export const validationSchema = yup.object().shape({
+export const validationSchema = (value: string) => yup.object().shape({
 
     crms: yup.array()
         .of(yup.number().required("Обязательное поле"))
@@ -18,14 +18,13 @@ export const validationSchema = yup.object().shape({
         .required("Обязательное поле"),
     inn: yup
         .string()
-        .min(0, "должен состоять минимум из 10 символов")
+        .min(value == "ЮЛ" ? 10 : 12, `должен состоять минимум из ${value == "ЮЛ" ? 10 : 12} символов`)
         .max(18, "должен состоять максимум из 18 символов")
         .required("Обязательное поле"),
     kpp: yup
-        .string()
+        .string().nullable(true)
         .min(0, "должен состоять минимум из 10 символов")
-        .max(18, "должен состоять максимум из 18 символов")
-        .required("Обязательное поле"),
+        .max(18, "должен состоять максимум из 18 символов"),
     ogrn: yup
         .string()
         .min(0, "должен состоять минимум из 10 символов")

@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateCounterparty = (props: any) => {
-  const { AuthorData } = useTypedSelector((state) => state.author);
+  const { AuthorData ,loading} = useTypedSelector((state) => state.author);
   let { id }: any = AuthorData;
   const {getContactPersonsDataWithId} = useActions()
   useEffect(()=>{
@@ -188,11 +188,13 @@ const CreateCounterparty = (props: any) => {
 
       <div className={classes.bottomField}>
         {props.match.params.item === "author" ? (
+            <div>
           <div>
             {selectedTab === 0 && <InformationUserData />}
             {selectedTab === 1 && <ContractorContactFacesData />}
             {selectedTab === 2 && <CreatingBankDetails />}
           </div>
+            </div>
         ) : props.match.params.item === "new contractor" ? (
           <div>
             {selectedTab === 0 && <GeneralInformationForCreating />}

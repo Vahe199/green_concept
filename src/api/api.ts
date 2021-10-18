@@ -53,6 +53,12 @@ export const counterpartiesApi = {
       ...config,
     });
   },
+  getContractorsDataWithId(id:number) {
+    return axios.request({
+      method: "get",
+      url: `contractors/${id}`,
+    });
+  },
   fetchContractorsAuthor() {
     return axios.request({ method: "get", url: "contractors/authors_list" });
   },

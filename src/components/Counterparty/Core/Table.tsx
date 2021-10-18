@@ -158,7 +158,7 @@ export default function CounterpartiesTable(props: any) {
 
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/${data.id}`);
-    getAuthorData(data);
+    getAuthorData(data.id);
   };
 
   const columns = [

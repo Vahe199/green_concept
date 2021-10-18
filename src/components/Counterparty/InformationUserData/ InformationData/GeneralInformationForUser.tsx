@@ -4,6 +4,7 @@ import React from "react";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
+import {InputAssetsOptions} from "../../Core/utils/InputAssetsOptions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,8 +40,13 @@ export const GeneralInformationForUser: React.FC<Props> = ({
   setChangeGeneralInformation,
 }) => {
   const { AuthorData } = useTypedSelector((state) => state.author);
-  const { crms, org_type, inn, kpp, ogrn, nda, contractor_type_id }: any =
-    AuthorData;
+    const { contractor }: any = AuthorData;
+    const {assetsOptionsCongratulation} = InputAssetsOptions()
+  const { crms, org_type, inn, kpp, ogrn, nda, contractor_type_id }: any = contractor;
+    let contractorType= assetsOptionsCongratulation.filter((type:any) =>type.key == contractor_type_id).map((type:any) =>(
+        <div key={type.id}>{type.label}</div>
+    ))
+    debugger
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -102,14 +108,9 @@ export const GeneralInformationForUser: React.FC<Props> = ({
             style={{ marginTop: 2 }}
             className={classes.title}
           >
-            {contractor_type_id ? (
-              <InputFilterSelectedType
-                value="ShowText"
-                id={contractor_type_id}
-              />
-            ) : (
+            {contractor_type_id ? contractorType :
               "------------------"
-            )}
+           }
           </Typography>
         </div>
           {<div className={classes.div}>

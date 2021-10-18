@@ -44,7 +44,9 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
   setChangeCompanyDetails,
 }) => {
   const { AuthorData } = useTypedSelector((state) => state.author);
-  const { full_name, short_name, group, branches }: any = AuthorData;
+  const { contractor }: any = AuthorData;
+  const { full_name, short_name, group, branches }: any = contractor;
+  debugger
   const classes = useStyles();
   return (
     <div className={classes.root}>

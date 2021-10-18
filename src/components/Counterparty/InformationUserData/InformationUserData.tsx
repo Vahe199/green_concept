@@ -6,6 +6,8 @@ import { FormGeneralInformation } from "../Forms/GeneralInformation/FormGeneralI
 import { CompanyContactsForUser } from "./ InformationData/CompanyContactsForUser";
 import { CompanyDetailsForUser } from "./ InformationData/CompanyDetailsForUser";
 import { GeneralInformationForUser } from "./ InformationData/GeneralInformationForUser";
+import Loader from "../../Layout/Loader/Loader";
+import {useTypedSelector} from "../../../redux/type_redux_hook/useTypedSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,14 +29,14 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export const InformationUserData = () => {
   const classes = useStyles();
-
+const {loading} = useTypedSelector(state => state.author)
   const [changeGeneralInformation, setChangeGeneralInformation] =
     useState<boolean>(false);
   const [changeCompanyDetails, setChangeCompanyDetails] =
     useState<boolean>(false);
   const [changeContacts, setChangeContacts] = useState<boolean>(false);
 
-  return (
+  return (loading ? <Loader/>:
     <div className={classes.root}>
       <div style={{ width: "32%" }}>
         <div>

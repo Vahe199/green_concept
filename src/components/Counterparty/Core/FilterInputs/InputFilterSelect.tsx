@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
         fontSize: 14,
         border: "1px solid #F1F2F3",
       },
+
       "& .ant-select-selector": {
         height: "100% !important",
         fontSize: 14,

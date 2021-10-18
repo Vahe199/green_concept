@@ -140,6 +140,9 @@ export const contractorApi = {
   getContractorContactData() {
     return axios.request({ method: "get", url: "contacts" });
   },
+  getContractorContactDataWithId(id:number) {
+    return axios.request({ method: "get", url: `contacts/${id}` });
+  },
   searchContactPersonData() {
     return axios.request({ method: "get", url: "employees"});
   },

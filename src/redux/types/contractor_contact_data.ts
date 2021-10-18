@@ -3,7 +3,7 @@ import {getContactPersonsListData} from "../store/action_creator/ContractorConta
 export interface ContractorContactDataState {
   ContactPerson:any[];
   NewContactPerson:any[];
-  UpdateContactPerson:any[];
+  PersonContact:any[];
   loading: boolean;
   error: boolean | string;
   success:boolean | string;
@@ -14,6 +14,7 @@ export enum ContractorContactDataActionType {
   INSERT_CONTRACTOR_CONTACT_DATA_SUCCESS = "INSERT_CONTRACTOR_CONTACT_DATA_SUCCESS",
   INSERT_CONTRACTOR_CONTACT_DATA_ERROR = "INSERT_CONTRACTOR_CONTACT_DATA_ERROR",
   GET_CONTRACTOR_CONTACT_LIST_DATA = "GET_CONTRACTOR_CONTACT_LIST_DATA",
+  GET_CONTRACTOR_CONTACT_DATA_WITH_ID = "GET_CONTRACTOR_CONTACT_DATA_WITH_ID",
   RECOVERY_CONTRACTOR_CONTACT_DATA_STATE = "RECOVERY_CONTRACTOR_CONTACT_DATA_STATE",
 }
 
@@ -32,6 +33,10 @@ interface GetContactPersonsListAction {
   type: ContractorContactDataActionType.GET_CONTRACTOR_CONTACT_LIST_DATA;
   payload: any[] ;
 }
+interface GetContactPersonsListWithIdAction {
+  type: ContractorContactDataActionType.GET_CONTRACTOR_CONTACT_DATA_WITH_ID;
+  payload: any[] ;
+}
 interface RecoveryState {
   type: ContractorContactDataActionType.RECOVERY_CONTRACTOR_CONTACT_DATA_STATE
 }
@@ -41,4 +46,5 @@ export type ContractorContactDataAction =
   | InsertContractorContactDataSuccessAction
   | InsertContractorContactDataErrorAction
   |GetContactPersonsListAction
+  |GetContactPersonsListWithIdAction
   | RecoveryState;

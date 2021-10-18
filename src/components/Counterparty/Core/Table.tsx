@@ -12,7 +12,7 @@ import InputFilterSelect from "./FilterInputs/InputFilterSelect";
 import InputFilterDatePicker from "./FilterInputs/InputFilterDatePicker";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
 import { Table } from "antd";
-import arrowImg from "../../../IMG/icons/arrow.png"
+
 
 const useStyles = makeStyles({
   root: {
@@ -142,7 +142,7 @@ export default function CounterpartiesTable(props: any) {
   const [updatedAt, setUpdatedAt] = useState<any>(null);
 
   //It's for change position arrow in select type
-  const [arrow, setArrow] = useState<any>(false);
+
 
   const filteredBranches =
       branch.length === 0 || branch.length > 3
@@ -164,7 +164,9 @@ export default function CounterpartiesTable(props: any) {
   const columns = [
     {
       title: () => (
-          <div style={{ minHeight: 79, alignItems: "flex-start" }}>&#x2116;</div>
+
+        <div style={{ minHeight: 78, alignItems: "flex-start" }}>&#x2116;</div>
+
       ), //todo Arsen change icon
       dataIndex: "id",
       width: "5%",
@@ -172,24 +174,26 @@ export default function CounterpartiesTable(props: any) {
     },
     {
       title: () => (
-          <>
-            Тип
-            <div>
-              <InputFilterSelect
-                  className={classes.input}
-                  handleChange={(id: any) => {
-                    setServices(id);
-                    setParams({ ...params, "filter[contractor_type_id]": id });
-                  }}
-                  onDropdownVisibleChange={() => setArrow(!arrow)}
-                  value={services}
-                  options={assetsOptions}
-                  placeholder="Все"
-                  loading={assetsLoading}
-                  suffixIcon={<img src={arrowImg}  style={arrow ? {transform: "rotate(180deg)"} : {transform: "rotate(0deg)"}} />}
-              />
-            </div>
-          </>
+
+
+
+        <>
+          Тип
+          <div>
+            <InputFilterSelect
+              className={classes.input}
+              handleChange={(id: any) => {
+                setServices(id);
+                setParams({ ...params, "filter[contractor_type_id]": id });
+              }}
+              value={services}
+              options={assetsOptions}
+              placeholder="Все"
+              loading={assetsLoading}
+            />
+          </div>
+        </>
+
       ),
       dataIndex: "typeName",
     },

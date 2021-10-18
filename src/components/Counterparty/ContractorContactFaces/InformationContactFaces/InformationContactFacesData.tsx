@@ -2,6 +2,7 @@ import { Checkbox, Paper, Radio } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +38,8 @@ type InfoProps = {
 export const InformationContactFacesData: React.FC<InfoProps> = ({
   setChangeBasicInformation,
 }) => {
+  const contact = useTypedSelector(state => state.contactPerson.PersonContact)
+  const {} = contact
   const classes = useStyles();
   const [checked, setChecked] = React.useState("a");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

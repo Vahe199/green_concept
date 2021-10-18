@@ -12,6 +12,7 @@ import InputFilterSelect from "./FilterInputs/InputFilterSelect";
 import InputFilterDatePicker from "./FilterInputs/InputFilterDatePicker";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
 import { Table } from "antd";
+import arrowImg from "../../../IMG/icons/arrow.png"
 
 const useStyles = makeStyles({
   root: {
@@ -60,7 +61,7 @@ const useStyles = makeStyles({
         },
         "&:hover": {
           boxShadow:
-            "0px 0px 12px rgba(51, 63, 79, 0.08), 0px 0px 2px rgba(51, 63, 79, 0.32)",
+              "0px 0px 12px rgba(51, 63, 79, 0.08), 0px 0px 2px rgba(51, 63, 79, 0.32)",
         },
         "&:active": {
           boxShadow: "0px 0px 6px 0px #333F4F3D inset",
@@ -98,16 +99,18 @@ const useStyles = makeStyles({
 });
 
 export default function CounterpartiesTable(props: any) {
+
+
   const { fetchCounterpartiesList } = useActions();
 
   const history = useHistory();
   const classes = useStyles();
   const { contractors, loading } = useTypedSelector(
-    (state) => state.counterparties
+      (state) => state.counterparties
   );
   const { authors: crms } = useTypedSelector((state) => state.authorsList);
   const { assets, load: assetsLoading } = useTypedSelector(
-    (state) => state.assets
+      (state) => state.assets
   );
   const { types_and_services = [], branches = [] }: any = assets;
   const assetsOptions = types_and_services?.map((option: any) => ({
@@ -124,7 +127,7 @@ export default function CounterpartiesTable(props: any) {
   const { getAuthorData } = useActions();
 
   const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
-    []
+      []
   );
 
   const [params, setParams] = useState<any>({
@@ -138,17 +141,20 @@ export default function CounterpartiesTable(props: any) {
   const [createdAt, setCreatedAt] = useState<any>(null);
   const [updatedAt, setUpdatedAt] = useState<any>(null);
 
+  //It's for change position arrow in select type
+  const [arrow, setArrow] = useState<any>(false);
+
   const filteredBranches =
-    branch.length === 0 || branch.length > 3
-      ? branches.filter(({ name }: { name: string }) => name.includes(branch))
-      : branches;
+      branch.length === 0 || branch.length > 3
+          ? branches.filter(({ name }: { name: string }) => name.includes(branch))
+          : branches;
 
   const companyGroupFilter =
-    group.length === 0 || group.length > 3
-      ? companyGroupFilterInital.filter(
+      group.length === 0 || group.length > 3
+          ? companyGroupFilterInital.filter(
           ({ full_name }: { full_name: string }) => full_name.includes(group)
-        )
-      : companyGroupFilterInital;
+          )
+          : companyGroupFilterInital;
 
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/${data.id}`);
@@ -158,7 +164,7 @@ export default function CounterpartiesTable(props: any) {
   const columns = [
     {
       title: () => (
-        <div style={{ minHeight: 79, alignItems: "flex-start" }}>&#x2116;</div>
+          <div style={{ minHeight: 79, alignItems: "flex-start" }}>&#x2116;</div>
       ), //todo Arsen change icon
       dataIndex: "id",
       width: "5%",
@@ -166,78 +172,80 @@ export default function CounterpartiesTable(props: any) {
     },
     {
       title: () => (
-        <>
-          Тип
-          <div>
-            <InputFilterSelect
-              className={classes.input}
-              handleChange={(id: any) => {
-                setServices(id);
-                setParams({ ...params, "filter[contractor_type_id]": id });
-              }}
-              value={services}
-              options={assetsOptions}
-              placeholder="Другое"
-              loading={assetsLoading}
-            />
-          </div>
-        </>
+          <>
+            Тип
+            <div>
+              <InputFilterSelect
+                  className={classes.input}
+                  handleChange={(id: any) => {
+                    setServices(id);
+                    setParams({ ...params, "filter[contractor_type_id]": id });
+                  }}
+                  onDropdownVisibleChange={() => setArrow(!arrow)}
+                  value={services}
+                  options={assetsOptions}
+                  placeholder="Все"
+                  loading={assetsLoading}
+                  suffixIcon={<img src={arrowImg}  style={arrow ? {transform: "rotate(180deg)"} : {transform: "rotate(0deg)"}} />}
+              />
+            </div>
+          </>
       ),
       dataIndex: "typeName",
     },
     {
       title: () => (
-        <>
-          Наименование
-          <InputFilterSearch
-            handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const { value } = e.target;
-              setFullName(value);
-              (value.length === 0 || value.length > 3) &&
-                setParams({ ...params, "filter[full_name]": value });
-            }}
-            value={fullName}
-            className={classes.input}
-          />
-        </>
+          <>
+            Наименование
+            <InputFilterSearch
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const { value } = e.target;
+                  setFullName(value);
+                  (value.length === 0 || value.length > 3) &&
+                  setParams({ ...params, "filter[full_name]": value });
+                }}
+                value={fullName}
+                className={classes.input}
+            />
+          </>
       ),
       dataIndex: "full_name",
       width: "15%",
     },
     {
       title: () => (
-        <>
-          Отрасль
-          <div className={classes.searchWraper}>
-            <MagnifyingGlass className="searchIcon" />
-            <InputFilterSelect
-              options={filteredBranches.map((option: any) => ({
-                key: option.id,
-                value: option.id,
-                label: option.name,
-              }))}
-              filterOption={false}
-              onSearch={setBranch}
-              onSelect={(id: number) => {
-                setParams({ ...params, "filter[branches.id]": id });
-              }}
-              notFoundContent={null}
-              value={params["filter[branches.id]"]}
-              className={"searchMode " + classes.input}
-              prefix={<MagnifyingGlass className={classes.icon} />}
-              showSearch
-            />
-          </div>
-        </>
+          <>
+            Отрасль
+            <div className={classes.searchWraper}>
+              <MagnifyingGlass className="searchIcon" />
+              <InputFilterSelect
+                  options={filteredBranches.map((option: any) => ({
+                    key: option.id,
+                    value: option.id,
+                    label: option.name,
+                  }))}
+                  filterOption={false}
+                  onSearch={setBranch}
+                  onSelect={(id: number) => {
+                    setParams({ ...params, "filter[branches.id]": id });
+                  }}
+                  notFoundContent={null}
+                  value={params["filter[branches.id]"]}
+                  className={"searchMode " + classes.input}
+                  prefix={<MagnifyingGlass className={classes.icon} />}
+                  showSearch
+              />
+            </div>
+          </>
       ),
       dataIndex: "branches",
       width: "13%",
       render: (branches: any[]) => {
         return branches?.map((branch: any, index: number) => {
           return (
-            <span key={index}>
+              <span key={index}>
               {branch.name}
-              {index < branches.length - 1 ? ", " : " "}
+                {index < branches.length - 1 ? ", " : " "}
             </span>
           );
         });
@@ -245,64 +253,64 @@ export default function CounterpartiesTable(props: any) {
     },
     {
       title: () => (
-        <div style={{ minWidth: 125 }}>
-          Группа компаний
-          <div className={classes.searchWraper}>
-            <MagnifyingGlass className="searchIcon" />
-            <InputFilterSelect
-              onSearch={setGroup}
-              value={params["filter[parent_id]"]}
-              options={companyGroupFilter.map((option: any) => ({
-                key: option.id,
-                value: option.id,
-                label: option.full_name,
-              }))}
-              filterOption={false}
-              onSelect={(id: number) => {
-                setParams({ ...params, "filter[parent_id]": id });
-              }}
-              notFoundContent={null}
-              className={"searchMode " + classes.input}
-              showSearch
-            />
+          <div style={{ minWidth: 125 }}>
+            Группа компаний
+            <div className={classes.searchWraper}>
+              <MagnifyingGlass className="searchIcon" />
+              <InputFilterSelect
+                  onSearch={setGroup}
+                  value={params["filter[parent_id]"]}
+                  options={companyGroupFilter.map((option: any) => ({
+                    key: option.id,
+                    value: option.id,
+                    label: option.full_name,
+                  }))}
+                  filterOption={false}
+                  onSelect={(id: number) => {
+                    setParams({ ...params, "filter[parent_id]": id });
+                  }}
+                  notFoundContent={null}
+                  className={"searchMode " + classes.input}
+                  showSearch
+              />
+            </div>
           </div>
-        </div>
       ),
       dataIndex: "group",
     },
     {
       title: () => (
-        <>
-          Ответственный
-          <div className={classes.searchWraper}>
-            <MagnifyingGlass className="searchIcon" />
-            <InputFilterSelect
-              options={[].map((option: any) => ({
-                key: option.id,
-                value: option.id,
-                label: option.name,
-              }))}
-              filterOption={false}
-              onSelect={(id: number) => {
-                setParams({ ...params, "filter[created_by]": id });
-              }}
-              notFoundContent={null}
-              value={params["filter[created_by]"]}
-              className={"searchMode " + classes.input}
-              prefix={<MagnifyingGlass className={classes.icon} />}
-              loading={assetsLoading}
-              showSearch
-            />
-          </div>
-        </>
+          <>
+            Ответственный
+            <div className={classes.searchWraper}>
+              <MagnifyingGlass className="searchIcon" />
+              <InputFilterSelect
+                  options={[].map((option: any) => ({
+                    key: option.id,
+                    value: option.id,
+                    label: option.name,
+                  }))}
+                  filterOption={false}
+                  onSelect={(id: number) => {
+                    setParams({ ...params, "filter[created_by]": id });
+                  }}
+                  notFoundContent={null}
+                  value={params["filter[created_by]"]}
+                  className={"searchMode " + classes.input}
+                  prefix={<MagnifyingGlass className={classes.icon} />}
+                  loading={assetsLoading}
+                  showSearch
+              />
+            </div>
+          </>
       ),
       dataIndex: "crms",
       render: (crms: any[]) => {
         return crms?.map((crm: any, index: number) => {
           return (
-            <span key={index}>
+              <span key={index}>
               {crm.firstname + " " + crm.surname && crm.surname}
-              {index < crms.length - 1 ? ", " : " "}
+                {index < crms.length - 1 ? ", " : " "}
             </span>
           );
         });
@@ -310,76 +318,76 @@ export default function CounterpartiesTable(props: any) {
     },
     {
       title: () => (
-        <>
-          Автор записи
-          <div>
-            <InputFilterSelect
-              className={classes.input}
-              placeholder="Все"
-              value={crm}
-              handleChange={(val: any) => {
-                setCrm(val);
-                setParams({ ...params, "filter[created_by]": val }); // Todo Arsen, check backend field
-              }}
-              options={crmsOptions}
-              loading={assetsLoading}
-            />
-          </div>
-        </>
+          <>
+            Автор записи
+            <div>
+              <InputFilterSelect
+                  className={classes.input}
+                  placeholder="Все"
+                  value={crm}
+                  handleChange={(val: any) => {
+                    setCrm(val);
+                    setParams({ ...params, "filter[created_by]": val }); // Todo Arsen, check backend field
+                  }}
+                  options={crmsOptions}
+                  loading={assetsLoading}
+              />
+            </div>
+          </>
       ),
       dataIndex: "author",
       render: (author: any = {}) => {
         const authorFullName = author
-          ? `${author.surname} ${author.firstname?.substring(0, 1)}. `
-          : "" + author.middlename
-          ? `${author.middlename?.substring(0, 1)}.`
-          : "";
+            ? `${author.surname} ${author.firstname?.substring(0, 1)}. `
+            : "" + author.middlename
+                ? `${author.middlename?.substring(0, 1)}.`
+                : "";
 
         return authorFullName;
       },
     },
     {
       title: () => (
-        <>
-          <div style={{ display: "flex" }}>
-            <span>Создано</span>
-            <span style={{ position: "absolute", right: 8, top: 8 }}>
+          <>
+            <div style={{ display: "flex" }}>
+              <span>Создано</span>
+              <span style={{ position: "absolute", right: 8, top: 8 }}>
               <SortingButtons color="#5B6770" />
             </span>
-          </div>
-          <InputFilterDatePicker
-            placeholder="01.01.2020"
-            value={createdAt ? moment(createdAt) : null}
-            handleChange={(_: any, value: string) => {
-              setCreatedAt(value);
-              setParams({ ...params, "filter[created_at]": value });
-            }}
-            className={classes.input}
-          />
-        </>
+            </div>
+            <InputFilterDatePicker
+                placeholder="01.01.2020"
+                value={createdAt ? moment(createdAt) : null}
+                handleChange={(_: any, value: string) => {
+                  setCreatedAt(value);
+                  setParams({ ...params, "filter[created_at]": value });
+                }}
+                className={classes.input}
+            />
+          </>
       ),
       dataIndex: "created_at",
       width: "11%",
     },
     {
       title: () => (
-        <>
-          <div style={{ display: "flex" }}>
-            <span>Обновлено</span>
-            <span style={{ position: "absolute", right: 8, top: 8 }}>
+          <>
+            <div style={{ display: "flex" }}>
+              <span>Обновлено</span>
+              <span style={{ position: "absolute", right: 8, top: 8 }}>
               <SortingButtons color="#5B6770" />
             </span>
-          </div>
-          <InputFilterDatePicker
-            placeholder="01.01.2020"
-            value={updatedAt ? moment(updatedAt) : null}
-            handleChange={(_: any, value: string) => {
-              setUpdatedAt(value);
-              setParams({ ...params, "filter[updated_at]": value });
-            }}
-            className={classes.input}
-          />
-        </>
+            </div>
+            <InputFilterDatePicker
+                placeholder="01.01.2020"
+                value={updatedAt ? moment(updatedAt) : null}
+                handleChange={(_: any, value: string) => {
+                  setUpdatedAt(value);
+                  setParams({ ...params, "filter[updated_at]": value });
+                }}
+                className={classes.input}
+            />
+          </>
       ),
       dataIndex: "updated_at",
       width: "11%",
@@ -387,43 +395,43 @@ export default function CounterpartiesTable(props: any) {
   ];
 
   const data = contractors.map(
-    ({
-      id,
-      type = {},
-      full_name,
-      branches,
-      group,
-      crms,
-      author,
-      created_at,
-      updated_at,
-    }) => {
-      // console.log({
-      //   key: id,
-      //   id,
-      //   typeName: type.name,
-      //   full_name,
-      //   branches,
-      //   group,
-      //   crms,
-      //   author,
-      //   created_at,
-      //   updated_at,
-      // });
+      ({
+         id,
+         type = {},
+         full_name,
+         branches,
+         group,
+         crms,
+         author,
+         created_at,
+         updated_at,
+       }) => {
+        // console.log({
+        //   key: id,
+        //   id,
+        //   typeName: type.name,
+        //   full_name,
+        //   branches,
+        //   group,
+        //   crms,
+        //   author,
+        //   created_at,
+        //   updated_at,
+        // });
 
-      return {
-        key: id,
-        id,
-        typeName: type.name,
-        full_name,
-        branches,
-        group,
-        crms,
-        author,
-        created_at,
-        updated_at,
-      };
-    }
+        return {
+          key: id,
+          id,
+          typeName: type.name,
+          full_name,
+          branches,
+          group,
+          crms,
+          author,
+          created_at,
+          updated_at,
+        };
+      }
   );
 
   useEffect(() => {
@@ -434,22 +442,22 @@ export default function CounterpartiesTable(props: any) {
 
   useEffect(() => {
     !companyGroupFilterInital.length &&
-      setCompanyGroupFilterInital(contractors);
+    setCompanyGroupFilterInital(contractors);
   }, [contractors]);
 
   return (
-    <Paper className={classes.root}>
-      <Table
-        onRow={(record) => ({
-          onClick: () => getUserData(record),
-        })}
-        columns={columns}
-        dataSource={data}
-        pagination={false}
-        scroll={{ y: window.innerHeight - 328 }}
-        className={classes.table}
-        loading={loading}
-      />
-    </Paper>
+      <Paper className={classes.root}>
+        <Table
+            onRow={(record) => ({
+              onClick: () => getUserData(record),
+            })}
+            columns={columns}
+            dataSource={data}
+            pagination={false}
+            scroll={{ y: window.innerHeight - 328 }}
+            className={classes.table}
+            loading={loading}
+        />
+      </Paper>
   );
 }

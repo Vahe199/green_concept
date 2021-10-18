@@ -21,8 +21,8 @@ import {recoveryAuthorDataState} from "../../../redux/store/action_creator/recov
 
 export const GeneralInformationForCreating = () => {
   const classes = useStylesGeneralInfo();
-  const [matchesAddressActualAddress, setMatchesAddressActualAddress] = React.useState<boolean>(true);
-  const [matchesAddressMailingAddress, setMatchesAddressMailingAddress] = React.useState<boolean>(true);
+  const [matchesAddressActualAddress, setMatchesAddressActualAddress] = React.useState<boolean>(false);
+  const [matchesAddressMailingAddress, setMatchesAddressMailingAddress] = React.useState<boolean>(false);
   const [contractorId, setContractorId] = React.useState(1);
   const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
       []
@@ -477,7 +477,7 @@ export const GeneralInformationForCreating = () => {
                             onBlur={() => setLegalRegistrationAddress(values.legal_registration_address)}
                             error={touched.legal_registration_address && Boolean(errors.legal_registration_address)}
                             helperText={touched.legal_registration_address && errors.legal_registration_address}
-                            //onFocus={() => setLegalRegistrationAddress(values.legal_registration_address)}
+
                         />
                       </div>
                       <div className={classes.label}>
@@ -487,9 +487,7 @@ export const GeneralInformationForCreating = () => {
                             variant={"outlined"}
                             name="actual_address"
                             placeholder={"123456 город улица строени дом офис"}
-                            //disabled={matchesAddressActualAddress}
-                            //value={values.actual_address}
-                            value={!matchesAddressActualAddress ? legalRegistrationAddress : 'values.actual_address'}
+                            value={values.actual_address}
                             onChange={handleChange}
                             error={touched.actual_address && Boolean(errors.actual_address)}
                             helperText={touched.actual_address && errors.actual_address}
@@ -504,7 +502,10 @@ export const GeneralInformationForCreating = () => {
                             color="default"
                             inputProps={{ "aria-label": "checkbox with default color" }}
                             value={matchesAddressActualAddress}
-                            onChange={() => setMatchesAddressActualAddress(!matchesAddressActualAddress)}
+                            onChange={() => {
+                              setFieldValue("actual_address",`${matchesAddressActualAddress ?values.legal_registration_address : ""}`)
+                              setMatchesAddressActualAddress(!matchesAddressActualAddress)
+                            }}
                         />
                         <span className={classes.checkText}>
                   Совпадает с юридическим адресом
@@ -516,9 +517,8 @@ export const GeneralInformationForCreating = () => {
                             variant={"outlined"}
                             name="post_address"
                             placeholder={"123456 город улица строени дом офис"}
-                            //disabled={matchesAddressMailingAddress}
-                            //value={values.post_address}
-                            value={!matchesAddressActualAddress ? legalRegistrationAddress : 'values.post_address'}
+
+                            value={values.post_address}
                             onChange={handleChange}
                             error={touched.post_address && Boolean(errors.post_address) }
                             helperText={touched.post_address &&errors.post_address}
@@ -533,7 +533,10 @@ export const GeneralInformationForCreating = () => {
                             color="default"
                             inputProps={{ "aria-label": "checkbox with default color" }}
                             value={matchesAddressMailingAddress}
-                            onChange={() => setMatchesAddressMailingAddress(!matchesAddressMailingAddress)}
+                            onChange={() => {
+                              setFieldValue("post_address", `${matchesAddressMailingAddress ? values.legal_registration_address : ""}`)
+                              setMatchesAddressMailingAddress(!matchesAddressMailingAddress)
+                            }}
                         />
                         <span className={classes.checkText}>
                   Совпадает с юридическим адресом

@@ -12,7 +12,8 @@ export const useStylesContactPersons = makeStyles((theme: Theme) =>
 
         "& .ant-modal-mask": {
           position: "absolute",
-          backgroundColor: "red",
+          backgroundColor: "rgba(214, 217, 220, 0.75)",
+
         },
           "& .ant-modal-wrap": {
               position: "absolute",

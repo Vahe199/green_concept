@@ -15,7 +15,8 @@ const useStyles = makeStyles({
   root: {
     "&.ant-modal": {
       width: "max-content!important",
-
+        marginLeft:64,
+        marginTop:-64,
       "& .ant-modal-body": {
         padding: 20,
       },
@@ -69,7 +70,7 @@ const useStyles = makeStyles({
     marginTop: 16,
   },
   header: {
-    backgroundColor: "red",
+    // backgroundColor: "red",
     height: 200,
     width: "100%",
   },

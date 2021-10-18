@@ -133,7 +133,7 @@ const searchOptions = SearchContactPerson()
                   <span style={{ fontSize: 17, marginTop: 15 }}> + </span>
                   <span
                      onClick={() => {
-                       // setShowModal(true)
+                        setShowModal(true)
                        getContactPersonsListData()
                      }}
                     className={classes.selectItem}

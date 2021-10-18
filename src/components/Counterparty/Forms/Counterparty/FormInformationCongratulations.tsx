@@ -19,7 +19,8 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
   setChangeCongratulations,}) => {
   const classes = useStylesInformationCongratulations();
 
-
+    const { AuthorData } = useTypedSelector((state) => state.author);
+    const { id }: any = AuthorData;
   const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
   const { congratulation_types, }: any = assets;
 
@@ -38,8 +39,9 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
             validationSchema={validationSchemaInformationCongratulations}
             onSubmit={async (values,action) => {
               console.log(values,"values")
-                counterpartiesApi.changeContactCongratulationsData(values,31).then(res =>{
+                counterpartiesApi.changeContactCongratulationsData(values,id).then(res =>{
                     console.log(res)
+                    setChangeCongratulations(true)
                     debugger
                 })
                     .catch((e)=>{

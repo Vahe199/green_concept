@@ -5,7 +5,10 @@ export const validationSchemaBasicInformation = yup.object({
     surname: yup.string().required("Обязательное поле"),
     birthdate:yup.string().required("Обязательное поле"),
     contractor_type_id: yup.string().required("Обязательное поле"),
-    branches: yup.string().required("Обязательное поле"),
+    // branches: yup.array()
+    //     .of(yup.number().nullable(true).required("Обязательное поле"))
+    //     .strict()
+    //     .required("Обязательное поле"),
     delivery_address: yup.string().required("Обязательное поле"),
     emails: yup.array()
         .of(
@@ -24,9 +27,16 @@ export const validationSchemaBasicInformation = yup.object({
             })
         )
         .required("Обязательное поле"),
-    service_type_id: yup.string().required("Обязательное поле"),
+    service_type_id: yup.number().nullable(true).required("Обязательное поле"),
     sex: yup.string().required("Обязательное поле"),
-    contractors_role_id:yup.string().required("Обязательное поле"),
+    contact_contractors:
+        yup.object().shape({
+            role_id: yup.number()
+                .nullable(true)
+                .required("Обязательное поле"),
+            position: yup.string().required("Обязательное поле"),
+            main: yup.number().nullable(true).required("Обязательное поле"),
+        }),
 });
 
 export const validationSchemaContactsFromGreen = yup.object({

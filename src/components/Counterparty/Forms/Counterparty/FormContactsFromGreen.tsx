@@ -1,6 +1,6 @@
 import {Button, InputAdornment, Paper, TextField} from "@material-ui/core";
 import {FieldArray, Form, Formik, getIn} from "formik";
-import React from "react";
+import React, {useState} from "react";
 import Divider from "@material-ui/core/Divider";
 import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
 import SearchIcon from "@material-ui/icons/Search";
@@ -9,6 +9,11 @@ import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelect
 import {validationSchemaContactsFromGreen} from "./BasicInformationFormValidationSchema";
 import {useStylesContactsFromGreen} from "./BasicInformationFormStyles";
 import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
+import {MagnifyingGlass} from "../../../../IMG/SVG/MagnifyingGlass";
+import InputFilterSelect from "../../Core/FilterInputs/InputFilterSelect";
+import {SearchContactPerson} from "../../Core/utils/SearchContactPerson";
+import {counterpartiesApi} from "../../../../api/api";
+import {InputAssetsOptions} from "../../Core/utils/InputAssetsOptions";
 
 
 type InfoProps = {
@@ -20,15 +25,13 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
 }) => {
   const classes = useStylesContactsFromGreen();
 
+    const [branch, setBranch] = useState("");
+    const { AuthorData,loading: assetsLoading} = useTypedSelector((state) => state.author);
+    const { id }: any = AuthorData;
 
+    const searchOptions = SearchContactPerson()
+    const {assetsOptionsDirections} = InputAssetsOptions();
 
-  const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
-  const { branches,}: any = assets;
-  const assetsOptionsDirections = branches?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
 const initialValues = {
   contact_employees:[{direction_id: '', employee_id: '', info: ''}]
 }
@@ -39,7 +42,15 @@ const initialValues = {
           validationSchema={validationSchemaContactsFromGreen}
           onSubmit={async (values,action) => {
             console.log(values,"values")
-            // insertContractorContactData(values);
+              await counterpartiesApi.changeContactEmployeesData(values,id)
+                  .then(res =>{
+                      console.log(res)
+                      setChangeContactsFromGreen(true)
+                  }).catch((e)=>{
+                      console.log(e.response)
+                      debugger
+                  })
+
           }}
       >
         {({ values, touched, handleChange,errors,setFieldValue }) => (
@@ -122,25 +133,59 @@ const initialValues = {
                                 <div className={classes.label}>
                                   <span style={index == 0 ?{width:"35%"}:{width:"37%"}}>Контактное лицо</span>
                                   <div style={index == 0 ?{width:"65%"}:{width:"63%"}}>
-                                    <TextField style={{width:"100%"}}
-                                               variant={"outlined"}
-                                               name={fieldEmployee}
-                                               placeholder={"Введите слово или часть слова"}
-                                               value={employees.employee_id}
-                                               onChange={handleChange}
-                                               InputProps={{
-                                                 startAdornment: (
-                                                     <InputAdornment position="start">
-                                                       <SearchIcon
-                                                           fontSize={"small"}
-                                                           className={classes.icon}
-                                                       />
-                                                     </InputAdornment>
-                                                 ),
-                                               }}
-                                               error={Boolean(touchedFieldEmployee && errorFieldEmployee)}
-                                               helperText={touchedFieldEmployee && errorFieldEmployee ? errorFieldEmployee : ""}
-                                    />
+                                      <ValidationErrorWrapper
+                                          inputClassName="ant-select-selector"
+                                          error={Boolean(
+                                              touchedFieldEmployee &&
+                                              errorFieldEmployee
+                                          )}
+                                          helperText={
+                                              touchedFieldEmployee &&
+                                              errorFieldEmployee
+                                                  ? errorFieldEmployee
+                                                  : ""
+                                          }
+                                      >
+                                          <div className={classes.searchWraper}>
+                                              <MagnifyingGlass className="searchIcon" />
+                                              <InputFilterSelect
+                                                  name={fieldEmployee}
+                                                  placeholder={"Введите слово или часть слова"}
+                                                  value={employees.employee_id}
+                                                  onFocus={()=>searchOptions.fetchContactPerson()}
+                                                  options={searchOptions.searchOptions}
+                                                  filterOption={false}
+                                                  onSearch={setBranch}
+                                                  onSelect={(id: number) => {
+                                                      setFieldValue(fieldEmployee,id)
+                                                  }}
+                                                  notFoundContent={null}
+                                                  className={"searchMode " }
+                                                  prefix={<MagnifyingGlass className={classes.icon} />}
+                                                  showSearch
+                                              />
+                                          </div>
+                                      </ValidationErrorWrapper>
+
+                                    {/*<TextField style={{width:"100%"}}*/}
+                                    {/*           variant={"outlined"}*/}
+                                    {/*           name={fieldEmployee}*/}
+                                    {/*           placeholder={"Введите слово или часть слова"}*/}
+                                    {/*           value={employees.employee_id}*/}
+                                    {/*           onChange={handleChange}*/}
+                                    {/*           InputProps={{*/}
+                                    {/*             startAdornment: (*/}
+                                    {/*                 <InputAdornment position="start">*/}
+                                    {/*                   <SearchIcon*/}
+                                    {/*                       fontSize={"small"}*/}
+                                    {/*                       className={classes.icon}*/}
+                                    {/*                   />*/}
+                                    {/*                 </InputAdornment>*/}
+                                    {/*             ),*/}
+                                    {/*           }}*/}
+                                    {/*           error={Boolean(touchedFieldEmployee && errorFieldEmployee)}*/}
+                                    {/*           helperText={touchedFieldEmployee && errorFieldEmployee ? errorFieldEmployee : ""}*/}
+                                    {/*/>*/}
                                   </div>
 
                                 </div>

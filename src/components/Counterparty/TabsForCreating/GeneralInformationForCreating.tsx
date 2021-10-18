@@ -16,6 +16,8 @@ import {notifyError, notifySuccess} from "../Core/utils/ToastNotify";
 import ValidationErrorWrapper from "../Core/utils/ValidationErrorWrapper";
 import {MagnifyingGlass} from "../../../IMG/SVG/MagnifyingGlass";
 import InputFilterSelect from "../Core/FilterInputs/InputFilterSelect";
+import {InputAssetsOptions} from "../Core/utils/InputAssetsOptions";
+import {recoveryAuthorDataState} from "../../../redux/store/action_creator/recoveryAuthorDataState";
 
 export const GeneralInformationForCreating = () => {
   const classes = useStylesGeneralInfo();
@@ -26,16 +28,19 @@ export const GeneralInformationForCreating = () => {
       []
   );
   const [group, setGroup] = useState("");
+
+  const Options = InputAssetsOptions();
+  const { insertContractorGeneralData,recoveryAuthorDataState } = useActions();
   const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
-  const { crms, branches, types_and_services }: any = assets;
+  const {types_and_services}:any = assets
   const {success,error}:any = useTypedSelector(state => state.author)
   const { contractors, loading } = useTypedSelector(
       (state) => state.counterparties
   );
   const companyGroupFilter =
-     companyGroupFilterInital.filter(
-              ({ full_name }: { full_name: string }) => full_name.includes(group)
-          )
+      companyGroupFilterInital.filter(
+          ({ full_name }: { full_name: string }) => full_name.includes(group)
+      )
 
   useEffect(() => {
     !companyGroupFilterInital.length &&
@@ -44,33 +49,21 @@ export const GeneralInformationForCreating = () => {
   useEffect(()=>{
     if(error){
       notifyError()
+      recoveryAuthorDataState()
     }
     if(success){
       notifySuccess()
+      recoveryAuthorDataState()
     }
   },[success,error])
-  const assetsOptionsCRMS = crms?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.full_name,
-  }));
-  const assetsOptionsCounterpartyType = types_and_services?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
-  const assetsOptionsServiceType = types_and_services[contractorId -1]?.services?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
-  const assetsOptionsBranches = branches?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
 
-  const { insertContractorGeneralData } = useActions();
+  const assetsOptionsServiceType = types_and_services[
+  contractorId - 1
+      ]?.services?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.name,
+  }));
 
   const  initialValues = {
     org_type: "ЮЛ",
@@ -176,23 +169,23 @@ export const GeneralInformationForCreating = () => {
                                     return(
                                         <div key={index} style={{display:"flex",flexDirection:"row",marginBottom:16}}>
                                           <div style={index > 0 ? {width:"80%"}:{width:"100%"}}>
-                                              <ValidationErrorWrapper
-                                                  inputClassName="ant-select-selector"
-                                                  error={Boolean(touchedFieldName && errorFieldName)}
-                                                  helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
-                                              >
-                                            <InputFilterSelectedType
-                                                name={fieldName}
-                                                handleChange={(value:any) =>
-                                                    setFieldValue(fieldName, value)
-                                                }
-                                                value={crm}
-                                                options={ assetsOptionsCRMS}
-                                                placeholder="Фамилия Имя"
-                                                loading={assetsLoading}
+                                            <ValidationErrorWrapper
+                                                inputClassName="ant-select-selector"
+                                                error={Boolean(touchedFieldName && errorFieldName)}
+                                                helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                            >
+                                              <InputFilterSelectedType
+                                                  name={fieldName}
+                                                  handleChange={(value:any) =>
+                                                      setFieldValue(fieldName, value)
+                                                  }
+                                                  value={crm}
+                                                  options={ Options.assetsOptionsCRMS}
+                                                  placeholder="Фамилия Имя"
+                                                  loading={assetsLoading}
 
-                                            />
-                                              </ValidationErrorWrapper>
+                                              />
+                                            </ValidationErrorWrapper>
                                           </div>
 
                                           { index == 0 ? "":<div style={{marginLeft: 16 }}
@@ -230,7 +223,7 @@ export const GeneralInformationForCreating = () => {
                                         }
                                         }
                                         value={values.contractor_type_id}
-                                        options={assetsOptionsCounterpartyType}
+                                        options={Options.assetsOptionsCounterpartyType}
                                         placeholder="Другое"
                                         loading={assetsLoading}
                                     />
@@ -374,7 +367,7 @@ export const GeneralInformationForCreating = () => {
                               name="parent_id"
                               placeholder={"Группа компаний"}
                               onSearch={setGroup}
-                                value={values.parent_id}
+                              value={values.parent_id}
                               options={companyGroupFilter.map((option: any) => ({
                                 key: option.id,
                                 value: option.id,
@@ -415,18 +408,18 @@ export const GeneralInformationForCreating = () => {
                                                 error={Boolean(touchedFieldName && errorFieldName)}
                                                 helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
                                             >
-                                            <InputFilterSelectedType
-                                                name={fieldName}
-                                                handleChange={(value:any) =>
-                                                    setFieldValue(fieldName, value)
-                                                }
-                                                value={branch}
-                                                options={ assetsOptionsBranches}
-                                                placeholder="Выберите отрасль"
-                                                loading={assetsLoading}
-                                                error={Boolean(touchedFieldName && errorFieldName)}
-                                                helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
-                                            />
+                                              <InputFilterSelectedType
+                                                  name={fieldName}
+                                                  handleChange={(value:any) =>
+                                                      setFieldValue(fieldName, value)
+                                                  }
+                                                  value={branch}
+                                                  options={ Options.assetsOptionsBranches}
+                                                  placeholder="Выберите отрасль"
+                                                  loading={assetsLoading}
+                                                  error={Boolean(touchedFieldName && errorFieldName)}
+                                                  helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                              />
                                             </ValidationErrorWrapper>
                                           </div>
 

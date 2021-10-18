@@ -36,7 +36,7 @@ export const InformationUserData = () => {
 
   return (
     <div className={classes.root}>
-      <div style={{ width: "28%" }}>
+      <div style={{ width: "32%" }}>
         <div>
           {changeGeneralInformation ? (
             <FormGeneralInformation
@@ -49,7 +49,7 @@ export const InformationUserData = () => {
           )}
         </div>
       </div>
-      <div style={{ width: "37%" }}>
+      <div style={{ width: "35%" }}>
         <div>
           {changeCompanyDetails ? (
             <FormCompanyDetails

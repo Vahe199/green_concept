@@ -195,6 +195,44 @@ export const useStylesContactsFromGreen = makeStyles((theme: Theme) =>
                 textDecoration: "underline",
             }
         },
+        searchWraper: {
+            position: "relative",
+
+            "& .ant-select-selection-search-input": {
+                fontSize:16,
+                paddingLeft:8,
+            },
+            "& .searchMode .ant-select-arrow": {
+                display: "none",
+            },
+            "& .ant-select-selection-placeholder":{
+                fontSize:16,
+                fontWeight:400,
+                marginLeft:18,
+            },
+            "& .searchMode .ant-select-selection-search": {
+                // top: 4,
+                left: 24,
+
+                "& .ant-select-selection-search-input": {
+                    fontSize:16,
+                    paddingLeft:8,
+                    fontWeight:400,
+
+                },
+
+            },
+            "& .searchMode .ant-select-selection-item": {
+                top: 0,
+                left: 15,
+            },
+            "& svg": {
+                position: "absolute",
+                left: 8,
+                top: 8,
+                zIndex: 4,
+            },
+        },
     })
 );
 export const useStylesInformationCongratulations = makeStyles((theme: Theme) =>

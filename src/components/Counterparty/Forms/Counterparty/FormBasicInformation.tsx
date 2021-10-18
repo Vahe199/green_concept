@@ -11,6 +11,8 @@ import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 import {useStylesBasicInformation} from "./BasicInformationFormStyles";
 import {validationSchemaBasicInformation} from "./BasicInformationFormValidationSchema";
 import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
+import {InputAssetsOptions} from "../../Core/utils/InputAssetsOptions";
+import {counterpartiesApi} from "../../../../api/api";
 
 type InfoProps = {
   // change: boolean;
@@ -21,53 +23,38 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
 }) => {
   const classes = useStylesBasicInformation();
   const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
-  const { branches,types_and_services, contact_roles }: any = assets;
-  const [birthdate, setBirthdatet] = useState<any>(moment('2015-01-01', 'YYYY-MM-DD'));
+  const { types_and_services, }: any = assets;
   const [contractorId, setContractorId] = React.useState(1);
+  const { AuthorData } = useTypedSelector((state) => state.author);
+  const { id }: any = AuthorData;
+
+  const {assetsOptionsRoles,assetsOptionsCounterpartyType,assetsOptionsBranches} = InputAssetsOptions();
 
 
-  const assetsOptionsRoles = contact_roles?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
-  const assetsOptionsCounterpartyType = types_and_services?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
   const assetsOptionsServiceType = types_and_services[contractorId -1]?.services?.map((option: any) => ({
     key: option.id,
     value: option.id ? option.id : 0,
     label: option.name,
   }));
-  const assetsOptionsBranches = branches?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
+
   const initialValues = {
+
     firstname: "",
     middlename: "",
     surname: "",
     contractor_type_id: "",
-    service_type_id: "",
+    service_type_id: null,
     sex: "Муж",
     birthdate:"",
     delivery_address: "",
     emails:[{ email: '' }],
     phones:[{phone: '', phone_type: 'Рабочий'},{phone: '', phone_type: 'Мобильный'}],
+    branches: [''],
 
-    branches:"",
+    contact_contractors:{main:1,role_id:null,position:"",contractor_id:id},
 
-
-
-
-
-
-    contractors_main:1,
-    contractors_role_id:"",
     contractors_position:"",
+
   }
 
   return (
@@ -77,7 +64,14 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
           validationSchema={validationSchemaBasicInformation}
           onSubmit={async (values,action) => {
             console.log(values,"values")
-            // insertContractorContactData(values);
+           await counterpartiesApi.changeContactGeneralInfoData(values,id)
+               .then(res =>{
+                 console.log(res)
+                 setChangeBasicInformation(true)
+               }).catch((e)=>{
+                 console.log(e.response)
+                   debugger
+               })
           }}
       >
         {({ values, touched, handleChange,errors,setFieldValue }) => (
@@ -104,24 +98,33 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
           <div className={classes.label}>
             <span className={classes.spanTitle}>Основное контактное лицо </span>
             <span style={{ width: "61%" }}>
+               <FieldArray name="contact_contractors">
+                     {() => {
+                       const fieldName = `contact_contractors.main`;
 
-              <Checkbox
-                  name="contractors_main"
-                  icon={<CheckSquareChecked color="#5B6770" />}
-                  checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
-                  inputProps={{
-                    "aria-label": "checkbox with default color",
-                  }}
-                  value={
-                    values.contractors_main === 1 ? true : false
-                  }
-                  onChange={(e: any) =>
-                      setFieldValue(
-                          "contractors_main",
-                          e.target.checked ? 0 : 1
-                      )
-                  }
-              />
+                       return(
+                           <Checkbox
+                               name={fieldName}
+                               icon={<CheckSquareChecked color="#5B6770" />}
+                               checkedIcon={
+                                 <CheckSquareUnChecked color="#5B6770" />
+                               }
+                               inputProps={{
+                                 "aria-label": "checkbox with default color",
+                               }}
+                               value={values.contact_contractors.main === 1 ? true : false}
+                               onChange={(e: any) => {
+                                 setFieldValue(
+                                     fieldName,
+                                     e.target.checked ? 0 : 1
+                                 )
+                                 console.log(values.contact_contractors.main)
+                               }
+                               }
+                           />
+                       )}}
+                          </FieldArray>
+
             </span>
           </div>
           <div className={classes.label}>
@@ -217,42 +220,64 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
           <div className={classes.label}>
             <span className={classes.spanTitle}>Роль</span>
             <div style={{width:"60%"}}>
-              <ValidationErrorWrapper
-                  inputClassName="ant-select-selector"
-                  error={
-                    touched.contractors_role_id &&
-                    Boolean(errors.contractors_role_id)
-                  }
-                  helperText={
-                    touched.contractors_role_id &&
-                    errors.contractors_role_id
-                  }
-              >
-                <InputFilterSelectedType
-                    name="contractors_role_id"
-                    handleChange={(value: any) =>
-                        setFieldValue("contractors_role_id", value)
-                    }
-                    value={values.contractors_role_id}
-                    options={assetsOptionsRoles}
-                    placeholder="Выберите"
-                    loading={assetsLoading}
+              <FieldArray name="contact_contractors">
+                {() => {
+                  const fieldName = `contact_contractors.role_id`;
+                  const touchedFieldName = getIn(touched, fieldName);
+                  const errorFieldName = getIn(errors, fieldName);
 
-                />
-              </ValidationErrorWrapper>
+                  return( <ValidationErrorWrapper
+                          inputClassName="ant-select-selector"
+                          error={Boolean(
+                              touchedFieldName && errorFieldName
+                          )}
+                          helperText={
+                            touchedFieldName && errorFieldName
+                                ? errorFieldName
+                                : ""
+                          }
+                      >
+                        <InputFilterSelectedType
+                            name={fieldName}
+                            handleChange={(value: any) =>
+                                setFieldValue(fieldName, value)
+                            }
+                            value={values.contact_contractors.role_id}
+                            options={assetsOptionsRoles}
+                            placeholder="Выберите"
+                            loading={assetsLoading}
+
+                        />
+                      </ValidationErrorWrapper>
+                  )}}
+              </FieldArray>
             </div>
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Должность</span>
-            <TextField
-                variant={"outlined"}
-                name="contractors_position"
-                placeholder={"Должность"}
-                value={values.contractors_position}
-                onChange={handleChange}
-                error={touched.contractors_position &&Boolean(errors.contractors_position)}
-                helperText={ touched.contractors_position && errors.contractors_position}
-            />
+            <FieldArray name="contact_contractors">
+              {() => {
+                const fieldName = `contact_contractors.position`;
+                const touchedFieldName = getIn(touched, fieldName);
+                const errorFieldName = getIn(errors, fieldName);
+
+                return(
+                    <TextField
+                        variant={"outlined"}
+                        name={fieldName}
+                        placeholder={"Должность"}
+                        value={values.contact_contractors.position}
+                        onChange={handleChange}
+                        error={Boolean(
+                            touchedFieldName && errorFieldName
+                        )}
+                        helperText={
+                          touchedFieldName && errorFieldName
+                              ? errorFieldName
+                              : ""
+                        }
+                    />)}}
+            </FieldArray>
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Тип контрагента</span>

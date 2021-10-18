@@ -150,7 +150,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
                 className={classes.label}
                 style={{ alignItems: "flex-start" }}
               >
-                <span>CRM</span>
+                <span style={{width: "40%"}}>CRM</span>
                 <div
                   style={{
                     width: "60%",
@@ -233,7 +233,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
               </div>
 
               <div className={classes.label}>
-                <span>Тип контрагента</span>
+                <span style={{width: "40%"}}>Тип контрагента</span>
                 <span style={{ width: "60%" }}>
                     <ValidationErrorWrapper
                         inputClassName="ant-select-selector"
@@ -262,7 +262,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
                 </span>
               </div>
               <div className={classes.label}>
-                <span>Тип услуг</span>
+                <span style={{width: "40%"}}>Тип услуг</span>
                 <span style={{ width: "60%" }}>
                     <ValidationErrorWrapper
                         inputClassName="ant-select-selector"
@@ -288,8 +288,8 @@ export const FormGeneralInformation: React.FC<Props> = ({
                 </span>
               </div>
               <div className={classes.label}>
-                <span>ИНН</span>
-                <TextField
+                <span style={{width: "40%"}}>ИНН</span>
+                <TextField style={{width: "60%"}}
                   variant={"outlined"}
                   name="inn"
                   placeholder={"1234556789101112"}
@@ -301,8 +301,8 @@ export const FormGeneralInformation: React.FC<Props> = ({
               </div>
               {values.org_type === "ЮЛ" && (
                 <div className={classes.label}>
-                  <span>КПП</span>
-                  <TextField
+                  <span style={{width: "40%"}}>КПП</span>
+                  <TextField style={{width: "60%"}}
                     variant={"outlined"}
                     name="kpp"
                     placeholder={"1234556789101112"}
@@ -314,8 +314,8 @@ export const FormGeneralInformation: React.FC<Props> = ({
                 </div>
               )}
               <div className={classes.label}>
-                <span>{values.org_type === "ФЛ" ? "ОГРНИП" : "ОГРН"}</span>
-                <TextField
+                <span style={{width: "40%"}}>{values.org_type === "ФЛ" ? "ОГРНИП" : "ОГРН"}</span>
+                <TextField style={{width: "60%"}}
                   variant={"outlined"}
                   name="ogrn"
                   placeholder={"1234556789101112"}
@@ -325,9 +325,9 @@ export const FormGeneralInformation: React.FC<Props> = ({
                   helperText={touched.ogrn && errors.ogrn}
                 />
               </div>
-              <div className={clsx(classes.label, classes.NDASection)}>
-                <span>NDA</span>
-                <span style={{ width: "63.2%" }}>
+              <div  className={clsx(classes.label, classes.NDASection)}>
+                <span style={{ width: "37%" }}>NDA</span>
+                <span style={{ width: "63%" }}>
                   <Checkbox
                     name={"nda"}
 

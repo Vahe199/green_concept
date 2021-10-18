@@ -29,6 +29,11 @@ export const InputAssetsOptions = () => {
         value: option.id ? option.id : 0,
         label: option.name,
     }));
+    const assetsOptionsCRMS = crms?.map((option: any) => ({
+        key: option.id,
+        value: option.id ? option.id : 0,
+        label: option.full_name,
+    }));
      const assetsOptionsDirections = branches?.map((option: any) => ({
         key: option.id,
         value: option.id ? option.id : 0,
@@ -47,7 +52,7 @@ export const InputAssetsOptions = () => {
         label: option.name,
     }));
     return {
-        assetsOptionsStatus,  assetsOptionsRoles, assetsOptionsCounterpartyType,assetsOptionsBranches,assetsOptionsDirections,assetsOptionsCongratulation
+        assetsOptionsCRMS,  assetsOptionsStatus,  assetsOptionsRoles, assetsOptionsCounterpartyType,assetsOptionsBranches,assetsOptionsDirections,assetsOptionsCongratulation
     }
 }
 

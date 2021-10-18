@@ -1,14 +1,16 @@
 export interface ContractorContactDataState {
-  data: any[];
+  ContactPerson:any[];
+  UpdateContactPerson:any[];
   loading: boolean;
-  error: null | string;
+  error: boolean | string;
+  success:boolean | string;
 }
 
 export enum ContractorContactDataActionType {
   INSERT_CONTRACTOR_CONTACT_DATA = "INSERT_CONTRACTOR_CONTACT_DATA",
   INSERT_CONTRACTOR_CONTACT_DATA_SUCCESS = "INSERT_CONTRACTOR_CONTACT_DATA_SUCCESS",
   INSERT_CONTRACTOR_CONTACT_DATA_ERROR = "INSERT_CONTRACTOR_CONTACT_DATA_ERROR",
-  INSERT_CONTRACTOR_CONTACT_DATA_PAGE = "INSERT_CONTRACTOR_CONTACT_DATA_PAGE",
+  RECOVERY_CONTRACTOR_CONTACT_DATA_STATE = "RECOVERY_CONTRACTOR_CONTACT_DATA_STATE",
 }
 
 interface InsertContractorContactDataAction {
@@ -16,13 +18,18 @@ interface InsertContractorContactDataAction {
 }
 interface InsertContractorContactDataSuccessAction {
   type: ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA_SUCCESS;
+  payload: any[]
 }
 interface InsertContractorContactDataErrorAction {
   type: ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA_ERROR;
-  payload: string;
+  payload: string | boolean;
+}
+interface RecoveryState {
+  type: ContractorContactDataActionType.RECOVERY_CONTRACTOR_CONTACT_DATA_STATE
 }
 
 export type ContractorContactDataAction =
   | InsertContractorContactDataAction
   | InsertContractorContactDataSuccessAction
-  | InsertContractorContactDataErrorAction;
+  | InsertContractorContactDataErrorAction
+  | RecoveryState;

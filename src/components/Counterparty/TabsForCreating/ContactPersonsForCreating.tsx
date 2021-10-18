@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, {useState, useRef, useEffect} from "react";
 import { FieldArray, Form, Formik, getIn } from "formik";
 import {
   Button,
@@ -24,22 +24,45 @@ import ModalListOfContacts from "../../Modals/ModalListOfContacts";
 import ValidationErrorWrapper from "../Core/utils/ValidationErrorWrapper";
 import { Modal } from "antd";
 import {InputAssetsOptions} from "../Core/utils/InputAssetsOptions";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {notifyError, notifySuccess} from "../Core/utils/ToastNotify";
+import {SearchContactPerson} from "../Core/utils/SearchContactPerson";
+import {MagnifyingGlass} from "../../../IMG/SVG/MagnifyingGlass";
+import InputFilterSelect from "../Core/FilterInputs/InputFilterSelect";
 
 export const ContactPersonsForCreating: React.FC = () => {
 
-  const { insertContractorContactData } = useActions();
+  const { insertContractorContactData,recoveryContractorContactState } = useActions();
   const { assets, load: assetsLoading } = useTypedSelector(
       (state) => state.assets);
   const {types_and_services,}: any = assets;
   const { AuthorData } = useTypedSelector((state) => state.author);
   const { id }: any = AuthorData;
+  const { error, success } = useTypedSelector((state) => state.contactPerson);
+
   const parentRef = useRef<any>({});
   const classes = useStylesContactPersons();
   const Options = InputAssetsOptions();
 
+  const search = SearchContactPerson()
+  useEffect(()=>{
+    if(error){
+      notifyError()
+      recoveryContractorContactState()
+    }
+    if(success){
+      notifySuccess()
+      recoveryContractorContactState()
+    }
+  },[success,error])
   const [contractorId, setContractorId] = React.useState(1);
   const [showModal, setShowModal] = useState(false);
+const searchOptions = SearchContactPerson()
+
+  const [branch, setBranch] = useState("");
+  // const filteredBranches = branches.filter(({ name }: { name: string }) => name.includes(branch))
+
 
   const assetsOptionsServiceType = types_and_services[
   contractorId - 1
@@ -62,7 +85,7 @@ export const ContactPersonsForCreating: React.FC = () => {
       { phone: "", phone_type: "Рабочий" },
       { phone: "", phone_type: "Мобильный" },
     ],
-    contact_contractors:[{main:1,role_id:null,position:"",contractor_id:id}],
+    contact_contractors:{main:1,role_id:null,position:"",contractor_id:id},
     contact_employees: [{ direction_id: "", employee_id: null, info: "" }],
     contact_congratulations: [
       { name: "", congratulation_type_id: null, other: "" },
@@ -80,12 +103,13 @@ export const ContactPersonsForCreating: React.FC = () => {
       style={{ height: "max-content", position: "relative" }}
       ref={parentRef}
     >
+      <ToastContainer style={{fontSize:20, marginTop:"5%"}} />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchemaContactPerson}
         onSubmit={async (values, action) => {
           console.log(values, "values");
-          insertContractorContactData(values);
+           insertContractorContactData(values);
         }}
       >
         {({ values, touched, handleChange, errors, setFieldValue }) => (
@@ -97,9 +121,6 @@ export const ContactPersonsForCreating: React.FC = () => {
               }}
             >
               <Button
-                onClick={() => {
-                  console.log(errors, values);
-                }}
                 type="submit"
                 variant="contained"
                 color="primary"
@@ -111,7 +132,8 @@ export const ContactPersonsForCreating: React.FC = () => {
                 <span className={classes.addListItem}>
                   <span style={{ fontSize: 17, marginTop: 15 }}> + </span>
                   <span
-                    onClick={() => setShowModal(true)}
+                    // onClick={() => setShowModal(true)}
+                     onClick={() => search.fetchContactPerson()}
                     className={classes.selectItem}
                     style={{ marginTop: 15 }}
                   >
@@ -138,7 +160,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                         <span>
                           <FieldArray name="contact_contractors">
                      {() => {
-                       const fieldName = `contact_contractors[0].main`;
+                       const fieldName = `contact_contractors.main`;
 
                      return(
                           <Checkbox
@@ -150,13 +172,13 @@ export const ContactPersonsForCreating: React.FC = () => {
                             inputProps={{
                               "aria-label": "checkbox with default color",
                             }}
-                            value={values.contact_contractors[0].main === 1 ? true : false}
+                            value={values.contact_contractors.main === 1 ? true : false}
                             onChange={(e: any) => {
                               setFieldValue(
                                   fieldName,
                                   e.target.checked ? 0 : 1
                               )
-                              console.log(values.contact_contractors[0].main)
+                              console.log(values.contact_contractors.main)
                             }
                             }
                           />
@@ -287,7 +309,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                  <div style={{width:"60%"}}>
                    <FieldArray name="contact_contractors">
                      {() => {
-                       const fieldName = `contact_contractors[0].role_id`;
+                       const fieldName = `contact_contractors.role_id`;
                        const touchedFieldName = getIn(touched, fieldName);
                        const errorFieldName = getIn(errors, fieldName);
 
@@ -307,7 +329,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                              handleChange={(value: any) =>
                                  setFieldValue(fieldName, value)
                              }
-                             value={values.contact_contractors[0].role_id}
+                             value={values.contact_contractors.role_id}
                              options={Options.assetsOptionsRoles}
                              placeholder="Выберите"
                              loading={assetsLoading}
@@ -322,7 +344,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                     <span>Должность</span>
                     <FieldArray name="contact_contractors">
                       {() => {
-                        const fieldName = `contact_contractors[0].position`;
+                        const fieldName = `contact_contractors.position`;
                         const touchedFieldName = getIn(touched, fieldName);
                         const errorFieldName = getIn(errors, fieldName);
 
@@ -331,7 +353,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                       variant={"outlined"}
                       name={fieldName}
                       placeholder={"Должность"}
-                      value={values.contact_contractors[0].position}
+                      value={values.contact_contractors.position}
                       onChange={handleChange}
                       error={Boolean(
                           touchedFieldName && errorFieldName
@@ -843,38 +865,39 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                     : { width: "63%" }
                                                 }
                                               >
-                                                <TextField
-                                                  style={{ width: "100%" }}
-                                                  variant={"outlined"}
-                                                  name={fieldEmployee}
-                                                  placeholder={
-                                                    "Введите слово или часть слова"
-                                                  }
-                                                  value={employees.employee_id}
-                                                  onChange={handleChange}
-                                                  InputProps={{
-                                                    startAdornment: (
-                                                      <InputAdornment position="start">
-                                                        <SearchIcon
-                                                          fontSize={"small"}
-                                                          className={
-                                                            classes.icon
-                                                          }
-                                                        />
-                                                      </InputAdornment>
-                                                    ),
-                                                  }}
-                                                  error={Boolean(
-                                                    touchedFieldEmployee &&
+                                                <ValidationErrorWrapper
+                                                    inputClassName="ant-select-selector"
+                                                    error={Boolean(
+                                                        touchedFieldEmployee &&
+                                                        errorFieldEmployee
+                                                    )}
+                                                    helperText={
+                                                      touchedFieldEmployee &&
                                                       errorFieldEmployee
-                                                  )}
-                                                  helperText={
-                                                    touchedFieldEmployee &&
-                                                    errorFieldEmployee
-                                                      ? errorFieldEmployee
-                                                      : ""
-                                                  }
-                                                />
+                                                          ? errorFieldEmployee
+                                                          : ""
+                                                    }
+                                                >
+                                                <div className={classes.searchWraper}>
+                                                  <MagnifyingGlass className="searchIcon" />
+                                                  <InputFilterSelect
+                                                      name={fieldEmployee}
+                                                      placeholder={"Введите слово или часть слова"}
+                                                      value={employees.employee_id}
+                                                      onFocus={()=>searchOptions.fetchContactPerson()}
+                                                      options={searchOptions.searchOptions}
+                                                      filterOption={false}
+                                                      onSearch={setBranch}
+                                                      onSelect={(id: number) => {
+                                                        setFieldValue(fieldEmployee,id)
+                                                      }}
+                                                      notFoundContent={null}
+                                                      className={"searchMode " }
+                                                      prefix={<MagnifyingGlass className={classes.icon} />}
+                                                      showSearch
+                                                  />
+                                                </div>
+                                                </ValidationErrorWrapper>
                                               </div>
                                             </div>
                                             <div

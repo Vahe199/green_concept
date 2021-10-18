@@ -89,6 +89,8 @@ export const counterpartiesApi = {
     });
   },
 
+
+  //contacts update
   changeContactGeneralInfoData(formData: any, id: any) {
     return axios.request({
       method: "put",
@@ -134,5 +136,11 @@ export const contractorApi = {
   },
   insertContractorContactData(data: any) {
     return axios.request({ method: "post", url: "contacts/", data });
+  },
+  getContractorContactData() {
+    return axios.request({ method: "get", url: "contacts" });
+  },
+  searchContactPersonData() {
+    return axios.request({ method: "get", url: "employees"});
   },
 };

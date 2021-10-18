@@ -47,13 +47,14 @@ export const useStylesGeneralInformation = makeStyles((theme: Theme) =>
         label: {
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+             justifyContent: "space-between",
             marginBottom: 16,
             fontSize: 16,
             fontWeight: 500,
         },
         NDASection: {
             marginTop: "-10px",
+
         },
         saveButton: {
             textTransform: "none",

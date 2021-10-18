@@ -15,7 +15,7 @@ const initialState: AddContactsStateList = {
     error: null,
 };
 
-export const addContactsListReducer = (
+export const addContactPersonReducer = (
     state = initialState,
     action: ContractorContactDataAction
 ): AddContactsStateList => {

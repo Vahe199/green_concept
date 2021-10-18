@@ -30,18 +30,15 @@ export const validationSchemaContactPerson = yup.object({
       })
     )
     .required("Обязательное поле"),
-    contact_contractors: yup
-    .array()
-    .of(
+    contact_contractors:
       yup.object().shape({
           role_id: yup.number()
               .nullable(true)
               .required("Обязательное поле"),
           position: yup.string().required("Обязательное поле"),
           main: yup.number().nullable(true).required("Обязательное поле"),
-      })
-    )
-    .required("Обязательное поле"),
+      }),
+
   contractor_type_id: yup.string().required("Обязательное поле"),
   delivery_address: yup.string().required("Обязательное поле"),
   emails: yup

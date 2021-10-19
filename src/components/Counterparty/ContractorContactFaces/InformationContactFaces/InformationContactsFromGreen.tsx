@@ -49,7 +49,7 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: 10,
+          marginBottom: 8,
         }}
       >
         <span className={classes.spanTitle}>Контакты со стороны GREEN</span>

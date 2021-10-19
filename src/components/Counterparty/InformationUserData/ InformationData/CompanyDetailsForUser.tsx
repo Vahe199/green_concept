@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 16,
     },
     val: {
-      fontSize: 16,
-      fontWeight: 500,
+      fontSize: 15,
+      fontWeight: 400,
     },
   })
 );
@@ -56,7 +56,7 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
           justifyContent: "space-between",
           alignItems: "center",
           width: "100%",
-          marginBottom: 10,
+          marginBottom: 8,
         }}
       >
         <Typography variant={"subtitle2"} className={classes.val}>

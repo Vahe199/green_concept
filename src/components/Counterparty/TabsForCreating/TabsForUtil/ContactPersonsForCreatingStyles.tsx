@@ -134,13 +134,18 @@ export const useStylesContactPersons = makeStyles((theme: Theme) =>
       width: "100%",
       maxWait: "100%",
       borderRadius: 4,
-      padding: 16,
+      padding: "4px 12px",
       resize: "vertical",
       fontSize: 16,
       outline: "none",
       "&:focus": {
         border: "1px solid #3AB994 !important",
       },
+        "&::placeholder":{
+            color: '#ADB3B8',
+            fontSize: "16px",
+        }
+
     },
     paper: {
       padding: 16,
@@ -205,6 +210,7 @@ export const useStylesContactPersons = makeStyles((theme: Theme) =>
     val: {
       fontSize: 16,
       fontWeight: 500,
+        marginBottom: 8,
     },
     rightDivider: {
       marginLeft: "3%",

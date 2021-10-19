@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 16,
     },
     title: {
-      fontSize: 16,
+      fontSize: 15,
     },
   })
 );
@@ -60,7 +60,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
           justifyContent: "space-between",
           alignItems: "center",
           width: "100%",
-          marginBottom: 10,
+          marginBottom: 8,
         }}
       >
         <Typography variant={"subtitle2"} className={classes.title}>
@@ -132,6 +132,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
             href="#"
             onClick={() => console.log("Посмотреть карту")}
             color="inherit"
+            style={{fontSize: 16}}
           >
             Посмотреть карту
           </Link>

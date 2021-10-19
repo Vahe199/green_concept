@@ -72,6 +72,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
             justifyContent: "space-between",
             alignItems: "center",
             width: "101%",
+            marginBottom: 8,
           }}
         >
           <span style={{ fontWeight: 500, fontSize: 16 }}>
@@ -123,7 +124,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
               }}
               inputProps={{ "aria-label": "checkbox with default color" }}
             />
-            <span className={classes.title}>
+            <span style={{fontSize: 16, fontWeight: 500}}>
               Совпадает с юридическим адресом
             </span>
           </div>
@@ -139,7 +140,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
               helperText={touched.post_address && errors.post_address}
             />
           </div>
-          <div>
+          <div  >
             <Checkbox
               name="MatchesAddressMailingAddress"
               color="default"
@@ -153,7 +154,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
               }}
               inputProps={{ "aria-label": "checkbox with default color" }}
             />
-            <span className={classes.title}>
+            <span style={{fontSize: 16, fontWeight: 500}}>
               Совпадает с юридическим адресом
             </span>
           </div>

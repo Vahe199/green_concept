@@ -114,13 +114,14 @@ export const GeneralInformationForCreating = () => {
                   Сохранить карточку
                 </Button>
                 <div className={classes.root}>
-                  <div style={{ width: "24%", marginLeft: "2%", minWidth: 387 }}>
+                  <div style={{ width: "27%", marginLeft: "2%", minWidth: 387 }}>
                     <div
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
                           width: "100%",
+                          marginBottom: 8,
                         }}
                     >
                       <span className={classes.val}>Общие сведения</span>
@@ -314,13 +315,14 @@ export const GeneralInformationForCreating = () => {
                       </div>
                     </Paper>
                   </div>
-                  <div style={{ width: "34%",marginLeft:"1%", marginRight:"1%" }}>
+                  <div style={{ width: "35%",marginLeft:32, marginRight:32 }}>
                     <div
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
                           width: "101%",
+                          marginBottom: 8,
                         }}
                     >
                       <span className={classes.val}>Сведения о компании</span>
@@ -454,13 +456,14 @@ export const GeneralInformationForCreating = () => {
 
                     </Paper>
                   </div>
-                  <div style={{ width: "34%",marginRight:"2%" }}>
+                  <div style={{ width: "35%",marginRight:"2%" }}>
                     <div
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
                           width: "101%",
+                          marginBottom: 8,
                         }}
                     >
                       <span className={classes.val}>Контакты компании</span>

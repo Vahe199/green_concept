@@ -761,6 +761,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                         justifyContent: "space-between",
                         alignItems: "center",
                         width: "100%",
+                       // marginBottom: 8,
                       }}
                     >
                       <span className={classes.val}>
@@ -1041,6 +1042,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                       alignItems: "center",
                       width: "100%",
                       marginTop: "2%",
+                      marginBottom: 8,
                     }}
                   >
                     <span className={classes.val}>

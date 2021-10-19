@@ -182,7 +182,7 @@ export const SideBarPage: React.FC = () => {
                     />
                   </Badge>
                 </ListItemIcon>
-                <span>Оповещения</span>
+                <span >Оповещения</span>
                 <ListItemText></ListItemText>
               </ListItem>
             </Link>

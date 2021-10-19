@@ -36,7 +36,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
   const [contractorId, setContractorId] = React.useState(1);
   let errorMessage: string = "General";
 
-  const [validateValue, setValidateValue] = React.useState<string>();
+  const [validateValue2, setValidateValue2] = React.useState<string>("ЮЛ");
 
 const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
 
@@ -59,7 +59,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
       setChangeGeneralInformation(false);
       recoveryAuthorDataState();
     }
-  }, [error, isChange, validateValue]);
+  }, [error, isChange, validateValue2]);
 
 
   const initialValues = {
@@ -77,7 +77,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
     <div className={classes.root}>
       <Formik
         initialValues={initialValues}
-        validationSchema={() => validationSchemaGeneralInfo(validateValue)}
+        validationSchema={() => validationSchemaGeneralInfo(validateValue2)}
         onSubmit={async (values, action) => {
           console.log(values, "values");
           changeAuthorGeneralData(values, id, errorMessage);
@@ -91,6 +91,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                 justifyContent: "space-between",
                 alignItems: "center",
                 width: "101%",
+                marginBottom: 8,
               }}
             >
               <span style={{ fontWeight: 500, fontSize: 16 }}>
@@ -120,7 +121,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                     checked={values.org_type === "ФЛ"}
                     onChange={(e) => {
                       setFieldValue("org_type", e.target.value);
-                      setValidateValue("ФЛ")
+                      setValidateValue2("ФЛ")
                     }}
                     value="ФЛ"
                     color="default"
@@ -137,7 +138,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                     checked={values.org_type === "ЮЛ"}
                     onChange={(e) => {
                       setFieldValue("org_type", e.target.value);
-                      setValidateValue("ЮЛ")
+                      setValidateValue2("ЮЛ")
                     }}
                     value="ЮЛ"
                     color="default"

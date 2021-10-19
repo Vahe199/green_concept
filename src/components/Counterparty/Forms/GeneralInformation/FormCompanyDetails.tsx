@@ -91,6 +91,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
             justifyContent: "space-between",
             alignItems: "center",
             width: "101%",
+            marginBottom: 8,
           }}
         >
           <span style={{ fontWeight: 500, fontSize: 16 }}>

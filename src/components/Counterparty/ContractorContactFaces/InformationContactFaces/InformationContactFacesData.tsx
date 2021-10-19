@@ -3,6 +3,8 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import {CheckSquareChecked} from "../../../../IMG/SVG/CheckSquareChecked";
+import {CheckSquareUnChecked} from "../../../../IMG/SVG/CheckSquareUnChecked";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,8 +67,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
 
   const {PersonContact} = useTypedSelector(state => state.contactPerson)
 
-let {contact}:any = PersonContact
-  debugger
+// let {contact}:any = PersonContact
     const {
     firstname = "",
       surname = "",
@@ -77,7 +78,7 @@ let {contact}:any = PersonContact
       branches = [],
       emails = [],
       phones =[],
-      delivery_address = ""}:PersonContactState = contact
+      delivery_address = ""}:any = PersonContact
 
   const classes = useStyles();
   const [checked, setChecked] = React.useState(sex);
@@ -91,7 +92,7 @@ let {contact}:any = PersonContact
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: 10,
+          marginBottom: 8,
         }}
       >
         <span className={classes.spanTitle}>Основные сведения</span>
@@ -109,6 +110,13 @@ let {contact}:any = PersonContact
               name="main_contact_person"
               color="default"
               inputProps={{ "aria-label": "checkbox with default color" }}
+                // icon={<CheckSquareChecked color="#5B6770" />}
+                // checkedIcon={
+                //   <CheckSquareUnChecked color="#5B6770" />
+                // }
+                icon={<CheckSquareUnChecked color="#ADB3B8" />}
+                checkedIcon={<CheckSquareChecked color="#5B6770" />}
+
             />
           </span>
         </div>

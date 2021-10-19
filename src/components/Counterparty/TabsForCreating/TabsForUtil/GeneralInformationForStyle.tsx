@@ -11,18 +11,19 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
             },
         },
         textAreaCN: {
-            marginBottom:36,
+            marginBottom:30,
 
             width: "60%",
             "& .MuiOutlinedInput-inputMultiline": {
                 height: "50px !important",
+
             },
 
             "& .MuiOutlinedInput-multiline": {
                 paddingBottom: 4,
                 paddingTop:4,
-                paddingLeft: 12,
-                paddingRight:12,
+                paddingLeft: 0,
+                paddingRight:0,
             },
         },
         btn: {

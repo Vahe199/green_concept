@@ -5,6 +5,8 @@ import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
 import {InputAssetsOptions} from "../../Core/utils/InputAssetsOptions";
+import {CheckSquareUnChecked} from "../../../../IMG/SVG/CheckSquareUnChecked";
+import {CheckSquareChecked} from "../../../../IMG/SVG/CheckSquareChecked";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,6 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       fontSize: 16,
     },
+      title2: {
+        fontSize: 15,
+      },
   })
 );
 
@@ -46,7 +51,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
     let contractorType= assetsOptionsCongratulation.filter((type:any) =>type.key == contractor_type_id).map((type:any) =>(
         <div key={type.id}>{type.label}</div>
     ))
-    debugger
+
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -56,7 +61,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
           justifyContent: "space-between",
           alignItems: "center",
           width: "100%",
-          marginBottom: 10,
+          marginBottom: 8,
         }}
       >
         <Typography variant={"subtitle2"} className={classes.title}>
@@ -84,7 +89,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
           </Typography>
           <Typography variant={"body2"}>
             {crms?.map((crm: any, index: number) => (
-              <div key={index} className={classes.title}>
+              <div key={index} className={classes.title2}>
                 {crm.surname + " " + crm.firstname}
               </div>
             ))}
@@ -108,9 +113,10 @@ export const GeneralInformationForUser: React.FC<Props> = ({
             style={{ marginTop: 2 }}
             className={classes.title}
           >
-            {contractor_type_id ? contractorType :
-              "------------------"
-           }
+              <span className={classes.title}>{contractor_type_id ? contractorType :
+                  "------------------"
+              }</span>
+
           </Typography>
         </div>
           {<div className={classes.div}>
@@ -121,7 +127,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
               >
                   ИНН
               </Typography>
-              <Typography variant={"body2"} className={classes.title}>
+              <Typography variant={"body2"} className={classes.title2}>
                   {inn}
               </Typography>
           </div>}
@@ -133,7 +139,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
               >
                   КПП
               </Typography>
-              <Typography variant={"body2"} className={classes.title}>
+              <Typography variant={"body2"} className={classes.title2}>
                   {kpp}
               </Typography>
           </div>}
@@ -145,7 +151,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
           >
               <span>{org_type === "ФЛ" ? 'ОГРНИП' : 'ОГРН'}</span>
           </Typography>
-          <Typography variant={"body2"} className={classes.title}>
+          <Typography variant={"body2"} className={classes.title2}>
             {ogrn}
           </Typography>
         </div>
@@ -162,6 +168,8 @@ export const GeneralInformationForUser: React.FC<Props> = ({
               disabled
               checked={nda}
               inputProps={{ "aria-label": "disabled checked checkbox" }}
+               icon={<CheckSquareUnChecked color="#ADB3B8" />}
+               checkedIcon={<CheckSquareChecked color="#5B6770" />}
             />
           </span>
         </div>

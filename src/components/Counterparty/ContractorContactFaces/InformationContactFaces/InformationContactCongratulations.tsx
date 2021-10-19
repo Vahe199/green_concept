@@ -46,7 +46,7 @@ export const InformationContactCongratulations: React.FC<InfoCongratulations> =
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: 10,
+            marginBottom: 8,
           }}
         >
           <span className={classes.spanTitle}>Сведения о поздравлениях</span>

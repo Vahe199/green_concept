@@ -69,6 +69,9 @@ const useStyles = makeStyles({
       },
     },
   },
+    titleText: {
+      fontsize: "15px",
+    },
   input: {
     marginTop: 16,
   },
@@ -178,7 +181,7 @@ export default function CounterpartiesTable(props: any) {
 
 
         <>
-          Тип
+            <span className={classes.titleText}>Тип</span>
           <div>
             <InputFilterSelect
               className={classes.input}
@@ -200,7 +203,7 @@ export default function CounterpartiesTable(props: any) {
     {
       title: () => (
           <>
-            Наименование
+              <span className={classes.titleText}>Наименование</span>
             <InputFilterSearch
                 handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   const { value } = e.target;
@@ -219,7 +222,7 @@ export default function CounterpartiesTable(props: any) {
     {
       title: () => (
           <>
-            Отрасль
+              <span className={classes.titleText}>Отрасль</span>
             <div className={classes.searchWraper}>
               <MagnifyingGlass className="searchIcon" />
               <InputFilterSelect
@@ -258,7 +261,7 @@ export default function CounterpartiesTable(props: any) {
     {
       title: () => (
           <div style={{ minWidth: 125 }}>
-            Группа компаний
+              <span className={classes.titleText}>Группа компаний</span>
             <div className={classes.searchWraper}>
               <MagnifyingGlass className="searchIcon" />
               <InputFilterSelect
@@ -285,7 +288,7 @@ export default function CounterpartiesTable(props: any) {
     {
       title: () => (
           <>
-            Ответственный
+              <span className={classes.titleText}>Ответственный</span>
             <div className={classes.searchWraper}>
               <MagnifyingGlass className="searchIcon" />
               <InputFilterSelect
@@ -323,7 +326,7 @@ export default function CounterpartiesTable(props: any) {
     {
       title: () => (
           <>
-            Автор записи
+              <span className={classes.titleText}>Автор записи</span>
             <div>
               <InputFilterSelect
                   className={classes.input}
@@ -354,7 +357,7 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
           <>
             <div style={{ display: "flex" }}>
-              <span>Создано</span>
+              <span className={classes.titleText}>Создано</span>
               <span style={{ position: "absolute", right: 8, top: 8 }}>
               <SortingButtons color="#5B6770" />
             </span>
@@ -377,7 +380,7 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
           <>
             <div style={{ display: "flex" }}>
-              <span>Обновлено</span>
+              <span className={classes.titleText}>Обновлено</span>
               <span style={{ position: "absolute", right: 8, top: 8 }}>
               <SortingButtons color="#5B6770" />
             </span>

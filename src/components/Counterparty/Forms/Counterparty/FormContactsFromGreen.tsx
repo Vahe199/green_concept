@@ -61,9 +61,10 @@ const initialValues = {
             justifyContent: "space-between",
             alignItems: "center",
             width: "101%",
+              //marginBottom: 8,
           }}
         >
-          <span className={classes.spanTitle}>Контакты со gbdc GREEN</span>
+          <span className={classes.spanTitle}>Контакты со стороны GREEN</span>
           <Button
             color="primary"
             type="submit"

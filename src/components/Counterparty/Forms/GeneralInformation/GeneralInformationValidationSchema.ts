@@ -18,7 +18,7 @@ export const validationSchemaGeneralInfo = (value: any) =>  yup.object().shape({
         .string()
         .min(value == "ЮЛ" ? 10 : 12, `должен состоять минимум из ${value == "ЮЛ" ? 10 : 12} символов`)
         .max(value == "ЮЛ" ? 10 : 12, `должен состоять максимум из ${value == "ЮЛ" ? 10 : 12} символов` )
-        .required("Обязательное поле"),
+        .required(`Обязательное поле`),
     kpp: value == "ЮЛ" ? yup.string().required("Обязательное поле").min(0, "должен состоять минимум из 10 символов")
         .max(18, "должен состоять максимум из 18 символов").nullable(true) : yup.string().nullable(true),
     // kpp: yup

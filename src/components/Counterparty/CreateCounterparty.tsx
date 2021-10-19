@@ -180,7 +180,7 @@ const CreateCounterparty = (props: any) => {
           <CaretDoubleLeft color="#3B4750" alt="double left icon" />
         </div>
         <Link color="inherit" onClick={() => history.push("/counterparties")}>
-          <div style={{ fontSize: 14, cursor: "pointer" }}>
+          <div style={{ fontSize: 14, cursor: "pointer", fontWeight: 400 }}>
             Вернуться назад к списку
           </div>
         </Link>

@@ -14,6 +14,7 @@ const [filterData,setFilterData] = React.useState<any>([])
                 .then(({data}:any) => {
                     const {employees} = data;
                     setFilterData(employees)
+                    debugger
                 }).catch((error) => {
                     console.error(error.response)
                     setFilterData([])

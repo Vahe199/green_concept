@@ -3,10 +3,13 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
-import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
-import {InputAssetsOptions} from "../../Core/utils/InputAssetsOptions";
+
 import {CheckSquareUnChecked} from "../../../../IMG/SVG/CheckSquareUnChecked";
 import {CheckSquareChecked} from "../../../../IMG/SVG/CheckSquareChecked";
+
+import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
+import {InputAssetsOptions} from "../../Utils/utils_options/InputAssetsOptions";
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -4,19 +4,33 @@ import { Formik, getIn, FieldArray } from 'formik';
 
 import {useStylesEmployeeForm} from "./EmployeesFormStyles";
 import {TrashIcon} from "../../../../../IMG/SVG/TrashIcon";
+import {useTypedSelector} from "../../../../../redux/type_redux_hook/useTypedSelector";
 
-const initialValues = {
-    familia:'',
-    name:'',
-    otchestvo:'',
-    dataRojdenia:'',
-    phone:'',
-    emails: [{email: ''}],
-};
+
 type EmployeeFormDataProps = {
     setEmployeeData:(val:boolean)=>void
 }
 const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData}) => {
+    const {loading,employeeById} = useTypedSelector(state => state.employees)
+    let {employee}:any = employeeById
+    let {photo, surname,firstname, middlename, birthdate,phones,emails}:any = employee;
+    const initialValues = {
+        firstname:firstname ? firstname : "",
+        middlename:middlename ? middlename : "",
+        surname:surname ? surname : "",
+        photo:"",
+        birthdate:birthdate? birthdate : "",
+        emails: [{email: ''}],
+        phones:[{phone:""}],
+
+
+        familia:'',
+        name:'',
+        otchestvo:'',
+        dataRojdenia:'',
+        phone:'',
+
+    };
     const classes = useStylesEmployeeForm();
     return(
         <div className={classes.root}>
@@ -43,6 +57,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                 <div className={classes.row}>
                     <div style={{width:"37%"}}>
                         <input
+                            name={"photo"}
                             accept="image/*"
                             style={{ display: 'none' }}
                             id="raised-button-file"
@@ -66,11 +81,11 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                     fullWidth
                                     placeholder={"Фамилия"}
                                     variant={"outlined"}
-                                    name="familia"
-                                    value={values.familia}
+                                    name="surname"
+                                    value={values.surname}
                                     onChange={handleChange}
-                                    error={touched.familia && Boolean(errors.familia)}
-                                    helperText={touched.familia && errors.familia}
+                                    error={touched.surname && Boolean(errors.surname)}
+                                    helperText={touched.surname && errors.surname}
                                 />
                             </Typography>
                         </div>
@@ -83,11 +98,11 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                     fullWidth
                                     placeholder={"Имя"}
                                     variant={"outlined"}
-                                    name="name"
-                                    value={values.name}
+                                    name="firstname"
+                                    value={values.firstname}
                                     onChange={handleChange}
-                                    error={touched.name && Boolean(errors.name)}
-                                    helperText={touched.name && errors.name}
+                                    error={touched.firstname && Boolean(errors.firstname)}
+                                    helperText={touched.firstname && errors.firstname}
                                 />
                             </Typography>
                         </div>
@@ -100,11 +115,11 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                     fullWidth
                                     placeholder={"Отчество"}
                                     variant={"outlined"}
-                                    name="otchestvo"
-                                    value={values.otchestvo}
+                                    name="middlename"
+                                    value={values.middlename}
                                     onChange={handleChange}
-                                    error={touched.otchestvo && Boolean(errors.otchestvo)}
-                                    helperText={touched.otchestvo && errors.otchestvo}
+                                    error={touched.middlename && Boolean(errors.middlename)}
+                                    helperText={touched.middlename && errors.middlename}
                                 />
                             </Typography>
                         </div>
@@ -114,7 +129,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                             </Typography>
                             <Typography className={classes.typographyValue}>
                                 <TextField
-                                    name={"dataRojdenia"}
+                                    name={"birthdate"}
                                     style={{ width: "80%"}}
                                     id="date"
                                     variant="outlined"

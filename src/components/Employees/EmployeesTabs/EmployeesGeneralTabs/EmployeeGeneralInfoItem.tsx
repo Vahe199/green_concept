@@ -3,6 +3,7 @@ import {Link, Paper, Typography} from "@material-ui/core";
 
 import {useStylesEmployee} from "./EmployeesStyles";
 import AddIcon from "@material-ui/icons/Add";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 
 type GeneralInfoProps = {
     setEmployeeGeneralInfo:(val:boolean)=>void
@@ -10,6 +11,11 @@ type GeneralInfoProps = {
 
 const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralInfo}) => {
     const classes = useStylesEmployee();
+    const {loading,employeeById} = useTypedSelector(state => state.employees)
+    let {employee}:any = employeeById
+    let {status,region,company,directions,position,end_work_date ,start_work_date,experience_months,
+        experience_years,}:any = employee;
+    debugger
     return(
         <div className={classes.root}>
             <div className={classes.title} >
@@ -29,7 +35,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Статус
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                Уволен
+                                {status?.name}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -37,7 +43,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Регион:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                СПБ
+                                {region?.name}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -45,7 +51,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Компания трудоустройства
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                ООО «Грин»
+                                {company.name}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -53,7 +59,11 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Направление:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                Проектирование
+                                {directions?.map((direction:any)=>{
+                                    return(
+                                        <div key={direction.id}>{direction.name}</div>
+                                    )
+                                })}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -61,7 +71,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Категория (роль в системе)
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                Руководитель непроизводственного подразделения
+                                {position.name}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -69,7 +79,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Должность:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                Главный инженер проекта
+                                {position.name}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -77,7 +87,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Дата приема на работу:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                01.01.2018
+                                {start_work_date}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -85,7 +95,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Дата увольнения:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                01.01.2021
+                                {end_work_date}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -93,7 +103,9 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Стаж работы в компании
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                3 года
+                                {experience_years + " " + "г"  + " "
+                                    +
+                                experience_months + " " + "м" }
                             </Typography>
                         </div>
                     </div>

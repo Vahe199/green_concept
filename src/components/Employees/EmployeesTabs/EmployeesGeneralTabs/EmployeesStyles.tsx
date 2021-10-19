@@ -57,6 +57,12 @@ export const useStylesEmployee = makeStyles((theme: Theme) =>
             // overflow: 'hidden',
             // textOverflow:"ellipsis"
         },
+        typographyTextPlaceholder:{
+            fontSize: 16,
+            fontWeight: 400,
+            color:'#ADB3B8',
+            textAlign: "start"
+        },
         link:{
               display:'flex',
              flexDirection: "row",

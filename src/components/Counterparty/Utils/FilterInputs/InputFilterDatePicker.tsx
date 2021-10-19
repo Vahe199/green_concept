@@ -37,19 +37,20 @@ export default function InputFilterDatePicker({
   const [openCalendar, setOpenCalendar] = useState(true);
 
   return (
-    <DatePicker
-      allowClear
-      className={classes.select + " " + className}
-      value={value === "" ? null : value}
-      onChange={handleChange}
-      onMouseOver={() => setOpenCalendar(true)}
-      style={{ width: "100%" }}
-      //autoFocus={() => value && setOpenCalendar(false)}
-      //onOpenChange={() => setOpenCalendar(!openCalendar)}
-      suffixIcon={openCalendar && <span onClick={() => console.log('dc')} className={classes.iconCalendar}> <Calendar /> </span>}
-      //onFocus={() => value && setOpenCalendar(false)}
-      //onBlur={() => setOpenCalendar(true)}
-      {...props}
-    />
+      <DatePicker
+          allowClear
+          className={classes.select + " " + className}
+          value={value === "" ? null : value}
+          onChange={handleChange}
+          onMouseOver={() => setOpenCalendar(true)}
+          style={{ width: "100%" }}
+          //autoFocus={() => value && setOpenCalendar(false)}
+          //onOpenChange={() => setOpenCalendar(!openCalendar)}
+          suffixIcon={openCalendar && <span onClick={() => console.log('dc')} className={classes.iconCalendar}> <Calendar /> </span>}
+          //onFocus={() => value && setOpenCalendar(false)}
+          //onBlur={() => setOpenCalendar(true)}
+          {...props}
+      />
+
   );
 }

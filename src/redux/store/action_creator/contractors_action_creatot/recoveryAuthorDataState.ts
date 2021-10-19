@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import {AuthorDataActionType} from "../../types/conterpart_author_data";
-import {ContractorContactDataActionType} from "../../types/contractor_contact_data";
+import {AuthorDataActionType} from "../../../types/conterpart_author_data";
+import {ContractorContactDataActionType} from "../../../types/contractor_contact_data";
 
 
 export const recoveryAuthorDataState = () =>  (dispatch: Dispatch) => {

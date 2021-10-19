@@ -3,6 +3,7 @@ import {Avatar, Paper,Typography} from "@material-ui/core";
 import avatar from "../../../../IMG/profilePic.png"
 import {useStylesEmployee} from "./EmployeesStyles";
 import {PencilSimpleIcon} from "../../../../IMG/SVG/PencilSimpleIcon";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 
 type EmployeeDataProps = {
     setEmployeeData:(val:boolean)=>void
@@ -10,6 +11,11 @@ type EmployeeDataProps = {
 
 const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
     const classes = useStylesEmployee();
+
+
+    const {loading,employeeById} = useTypedSelector(state => state.employees)
+    let {employee}:any = employeeById
+    let {photo, surname,firstname, middlename, birthdate,phones,emails}:any = employee;
     return(
         <div className={classes.root}>
             <div className={classes.title} >
@@ -23,7 +29,9 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
             <Paper elevation={0} className={classes.paper}>
                 <div className={classes.row}>
                     <div style={{width:"37%"}}>
-                        <Avatar alt="Remy Sharp" src={avatar} className={classes.avatar}/>
+                        <Avatar alt="Remy Sharp"
+                                src={photo ?`https://green-kis.tecman.ru${photo}`:""}
+                                className={classes.avatar}/>
                     </div>
                     <div style={{width:"63%"}}>
                         <div className={classes.column}>
@@ -31,7 +39,7 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
                                 Фамилия:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                Карпова
+                                {surname}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -39,7 +47,7 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
                                 Имя
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                Инна
+                                {firstname}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -47,7 +55,7 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
                                 Отчество
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                Владимировна
+                                {middlename == null ? "" : middlename}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -55,7 +63,7 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
                                 Дата рождения
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                01.01.1990
+                                {birthdate}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -63,7 +71,11 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
                                 Телефон
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                +74951234567
+                                {phones.map((phone:any)=>{
+                                    return(
+                                       <div key={phone.id}>{phone.phone}</div>
+                                    )
+                                })}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -71,8 +83,7 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
                                 E-mail
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                               <span> innakarpova@green.ru </span>
-                               <span> inna1@mail.ru </span>
+                                {emails.map((email:any)=>(<div key={email.id}>{email.email}</div>))}
                             </Typography>
                         </div>
                     </div>

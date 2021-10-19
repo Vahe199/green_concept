@@ -67,7 +67,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
 
   const {PersonContact} = useTypedSelector(state => state.contactPerson)
 
-// let {contact}:any = PersonContact
+
     const {
     firstname = "",
       surname = "",

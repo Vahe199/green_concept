@@ -2,11 +2,11 @@ import React from "react";
 import {FieldArray, Form, Formik, getIn} from "formik";
 import {Button, Divider, Paper, TextField} from "@material-ui/core";
 import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
-import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
+import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import {useStylesInformationCongratulations} from "./BasicInformationFormStyles";
 import {validationSchemaInformationCongratulations} from "./BasicInformationFormValidationSchema";
-import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
+import ValidationErrorWrapper from "../../Utils/utils_options/ValidationErrorWrapper";
 import {counterpartiesApi} from "../../../../api/api";
 
 

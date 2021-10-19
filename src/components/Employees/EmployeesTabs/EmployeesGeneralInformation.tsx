@@ -17,13 +17,14 @@ const EmployeesGeneralInformation:React.FC = () => {
             justifyContent:'space-between',
              backgroundColor:"#F2F3F4"
         }}>
-            <div style={{width:'45%',marginLeft:32}}>
+            <div style={{width:'42%',marginLeft:32}}>
                 {employeeData ? <EmployeeInfoItem setEmployeeData={setEmployeeData}/>
                     :<EmployeeInfoItemForm setEmployeeData={setEmployeeData}/>}
+
                 {employeeAboutData ? <EmployeeAboutItem setEmployeeAboutData={setEmployeeAboutData}/>
                     :<EmployeeAboutItemForm setEmployeeAboutData={setEmployeeAboutData}/>}
             </div>
-            <div style={{width:'48%',marginRight:32}}>
+            <div style={{width:'53%',marginRight:32}}>
                 {employeeGeneralInfo ? <EmployeeGeneralInfoItem setEmployeeGeneralInfo={setEmployeeGeneralInfo}/>
                    : <EmployeeGeneralInfoForm setEmployeeGeneralInfo={setEmployeeGeneralInfo}/>}
             </div>

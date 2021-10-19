@@ -93,7 +93,9 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateCounterparty = (props: any) => {
   const { AuthorData ,loading} = useTypedSelector((state) => state.author);
-  let { id }: any = AuthorData;
+  let { contractor }: any = AuthorData;
+  let {id}: any = contractor;
+
   const {getContactPersonsDataWithId} = useActions()
   useEffect(()=>{
     getContactPersonsDataWithId(110)

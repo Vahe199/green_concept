@@ -152,3 +152,15 @@ export const contractorApi = {
     return axios.request({ method: "get", url: "employees" });
   },
 };
+
+
+export const employeesApi = {
+
+  searchContactPersonData() {
+    return axios.request({ method: "get", url: "employees" });
+  },
+  getEmployeeDataById(id:number) {
+    return axios.request({ method: "get", url: `employees/${id}` });
+  },
+};
+

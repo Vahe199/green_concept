@@ -2,8 +2,8 @@ import { Dispatch } from "redux";
 import {
   AuthorDataAction,
   AuthorDataActionType,
-} from "../../types/conterpart_author_data";
-import { counterpartiesApi } from "../../../api/api";
+} from "../../../types/conterpart_author_data";
+import { counterpartiesApi } from "../../../../api/api";
 
 export const changeAuthorCompanyDetailsData =
   (formData: any, id: number, errorMessage: string) =>

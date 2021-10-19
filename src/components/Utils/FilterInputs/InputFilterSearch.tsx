@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Input } from "antd";
 
-import { MagnifyingGlass } from "../../../../IMG/SVG/MagnifyingGlass";
+import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
 import { useState } from "react";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

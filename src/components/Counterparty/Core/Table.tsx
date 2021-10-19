@@ -3,13 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import moment from "moment";
 import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
-import InputFilterSearch from "../Utils/FilterInputs/InputFilterSearch";
+import InputFilterSearch from "../../Utils/FilterInputs/InputFilterSearch";
 
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import { useHistory } from "react-router-dom";
 import { useActions } from "../../../redux/type_redux_hook/useAction";
-import InputFilterSelect from "../Utils/FilterInputs/InputFilterSelect";
-import InputFilterDatePicker from "../Utils/FilterInputs/InputFilterDatePicker";
+import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
+import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicker";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
 import { Table } from "antd";
 

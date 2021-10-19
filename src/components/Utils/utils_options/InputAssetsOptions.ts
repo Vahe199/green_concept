@@ -1,4 +1,4 @@
-import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import {useTypedSelector} from "../../../redux/type_redux_hook/useTypedSelector";
 
 export const InputAssetsOptions = () => {
     const { assets,} = useTypedSelector(

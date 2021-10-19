@@ -1,7 +1,7 @@
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {DatePicker} from "antd";
-import {Calendar} from "../../../../IMG/SVG/calendar";
-import img from "../../../../IMG/icons/close.png";
+import {Calendar} from "../../../IMG/SVG/calendar";
+import img from "../../../IMG/icons/close.png";
 import {useState} from "react";
 
 const useStyles = makeStyles((theme: Theme) =>

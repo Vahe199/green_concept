@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Select } from "antd";
 import React, {useState} from "react";
-import arrowImg from "../../../../IMG/icons/arrow.png"
+import arrowImg from "../../../IMG/icons/arrow.png"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

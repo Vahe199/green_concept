@@ -7,16 +7,16 @@ import {CheckSquareUnChecked} from "../../../IMG/SVG/CheckSquareUnChecked";
 import {TrashIcon} from "../../../IMG/SVG/TrashIcon";
 import {useActions} from "../../../redux/type_redux_hook/useAction";
 import {useTypedSelector} from "../../../redux/type_redux_hook/useTypedSelector";
-import InputFilterSelectedType from "../Utils/FilterInputs/InputFilterSelect";
+import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
 import {useStylesGeneralInfo} from "./TabsForUtil/GeneralInformationForStyle";
 import {validationSchema} from "./TabsForUtil/GeneralInformationForValidate";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {notifyError, notifySuccess} from "../Utils/utils_options/ToastNotify";
-import ValidationErrorWrapper from "../Utils/utils_options/ValidationErrorWrapper";
+import {notifyError, notifySuccess} from "../../Utils/utils_options/ToastNotify";
+import ValidationErrorWrapper from "../../Utils/utils_options/ValidationErrorWrapper";
 import {MagnifyingGlass} from "../../../IMG/SVG/MagnifyingGlass";
-import InputFilterSelect from "../Utils/FilterInputs/InputFilterSelect";
-import {InputAssetsOptions} from "../Utils/utils_options/InputAssetsOptions";
+import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
+import {InputAssetsOptions} from "../../Utils/utils_options/InputAssetsOptions";
 import {recoveryAuthorDataState} from "../../../redux/store/action_creator/contractors_action_creatot/recoveryAuthorDataState";
 
 export const GeneralInformationForCreating = () => {

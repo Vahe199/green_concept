@@ -10,26 +10,26 @@ import {
 } from "@material-ui/core";
 import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
-import InputFilterSelectedType from "../Utils/FilterInputs/InputFilterSelect";
+import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
 import SearchIcon from "@material-ui/icons/Search";
 import Divider from "@material-ui/core/Divider";
 import { useStylesContactPersons } from "./TabsForUtil/ContactPersonsForCreatingStyles";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
-import InputFilterDatePicker from "../Utils/FilterInputs/InputFilterDatePicker";
+import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicker";
 import moment from "moment";
 import { validationSchemaContactPerson } from "./TabsForUtil/ContactPersonsForCreatingValidate";
 import { useActions } from "../../../redux/type_redux_hook/useAction";
 import ModalListOfContacts from "../Core/Modals/ModalListOfContacts";
-import ValidationErrorWrapper from "../Utils/utils_options/ValidationErrorWrapper";
+import ValidationErrorWrapper from "../../Utils/utils_options/ValidationErrorWrapper";
 import { Modal } from "antd";
-import { InputAssetsOptions } from "../Utils/utils_options/InputAssetsOptions";
+import { InputAssetsOptions } from "../../Utils/utils_options/InputAssetsOptions";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { notifyError, notifySuccess } from "../Utils/utils_options/ToastNotify";
-import { SearchContactPerson } from "../Utils/utils_options/SearchContactPerson";
+import { notifyError, notifySuccess } from "../../Utils/utils_options/ToastNotify";
+import { SearchContactPerson } from "../../Utils/utils_options/SearchContactPerson";
 import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
-import InputFilterSelect from "../Utils/FilterInputs/InputFilterSelect";
+import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 
 export const ContactPersonsForCreating: React.FC = () => {
   const {

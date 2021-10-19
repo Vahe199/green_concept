@@ -1,5 +1,5 @@
 import React from "react";
-import {contractorApi} from "../../../../api/api";
+import {contractorApi} from "../../../api/api";
 
 
 export const SearchContactPerson = () => {

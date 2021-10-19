@@ -2,18 +2,18 @@ import {Button, InputAdornment, Paper, TextField} from "@material-ui/core";
 import {FieldArray, Form, Formik, getIn} from "formik";
 import React, {useState} from "react";
 import Divider from "@material-ui/core/Divider";
-import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
+import InputFilterSelectedType from "../../../Utils/FilterInputs/InputFilterSelect";
 import SearchIcon from "@material-ui/icons/Search";
 import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import {validationSchemaContactsFromGreen} from "./BasicInformationFormValidationSchema";
 import {useStylesContactsFromGreen} from "./BasicInformationFormStyles";
-import ValidationErrorWrapper from "../../Utils/utils_options/ValidationErrorWrapper";
+import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
 import {MagnifyingGlass} from "../../../../IMG/SVG/MagnifyingGlass";
-import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
-import {SearchContactPerson} from "../../Utils/utils_options/SearchContactPerson";
+import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
+import {SearchContactPerson} from "../../../Utils/utils_options/SearchContactPerson";
 import {counterpartiesApi} from "../../../../api/api";
-import {InputAssetsOptions} from "../../Utils/utils_options/InputAssetsOptions";
+import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
 
 
 type InfoProps = {

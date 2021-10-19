@@ -8,8 +8,8 @@ import close from "../../../../IMG/icons/close.png";
 import { MagnifyingGlass } from "../../../../IMG/SVG/MagnifyingGlass";
 import { useActions } from "../../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
-import InputFilterSearch from "../../Utils/FilterInputs/InputFilterSearch";
-import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
+import InputFilterSearch from "../../../Utils/FilterInputs/InputFilterSearch";
+import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
 
 const useStyles = makeStyles({
   root: {

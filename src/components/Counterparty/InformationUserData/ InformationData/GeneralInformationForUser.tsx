@@ -7,8 +7,8 @@ import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSele
 import {CheckSquareUnChecked} from "../../../../IMG/SVG/CheckSquareUnChecked";
 import {CheckSquareChecked} from "../../../../IMG/SVG/CheckSquareChecked";
 
-import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
-import {InputAssetsOptions} from "../../Utils/utils_options/InputAssetsOptions";
+import InputFilterSelectedType from "../../../Utils/FilterInputs/InputFilterSelect";
+import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
 
 
 const useStyles = makeStyles((theme: Theme) =>

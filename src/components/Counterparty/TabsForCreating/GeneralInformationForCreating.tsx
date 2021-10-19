@@ -21,8 +21,8 @@ import {recoveryAuthorDataState} from "../../../redux/store/action_creator/recov
 
 export const GeneralInformationForCreating = () => {
   const classes = useStylesGeneralInfo();
-  const [matchesAddressActualAddress, setMatchesAddressActualAddress] = React.useState<boolean>(false);
-  const [matchesAddressMailingAddress, setMatchesAddressMailingAddress] = React.useState<boolean>(false);
+  const [matchesAddressActualAddress, setMatchesAddressActualAddress] = React.useState<boolean>(true);
+  const [matchesAddressMailingAddress, setMatchesAddressMailingAddress] = React.useState<boolean>(true);
   const [contractorId, setContractorId] = React.useState(1);
   const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
       []
@@ -76,7 +76,7 @@ export const GeneralInformationForCreating = () => {
     contractor_type_id:"",
     service_type_id:"",
     inn:"",
-    kpp:null,
+    kpp:'',
     ogrn:"",
     nda: 1,
     full_name:"",
@@ -499,6 +499,7 @@ export const GeneralInformationForCreating = () => {
                             icon={<CheckSquareChecked color="#5B6770" />}
                             checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
                             name="MatchesAddressActualAddress"
+                            checked={matchesAddressActualAddress}
                             color="default"
                             inputProps={{ "aria-label": "checkbox with default color" }}
                             value={matchesAddressActualAddress}
@@ -531,6 +532,7 @@ export const GeneralInformationForCreating = () => {
                             checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
                             name="MatchesAddressMailingAddress"
                             color="default"
+                            checked={matchesAddressMailingAddress}
                             inputProps={{ "aria-label": "checkbox with default color" }}
                             value={matchesAddressMailingAddress}
                             onChange={() => {

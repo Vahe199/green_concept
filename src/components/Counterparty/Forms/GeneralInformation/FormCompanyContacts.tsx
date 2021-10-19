@@ -30,6 +30,9 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
     phones =[],
   }: any = AuthorData;
 
+  const [matchesAddressActualAddress, setMatchesAddressActualAddress] = React.useState<boolean>(true);
+  const [matchesAddressMailingAddress, setMatchesAddressMailingAddress] = React.useState<boolean>(true);
+
   let errorMessage: string = "ContactInfo";
   useEffect(() => {
     if (error) {
@@ -112,6 +115,12 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
               color="default"
               icon={<CheckSquareChecked color="#5B6770" />}
               checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
+              checked={matchesAddressActualAddress}
+              value={matchesAddressActualAddress}
+              onChange={() => {
+                setFieldValue("actual_address",`${matchesAddressActualAddress ?values.legal_registration_address : ""}`)
+                setMatchesAddressActualAddress(!matchesAddressActualAddress)
+              }}
               inputProps={{ "aria-label": "checkbox with default color" }}
             />
             <span className={classes.title}>
@@ -136,6 +145,12 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
               color="default"
               icon={<CheckSquareChecked color="#5B6770" />}
               checkedIcon={<CheckSquareUnChecked color="#5B6770" />}
+              checked={matchesAddressMailingAddress}
+              value={matchesAddressMailingAddress}
+              onChange={() => {
+                setFieldValue("post_address", `${matchesAddressMailingAddress ? values.legal_registration_address : ""}`)
+                setMatchesAddressMailingAddress(!matchesAddressMailingAddress)
+              }}
               inputProps={{ "aria-label": "checkbox with default color" }}
             />
             <span className={classes.title}>

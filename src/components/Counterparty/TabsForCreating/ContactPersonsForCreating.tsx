@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FieldArray, Form, Formik, getIn } from "formik";
 import {
   Button,
@@ -23,50 +23,56 @@ import { useActions } from "../../../redux/type_redux_hook/useAction";
 import ModalListOfContacts from "../../Modals/ModalListOfContacts";
 import ValidationErrorWrapper from "../Core/utils/ValidationErrorWrapper";
 import { Modal } from "antd";
-import {InputAssetsOptions} from "../Core/utils/InputAssetsOptions";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {notifyError, notifySuccess} from "../Core/utils/ToastNotify";
-import {SearchContactPerson} from "../Core/utils/SearchContactPerson";
-import {MagnifyingGlass} from "../../../IMG/SVG/MagnifyingGlass";
+import { InputAssetsOptions } from "../Core/utils/InputAssetsOptions";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { notifyError, notifySuccess } from "../Core/utils/ToastNotify";
+import { SearchContactPerson } from "../Core/utils/SearchContactPerson";
+import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
 import InputFilterSelect from "../Core/FilterInputs/InputFilterSelect";
 
 export const ContactPersonsForCreating: React.FC = () => {
-
-  const { insertContractorContactData,recoveryContractorContactState,getContactPersonsListData } = useActions();
+  const {
+    insertContractorContactData,
+    recoveryContractorContactState,
+    getContactPersonsDataWithId,
+  } = useActions();
   const { assets, load: assetsLoading } = useTypedSelector(
-      (state) => state.assets);
-  const {types_and_services,}: any = assets;
+    (state) => state.assets
+  );
+  const { types_and_services }: any = assets;
   const { AuthorData } = useTypedSelector((state) => state.author);
   const { id }: any = AuthorData;
-  const { error, success } = useTypedSelector((state) => state.contactPerson);
+  const { PersonContact, error, success } = useTypedSelector(
+    (state) => state.contactPerson
+  );
 
   const parentRef = useRef<any>({});
   const classes = useStylesContactPersons();
   const Options = InputAssetsOptions();
 
-  const search = SearchContactPerson()
-  useEffect(()=>{
-    if(error){
-      notifyError()
-      recoveryContractorContactState()
+  const search = SearchContactPerson();
+  useEffect(() => {
+    if (error) {
+      notifyError();
+      recoveryContractorContactState();
     }
-    if(success){
-      notifySuccess()
-      recoveryContractorContactState()
+    if (success) {
+      notifySuccess();
+      recoveryContractorContactState();
     }
-  },[success,error])
-  const [contractorId, setContractorId] = React.useState(1);
+  }, [success, error]);
+  const [contractorId, setContractorId] = useState(1);
+  const [attachedContact, onAttachedContact] = useState("");
   const [showModal, setShowModal] = useState(false);
-const searchOptions = SearchContactPerson()
+  const searchOptions = SearchContactPerson();
 
   const [branch, setBranch] = useState("");
   // const filteredBranches = branches.filter(({ name }: { name: string }) => name.includes(branch))
 
-
   const assetsOptionsServiceType = types_and_services[
-  contractorId - 1
-      ]?.services?.map((option: any) => ({
+    contractorId - 1
+  ]?.services?.map((option: any) => ({
     key: option.id,
     value: option.id ? option.id : 0,
     label: option.name,
@@ -85,17 +91,27 @@ const searchOptions = SearchContactPerson()
       { phone: "", phone_type: "Рабочий" },
       { phone: "", phone_type: "Мобильный" },
     ],
-    contact_contractors:{main:1,role_id:null,position:"",contractor_id:id},
+    contact_contractors: {
+      main: 1,
+      role_id: null,
+      position: "",
+      contractor_id: id,
+    },
     contact_employees: [{ direction_id: "", employee_id: null, info: "" }],
     contact_congratulations: [
       { name: "", congratulation_type_id: null, other: "" },
     ],
     status_id: null,
     service_type_id: null,
-    branches: [''],
-
-
+    branches: [""],
   };
+  console.log(PersonContact, initialValues);
+
+  useEffect(() => {
+    if (attachedContact) {
+      getContactPersonsDataWithId(+attachedContact);
+    }
+  }, [attachedContact]);
 
   return (
     <div
@@ -103,13 +119,13 @@ const searchOptions = SearchContactPerson()
       style={{ height: "max-content", position: "relative" }}
       ref={parentRef}
     >
-      <ToastContainer style={{fontSize:20, marginTop:"5%"}} />
+      <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchemaContactPerson}
         onSubmit={async (values, action) => {
           console.log(values, "values");
-           insertContractorContactData(values);
+          insertContractorContactData(values);
         }}
       >
         {({ values, touched, handleChange, errors, setFieldValue }) => (
@@ -132,12 +148,11 @@ const searchOptions = SearchContactPerson()
                 <span className={classes.addListItem}>
                   <span style={{ fontSize: 17, marginTop: 15 }}> + </span>
                   <span
-                     onClick={() => {
-                        setShowModal(true)
-                       getContactPersonsListData()
-                     }}
+                    onClick={() => {
+                      setShowModal(true);
+                    }}
                     className={classes.selectItem}
-                    style={{ marginTop: 15 }}
+                    style={{ marginTop: 15, cursor: "pointer" }}
                   >
                     Выбрать из списка
                   </span>
@@ -161,30 +176,36 @@ const searchOptions = SearchContactPerson()
                       >
                         <span>
                           <FieldArray name="contact_contractors">
-                     {() => {
-                       const fieldName = `contact_contractors.main`;
+                            {() => {
+                              const fieldName = `contact_contractors.main`;
 
-                     return(
-                          <Checkbox
-                            name={fieldName}
-                            icon={<CheckSquareChecked color="#5B6770" />}
-                            checkedIcon={
-                              <CheckSquareUnChecked color="#5B6770" />
-                            }
-                            inputProps={{
-                              "aria-label": "checkbox with default color",
+                              return (
+                                <Checkbox
+                                  name={fieldName}
+                                  icon={<CheckSquareChecked color="#5B6770" />}
+                                  checkedIcon={
+                                    <CheckSquareUnChecked color="#5B6770" />
+                                  }
+                                  inputProps={{
+                                    "aria-label": "checkbox with default color",
+                                  }}
+                                  value={
+                                    values.contact_contractors.main === 1
+                                      ? true
+                                      : false
+                                  }
+                                  onChange={(e: any) => {
+                                    setFieldValue(
+                                      fieldName,
+                                      e.target.checked ? 0 : 1
+                                    );
+                                    console.log(
+                                      values.contact_contractors.main
+                                    );
+                                  }}
+                                />
+                              );
                             }}
-                            value={values.contact_contractors.main === 1 ? true : false}
-                            onChange={(e: any) => {
-                              setFieldValue(
-                                  fieldName,
-                                  e.target.checked ? 0 : 1
-                              )
-                              console.log(values.contact_contractors.main)
-                            }
-                            }
-                          />
-                     )}}
                           </FieldArray>
                         </span>
                         <div
@@ -194,23 +215,22 @@ const searchOptions = SearchContactPerson()
                           <span className={classes.statusText}>Статус</span>
                           <div style={{ width: 120 }}>
                             <ValidationErrorWrapper
-                                inputClassName="ant-select-selector"
-                                error={
-                                  touched.status_id && Boolean(errors.status_id)
-                                }
-                                helperText={touched.status_id && errors.status_id}
-                            >
-                            <InputFilterSelectedType
-                              name="status_id"
-                              handleChange={(value: any) =>
-                                setFieldValue("status_id", value)
+                              inputClassName="ant-select-selector"
+                              error={
+                                touched.status_id && Boolean(errors.status_id)
                               }
-                              value={values.status_id}
-                              options={Options.assetsOptionsStatus}
-                              placeholder="Выберите отрасль"
-                              loading={assetsLoading}
-
-                            />
+                              helperText={touched.status_id && errors.status_id}
+                            >
+                              <InputFilterSelectedType
+                                name="status_id"
+                                handleChange={(value: any) =>
+                                  setFieldValue("status_id", value)
+                                }
+                                value={values.status_id}
+                                options={Options.assetsOptionsStatus}
+                                placeholder="Выберите отрасль"
+                                loading={assetsLoading}
+                              />
                             </ValidationErrorWrapper>
                           </div>
                         </div>
@@ -308,39 +328,40 @@ const searchOptions = SearchContactPerson()
                   </div>
                   <div className={classes.label}>
                     <span>Роль</span>
-                 <div style={{width:"60%"}}>
-                   <FieldArray name="contact_contractors">
-                     {() => {
-                       const fieldName = `contact_contractors.role_id`;
-                       const touchedFieldName = getIn(touched, fieldName);
-                       const errorFieldName = getIn(errors, fieldName);
+                    <div style={{ width: "60%" }}>
+                      <FieldArray name="contact_contractors">
+                        {() => {
+                          const fieldName = `contact_contractors.role_id`;
+                          const touchedFieldName = getIn(touched, fieldName);
+                          const errorFieldName = getIn(errors, fieldName);
 
-                       return( <ValidationErrorWrapper
-                           inputClassName="ant-select-selector"
-                           error={Boolean(
-                               touchedFieldName && errorFieldName
-                           )}
-                           helperText={
-                             touchedFieldName && errorFieldName
-                                 ? errorFieldName
-                                 : ""
-                           }
-                       >
-                         <InputFilterSelectedType
-                             name={fieldName}
-                             handleChange={(value: any) =>
-                                 setFieldValue(fieldName, value)
-                             }
-                             value={values.contact_contractors.role_id}
-                             options={Options.assetsOptionsRoles}
-                             placeholder="Выберите"
-                             loading={assetsLoading}
-
-                         />
-                       </ValidationErrorWrapper>
-                       )}}
-                   </FieldArray>
-                 </div>
+                          return (
+                            <ValidationErrorWrapper
+                              inputClassName="ant-select-selector"
+                              error={Boolean(
+                                touchedFieldName && errorFieldName
+                              )}
+                              helperText={
+                                touchedFieldName && errorFieldName
+                                  ? errorFieldName
+                                  : ""
+                              }
+                            >
+                              <InputFilterSelectedType
+                                name={fieldName}
+                                handleChange={(value: any) =>
+                                  setFieldValue(fieldName, value)
+                                }
+                                value={values.contact_contractors.role_id}
+                                options={Options.assetsOptionsRoles}
+                                placeholder="Выберите"
+                                loading={assetsLoading}
+                              />
+                            </ValidationErrorWrapper>
+                          );
+                        }}
+                      </FieldArray>
+                    </div>
                   </div>
                   <div className={classes.label}>
                     <span>Должность</span>
@@ -350,118 +371,115 @@ const searchOptions = SearchContactPerson()
                         const touchedFieldName = getIn(touched, fieldName);
                         const errorFieldName = getIn(errors, fieldName);
 
-                        return(
-                    <TextField
-                      variant={"outlined"}
-                      name={fieldName}
-                      placeholder={"Должность"}
-                      value={values.contact_contractors.position}
-                      onChange={handleChange}
-                      error={Boolean(
-                          touchedFieldName && errorFieldName
-                      )}
-                      helperText={
-                        touchedFieldName && errorFieldName
-                            ? errorFieldName
-                            : ""
-                      }
-                    />)}}
+                        return (
+                          <TextField
+                            variant={"outlined"}
+                            name={fieldName}
+                            placeholder={"Должность"}
+                            value={values.contact_contractors.position}
+                            onChange={handleChange}
+                            error={Boolean(touchedFieldName && errorFieldName)}
+                            helperText={
+                              touchedFieldName && errorFieldName
+                                ? errorFieldName
+                                : ""
+                            }
+                          />
+                        );
+                      }}
                     </FieldArray>
                   </div>
                   <div className={classes.label}>
                     <span>Тип контрагента</span>
-                    <div style={{width:"60%"}}>
+                    <div style={{ width: "60%" }}>
                       <ValidationErrorWrapper
-                          inputClassName="ant-select-selector"
-                          error={
-                            touched.contractor_type_id &&
-                            Boolean(errors.contractor_type_id)
-                          }
-                          helperText={
-                            touched.contractor_type_id &&
-                            errors.contractor_type_id
-                          }
+                        inputClassName="ant-select-selector"
+                        error={
+                          touched.contractor_type_id &&
+                          Boolean(errors.contractor_type_id)
+                        }
+                        helperText={
+                          touched.contractor_type_id &&
+                          errors.contractor_type_id
+                        }
                       >
-                      <InputFilterSelectedType
-                        // className={classes.input}
-                        name="contractor_type_id"
-                        handleChange={(value: any) => {
-                          setFieldValue("contractor_type_id", value);
-                          setContractorId(value);
-                        }}
-                        value={values.contractor_type_id}
-                        options={Options.assetsOptionsCounterpartyType}
-                        placeholder="Выберите"
-                        loading={assetsLoading}
-                      />
+                        <InputFilterSelectedType
+                          // className={classes.input}
+                          name="contractor_type_id"
+                          handleChange={(value: any) => {
+                            setFieldValue("contractor_type_id", value);
+                            setContractorId(value);
+                          }}
+                          value={values.contractor_type_id}
+                          options={Options.assetsOptionsCounterpartyType}
+                          placeholder="Выберите"
+                          loading={assetsLoading}
+                        />
                       </ValidationErrorWrapper>
                     </div>
                   </div>
                   <div className={classes.label}>
                     <span>Тип услуг</span>
-                    <div style={{width:"60%"}}>
+                    <div style={{ width: "60%" }}>
                       <ValidationErrorWrapper
-                          inputClassName="ant-select-selector"
-                          error={
-                            touched.service_type_id &&
-                            Boolean(errors.service_type_id)
-                          }
-                          helperText={
-                            touched.service_type_id && errors.service_type_id
-                          }
-                      >
-                      <InputFilterSelectedType
-                        // className={classes.input}
-                        name="service_type_id"
-                        handleChange={(value: any) =>
-                          setFieldValue("service_type_id", value)
+                        inputClassName="ant-select-selector"
+                        error={
+                          touched.service_type_id &&
+                          Boolean(errors.service_type_id)
                         }
-                        value={values.service_type_id}
-                        options={assetsOptionsServiceType}
-                        placeholder="Выберите"
-                        loading={assetsLoading}
-
-                      />
+                        helperText={
+                          touched.service_type_id && errors.service_type_id
+                        }
+                      >
+                        <InputFilterSelectedType
+                          // className={classes.input}
+                          name="service_type_id"
+                          handleChange={(value: any) =>
+                            setFieldValue("service_type_id", value)
+                          }
+                          value={values.service_type_id}
+                          options={assetsOptionsServiceType}
+                          placeholder="Выберите"
+                          loading={assetsLoading}
+                        />
                       </ValidationErrorWrapper>
                     </div>
                   </div>
                   <div className={classes.label}>
                     <span>Отрасль</span>
-                    <div style={{width:"60%"}}>
+                    <div style={{ width: "60%" }}>
                       <FieldArray name="branches">
                         {() => {
                           const fieldName = `branches[${0}]`;
                           const touchedFieldName = getIn(touched, fieldName);
                           const errorFieldName = getIn(errors, fieldName);
 
-                          return(
-                      <ValidationErrorWrapper
-                          inputClassName="ant-select-selector"
-                          helperText={
-                            touchedFieldName &&
-                            errorFieldName
-                                ? errorFieldName
-                                : ""
-                          }
-                          error={Boolean(
-                              touchedFieldName &&
-                              errorFieldName
-                          )}
-                      >
-                      <InputFilterSelectedType
-                        // className={classes.input}
-                        name={fieldName}
-                        handleChange={(value: any) =>
-                          setFieldValue(fieldName, value)
-                        }
-                        value={values.branches[0]}
-                        options={Options.assetsOptionsBranches}
-                        placeholder="Выберите"
-                        loading={assetsLoading}
-
-                      />
-                      </ValidationErrorWrapper>
-                              )}}
+                          return (
+                            <ValidationErrorWrapper
+                              inputClassName="ant-select-selector"
+                              helperText={
+                                touchedFieldName && errorFieldName
+                                  ? errorFieldName
+                                  : ""
+                              }
+                              error={Boolean(
+                                touchedFieldName && errorFieldName
+                              )}
+                            >
+                              <InputFilterSelectedType
+                                // className={classes.input}
+                                name={fieldName}
+                                handleChange={(value: any) =>
+                                  setFieldValue(fieldName, value)
+                                }
+                                value={values.branches[0]}
+                                options={Options.assetsOptionsBranches}
+                                placeholder="Выберите"
+                                loading={assetsLoading}
+                              />
+                            </ValidationErrorWrapper>
+                          );
+                        }}
                       </FieldArray>
                     </div>
                   </div>
@@ -506,7 +524,7 @@ const searchOptions = SearchContactPerson()
                                             fullWidth
                                             style={{
                                               width: "100%",
-                                               marginBottom: 16,
+                                              marginBottom: 16,
                                             }}
                                             placeholder={"+79999999999"}
                                             variant={"outlined"}
@@ -818,36 +836,40 @@ const searchOptions = SearchContactPerson()
                                                     : { width: "63%" }
                                                 }
                                               >
-                                                  <ValidationErrorWrapper
-                                                      inputClassName="ant-select-selector"
-                                                      helperText={
-                                                        touchedFieldDirection &&
-                                                        errorFieldDirection
-                                                            ? errorFieldDirection
-                                                            : ""
-                                                      }
-                                                      error={Boolean(
-                                                          touchedFieldDirection &&
-                                                          errorFieldDirection
-                                                      )}
-                                                  >
-                                                <InputFilterSelectedType
-                                                  // className={classes.input}
-                                                  name={fieldDirection}
-                                                  value={employees.direction_id}
-                                                  handleChange={(value: any) =>
-                                                    setFieldValue(
-                                                      fieldDirection,
-                                                      value
-                                                    )
+                                                <ValidationErrorWrapper
+                                                  inputClassName="ant-select-selector"
+                                                  helperText={
+                                                    touchedFieldDirection &&
+                                                    errorFieldDirection
+                                                      ? errorFieldDirection
+                                                      : ""
                                                   }
-                                                  options={
-                                                    Options.assetsOptionsDirections
-                                                  }
-                                                  placeholder="Выберите"
-                                                  loading={assetsLoading}
-                                                />
-                                                  </ValidationErrorWrapper>
+                                                  error={Boolean(
+                                                    touchedFieldDirection &&
+                                                      errorFieldDirection
+                                                  )}
+                                                >
+                                                  <InputFilterSelectedType
+                                                    // className={classes.input}
+                                                    name={fieldDirection}
+                                                    value={
+                                                      employees.direction_id
+                                                    }
+                                                    handleChange={(
+                                                      value: any
+                                                    ) =>
+                                                      setFieldValue(
+                                                        fieldDirection,
+                                                        value
+                                                      )
+                                                    }
+                                                    options={
+                                                      Options.assetsOptionsDirections
+                                                    }
+                                                    placeholder="Выберите"
+                                                    loading={assetsLoading}
+                                                  />
+                                                </ValidationErrorWrapper>
                                               </div>
                                             </div>
                                             <div className={classes.label}>
@@ -868,37 +890,60 @@ const searchOptions = SearchContactPerson()
                                                 }
                                               >
                                                 <ValidationErrorWrapper
-                                                    inputClassName="ant-select-selector"
-                                                    error={Boolean(
-                                                        touchedFieldEmployee &&
-                                                        errorFieldEmployee
-                                                    )}
-                                                    helperText={
-                                                      touchedFieldEmployee &&
+                                                  inputClassName="ant-select-selector"
+                                                  error={Boolean(
+                                                    touchedFieldEmployee &&
                                                       errorFieldEmployee
-                                                          ? errorFieldEmployee
-                                                          : ""
-                                                    }
+                                                  )}
+                                                  helperText={
+                                                    touchedFieldEmployee &&
+                                                    errorFieldEmployee
+                                                      ? errorFieldEmployee
+                                                      : ""
+                                                  }
                                                 >
-                                                <div className={classes.searchWraper}>
-                                                  <MagnifyingGlass className="searchIcon" />
-                                                  <InputFilterSelect
+                                                  <div
+                                                    className={
+                                                      classes.searchWraper
+                                                    }
+                                                  >
+                                                    <MagnifyingGlass className="searchIcon" />
+                                                    <InputFilterSelect
                                                       name={fieldEmployee}
-                                                      placeholder={"Введите слово или часть слова"}
-                                                      value={employees.employee_id}
-                                                      onFocus={()=>searchOptions.fetchContactPerson()}
-                                                      options={searchOptions.searchOptions}
+                                                      placeholder={
+                                                        "Введите слово или часть слова"
+                                                      }
+                                                      value={
+                                                        employees.employee_id
+                                                      }
+                                                      onFocus={() =>
+                                                        searchOptions.fetchContactPerson()
+                                                      }
+                                                      options={
+                                                        searchOptions.searchOptions
+                                                      }
                                                       filterOption={false}
                                                       onSearch={setBranch}
-                                                      onSelect={(id: number) => {
-                                                        setFieldValue(fieldEmployee,id)
+                                                      onSelect={(
+                                                        id: number
+                                                      ) => {
+                                                        setFieldValue(
+                                                          fieldEmployee,
+                                                          id
+                                                        );
                                                       }}
                                                       notFoundContent={null}
-                                                      className={"searchMode " }
-                                                      prefix={<MagnifyingGlass className={classes.icon} />}
+                                                      className={"searchMode "}
+                                                      prefix={
+                                                        <MagnifyingGlass
+                                                          className={
+                                                            classes.icon
+                                                          }
+                                                        />
+                                                      }
                                                       showSearch
-                                                  />
-                                                </div>
+                                                    />
+                                                  </div>
                                                 </ValidationErrorWrapper>
                                               </div>
                                             </div>
@@ -925,20 +970,31 @@ const searchOptions = SearchContactPerson()
                                                 }
                                               >
                                                 <ValidationErrorWrapper
-                                                    inputClassName="makeStyles-textAreas"
-                                                    error={Boolean(touchedFieldInfo && errorFieldInfo)}
-                                                    helperText={touchedFieldInfo && errorFieldInfo ? errorFieldInfo : ""}
+                                                  inputClassName="makeStyles-textAreas"
+                                                  error={Boolean(
+                                                    touchedFieldInfo &&
+                                                      errorFieldInfo
+                                                  )}
+                                                  helperText={
+                                                    touchedFieldInfo &&
+                                                    errorFieldInfo
+                                                      ? errorFieldInfo
+                                                      : ""
+                                                  }
                                                 >
-                                                <textarea
-                                                  className={classes.textAreas}
-                                                  name={fieldInfo}
-                                                  placeholder={"Введите текст"}
-                                                  value={employees.info}
-                                                  onChange={handleChange}
-
-                                                >
-                                                  Расскажите о себе
-                                                </textarea>
+                                                  <textarea
+                                                    className={
+                                                      classes.textAreas
+                                                    }
+                                                    name={fieldInfo}
+                                                    placeholder={
+                                                      "Введите текст"
+                                                    }
+                                                    value={employees.info}
+                                                    onChange={handleChange}
+                                                  >
+                                                    Расскажите о себе
+                                                  </textarea>
                                                 </ValidationErrorWrapper>
                                               </div>
                                             </div>
@@ -1098,36 +1154,38 @@ const searchOptions = SearchContactPerson()
                                               }
                                             >
                                               <ValidationErrorWrapper
-                                                  inputClassName="ant-select-selector"
-                                                  helperText={
-                                                    touchedFieldCongratulation_type &&
+                                                inputClassName="ant-select-selector"
+                                                helperText={
+                                                  touchedFieldCongratulation_type &&
+                                                  errorFieldCongratulation_type
+                                                    ? errorFieldCongratulation_type
+                                                    : ""
+                                                }
+                                                error={Boolean(
+                                                  touchedFieldCongratulation_type &&
                                                     errorFieldCongratulation_type
-                                                        ? errorFieldCongratulation_type
-                                                        : ""
-                                                  }
-                                                  error={Boolean(
-                                                      touchedFieldCongratulation_type &&
-                                                      errorFieldCongratulation_type
-                                                  )}
+                                                )}
                                               >
-                                              <InputFilterSelectedType
-                                                // className={classes.input}
-                                                name={fieldCongratulation_type}
-                                                value={
-                                                  congratulations.congratulation_type_id
-                                                }
-                                                handleChange={(value: any) =>
-                                                  setFieldValue(
-                                                    fieldCongratulation_type,
-                                                    value
-                                                  )
-                                                }
-                                                options={
-                                                  Options.assetsOptionsCongratulation
-                                                }
-                                                placeholder="Выберите"
-                                                loading={assetsLoading}
-                                              />
+                                                <InputFilterSelectedType
+                                                  // className={classes.input}
+                                                  name={
+                                                    fieldCongratulation_type
+                                                  }
+                                                  value={
+                                                    congratulations.congratulation_type_id
+                                                  }
+                                                  handleChange={(value: any) =>
+                                                    setFieldValue(
+                                                      fieldCongratulation_type,
+                                                      value
+                                                    )
+                                                  }
+                                                  options={
+                                                    Options.assetsOptionsCongratulation
+                                                  }
+                                                  placeholder="Выберите"
+                                                  loading={assetsLoading}
+                                                />
                                               </ValidationErrorWrapper>
                                             </div>
                                           </div>
@@ -1208,13 +1266,17 @@ const searchOptions = SearchContactPerson()
           </Form>
         )}
       </Formik>
-      <ModalListOfContacts
-        visible={showModal}
-        getContainer={parentRef.current}
-        onCancel={() => setShowModal(false)}
-        footer={null}
-        closable={false}
-      />
+      {showModal ? (
+        <ModalListOfContacts
+          visible={showModal}
+          getContainer={parentRef.current}
+          onCancel={() => setShowModal(false)}
+          footer={null}
+          closable={false}
+          onAttachedContact={onAttachedContact}
+          attachedContact={attachedContact}
+        />
+      ) : null}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {Space, Spin} from 'antd'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,13 +16,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function Loader({ size }: { size?: number }) {
+export default function Loader() {
   const classes = useStyles();
-  const style = size ? { width: size, height: size } : {};
 
   return (
     <div className={classes.root}>
-      <CircularProgress color="primary" style={style} />
+      <Space size="middle">
+        <Spin />
+      </Space>
     </div>
   );
 }

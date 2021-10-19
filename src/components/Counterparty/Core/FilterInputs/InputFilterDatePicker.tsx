@@ -8,13 +8,21 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     select: {
       "& .ant-select": {
-        height: "100%",
+        height: "50%",
         border: "1px solid #F1F2F3",
       },
       "& .ant-select-selector": {
         height: "100% !important",
       },
     },
+     iconCalendar: {
+         //backgroundColor: 'green',
+       //cursor: 'pointer',
+       "&:hover": {
+         backgroundColor: 'red',
+       },
+     },
+
   })
 );
 
@@ -30,14 +38,17 @@ export default function InputFilterDatePicker({
 
   return (
     <DatePicker
-      allowClear={true}
+      allowClear
       className={classes.select + " " + className}
       value={value === "" ? null : value}
       onChange={handleChange}
+      onMouseOver={() => setOpenCalendar(true)}
       style={{ width: "100%" }}
+      //autoFocus={() => value && setOpenCalendar(false)}
       //onOpenChange={() => setOpenCalendar(!openCalendar)}
-      suffixIcon={<Calendar />}
-      //   suffixIcon={openCalendar ? <Calendar /> : <img src={img} style={{width: 15, height: 15}} />}
+      suffixIcon={openCalendar && <span onClick={() => console.log('dc')} className={classes.iconCalendar}> <Calendar /> </span>}
+      //onFocus={() => value && setOpenCalendar(false)}
+      //onBlur={() => setOpenCalendar(true)}
       {...props}
     />
   );

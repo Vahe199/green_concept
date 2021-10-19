@@ -8,7 +8,7 @@ const headers = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JlZW4ta2lzLnRlY21hbi5ydVwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNDU1MjU5OSwiZXhwIjoxNjM0NjM4OTk5LCJuYmYiOjE2MzQ1NTI1OTksImp0aSI6Im9HUWZjUUc5ZTRJcGpkakQiLCJzdWIiOjE1NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.zYIraF6S910WV6vP5aATSfGjgBBQwzaIJ2BJf6O5CGg`,
+  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JlZW4ta2lzLnRlY21hbi5ydVwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNDU2Njc2NSwiZXhwIjoxNjM0NjUzMTY1LCJuYmYiOjE2MzQ1NjY3NjUsImp0aSI6ImtEMlk4ZkNKaFhvSGxsR1ciLCJzdWIiOjE1NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Qbgw39bn6sKlVKZ6_-C3kFjizqIDtOSqMOYjCf0SBAg`,
 };
 
 const createAxios = () => {
@@ -95,7 +95,6 @@ export const counterpartiesApi = {
     });
   },
 
-
   //contacts update
   changeContactGeneralInfoData(formData: any, id: any) {
     return axios.request({
@@ -146,10 +145,10 @@ export const contractorApi = {
   getContractorContactData() {
     return axios.request({ method: "get", url: "contacts" });
   },
-  getContractorContactDataWithId(id:number) {
+  getContractorContactDataWithId(id: number) {
     return axios.request({ method: "get", url: `contacts/${id}` });
   },
   searchContactPersonData() {
-    return axios.request({ method: "get", url: "employees"});
+    return axios.request({ method: "get", url: "employees" });
   },
 };

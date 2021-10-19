@@ -1,8 +1,8 @@
-import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
+import { FormControlLabel } from "@material-ui/core";
+import { Divider, Radio } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Modal, Table } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import close from "../../IMG/icons/close.png";
 import { MagnifyingGlass } from "../../IMG/SVG/MagnifyingGlass";
@@ -15,8 +15,8 @@ const useStyles = makeStyles({
   root: {
     "&.ant-modal": {
       width: "max-content!important",
-        marginLeft:64,
-        marginTop:-64,
+      marginLeft: 64,
+      marginTop: -64,
       "& .ant-modal-body": {
         padding: 20,
       },
@@ -80,13 +80,15 @@ const useStyles = makeStyles({
 });
 
 export default function ModalListOfContacts(props: any) {
-  const { fetchCounterpartiesList } = useActions();
+  const { attachedContact, onAttachedContact, onCancel, ...modalProps } = props;
+  const { getContactPersonsListData } = useActions();
   const classes = useStyles();
   const [services, setServices] = React.useState(1);
   const [author, setAuthor] = React.useState(null);
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
+  const { ContactPerson } = useTypedSelector((state) => state.contactPerson);
 
   let history = useHistory();
   const { contractors, loading } = useTypedSelector(
@@ -115,7 +117,7 @@ export default function ModalListOfContacts(props: any) {
   const [branch, setBranch] = useState("");
   const [group, setGroup] = useState("");
   const [crm, setCrm] = useState("");
-  const [selectedValue, setSelectedValue] = useState(false);
+  const [selectedValue, setSelectedValue] = useState<null | number>(null);
   const [createdAt, setCreatedAt] = useState<any>(null);
   const [updatedAt, setUpdatedAt] = useState<any>(null);
 
@@ -123,63 +125,11 @@ export default function ModalListOfContacts(props: any) {
     branch.length === 0 || branch.length > 3
       ? branches.filter(({ name }: { name: string }) => name.includes(branch))
       : branches;
-  console.log(filteredBranches);
 
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/${data.id}`);
     getAuthorData(data);
   };
-
-  const data = [
-    {
-      id: "000001",
-      address: "Кузнецов Фёдрор Михайлович",
-      typeName: "Прочие промышленные",
-      full_name: "Подрядчик",
-      branches: "Подрядчик",
-      group: Math.random(),
-    },
-    {
-      id: "000001",
-      address: "Кузнецов Фёдрор Михайлович",
-      typeName: "Прочие промышленные",
-      full_name: "Подрядчик",
-      branches: "Подрядчик",
-      group: Math.random(),
-    },
-    {
-      id: "000001",
-      address: "Кузнецов Фёдрор Михайлович",
-      typeName: "Прочие промышленные",
-      full_name: "Подрядчик",
-      branches: "Подрядчик",
-      group: Math.random(),
-    },
-    {
-      id: "000001",
-      address: "Кузнецов Фёдрор Михайлович",
-      typeName: "Прочие промышленные",
-      full_name: "Подрядчик",
-      branches: "Подрядчик",
-      group: Math.random(),
-    },
-    {
-      id: "000001",
-      address: "Кузнецов Фёдрор Михайлович",
-      typeName: "Прочие промышленные",
-      full_name: "Подрядчик",
-      branches: "Подрядчик",
-      group: Math.random(),
-    },
-    {
-      id: "000001",
-      address: "Кузнецов Фёдрор Михайлович",
-      typeName: "Прочие промышленные",
-      full_name: "Подрядчик",
-      branches: "Подрядчик",
-      group: Math.random(),
-    },
-  ];
 
   const columns = [
     {
@@ -192,9 +142,6 @@ export default function ModalListOfContacts(props: any) {
       ),
       dataIndex: "id",
       width: "5%",
-      render: (id: string) => (
-        <span style={{ color: "#3B4750", whiteSpace: "nowrap" }}>{id}</span>
-      ),
     },
     {
       title: () => (
@@ -205,8 +152,8 @@ export default function ModalListOfContacts(props: any) {
           </div>
         </>
       ),
-      dataIndex: "address",
-      render: (address: string) => (
+      dataIndex: "name",
+      render: (_: any, record: any) => (
         <span
           style={{
             color: "#3B4750",
@@ -214,7 +161,7 @@ export default function ModalListOfContacts(props: any) {
             textAlign: "center",
           }}
         >
-          {address}
+          {`${record.surname} ${record.firstname} ${record.middlename}`}
         </span>
       ),
     },
@@ -243,9 +190,9 @@ export default function ModalListOfContacts(props: any) {
           />
         </>
       ),
-      dataIndex: "typeName",
+      dataIndex: "branches",
       width: "15%",
-      render: (typeName: string) => (
+      render: (branches: { name?: string }) => (
         <span
           style={{
             color: "#3B4750",
@@ -253,7 +200,7 @@ export default function ModalListOfContacts(props: any) {
             textAlign: "center",
           }}
         >
-          {typeName}
+          {branches?.name || ""}
         </span>
       ),
     },
@@ -274,8 +221,8 @@ export default function ModalListOfContacts(props: any) {
           />
         </>
       ),
-      dataIndex: "branches",
-      render: (branches: string) => (
+      dataIndex: "contractorType",
+      render: (_: any, record: any) => (
         <span
           style={{
             color: "#3B4750",
@@ -283,7 +230,7 @@ export default function ModalListOfContacts(props: any) {
             textAlign: "center",
           }}
         >
-          {branches}
+          {record.contractor_type_id}
         </span>
       ),
     },
@@ -304,8 +251,8 @@ export default function ModalListOfContacts(props: any) {
           />
         </div>
       ),
-      dataIndex: "full_name",
-      render: (group: string) => (
+      dataIndex: "service_type",
+      render: (serviceType: { name: string }) => (
         <span
           style={{
             color: "#3B4750",
@@ -313,7 +260,7 @@ export default function ModalListOfContacts(props: any) {
             textAlign: "center",
           }}
         >
-          {group}
+          {serviceType?.name}
         </span>
       ),
     },
@@ -323,29 +270,22 @@ export default function ModalListOfContacts(props: any) {
           <div style={{ minHeight: 75, alignItems: "flex-start" }}>Выбрать</div>
         </>
       ),
-      dataIndex: "group",
-      render: (group: string) => (
-        <div>
-          <RadioGroup
-            aria-label="group"
-            defaultValue="group"
-            name="radio-buttons-group"
-          >
-            <FormControlLabel
-              checked={selectedValue ? true : false}
-              onClick={() => setSelectedValue(!selectedValue)}
-              value={selectedValue}
-              control={<Radio style={{ color: "#5B6770" }} />}
-              label=""
-            />
-          </RadioGroup>
-        </div>
+      dataIndex: "id",
+      render: (id: number) => (
+        <Radio
+          style={{ height: 24, width: 24, color: "#5B6770" }}
+          checked={attachedContact === id}
+        />
       ),
     },
   ];
 
+  useEffect(() => {
+    getContactPersonsListData();
+  }, []);
+
   return (
-    <Modal {...props} className={classes.root}>
+    <Modal {...modalProps} className={classes.root}>
       <div
         style={{
           display: "flex",
@@ -358,7 +298,7 @@ export default function ModalListOfContacts(props: any) {
         <span style={{ fontSize: 16, fontWeight: 500 }}>
           Найдено 12 из 1112
         </span>
-        <div onClick={() => props.onCancel()}>
+        <div onClick={() => onCancel()}>
           <img src={close} width={"20"} height={"20"} />
         </div>
       </div>
@@ -372,12 +312,15 @@ export default function ModalListOfContacts(props: any) {
         }}
       />
       <Table
-        onRow={(record) => ({
+        onRow={(record: { id?: any }) => ({
+          onClick: () => {
+            onAttachedContact(record?.id);
+          },
           style: {
             cursor: "pointer",
           },
         })}
-        dataSource={data}
+        dataSource={ContactPerson}
         columns={columns}
         pagination={false}
         // scroll={{ y: window.innerHeight - 328 }}

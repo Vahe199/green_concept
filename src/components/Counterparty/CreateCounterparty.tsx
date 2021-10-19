@@ -1,24 +1,25 @@
-import {Link, Typography} from "@material-ui/core";
+import { Link, Typography } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
-import React, {useEffect, useState} from "react";
-import {useHistory, withRouter} from "react-router-dom";
-import {CaretDoubleLeft} from "../../IMG/SVG/CaretDoubleLeft";
-import {useTypedSelector} from "../../redux/type_redux_hook/useTypedSelector";
+import React, { useEffect, useState } from "react";
+import { useHistory, withRouter } from "react-router-dom";
+import { CaretDoubleLeft } from "../../IMG/SVG/CaretDoubleLeft";
+import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
 import CreatingBankDetails from "./BankDetails/CreatingBankDetails";
-import {ContractorContactFacesData} from "./ContractorContactFaces/ContractorContactFacesData";
-import {InformationUserData} from "./InformationUserData/InformationUserData";
+import { ContractorContactFacesData } from "./ContractorContactFaces/ContractorContactFacesData";
+import { InformationUserData } from "./InformationUserData/InformationUserData";
 import CreatEditBankAccount, {
   ContractorBankDetailType,
   initialBankDetails,
 } from "./Forms/BankAccountForm/CreatEditBankAccount";
-import {BankDetails} from "./TabsForCreating/BankDetails";
-import {ContactPersonsForCreating} from "./TabsForCreating/ContactPersonsForCreating";
-import {GeneralInformationForCreating} from "./TabsForCreating/GeneralInformationForCreating";
-import {useActions} from "../../redux/type_redux_hook/useAction";
+import { BankDetails } from "./TabsForCreating/BankDetails";
+import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
+import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformationForCreating";
+import { useActions } from "../../redux/type_redux_hook/useAction";
+import BackToAddress from "../Utils/BackToAddress";
 
 // interface TabPanelProps {
 //   children?: React.ReactNode;
@@ -92,15 +93,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateCounterparty = (props: any) => {
-  const { AuthorData ,loading} = useTypedSelector((state) => state.author);
+  const { AuthorData, loading } = useTypedSelector((state) => state.author);
   let { contractor }: any = AuthorData;
-  let {id}: any = contractor;
+  let { id }: any = contractor;
 
-  const {getContactPersonsDataWithId} = useActions()
-  useEffect(()=>{
-    getContactPersonsDataWithId(110)
-  },[])
-  let history = useHistory();
+  const { getContactPersonsDataWithId } = useActions();
+  useEffect(() => {
+    getContactPersonsDataWithId(110);
+  }, []);
+
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [edit, setEdit] = useState(true);
@@ -177,32 +178,23 @@ const CreateCounterparty = (props: any) => {
         </div>
         <Divider style={{ width: "102%" }} />
       </Paper>
-      <div style={{ display: "flex", marginLeft: "2%", marginTop: "1%" }}>
-        <div style={{ marginRight: ".5%" }}>
-          <CaretDoubleLeft color="#3B4750" alt="double left icon" />
-        </div>
-        <Link color="inherit" onClick={() => history.push("/counterparties")}>
-          <div style={{ fontSize: 14, cursor: "pointer", fontWeight: 400 }}>
-            Вернуться назад к списку
-          </div>
-        </Link>
-      </div>
 
       <div className={classes.bottomField}>
         {props.match.params.item === "author" ? (
-            <div>
           <div>
-            {selectedTab === 0 && <InformationUserData />}
-            {selectedTab === 1 && <ContractorContactFacesData />}
-            {selectedTab === 2 && <CreatingBankDetails />}
-          </div>
+            <div>
+              {selectedTab === 0 && <InformationUserData />}
+              {selectedTab === 1 && <ContractorContactFacesData />}
+              {selectedTab === 2 && <CreatingBankDetails />}
             </div>
+          </div>
         ) : props.match.params.item === "new contractor" ? (
           <div>
             {selectedTab === 0 && <GeneralInformationForCreating />}
             {selectedTab === 1 && <ContactPersonsForCreating />}
             {selectedTab === 2 && (
               <div>
+                <BackToAddress address="/counterparties" title="списку" />
                 {edit ? (
                   <BankDetails
                     setEdit={setEdit}

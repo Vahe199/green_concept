@@ -7,7 +7,8 @@ import { CompanyContactsForUser } from "./ InformationData/CompanyContactsForUse
 import { CompanyDetailsForUser } from "./ InformationData/CompanyDetailsForUser";
 import { GeneralInformationForUser } from "./ InformationData/GeneralInformationForUser";
 import Loader from "../../Layout/Loader/Loader";
-import {useTypedSelector} from "../../../redux/type_redux_hook/useTypedSelector";
+import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
+import BackToAddress from "../../Utils/BackToAddress";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,50 +30,55 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export const InformationUserData = () => {
   const classes = useStyles();
-const {loading} = useTypedSelector(state => state.author)
+  const { loading } = useTypedSelector((state) => state.author);
   const [changeGeneralInformation, setChangeGeneralInformation] =
     useState<boolean>(false);
   const [changeCompanyDetails, setChangeCompanyDetails] =
     useState<boolean>(false);
   const [changeContacts, setChangeContacts] = useState<boolean>(false);
 
-  return (loading ? <Loader/>:
-    <div className={classes.root}>
-      <div style={{ width: "32%" }}>
-        <div>
-          {changeGeneralInformation ? (
-            <FormGeneralInformation
-              setChangeGeneralInformation={setChangeGeneralInformation}
-            />
-          ) : (
-            <GeneralInformationForUser
-              setChangeGeneralInformation={setChangeGeneralInformation}
-            />
-          )}
+  return loading ? (
+    <Loader />
+  ) : (
+    <>
+      <BackToAddress address="/counterparties" title="списку" />
+      <div className={classes.root}>
+        <div style={{ width: "32%" }}>
+          <div>
+            {changeGeneralInformation ? (
+              <FormGeneralInformation
+                setChangeGeneralInformation={setChangeGeneralInformation}
+              />
+            ) : (
+              <GeneralInformationForUser
+                setChangeGeneralInformation={setChangeGeneralInformation}
+              />
+            )}
+          </div>
+        </div>
+        <div style={{ width: "35%" }}>
+          <div>
+            {changeCompanyDetails ? (
+              <FormCompanyDetails
+                setChangeCompanyDetails={setChangeCompanyDetails}
+              />
+            ) : (
+              <CompanyDetailsForUser
+                setChangeCompanyDetails={setChangeCompanyDetails}
+              />
+            )}
+          </div>
+        </div>
+        <div style={{ width: "32%" }}>
+          <div>
+            {changeContacts ? (
+              <FormCompanyContacts setChangeContacts={setChangeContacts} />
+            ) : (
+              <CompanyContactsForUser setChangeContacts={setChangeContacts} />
+            )}
+          </div>
         </div>
       </div>
-      <div style={{ width: "35%" }}>
-        <div>
-          {changeCompanyDetails ? (
-            <FormCompanyDetails
-              setChangeCompanyDetails={setChangeCompanyDetails}
-            />
-          ) : (
-            <CompanyDetailsForUser
-              setChangeCompanyDetails={setChangeCompanyDetails}
-            />
-          )}
-        </div>
-      </div>
-      <div style={{ width: "32%" }}>
-        <div>
-          {changeContacts ? (
-            <FormCompanyContacts setChangeContacts={setChangeContacts} />
-          ) : (
-            <CompanyContactsForUser setChangeContacts={setChangeContacts} />
-          )}
-        </div>
-      </div>
-    </div>
+    </>
   );
 };

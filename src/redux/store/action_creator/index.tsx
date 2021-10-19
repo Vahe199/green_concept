@@ -1,16 +1,17 @@
-import * as CounterpartiesActionCreators from "./counterpartiesAC";
-import * as NewContractorActionCreators from "./newContractorAC";
-import * as AuthorListAC from "./authorListAC";
-import * as ServicesTypesListAC from "./ServicesTypesListAC";
-import * as AuthorDataAC from "./authorAC";
-import * as ChangeAuthorGeneralDataAC from "./ChangeAuthorGeneralDataAC";
-import * as AuthorCompanyDetailsData from "./ChangeAuthorCompanyDetailsDataAC";
-import * as AuthorContactInfoData from "./ChangeAuthorContactInfoDataAC";
-import * as AssetsListDataAC from "./AssetsListAC";
-import * as RecoveryAuthorDataAC from "./recoveryAuthorDataState";
-import * as ContractorBankDetailsDataAC from "./ContractorBankDetailsDataAC";
-import * as ContractorGeneraDataAC from "./ContractorGeneralDataAC";
-import * as ContractorContactAC from "./ContractorContactAC";
+import * as CounterpartiesActionCreators from "./contractors_action_creatot/counterpartiesAC";
+import * as NewContractorActionCreators from "./contractors_action_creatot/newContractorAC";
+import * as AuthorListAC from "./contractors_action_creatot/authorListAC";
+import * as ServicesTypesListAC from "./contractors_action_creatot/ServicesTypesListAC";
+import * as AuthorDataAC from "./contractors_action_creatot/authorAC";
+import * as ChangeAuthorGeneralDataAC from "./contractors_action_creatot/ChangeAuthorGeneralDataAC";
+import * as AuthorCompanyDetailsData from "./contractors_action_creatot/ChangeAuthorCompanyDetailsDataAC";
+import * as AuthorContactInfoData from "./contractors_action_creatot/ChangeAuthorContactInfoDataAC";
+import * as AssetsListDataAC from "./contractors_action_creatot/AssetsListAC";
+import * as RecoveryAuthorDataAC from "./contractors_action_creatot/recoveryAuthorDataState";
+import * as ContractorBankDetailsDataAC from "./contractors_action_creatot/ContractorBankDetailsDataAC";
+import * as ContractorGeneraDataAC from "./contractors_action_creatot/ContractorGeneralDataAC";
+import * as ContractorContactAC from "./contractors_action_creatot/ContractorContactAC";
+import * as EmployeesListAC from "./employees_action-creator/employees_action_creator";
 
 export default {
   ...CounterpartiesActionCreators,
@@ -26,4 +27,5 @@ export default {
   ...ContractorBankDetailsDataAC,
   ...ContractorGeneraDataAC,
   ...ContractorContactAC,
+  ...EmployeesListAC
 };

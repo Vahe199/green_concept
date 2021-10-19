@@ -3,15 +3,15 @@ import {FieldArray, Form, Formik, getIn} from "formik";
 import React, {useState} from "react";
 import {CheckSquareChecked} from "../../../../IMG/SVG/CheckSquareChecked";
 import {CheckSquareUnChecked} from "../../../../IMG/SVG/CheckSquareUnChecked";
-import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
+import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
 import moment from "moment";
-import InputFilterDatePicker from "../../Core/FilterInputs/InputFilterDatePicker";
+import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicker";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 import {useStylesBasicInformation} from "./BasicInformationFormStyles";
 import {validationSchemaBasicInformation} from "./BasicInformationFormValidationSchema";
-import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
-import {InputAssetsOptions} from "../../Core/utils/InputAssetsOptions";
+import ValidationErrorWrapper from "../../Utils/utils_options/ValidationErrorWrapper";
+import {InputAssetsOptions} from "../../Utils/utils_options/InputAssetsOptions";
 import {counterpartiesApi} from "../../../../api/api";
 
 type InfoProps = {

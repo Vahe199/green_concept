@@ -5,11 +5,11 @@ import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 import {useActions} from "../../../../redux/type_redux_hook/useAction";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import {validationSchemaFormCompanyDetails} from "./GeneralInformationValidationSchema";
-import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
+import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
 import {useStylesCompanyDetails} from "./GeneralInformationStyles";
-import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
+import ValidationErrorWrapper from "../../Utils/utils_options/ValidationErrorWrapper";
 import {MagnifyingGlass} from "../../../../IMG/SVG/MagnifyingGlass";
-import InputFilterSelect from "../../Core/FilterInputs/InputFilterSelect";
+import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 
 type Props = {
   // change: boolean;

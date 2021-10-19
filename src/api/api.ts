@@ -8,7 +8,7 @@ const headers = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JlZW4ta2lzLnRlY21hbi5ydVwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNDU2Njc2NSwiZXhwIjoxNjM0NjUzMTY1LCJuYmYiOjE2MzQ1NjY3NjUsImp0aSI6ImtEMlk4ZkNKaFhvSGxsR1ciLCJzdWIiOjE1NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Qbgw39bn6sKlVKZ6_-C3kFjizqIDtOSqMOYjCf0SBAg`,
+  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JlZW4ta2lzLnRlY21hbi5ydVwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNDY1MzUwMiwiZXhwIjoxNjM0NzM5OTAyLCJuYmYiOjE2MzQ2NTM1MDIsImp0aSI6IlVaaGdvWWlrS2xhRDhnbW4iLCJzdWIiOjE1NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.y0oWcCsE0j5XjKbha9yZvLojid2F9ZoOLtqtRkf949c`,
 };
 
 const createAxios = () => {
@@ -152,3 +152,15 @@ export const contractorApi = {
     return axios.request({ method: "get", url: "employees" });
   },
 };
+
+
+export const employeesApi = {
+
+  searchContactPersonData() {
+    return axios.request({ method: "get", url: "employees" });
+  },
+  getEmployeeDataById(id:number) {
+    return axios.request({ method: "get", url: `employees/${id}` });
+  },
+};
+

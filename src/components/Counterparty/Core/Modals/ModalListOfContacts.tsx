@@ -4,12 +4,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Modal, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import close from "../../IMG/icons/close.png";
-import { MagnifyingGlass } from "../../IMG/SVG/MagnifyingGlass";
-import { useActions } from "../../redux/type_redux_hook/useAction";
-import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
-import InputFilterSearch from "../Counterparty/Core/FilterInputs/InputFilterSearch";
-import InputFilterSelect from "../Counterparty/Core/FilterInputs/InputFilterSelect";
+import close from "../../../../IMG/icons/close.png";
+import { MagnifyingGlass } from "../../../../IMG/SVG/MagnifyingGlass";
+import { useActions } from "../../../../redux/type_redux_hook/useAction";
+import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
+import InputFilterSearch from "../../Utils/FilterInputs/InputFilterSearch";
+import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 
 const useStyles = makeStyles({
   root: {

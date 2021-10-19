@@ -7,11 +7,11 @@ import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
 import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
 import { useActions } from "../../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
-import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
+import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
 import { validationSchemaGeneralInfo } from "./GeneralInformationValidationSchema";
 import { useStylesGeneralInformation } from "./GeneralInformationStyles";
-import ValidationErrorWrapper from "../../Core/utils/ValidationErrorWrapper";
-import {InputAssetsOptions} from "../../Core/utils/InputAssetsOptions";
+import ValidationErrorWrapper from "../../Utils/utils_options/ValidationErrorWrapper";
+import {InputAssetsOptions} from "../../Utils/utils_options/InputAssetsOptions";
 
 type Props = {
   // change: boolean;

@@ -65,8 +65,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
 
   const {PersonContact} = useTypedSelector(state => state.contactPerson)
 
-let {contact}:any = PersonContact
-  debugger
+
     const {
     firstname = "",
       surname = "",
@@ -77,7 +76,7 @@ let {contact}:any = PersonContact
       branches = [],
       emails = [],
       phones =[],
-      delivery_address = ""}:PersonContactState = contact
+      delivery_address = ""}:any = PersonContact
 
   const classes = useStyles();
   const [checked, setChecked] = React.useState(sex);

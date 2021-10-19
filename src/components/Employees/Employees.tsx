@@ -19,13 +19,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import { CancelPresentationOutlined } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useHistory, withRouter } from "react-router-dom";
 import { CaretDoubleLeft } from "../../IMG/SVG/CaretDoubleLeft";
 import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
 import EmployeesGeneralInformation from "./EmployeesTabs/EmployeesGeneralInformation";
 import EmployeesQualification from "./EmployeesTabs/EmployeesQualification";
 import EmployeesDevelopment from "./EmployeesTabs/EmployeesDevelopment";
+import {useActions} from "../../redux/type_redux_hook/useAction";
+import Loader from "../Layout/Loader/Loader";
 
 // interface TabPanelProps {
 //   children?: React.ReactNode;
@@ -99,6 +101,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Employees = (props: any) => {
+    const {fetchEmployeeByIdtAC} = useActions()
+    const {loading} = useTypedSelector(state => state.employees)
     let history = useHistory();
     const classes = useStyles();
     const [selectedTab, setSelectedTab] = React.useState<string>('Общие сведения');
@@ -107,7 +111,9 @@ const Employees = (props: any) => {
          setSelectedTab(newValue);
         history.push(`/employees/${newValue}`)
     };
-
+useEffect(()=>{
+    fetchEmployeeByIdtAC(17)
+},[])
     return (
         <div className={classes.container}>
             <Paper square className={classes.root}>
@@ -188,12 +194,13 @@ const Employees = (props: any) => {
                 </div>
                 <Divider style={{ width: "102%" }} />
             </Paper>
-            <div>
-                {selectedTab == 'Общие сведения' && <EmployeesGeneralInformation/>}
-                {selectedTab == 'Квалификация' && <EmployeesQualification/>}
-                {selectedTab == 'Развитие' && <EmployeesDevelopment/>}
+            <div>{loading ? <Loader/> :
+                <div>
+                    {selectedTab == 'Общие сведения' && <EmployeesGeneralInformation/>}
+                    {selectedTab == 'Квалификация' && <EmployeesQualification/>}
+                    {selectedTab == 'Развитие' && <EmployeesDevelopment/>}
+                </div>}
             </div>
-
         </div>
     );
 };

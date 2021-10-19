@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import { counterpartiesApi } from "../../../api/api";
-import {AssetsListAction, AssetsListActionType} from "../../types/conterpart_assets_types_list";
+import { counterpartiesApi } from "../../../../api/api";
+import {AssetsListAction, AssetsListActionType} from "../../../types/conterpart_assets_types_list";
 
 
 export const getAssetsListData =

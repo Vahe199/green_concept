@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import {AuthorDataAction, AuthorDataActionType} from "../../types/conterpart_author_data";
-import {counterpartiesApi} from "../../../api/api";
+import {AuthorDataAction, AuthorDataActionType} from "../../../types/conterpart_author_data";
+import {counterpartiesApi} from "../../../../api/api";
 
 
 export const changeAuthorContactInfoData = (formData:any, id:number,errorMessage:string) =>  async (dispatch: Dispatch<AuthorDataAction>) => {

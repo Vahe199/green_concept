@@ -30,14 +30,14 @@ export default function InputFilterDatePicker({
 
   return (
     <DatePicker
-      allowClear={true}
+      //allowClear={true}
       className={classes.select + " " + className}
       value={value === "" ? null : value}
       onChange={handleChange}
       style={{ width: "100%" }}
-      //onOpenChange={() => setOpenCalendar(!openCalendar)}
-      suffixIcon={<Calendar />}
-      //   suffixIcon={openCalendar ? <Calendar /> : <img src={img} style={{width: 15, height: 15}} />}
+      onOpenChange={() => setOpenCalendar(!openCalendar)}
+     // suffixIcon={<Calendar />}
+         suffixIcon={openCalendar ? <Calendar /> : <img src={img} style={{width: 15, height: 15}} />}
       {...props}
     />
   );

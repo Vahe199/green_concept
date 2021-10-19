@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
-import { counterpartiesApi } from "../../../api/api";
+import { counterpartiesApi } from "../../../../api/api";
 import {
   AuthorsListAction,
   AuthorsListActionType,
-} from "../../types/conterpart_authors_list";
+} from "../../../types/conterpart_authors_list";
 
 export const fetchAuthorsList =
   () => async (dispatch: Dispatch<AuthorsListAction>) => {

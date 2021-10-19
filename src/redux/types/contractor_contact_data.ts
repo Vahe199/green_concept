@@ -1,4 +1,4 @@
-import { getContactPersonsListData } from "../store/action_creator/ContractorContactAC";
+import { getContactPersonsListData } from "../store/action_creator/contractors_action_creatot/ContractorContactAC";
 
 export interface ContractorContactDataState {
   ContactPerson: any[];

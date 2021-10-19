@@ -3,8 +3,8 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
-import InputFilterSelectedType from "../../Core/FilterInputs/InputFilterSelect";
-import {InputAssetsOptions} from "../../Core/utils/InputAssetsOptions";
+import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
+import {InputAssetsOptions} from "../../Utils/utils_options/InputAssetsOptions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,7 +46,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
     let contractorType= assetsOptionsCongratulation.filter((type:any) =>type.key == contractor_type_id).map((type:any) =>(
         <div key={type.id}>{type.label}</div>
     ))
-    debugger
+
   const classes = useStyles();
   return (
     <div className={classes.root}>

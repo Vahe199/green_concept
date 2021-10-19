@@ -7,7 +7,7 @@ import { XLSIcon } from "../../IMG/SVG/XLS";
 import { useActions } from "../../redux/type_redux_hook/useAction";
 import Table from "./Core/Table";
 import { useStyles } from "./Styles";
-import ModalListOfContacts from "../Modals/ModalListOfContacts";
+import ModalListOfContacts from "./Core/Modals/ModalListOfContacts";
 
 export const Counterparty = () => {
   const { fetchAuthorsList, getAssetsListData } =

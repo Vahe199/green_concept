@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import {ServicesTypesListAction, ServicesTypesListActionType} from "../../types/conterpart_services_types_list";
-import {counterpartiesApi} from "../../../api/api";
+import {ServicesTypesListAction, ServicesTypesListActionType} from "../../../types/conterpart_services_types_list";
+import {counterpartiesApi} from "../../../../api/api";
 
 
 export const fetchServicesTypesList =

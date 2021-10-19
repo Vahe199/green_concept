@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import moment from "moment";
 import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
-
 import InputFilterSearch from "./FilterInputs/InputFilterSearch";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import { useHistory } from "react-router-dom";

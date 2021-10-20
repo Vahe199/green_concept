@@ -38,7 +38,7 @@ export default function InputFilterDatePicker({
 
   return (
       <DatePicker
-          allowClear
+          // allowClear
           className={classes.select + " " + className}
           value={value === "" ? null : value}
           onChange={handleChange}

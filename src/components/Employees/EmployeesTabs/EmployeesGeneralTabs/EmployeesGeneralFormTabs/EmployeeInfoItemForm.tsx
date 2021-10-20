@@ -1,10 +1,14 @@
-import React from "react";
-import {Button, Paper, TextField, Typography} from "@material-ui/core";
-import { Formik, getIn, FieldArray } from 'formik';
+import React, {useState} from "react";
+import {Avatar, Button, Paper, TextField, Typography} from "@material-ui/core";
+import { Formik, getIn, FieldArray,Form } from 'formik';
 
 import {useStylesEmployeeForm} from "./EmployeesFormStyles";
 import {TrashIcon} from "../../../../../IMG/SVG/TrashIcon";
 import {useTypedSelector} from "../../../../../redux/type_redux_hook/useTypedSelector";
+import InputFilterDatePicker from "../../../../Utils/FilterInputs/InputFilterDatePicker";
+import moment from "moment";
+import ValidationErrorWrapper from "../../../../Utils/utils_options/ValidationErrorWrapper";
+import {employeesApi} from "../../../../../api/api";
 
 
 type EmployeeFormDataProps = {
@@ -13,7 +17,9 @@ type EmployeeFormDataProps = {
 const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData}) => {
     const {loading,employeeById} = useTypedSelector(state => state.employees)
     let {employee}:any = employeeById
-    let {photo, surname,firstname, middlename, birthdate,phones,emails}:any = employee;
+    let {photo, surname,firstname, middlename, birthdate,phones,emails, id}:any = employee;
+    const [avatarPreview,setAvatarPreview] = useState<any>()
+    debugger
     const initialValues = {
         firstname:firstname ? firstname : "",
         middlename:middlename ? middlename : "",
@@ -21,34 +27,32 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
         photo:"",
         birthdate:birthdate? birthdate : "",
         emails: [{email: ''}],
-        phones:[{phone:""}],
-
-
-        familia:'',
-        name:'',
-        otchestvo:'',
-        dataRojdenia:'',
-        phone:'',
+        phones:[{phone:phones ? phones[0].phone : ""}],
 
     };
     const classes = useStylesEmployeeForm();
     return(
         <div className={classes.root}>
             <Formik
-                initialValues={initialValues}
+                 initialValues={initialValues}
                 onSubmit={async (values) => {
-                    await new Promise((r) => setTimeout(r, 500));
-                    alert(JSON.stringify(values, null, 2));
+                    let formData = new FormData();
+                    Object.entries(values).forEach(([key, value]) => {
+                        formData.append(key, value)
+                    })
+                    console.log(values, formData)
+                    employeesApi.updateEmployeeDataById(formData, id)
                 }}
             >
-                {({ values, touched,handleChange,errors }) => (
-                    <div>
+                {({ values,setFieldValue, touched,handleChange,errors }) => (
+                    <Form encType={"multipart/form-data"}>
             <div className={classes.title} >
                 <Typography  className={classes.typographyTitle}>
                     Данные сотрудника
                 </Typography>
                 <Button color="primary" type="submit"
-                        onClick={()=>setEmployeeData(true)}
+                        // onClick={()=>setEmployeeData(true)}
+                        // onClick={()=>console.log(values,"values", errors, " errors")}
                         className={classes.saveButton}>
                     Сохранить
                 </Button>
@@ -63,11 +67,27 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                             id="raised-button-file"
                             multiple
                             type="file"
+                            onChange={(e:any) => {
+                                const fileReader = new FileReader();
+                                fileReader.onload = () => {
+                                    if (fileReader.readyState === 2) {
+                                        debugger
+                                        setFieldValue('photo', e.target.files[0]);
+                                         setAvatarPreview(fileReader.result);
+                                    }
+                                };
+                                if(e.target.files[0]) {
+                                    fileReader.readAsDataURL(e.target.files[0]);
+                                }
+                            }}
                         />
                         <label htmlFor="raised-button-file">
                             <Button  component="span"
-                                     className={classes.fileInput}
+                                     className={avatarPreview ? classes.fileInputAvatar :classes.fileInput}
                                 >
+                                {avatarPreview && <Avatar alt="Remy Sharp"
+                                         src={avatarPreview ? avatarPreview : ""}
+                                         className={classes.fileInputAvatar}/>}
                             </Button>
                         </label>
                     </div>
@@ -128,19 +148,27 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                 Дата рождения
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                <TextField
-                                    name={"birthdate"}
-                                    style={{ width: "80%"}}
-                                    id="date"
-                                    variant="outlined"
-                                    type="date"
-                                    // value={values.otchestvo}
-                                    defaultValue="2021-01-01"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    onChange={handleChange}
-                                />
+                                <ValidationErrorWrapper
+                                    inputClassName="ant-picker"
+                                    error={touched.birthdate && Boolean(errors.birthdate)}
+                                    helperText={touched.birthdate && errors.birthdate}
+                                >
+                                    <InputFilterDatePicker
+                                        value={
+                                            values.birthdate
+                                                ? moment(values.birthdate, "YYYY-MM-DD")
+                                                : null
+                                        }
+                                        handleChange={(date: any) =>
+                                            setFieldValue(
+                                                "birthdate",
+                                                moment(date).format("YYYY-MM-DD")
+                                            )
+                                        }
+                                        placeholder="01.01.1970"
+                                        format="DD.MM.YYYY"
+                                    />
+                                </ValidationErrorWrapper>
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -148,17 +176,45 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                 Телефон
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                <TextField
-                                    fullWidth
-                                    style={{ width: "80%"}}
-                                    placeholder={"+79999999999"}
-                                    variant={"outlined"}
-                                    name="phone"
-                                    value={values.phone}
-                                    onChange={handleChange}
-                                    error={touched.phone && Boolean(errors.phone)}
-                                    helperText={touched.phone && errors.phone}
-                                />
+                                <FieldArray name="phones">
+                                    {() => {
+                                        return (
+                                            <div>
+                                                {
+                                                values.phones?.map((phone, index) => {
+                                                    const fieldName = `phones[${index}].phone`;
+                                                    const touchedFieldName = getIn(
+                                                        touched,
+                                                        fieldName
+                                                    );
+                                                    const errorFieldName = getIn(
+                                                        errors,
+                                                        fieldName
+                                                    );
+                                                    return (
+                                                                <TextField
+                                                                    fullWidth
+                                                                    placeholder={"+79999999999"}
+                                                                    variant={"outlined"}
+                                                                    name={fieldName}
+                                                                    value={phone.phone}
+                                                                    onChange={handleChange}
+                                                                    error={Boolean(
+                                                                        touchedFieldName && errorFieldName
+                                                                    )}
+                                                                    helperText={
+                                                                        touchedFieldName && errorFieldName
+                                                                            ? errorFieldName
+                                                                            : ""
+                                                                    }
+                                                                />
+                                                    );
+                                                })}
+
+                                            </div>
+                                        );
+                                    }}
+                                </FieldArray>
                             </Typography>
                         </div>
                         <div className={classes.column} style={{alignItems:"flex-start"}}>
@@ -208,7 +264,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                     </div>
                 </div>
             </Paper>
-                    </div>
+                    </Form>
                     )}
             </Formik>
         </div>

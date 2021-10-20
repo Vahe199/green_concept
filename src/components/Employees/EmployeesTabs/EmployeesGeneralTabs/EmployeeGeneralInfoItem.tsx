@@ -15,7 +15,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
     let {employee}:any = employeeById
     let {status,region,company,directions,position,end_work_date ,start_work_date,experience_months,
         experience_years,}:any = employee;
-    debugger
+
     return(
         <div className={classes.root}>
             <div className={classes.title} >

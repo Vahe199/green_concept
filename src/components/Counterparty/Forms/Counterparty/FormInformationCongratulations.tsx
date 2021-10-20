@@ -42,11 +42,11 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
                 counterpartiesApi.changeContactCongratulationsData(values,id).then(res =>{
                     console.log(res)
                     setChangeCongratulations(true)
-                    debugger
+
                 })
                     .catch((e)=>{
                         console.log(e.response)
-                        debugger
+
                     })
             }}
         >

@@ -70,7 +70,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                  setChangeBasicInformation(true)
                }).catch((e)=>{
                  console.log(e.response)
-                   debugger
+
                })
           }}
       >

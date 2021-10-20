@@ -48,7 +48,7 @@ const initialValues = {
                       setChangeContactsFromGreen(true)
                   }).catch((e)=>{
                       console.log(e.response)
-                      debugger
+
                   })
 
           }}

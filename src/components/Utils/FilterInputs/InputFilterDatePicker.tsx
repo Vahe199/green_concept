@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function InputFilterDatePicker({
-  value = "",
-  handleChange,
-  className = "",
-  ...props
-}: any): any {
-  const classes = useStyles();
+                                                  value = "",
+                                                  handleChange,
+                                                  className = "",
+                                                  ...props
+                                              }: any): any {
+    const classes = useStyles();
 
-  const [openCalendar, setOpenCalendar] = useState(true);
+    const [openCalendar, setOpenCalendar] = useState(true);
 
   return (
     <DatePicker

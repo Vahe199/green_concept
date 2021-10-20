@@ -75,6 +75,19 @@ export const useStylesEmployeeForm = makeStyles((theme: Theme) =>
                 backgroundColor: "#ADB3B8",
             },
         },
+        fileInputAvatar:{
+            width:144,
+            height:144,
+             // marginRight:44,
+            borderRadius:"50%",
+            "&:hover": {
+                backgroundColor: "#ADB3B8",
+                boxShadow: "none",
+            },
+            "&:active": {
+                backgroundColor: "#ADB3B8",
+            },
+        },
         saveButton: {
             fontSize:16,
             textTransform: "none",

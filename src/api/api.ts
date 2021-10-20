@@ -162,5 +162,15 @@ export const employeesApi = {
   getEmployeeDataById(id:number) {
     return axios.request({ method: "get", url: `employees/${id}` });
   },
+  updateEmployeeDataById(data:any, id:number) {
+    return axios.request({ method: "put", url: `employees/employee_data/${id}`, data, headers: {"Content-Type": "multipart/form-data"} })
+        .then(res => {
+          debugger
+        })
+        .catch((e)=>{
+          console.log(e.response)
+          debugger
+        });
+  },
 };
 

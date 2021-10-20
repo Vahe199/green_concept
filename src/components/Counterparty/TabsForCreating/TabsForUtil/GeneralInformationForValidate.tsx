@@ -2,16 +2,16 @@ import * as yup from "yup";
 
 export const validationSchema = (value: string) =>
   yup.object().shape({
-    // crms: yup
-    //   .array()
-    //   .of(yup.number().required("Обязательное поле"))
-    //   .strict()
-    //   .required("Обязательное поле"),
-    // branches: yup
-    //   .array()
-    //   .of(yup.number().required("Обязательное поле"))
-    //   .strict()
-    //   .required("Обязательное поле"),
+    crms: yup
+      .array()
+      .of(yup.number().required("Обязательное поле"))
+      .strict()
+      .required("Обязательное поле"),
+    branches: yup
+      .array()
+      .of(yup.number().required("Обязательное поле"))
+      .strict()
+      .required("Обязательное поле"),
     contractor_type_id: yup.string().required("Обязательное поле"),
     service_type_id: yup.string().required("Обязательное поле"),
     inn: yup
@@ -34,10 +34,6 @@ export const validationSchema = (value: string) =>
             .max(9, "должен состоять максимум из 9 символов")
             .nullable(true)
         : yup.string().nullable(true),
-    // kpp:  yup
-    //     .string().nullable(true)
-    //     .min(0, "должен состоять минимум из 10 символов")
-    //     .max(18, "должен состоять максимум из 18 символов"),
     ogrn: yup
       .string()
       .min(13, "должен состоять минимум из 13 символов")
@@ -63,45 +59,45 @@ export const validationSchema = (value: string) =>
       .min(0, "должен состоять минимум из 10 символов")
       .max(250, "должен состоять максимум из 250 символов")
       .required("Обязательное поле"),
-    // short_name: yup.string() .min(0, "должен состоять минимум из 10 символов")
-    //     .max(250, "должен состоять максимум из 250 символов")
-    //     .required("Обязательное поле"),
-    // sites: yup
-    //   .array()
-    //   .of(
-    //     yup.object().shape({
-    //       url: yup
-    //         .string()
-    //         .min(3, "Слишком короткый")
-    //         .required("Обязательное поле"),
-    //       // salary: yup.string().min(3, 'cmon').required('Required'),
-    //     })
-    //   )
-    //   .required("Обязательное поле"),
-    // phones: yup
-    //   .array()
-    //   .of(
-    //     yup.object().shape({
-    //       phone: yup
-    //         .string()
-    //         .min(10, "Слишком короткый")
-    //         .required("Обязательное поле"),
-    //       // salary: yup.string().min(3, 'cmon').required('Required'),
-    //     })
-    //   )
-    //   .required("Обязательное поле"),
-    // emails: yup
-    //   .array()
-    //   .of(
-    //     yup.object().shape({
-    //       email: yup
-    //         .string()
-    //         .email("Неверный адрес электронной почты")
-    //         .required("Обязательное поле"),
-    //       // salary: yup.string().min(3, 'cmon').required('Required'),
-    //     })
-    //   )
-    //   .required("Обязательное поле"),
+    short_name: yup.string() .min(0, "должен состоять минимум из 10 символов")
+        .max(250, "должен состоять максимум из 250 символов")
+        .required("Обязательное поле"),
+    sites: yup
+      .array()
+      .of(
+        yup.object().shape({
+          url: yup
+            .string()
+            .min(3, "Слишком короткый")
+            .required("Обязательное поле"),
+          // salary: yup.string().min(3, 'cmon').required('Required'),
+        })
+      )
+      .required("Обязательное поле"),
+    phones: yup
+      .array()
+      .of(
+        yup.object().shape({
+          phone: yup
+            .string()
+            .min(10, "Слишком короткый")
+            .required("Обязательное поле"),
+          // salary: yup.string().min(3, 'cmon').required('Required'),
+        })
+      )
+      .required("Обязательное поле"),
+    emails: yup
+      .array()
+      .of(
+        yup.object().shape({
+          email: yup
+            .string()
+            .email("Неверный адрес электронной почты")
+            .required("Обязательное поле"),
+          // salary: yup.string().min(3, 'cmon').required('Required'),
+        })
+      )
+      .required("Обязательное поле"),
   });
 
 // org_type: "ЮЛ",

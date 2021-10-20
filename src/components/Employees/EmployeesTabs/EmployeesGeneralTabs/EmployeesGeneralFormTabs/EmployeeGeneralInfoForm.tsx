@@ -3,8 +3,19 @@ import {Button, Paper, TextField, Typography} from "@material-ui/core";
 import {Formik} from 'formik';
 
 import {useStylesEmployeeForm} from "./EmployeesFormStyles";
+import ValidationErrorWrapper from "../../../../Utils/utils_options/ValidationErrorWrapper";
+import InputFilterDatePicker from "../../../../Utils/FilterInputs/InputFilterDatePicker";
+import moment from "moment";
 
 const initialValues = {
+    region_id:null,
+    green_legal_id:null,
+    position_id:null,
+    start_work_date:"",
+    end_work_date:"",
+    directions:[null],
+
+
     region:'',
     empl_company:'',
     direction:'',
@@ -26,7 +37,7 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
                     alert(JSON.stringify(values, null, 2));
                 }}
             >
-                {({ values, touched,handleChange,errors }) => (
+                {({ values, setFieldValue,touched,handleChange,errors }) => (
                     <div>
             <div className={classes.title} >
                 <Typography  className={classes.typographyTitle}>
@@ -130,19 +141,29 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
                                 Дата приема на работу:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                <TextField
-                                    name={"employment_date"}
-                                    style={{ width: "50%"}}
-                                    id="date"
-                                    variant="outlined"
-                                    type="date"
-                                    // value={values.otchestvo}
-                                    defaultValue="2021-01-01"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    onChange={handleChange}
-                                />
+                                <ValidationErrorWrapper
+                                    inputClassName="ant-picker"
+                                    error={touched.start_work_date && Boolean(errors.start_work_date)}
+                                    helperText={touched.start_work_date && errors.start_work_date}
+                                >
+                                    <InputFilterDatePicker
+                                        name={"start_work_date"}
+                                        value={
+                                            values.start_work_date
+                                                ? moment(values.start_work_date, "YYYY-MM-DD")
+                                                : null
+                                        }
+                                        handleChange={(date: any) =>
+                                            setFieldValue(
+                                                "start_work_date",
+                                                moment(date).format("YYYY-MM-DD")
+                                            )
+                                        }
+                                        placeholder="01.01.1970"
+                                        format="DD.MM.YYYY"
+                                        className={classes.input}
+                                    />
+                                </ValidationErrorWrapper>
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -150,19 +171,29 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
                                 Дата увольнения:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                <TextField
-                                    name={"dismissal_date"}
-                                    style={{ width: "50%"}}
-                                    id="date"
-                                    variant="outlined"
-                                    type="date"
-                                    // value={values.otchestvo}
-                                    defaultValue="2021-01-01"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    onChange={handleChange}
-                                />
+                                <ValidationErrorWrapper
+                                    inputClassName="ant-picker"
+                                    error={touched.end_work_date && Boolean(errors.end_work_date)}
+                                    helperText={touched.end_work_date && errors.end_work_date}
+                                >
+                                    <InputFilterDatePicker
+                                        name={"end_work_date"}
+                                        value={
+                                            values.end_work_date
+                                                ? moment(values.end_work_date, "YYYY-MM-DD")
+                                                : null
+                                        }
+                                        handleChange={(date: any) =>
+                                            setFieldValue(
+                                                "end_work_date",
+                                                moment(date).format("YYYY-MM-DD")
+                                            )
+                                        }
+                                        placeholder="01.01.1970"
+                                        format="DD.MM.YYYY"
+                                        className={classes.input}
+                                    />
+                                </ValidationErrorWrapper>
                             </Typography>
                         </div>
 

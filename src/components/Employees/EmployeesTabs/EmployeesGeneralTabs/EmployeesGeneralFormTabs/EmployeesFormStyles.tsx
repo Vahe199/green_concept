@@ -139,5 +139,8 @@ export const useStylesEmployeeForm = makeStyles((theme: Theme) =>
             textDecoration:"underline"
 
         },
+        input: {
+            width: "60% !important",
+        },
     })
 );

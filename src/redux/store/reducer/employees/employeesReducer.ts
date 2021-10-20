@@ -40,7 +40,7 @@ export const employeesListReducer = (
             return { loading: false, load_update:false,error: false,success:state.success,success_update:"GENERAL_INFO", employees: state.employees, employeeById:action.payload};
 
         case EmployeeListActionType.UPDATE_EMPLOYEES_ABOUT_INFO:
-            debugger
+
             return { loading: false,load_update:false, error: false, success:state.success,success_update:"ABOUT_INFO",employees: state.employees, employeeById:action.payload};
 
         case EmployeeListActionType.FETCH_EMPLOYEES_LIST_ERROR:

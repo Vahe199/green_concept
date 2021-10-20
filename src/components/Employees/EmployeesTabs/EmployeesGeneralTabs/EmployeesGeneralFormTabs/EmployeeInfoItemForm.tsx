@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Avatar, Button, Paper, TextField, Typography} from "@material-ui/core";
-import { Formik, getIn, FieldArray,Form } from 'formik';
+import {FieldArray, Form, Formik, getIn} from 'formik';
 
 import {useStylesEmployeeForm} from "./EmployeesFormStyles";
 import {TrashIcon} from "../../../../../IMG/SVG/TrashIcon";
@@ -8,31 +8,46 @@ import {useTypedSelector} from "../../../../../redux/type_redux_hook/useTypedSel
 import InputFilterDatePicker from "../../../../Utils/FilterInputs/InputFilterDatePicker";
 import moment from "moment";
 import ValidationErrorWrapper from "../../../../Utils/utils_options/ValidationErrorWrapper";
-import {employeesApi} from "../../../../../api/api";
+import {useActions} from "../../../../../redux/type_redux_hook/useAction";
+import {notifyError, notifySuccess} from "../../../../Utils/utils_options/ToastNotify";
+import {ToastContainer} from "react-toastify";
 
 
 type EmployeeFormDataProps = {
     setEmployeeData:(val:boolean)=>void
 }
 const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData}) => {
-    const {loading,employeeById} = useTypedSelector(state => state.employees)
+    const {updateEmployeeEmployeeDataAC,recoveryEmployeesState} = useActions()
+    const {error,success_update,loading,employeeById} = useTypedSelector(state => state.employees)
+
     let {employee}:any = employeeById
     let {photo, surname,firstname, middlename, birthdate,phones,emails, id}:any = employee;
     const [avatarPreview,setAvatarPreview] = useState<any>()
-    debugger
+    useEffect(()=>{
+        if(error){
+            notifyError();
+            recoveryEmployeesState()
+        }
+        if(success_update == "EMPLOYEE_DATA"){
+            notifySuccess();
+            recoveryEmployeesState()
+             setEmployeeData(true)
+        }
+    },[error,success_update])
     const initialValues = {
         firstname:firstname ? firstname : "",
         middlename:middlename ? middlename : "",
         surname:surname ? surname : "",
         photo:"",
         birthdate:birthdate? birthdate : "",
-        emails: [{email: ''}],
-        phones:[{phone:phones ? phones[0].phone : ""}],
+        emails: [""],
+        phones:[""],
 
     };
     const classes = useStylesEmployeeForm();
     return(
         <div className={classes.root}>
+            <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
             <Formik
                  initialValues={initialValues}
                 onSubmit={async (values) => {
@@ -41,7 +56,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                         formData.append(key, value)
                     })
                     console.log(values, formData)
-                    employeesApi.updateEmployeeDataById(formData, id)
+                     updateEmployeeEmployeeDataAC(formData, id)
                 }}
             >
                 {({ values,setFieldValue, touched,handleChange,errors }) => (
@@ -51,7 +66,6 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                     Данные сотрудника
                 </Typography>
                 <Button color="primary" type="submit"
-                        // onClick={()=>setEmployeeData(true)}
                         // onClick={()=>console.log(values,"values", errors, " errors")}
                         className={classes.saveButton}>
                     Сохранить
@@ -182,7 +196,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                             <div>
                                                 {
                                                 values.phones?.map((phone, index) => {
-                                                    const fieldName = `phones[${index}].phone`;
+                                                    const fieldName = `phones[${index}]`;
                                                     const touchedFieldName = getIn(
                                                         touched,
                                                         fieldName
@@ -197,7 +211,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                                                     placeholder={"+79999999999"}
                                                                     variant={"outlined"}
                                                                     name={fieldName}
-                                                                    value={phone.phone}
+                                                                    value={phone}
                                                                     onChange={handleChange}
                                                                     error={Boolean(
                                                                         touchedFieldName && errorFieldName
@@ -227,7 +241,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                         <div>
                                             {values. emails.length > 0 &&
                                             values. emails.map(( email, index) => {
-                                                const fieldName = `emails[${index}].email`;
+                                                const fieldName = `emails[${index}]`;
                                                 const touchedFieldName = getIn(touched, fieldName);
                                                 const errorFieldName = getIn(errors, fieldName);
                                                 return(
@@ -239,7 +253,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                                             variant={"outlined"}
                                                             name={fieldName}
                                                             type="email"
-                                                            value={email.email}
+                                                            value={email}
                                                             onChange={handleChange}
                                                             error={Boolean(touchedFieldName && errorFieldName)}
                                                              helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
@@ -252,7 +266,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                                 )
                                             })}
                                             <div className={classes.link}
-                                                onClick={() => push({ email: '' })}
+                                                onClick={() => push("")}
                                             >
                                                 + Добавить email
                                             </div>

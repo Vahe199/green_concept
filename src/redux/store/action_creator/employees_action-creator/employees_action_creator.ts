@@ -7,8 +7,9 @@ export const fetchEmployeeByIdtAC = (id:number) => async (dispatch: Dispatch<Emp
     try {
         dispatch({type:EmployeeListActionType.FETCH_EMPLOYEES_LIST})
         const {data} = await employeesApi.getEmployeeDataById(id)
-        dispatch({type:EmployeeListActionType.FETCH_EMPLOYEE_BY_ID_SUCCESS, payload:data})
+         dispatch({type:EmployeeListActionType.FETCH_EMPLOYEE_BY_ID_SUCCESS, payload:data})
     }catch (e) {
         dispatch({type:EmployeeListActionType.FETCH_EMPLOYEES_LIST_ERROR,payload:"что-то пошло не так"})
     }
 }
+

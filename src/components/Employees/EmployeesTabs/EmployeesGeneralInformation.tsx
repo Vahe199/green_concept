@@ -7,8 +7,10 @@ import EmployeeAboutItemForm from "./EmployeesGeneralTabs/EmployeesGeneralFormTa
 import EmployeeGeneralInfoForm from "./EmployeesGeneralTabs/EmployeesGeneralFormTabs/EmployeeGeneralInfoForm";
 
 
+
 const EmployeesGeneralInformation:React.FC = () => {
     const [employeeData, setEmployeeData] = useState<boolean>(true)
+    console.log(employeeData,"employeeData")
     const [employeeAboutData, setEmployeeAboutData] = useState<boolean>(true)
     const [employeeGeneralInfo, setEmployeeGeneralInfo] = useState<boolean>(true)
     return(
@@ -17,6 +19,7 @@ const EmployeesGeneralInformation:React.FC = () => {
             justifyContent:'space-between',
              backgroundColor:"#F2F3F4"
         }}>
+
             <div style={{width:'42%',marginLeft:32,marginRight:"1%"}}>
                 {employeeData ? <EmployeeInfoItem setEmployeeData={setEmployeeData}/>
                     :<EmployeeInfoItemForm setEmployeeData={setEmployeeData}/>}

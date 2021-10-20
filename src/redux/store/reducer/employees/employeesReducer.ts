@@ -9,7 +9,10 @@ const initialState: EmployeesListState = {
     employees: [],
     employeeById:[],
     error: false,
+    success:false,
+    success_update:false,
     loading: true,
+    load_update:false,
 };
 
 export const employeesListReducer = (
@@ -18,16 +21,36 @@ export const employeesListReducer = (
 ):EmployeesListState => {
     switch (action.type) {
         case EmployeeListActionType.FETCH_EMPLOYEES_LIST:
-            return { error:true, loading: true, employees:state.employees, employeeById:state.employeeById };
+            return { error:false,success_update:state.success_update, load_update:false,loading: true,success:state.success, employees:state.employees, employeeById:state.employeeById };
+
+        case EmployeeListActionType.UPDATE_EMPLOYEES_LIST:
+            return { error:false, success_update:state.success_update,load_update:true,loading:state.loading,success:false, employees:state.employees, employeeById:state.employeeById };
+
 
         case EmployeeListActionType.FETCH_EMPLOYEES_LIST_SUCCESS:
-            return { loading: false, error: false, employeeById:state.employeeById, employees: action.payload };
+            return { loading: false,success_update:state.success_update,load_update:false, error: false,success:true, employeeById:state.employeeById, employees: action.payload };
 
         case EmployeeListActionType.FETCH_EMPLOYEE_BY_ID_SUCCESS:
-            return { loading: false, error: false, employees: state.employees, employeeById:action.payload};
+            return { loading: false,load_update:false,success_update:state.success_update, error: false,success:true, employees: state.employees, employeeById:action.payload};
+
+        case EmployeeListActionType.UPDATE_EMPLOYEES_EMPLOYEE_DATA:
+            return { loading: false,load_update:false, error: false,success_update:"EMPLOYEE_DATA",success:state.success, employees: state.employees, employeeById:action.payload};
+
+        case EmployeeListActionType.UPDATE_EMPLOYEES_GENERAL_INFO:
+            return { loading: false, load_update:false,error: false,success:state.success,success_update:"GENERAL_INFO", employees: state.employees, employeeById:action.payload};
+
+        case EmployeeListActionType.UPDATE_EMPLOYEES_ABOUT_INFO:
+            debugger
+            return { loading: false,load_update:false, error: false, success:state.success,success_update:"ABOUT_INFO",employees: state.employees, employeeById:action.payload};
 
         case EmployeeListActionType.FETCH_EMPLOYEES_LIST_ERROR:
-            return { loading: false, error: action.payload, employees: state.employees, employeeById:state.employeeById };
+            return { loading: false, load_update:false,error: action.payload,success:false,success_update:false, employees: state.employees, employeeById:state.employeeById };
+
+        case EmployeeListActionType.UPDATE_EMPLOYEES_LIST_ERROR:
+            return { loading: false, load_update:false,error: action.payload, success:false,success_update:false, employees: state.employees, employeeById:state.employeeById };
+
+            case EmployeeListActionType.RECOVERY_EMPLOYEES_STATE:
+            return { loading: false, load_update:false,error: false,success_update:false, success:false,employees: state.employees, employeeById:state.employeeById };
         default:
             return state;
     }

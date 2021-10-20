@@ -1,34 +1,58 @@
-import React from "react";
+import React, {memo, useEffect} from "react";
 import {Button, Typography} from "@material-ui/core";
-import {Formik} from 'formik';
+import {Formik,Form} from 'formik';
 
 import {useStylesEmployeeForm} from "./EmployeesFormStyles";
+import {useTypedSelector} from "../../../../../redux/type_redux_hook/useTypedSelector";
+import {notifyError, notifySuccess} from "../../../../Utils/utils_options/ToastNotify";
+import {useActions} from "../../../../../redux/type_redux_hook/useAction";
+import {ToastContainer} from "react-toastify";
 
-const initialValues = {
-    about:""
-};
+
 type EmployeeFormDataProps = {
     setEmployeeAboutData:(val:boolean)=>void
 }
 const EmployeeAboutItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeAboutData}) => {
+    const {recoveryEmployeesState,updateEmployeeAboutListAC} = useActions()
+    const {employeeById ,error,success_update} = useTypedSelector(state => state.employees)
+    const {employee}:any =employeeById;
+    const {about}:any =employee;
+    let id:number = 17
+    const initialValues = {
+        about:about ? about :""
+    };
+    console.log(success_update,"success_update !!!")
+    useEffect( ()=>{
+        if(error){
+            notifyError();
+             recoveryEmployeesState()
+        }
+        if(success_update === "ABOUT_INFO"){
+            notifySuccess();
+              recoveryEmployeesState()
+            setEmployeeAboutData(true)
+
+        }
+    },[error,success_update])
     const classes = useStylesEmployeeForm();
     return(
         <div className={classes.root} style={{marginBottom:50}}>
+            <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
             <Formik
                 initialValues={initialValues}
                 onSubmit={async (values) => {
-                    await new Promise((r) => setTimeout(r, 500));
-                    alert(JSON.stringify(values, null, 2));
+                    updateEmployeeAboutListAC(values, id)
+
                 }}
             >
                 {({ values, touched,handleChange,errors }) => (
-                    <div>
+                    <Form>
             <div className={classes.title} >
                 <Typography  className={classes.typographyTitle}>
                     Данные сотрудника
                 </Typography>
                 <Button color="primary" type="submit"
-                        onClick={()=>setEmployeeAboutData(true)}
+                        // onClick={()=>setEmployeeAboutData(true)}
                         className={classes.saveButton}>
                     Сохранить
                 </Button>
@@ -44,11 +68,11 @@ const EmployeeAboutItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeAbout
                     // helperText={touched.about && errors.about}
                 >Расскажите о себе</textarea>
             </div>
-                    </div>
+                    </Form>
                     )}
             </Formik>
         </div>
     )
 }
 
-export default EmployeeAboutItemForm;
+export default memo(EmployeeAboutItemForm);

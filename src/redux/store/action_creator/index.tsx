@@ -12,6 +12,7 @@ import * as ContractorBankDetailsDataAC from "./contractors_action_creatot/Contr
 import * as ContractorGeneraDataAC from "./contractors_action_creatot/ContractorGeneralDataAC";
 import * as ContractorContactAC from "./contractors_action_creatot/ContractorContactAC";
 import * as EmployeesListAC from "./employees_action-creator/employees_action_creator";
+import * as EmployeesListUpdateAC from "./employees_action-creator/employees_update_action_creator";
 
 export default {
   ...CounterpartiesActionCreators,
@@ -27,5 +28,6 @@ export default {
   ...ContractorBankDetailsDataAC,
   ...ContractorGeneraDataAC,
   ...ContractorContactAC,
-  ...EmployeesListAC
+  ...EmployeesListAC,
+  ...EmployeesListUpdateAC
 };

@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { FieldArray, Form, Formik, getIn } from "formik";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
@@ -30,6 +30,7 @@ import { recoveryAuthorDataState } from "../../../redux/store/action_creator/con
 import BackToAddress from "../../Utils/BackToAddress";
 
 export const GeneralInformationForCreating = () => {
+  const formikRef = useRef<any>()
   const classes = useStylesGeneralInfo();
   const [matchesAddressActualAddress, setMatchesAddressActualAddress] =
     React.useState<boolean>(true);
@@ -72,6 +73,7 @@ export const GeneralInformationForCreating = () => {
     }
     if (success) {
       notifySuccess();
+      formikRef.current.resetForm()
       recoveryAuthorDataState();
     }
   }, [success, error, validateValue]);
@@ -108,15 +110,14 @@ export const GeneralInformationForCreating = () => {
     <div style={{ width: "100%" }}>
       <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
       <BackToAddress address="/counterparties" title="списку" />
-      <Formik
+      <Formik innerRef={formikRef}
         initialValues={initialValues}
         validationSchema={() => validationSchema(validateValue)}
-        onSubmit={async ({ short_name, ...values }, action) => {
+        onSubmit={async (values, action) => {
           console.log(values, "values");
           insertContractorGeneralData(values);
-          {
-            success && action.resetForm();
-          }
+
+
         }}
       >
         {({ values, touched, handleChange, errors, setFieldValue }) => (

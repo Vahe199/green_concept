@@ -95,7 +95,8 @@ const useStyles = makeStyles((theme) => ({
 const CreateCounterparty = (props: any) => {
   const { AuthorData, loading } = useTypedSelector((state) => state.author);
   let { contractor }: any = AuthorData;
-  let { id }: any = contractor;
+  const { id = null}: any = contractor;
+
 
   const { getContactPersonsDataWithId } = useActions();
   useEffect(() => {
@@ -117,7 +118,7 @@ const CreateCounterparty = (props: any) => {
       <Paper square className={classes.root}>
         <Typography variant="subtitle1" noWrap className={classes.typography}>
           {props.match.params.item === "author"
-            ? `ООО «Контрагент №${id}»`
+            ? `ООО «Контрагент №${id ?id : ''}»`
             : "Новый контрагент"}
         </Typography>
 

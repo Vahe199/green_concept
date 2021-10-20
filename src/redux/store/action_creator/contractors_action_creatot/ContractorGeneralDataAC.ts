@@ -7,6 +7,7 @@ import {
 
 export const insertContractorGeneralData =
   (formData: any) => async (dispatch: Dispatch<AuthorDataAction>) => {
+  debugger
     try {
       dispatch({
         type: AuthorDataActionType.CHANGE_AUTHOR_DATA,
@@ -16,7 +17,7 @@ export const insertContractorGeneralData =
       );
       dispatch({
         type: AuthorDataActionType.CHANGE_AUTHOR_DATA_SUCCESS,
-        payload: data.contractor,
+        payload: data
       });
     } catch (e) {
       dispatch({

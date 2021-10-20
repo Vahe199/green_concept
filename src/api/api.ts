@@ -164,13 +164,11 @@ export const employeesApi = {
   },
   updateEmployeeDataById(data:any, id:number) {
     return axios.request({ method: "put", url: `employees/employee_data/${id}`, data, headers: {"Content-Type": "multipart/form-data"} })
-        .then(res => {
-          debugger
-        })
-        .catch((e)=>{
-          console.log(e.response)
-          debugger
-        });
+       },
+  updateEmployeeGeneralInfoById(data:any, id:number) {
+    return axios.request({ method: "put", url: `employees/general_info/${id}`, data });
   },
+  updateEmployeeAboutInfoById(data:any, id:number) {
+    return axios.request({ method: "put", url: `employees/about_info/${id}`, data })},
 };
 

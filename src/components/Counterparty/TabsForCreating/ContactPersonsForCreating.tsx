@@ -26,10 +26,14 @@ import { Modal } from "antd";
 import { InputAssetsOptions } from "../../Utils/utils_options/InputAssetsOptions";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { notifyError, notifySuccess } from "../../Utils/utils_options/ToastNotify";
+import {
+  notifyError,
+  notifySuccess,
+} from "../../Utils/utils_options/ToastNotify";
 import { SearchContactPerson } from "../../Utils/utils_options/SearchContactPerson";
 import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
 import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
+import BackToAddress from "../../Utils/BackToAddress";
 
 export const ContactPersonsForCreating: React.FC = () => {
   const {
@@ -120,6 +124,7 @@ export const ContactPersonsForCreating: React.FC = () => {
       ref={parentRef}
     >
       <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
+      <BackToAddress address="/counterparties" title="списку" />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchemaContactPerson}
@@ -761,7 +766,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                         justifyContent: "space-between",
                         alignItems: "center",
                         width: "100%",
-                       // marginBottom: 8,
+                        // marginBottom: 8,
                       }}
                     >
                       <span className={classes.val}>

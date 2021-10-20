@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BackToAddress from "../../Utils/BackToAddress";
 import CreatEditBankAccount, {
   ContractorBankDetailType,
   initialBankDetails,
@@ -12,6 +13,7 @@ const CreatingBankDetails: React.FC = () => {
 
   return (
     <div>
+      <BackToAddress address="/counterparties" title="списку" />
       {edit ? (
         <BankDetails
           setEdit={setEdit}

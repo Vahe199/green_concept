@@ -9,22 +9,30 @@ import InputFilterSelectedType from "../../../../Utils/FilterInputs/InputFilterS
 import { Input } from 'antd';
 import InputFilterDatePicker from "../../../../Utils/FilterInputs/InputFilterDatePicker";
 import moment from "moment";
-
+import 'moment/locale/ru'
+import { DatePicker } from 'antd';
+import locale from 'antd/es/date-picker/locale/ru_RU';
 const EmployeeEducationForm:React.FC = () => {
     const initialValues = {
-        contact_employees:[{direction_id: '', employee_id: '', info: ''}]
+
+        employee_education:[{
+            education_type_id:null,
+            educational_institution_name:"",
+            education_document:"",
+            speciality:"",
+            end_date:""
+        }],
+        month:"",
+        year:""
     }
-    let EducationState = [1,2,3]
     const classes = useStylesEmployeeQualificationForm();
     return(
         <div className={classes.root}>
             <Formik
                 initialValues={initialValues}
-                validationSchema={validationSchemaContactsFromGreen}
-                onSubmit={async (values,action) => {
-                    console.log(values,"values")
-
-
+                // validationSchema={validationSchemaContactsFromGreen}
+                onSubmit={async ({year, month,...values},action) => {
+                    console.log (111, {...values, month: moment(month).format("MM"), year: 222})
                 }}
             >
                 {({ values, touched, handleChange,errors,setFieldValue }) => (
@@ -38,39 +46,95 @@ const EmployeeEducationForm:React.FC = () => {
                     type="submit"
                     className={classes.btnSubmit}
                     // onClick={() => setChangeContactsFromGreen(true)}
-                    // onClick={() => console.log(errors)}
+                    //  onClick={() => console.log(values)}
                 >
                     Сохранить
                 </Button>
             </div>
 
             <Paper elevation={0} className={classes.paper}>
-                <div className={classes.column} style={{marginBottom:0}}>
+                <div className={classes.column} style={{marginRight:40}}>
                     <Typography className={classes.typographyTitle}>
                         Стаж работы по специальности
                     </Typography>
-                    <Typography className={classes.typographyValue}>
-                        12 лет 11 месяцев
-                    </Typography>
+                    <div style={{width:"50%", display:"flex", justifyContent:"flex-start"}}>
+
+                            <DatePicker
+
+                                className={classes.yearPiker}
+                                        name={"year"}
+                                        value={
+                                            values.year
+                                                ? moment(values.year, "YYYY-MM-DD")
+                                                : null
+                                        }
+                                        onChange={(_:any,date: any) => {
+                                            setFieldValue(
+                                                "year",
+                                                moment(date).format("YYYY-MM-DD")
+                                            )
+                                        }
+                                        }
+                                placeholder={"Лет"}
+                                        allowClear={false}
+                                        suffixIcon={<div></div>}
+                                        picker="year"
+                            />
+
+
+                            <DatePicker
+                                locale={locale}
+                                name={"month"}
+                                value={
+                                    values.month
+                                        ? moment(values.month, "MMM")
+                                        : null
+                                }
+                                onChange={(date:any) => {
+                                    console.log(date)
+
+                                    setFieldValue("month", date)
+                                }
+                                }
+                                className={classes.monthPiker}
+                                placeholder={"Месяцев"}
+
+                                picker="month"
+                                  format="MMM"
+                                allowClear={false}
+                                suffixIcon={<div></div>}/>
+
+                    </div>
                 </div>
-                <FieldArray name="contact_employees">
+                <FieldArray name="employee_education">
                     {({ remove, push }) => {
                         return (<div>
-                                {values.contact_employees.length > 0 &&
-                                values.contact_employees?.map((employees, index) => {
-                                    const fieldDirection = `contact_employees[${index}].direction_id`;
-                                    const touchedFieldDirection = getIn(touched, fieldDirection);
-                                    const errorFieldDirection = getIn(errors, fieldDirection);
-                                    const fieldEmployee = `contact_employees[${index}].employee_id`;
-                                    const touchedFieldEmployee = getIn(touched, fieldEmployee);
-                                    const errorFieldEmployee = getIn(errors, fieldEmployee);
-                                    const fieldInfo = `contact_employees[${index}].info`;
-                                    const touchedFieldInfo = getIn(touched, fieldInfo);
-                                    const errorFieldInfo = getIn(errors, fieldInfo);
+                                {values.employee_education.length > 0 &&
+                                values.employee_education?.map((education:any, index:number) => {
+                                    const field_education_type = `employee_education[${index}].education_type_id`;
+                                    const touched_field_education_type = getIn(touched, field_education_type);
+                                    const error_field_education_type = getIn(errors, field_education_type);
+
+                                    const field_institution_name = `employee_education[${index}].educational_institution_name`;
+                                    const touched_field_institution_name = getIn(touched, field_institution_name);
+                                    const error_field_institution_name = getIn(errors, field_institution_name);
+
+                                    const field_education_document = `employee_education[${index}].education_document`;
+                                    const touched_field_education_document = getIn(touched, field_education_document);
+                                    const error_field_education_document = getIn(errors, field_education_document);
+
+                                    const field_speciality = `employee_education[${index}].speciality`;
+                                    const touched_field_speciality = getIn(touched, field_speciality);
+                                    const error_field_speciality = getIn(errors, field_speciality);
+
+                                    const field_end_date = `employee_education[${index}].end_date`;
+                                    const touched_field_end_date = getIn(touched, field_end_date);
+                                    const error_field_end_date = getIn(errors, field_end_date);
+
                                     return (
                 <div className={classes.row}>
                     <div style={{width:"100%"}}>
-                            <Divider variant="middle" style={{marginBottom: 24, marginTop: 24}}/>
+                            <Divider variant="middle" style={{marginTop:0,marginBottom: 16}}/>
                             <div style={{display:"flex", flexDirection:"row",}}>
                                 <div style={{width:"100%"}}>
                             <div className={classes.column}>
@@ -81,23 +145,23 @@ const EmployeeEducationForm:React.FC = () => {
                                     <ValidationErrorWrapper
                                         inputClassName="ant-select-selector"
                                         helperText={
-                                            touchedFieldDirection &&
-                                            errorFieldDirection
-                                                ? errorFieldDirection
+                                            touched_field_education_type &&
+                                            error_field_education_type
+                                                ? error_field_education_type
                                                 : ""
                                         }
                                         error={Boolean(
-                                            touchedFieldDirection &&
-                                            errorFieldDirection
+                                            touched_field_education_type &&
+                                            error_field_education_type
                                         )}
                                     >
                                         <InputFilterSelectedType
                                             // className={classes.input}
-                                            name={fieldDirection}
-                                            value={employees.direction_id}
+                                            name={field_education_type}
+                                            value={education.education_type_id}
                                             handleChange={(value: any) =>
                                                 setFieldValue(
-                                                    fieldDirection,
+                                                    field_education_type,
                                                     value
                                                 )
                                             }
@@ -117,19 +181,19 @@ const EmployeeEducationForm:React.FC = () => {
                                     <ValidationErrorWrapper
                                         inputClassName="ant-select-selector"
                                         helperText={
-                                            touchedFieldDirection &&
-                                            errorFieldDirection
-                                                ? errorFieldDirection
+                                            touched_field_institution_name &&
+                                            error_field_institution_name
+                                                ? error_field_institution_name
                                                 : ""
                                         }
                                         error={Boolean(
-                                            touchedFieldDirection &&
-                                            errorFieldDirection
+                                            touched_field_institution_name &&
+                                            error_field_institution_name
                                         )}
                                     >
                                     <Input
-                                        name={fieldDirection}
-                                        value={employees.direction_id}
+                                        name={field_institution_name}
+                                        value={education.educational_institution_name}
                                         onChange={handleChange}
                                         placeholder="Наименование учебного заведения" />
                                     </ValidationErrorWrapper>
@@ -141,21 +205,21 @@ const EmployeeEducationForm:React.FC = () => {
                                 </Typography>
                                 <Typography className={classes.typographyValue}>
                                     <ValidationErrorWrapper
-                                        inputClassName="ant-select-selector"
+                                        inputClassName="ant-input"
                                         helperText={
-                                            touchedFieldDirection &&
-                                            errorFieldDirection
-                                                ? errorFieldDirection
+                                            touched_field_education_document &&
+                                            error_field_education_document
+                                                ? error_field_education_document
                                                 : ""
                                         }
                                         error={Boolean(
-                                            touchedFieldDirection &&
-                                            errorFieldDirection
+                                            touched_field_education_document &&
+                                            error_field_education_document
                                         )}
                                     >
                                         <Input
-                                            name={fieldDirection}
-                                            value={employees.direction_id}
+                                            name={field_education_document}
+                                            value={education.education_document}
                                             onChange={handleChange}
                                             placeholder="Документ об образовании" />
                                     </ValidationErrorWrapper>
@@ -167,21 +231,21 @@ const EmployeeEducationForm:React.FC = () => {
                                 </Typography>
                                 <Typography className={classes.typographyValue}>
                                     <ValidationErrorWrapper
-                                        inputClassName="ant-select-selector"
+                                        inputClassName="ant-input"
                                         helperText={
-                                            touchedFieldDirection &&
-                                            errorFieldDirection
-                                                ? errorFieldDirection
+                                            touched_field_speciality &&
+                                            error_field_speciality
+                                                ? error_field_speciality
                                                 : ""
                                         }
                                         error={Boolean(
-                                            touchedFieldDirection &&
-                                            errorFieldDirection
+                                            touched_field_speciality &&
+                                            error_field_speciality
                                         )}
                                     >
                                         <Input
-                                            name={fieldDirection}
-                                            value={employees.direction_id}
+                                            name={field_speciality}
+                                            value={education.speciality}
                                             onChange={handleChange}
                                             placeholder="Специальность" />
                                     </ValidationErrorWrapper>
@@ -195,20 +259,21 @@ const EmployeeEducationForm:React.FC = () => {
                                     <ValidationErrorWrapper
                                         inputClassName="ant-picker"
                                         helperText={
-                                            touchedFieldDirection &&
-                                            errorFieldDirection
-                                                ? errorFieldDirection
+                                            touched_field_end_date &&
+                                            error_field_end_date
+                                                ? error_field_end_date
                                                 : ""
                                         }
                                         error={Boolean(
-                                            touchedFieldDirection &&
-                                            errorFieldDirection
+                                            touched_field_end_date &&
+                                            error_field_end_date
                                         )}
                                     >
                                         <InputFilterDatePicker
+                                            name={field_end_date}
                                             value={
-                                                employees.direction_id
-                                                    ? moment(employees.direction_id, "YYYY-MM-DD")
+                                                education.end_date
+                                                    ? moment(education.end_date, "YYYY-MM-DD")
                                                     : null
                                             }
                                             handleChange={(date: any) =>
@@ -234,12 +299,23 @@ const EmployeeEducationForm:React.FC = () => {
                 </div>
                                         )
                                     })}
+                                <div className={classes.column} style={{marginRight:42}}>
+                                    <div style={{width:"50%"}}></div>
+                                    <div style={{width:"50%"}}>
                                         <div
-                                             className={classes.addItem}
-                                            onClick={() => push({direction_id: '', employee_id: '', info: ''})}
+                                            className={classes.addItem}
+                                            onClick={() => push( {
+                                                education_type_id:null,
+                                                educational_institution_name:"",
+                                                education_document:"",
+                                                speciality:"",
+                                                end_date:""
+                                            })}
                                         >
                                             + Добавить ВУЗ
                                         </div>
+                                    </div>
+                                </div>
                                     </div>
                                 )}}
                         </FieldArray>

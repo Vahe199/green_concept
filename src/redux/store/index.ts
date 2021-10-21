@@ -10,11 +10,13 @@ import { counterpartiesServicesTypesListReducer } from "./reducer/conterparties/
 import { contractorBankDetailsReducer } from "./reducer/contractor/contractorBankDetailsReducer";
 import {counterpartiesContactPersonReducer} from "./reducer/conterparties/conterpartiesContactPersonReducer";
 import {employeesListReducer} from "./reducer/employees/employeesReducer";
+import {employeesAssetsReducer} from "./reducer/employees/employeesAssetsReducer";
 
 const reducer = combineReducers({
   counterparties: counterpartiesReducer,
   contractorBankDetails: contractorBankDetailsReducer,
   assets: counterpartiesAssetsListReducer,
+  assets_employees: employeesAssetsReducer,
   servicesTypes: counterpartiesServicesTypesListReducer,
   authorsList: counterpartiesAuthorsListReducer,
   author: counterpartiesAuthorDataReducer,

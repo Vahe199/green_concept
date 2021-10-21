@@ -12,40 +12,20 @@ import {useTypedSelector} from "../../../../../redux/type_redux_hook/useTypedSel
 import {useActions} from "../../../../../redux/type_redux_hook/useAction";
 import {notifyError, notifySuccess} from "../../../../Utils/utils_options/ToastNotify";
 import {ToastContainer} from "react-toastify";
+import {InputEmployeesAssetsOptions} from "../../../../Utils/utils_options/InputEmployeesAssetsOptions";
 
 
 type EmployeeFormDataProps = {
     setEmployeeGeneralInfo:(val:boolean)=>void
 }
 const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGeneralInfo}) => {
+  const { assetsOptionsCompanies, assetsOptionsRegions, assetsOptionsEmployeePositions} = InputEmployeesAssetsOptions()
     const {updateEmployeeGeneralListAC,recoveryEmployeesState} = useActions()
     const {employeeById, error,success_update} = useTypedSelector(state => state.employees)
     let {employee}:any = employeeById
-    let {region,company,directions,position,end_work_date ,start_work_date,experience_months,
-        experience_years,}:any = employee;
+    let {region,company,directions,position,end_work_date ,start_work_date}:any = employee;
 const id:number = 17
-    let regionOptions = [region, region, region].map(
-        (option: any) => ({
-            key: option.id,
-            value: option.id ? option.id : 0,
-            label: option.name,
-        })
-    );
 
-    let positionOptions = [position, position, position].map(
-        (option: any) => ({
-            key: option.id,
-            value: option.id ? option.id : 0,
-            label: option.name,
-        })
-    );
-    let companyOptions = [company, company, company].map(
-        (option: any) => ({
-            key: option.id,
-            value: option.id ? option.id : 0,
-            label: option.name,
-        })
-    );
 
     useEffect( ()=>{
         if(error){
@@ -135,7 +115,7 @@ const id:number = 17
                                             setFieldValue("region_id", value);
                                         }}
                                         value={values.region_id}
-                                         options={regionOptions}
+                                         options={assetsOptionsRegions}
                                         placeholder="Выберите"
                                     />
                                 </ValidationErrorWrapper>
@@ -173,7 +153,7 @@ const id:number = 17
                                             setFieldValue("green_legal_id", value);
                                         }}
                                         value={values.green_legal_id}
-                                         options={companyOptions}
+                                         options={assetsOptionsCompanies}
                                         placeholder="Выберите"
                                     />
                                 </ValidationErrorWrapper>
@@ -290,7 +270,7 @@ const id:number = 17
                                             setFieldValue("position_id", value);
                                         }}
                                         value={values.position_id}
-                                        options={positionOptions}
+                                        options={assetsOptionsEmployeePositions}
                                         placeholder="Выберите"
                                     />
                                 </ValidationErrorWrapper>

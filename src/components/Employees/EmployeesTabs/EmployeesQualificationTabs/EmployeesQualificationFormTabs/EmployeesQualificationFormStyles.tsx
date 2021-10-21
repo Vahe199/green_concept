@@ -85,5 +85,25 @@ export const useStylesEmployeeQualificationForm = makeStyles((theme: Theme) =>
         input: {
             width: "100% !important",
         },
+        yearPiker:{
+            width:52,
+            height:30,
+            marginRight:24,
+            paddingRight:0,
+            paddingLeft:4,
+            "& input": {
+                fontSize: "16px !important",
+                textAlign:"center"
+            }
+        },
+        monthPiker:{width:91,
+            height:30,
+            paddingRight:4,
+            paddingLeft:8,
+            "& input": {
+                fontSize: "16px !important",
+                textAlign:"center"
+            }
+        },
     })
 );

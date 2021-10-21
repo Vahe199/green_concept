@@ -28,6 +28,7 @@ import EmployeesQualification from "./EmployeesTabs/EmployeesQualification";
 import EmployeesDevelopment from "./EmployeesTabs/EmployeesDevelopment";
 import {useActions} from "../../redux/type_redux_hook/useAction";
 import Loader from "../Layout/Loader/Loader";
+import {getEmployeeAssetsAC} from "../../redux/store/action_creator/employees_action-creator/employees_assets_action_creator";
 
 // interface TabPanelProps {
 //   children?: React.ReactNode;
@@ -101,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Employees = (props: any) => {
-    const {fetchEmployeeByIdtAC} = useActions()
+    const {fetchEmployeeByIdtAC,getEmployeeAssetsAC} = useActions()
     const {loading} = useTypedSelector(state => state.employees)
     let history = useHistory();
     const classes = useStyles();
@@ -113,6 +114,7 @@ const Employees = (props: any) => {
     };
 useEffect(()=>{
     fetchEmployeeByIdtAC(17)
+    getEmployeeAssetsAC()
 },[])
     return (
         <div className={classes.container}>

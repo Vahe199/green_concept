@@ -7,6 +7,7 @@ import * as ChangeAuthorGeneralDataAC from "./contractors_action_creatot/ChangeA
 import * as AuthorCompanyDetailsData from "./contractors_action_creatot/ChangeAuthorCompanyDetailsDataAC";
 import * as AuthorContactInfoData from "./contractors_action_creatot/ChangeAuthorContactInfoDataAC";
 import * as AssetsListDataAC from "./contractors_action_creatot/AssetsListAC";
+import * as AssetsEmployeesListDataAC from "./employees_action-creator/employees_assets_action_creator";
 import * as RecoveryAuthorDataAC from "./contractors_action_creatot/recoveryAuthorDataState";
 import * as ContractorBankDetailsDataAC from "./contractors_action_creatot/ContractorBankDetailsDataAC";
 import * as ContractorGeneraDataAC from "./contractors_action_creatot/ContractorGeneralDataAC";
@@ -29,5 +30,6 @@ export default {
   ...ContractorGeneraDataAC,
   ...ContractorContactAC,
   ...EmployeesListAC,
-  ...EmployeesListUpdateAC
+  ...EmployeesListUpdateAC,
+  ...AssetsEmployeesListDataAC
 };

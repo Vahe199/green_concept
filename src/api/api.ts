@@ -166,7 +166,7 @@ export const employeesApi = {
     return axios.request({ method: "put", url: `employees/employee_data/${id}`, data, headers: {"Content-Type": "multipart/form-data"} })
        },
   updateEmployeeGeneralInfoById(data:any, id:number) {
-    return axios.request({ method: "put", url: `employees/general_info/${id}`, data });
+    return axios.request({ method: "put", url: `employees/general_info/${id}`, data })
   },
   updateEmployeeAboutInfoById(data:any, id:number) {
     return axios.request({ method: "put", url: `employees/about_info/${id}`, data })},

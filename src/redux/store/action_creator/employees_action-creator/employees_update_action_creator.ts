@@ -26,12 +26,13 @@ debugger
     }
 }
 export const updateEmployeeGeneralListAC = (formData:any ,id:number) => async (dispatch: Dispatch<EmployeeListAction>) => {
-
+debugger
     try {
         dispatch({type:EmployeeListActionType.UPDATE_EMPLOYEES_LIST})
         const {data} = await employeesApi.updateEmployeeGeneralInfoById(formData,id)
         dispatch({type:EmployeeListActionType.UPDATE_EMPLOYEES_GENERAL_INFO, payload:data})
-    }catch (e) {
+    }catch (e:any) {
+        console.log(e.response)
         dispatch({type:EmployeeListActionType.UPDATE_EMPLOYEES_LIST_ERROR,payload:"что-то пошло не так"})
     }
 }

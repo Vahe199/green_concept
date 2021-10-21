@@ -11,7 +11,7 @@ type GeneralInfoProps = {
 
 const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralInfo}) => {
     const classes = useStylesEmployee();
-    const {loading,employeeById} = useTypedSelector(state => state.employees)
+    const {employeeById} = useTypedSelector(state => state.employees)
     let {employee}:any = employeeById
     let {status,region,company,directions,position,end_work_date ,start_work_date,experience_months,
         experience_years,}:any = employee;
@@ -87,7 +87,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Дата приема на работу:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                {start_work_date}
+                                {start_work_date.replaceAll("-",".")}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -95,7 +95,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Дата увольнения:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                {end_work_date}
+                                {end_work_date.replaceAll("-",".")}
                             </Typography>
                         </div>
                         <div className={classes.column}>

@@ -1,50 +1,93 @@
-import React from "react";
-import {Button, Paper, TextField, Typography} from "@material-ui/core";
-import {Formik} from 'formik';
+import React, {useEffect} from "react";
+import {Button, Paper, Typography} from "@material-ui/core";
+import {FieldArray, Formik,Form, getIn} from 'formik';
 
 import {useStylesEmployeeForm} from "./EmployeesFormStyles";
 import ValidationErrorWrapper from "../../../../Utils/utils_options/ValidationErrorWrapper";
 import InputFilterDatePicker from "../../../../Utils/FilterInputs/InputFilterDatePicker";
 import moment from "moment";
-
-const initialValues = {
-    region_id:null,
-    green_legal_id:null,
-    position_id:null,
-    start_work_date:"",
-    end_work_date:"",
-    directions:[null],
+import InputFilterSelectedType from "../../../../Utils/FilterInputs/InputFilterSelect";
+import {InputAssetsOptions} from "../../../../Utils/utils_options/InputAssetsOptions";
+import {useTypedSelector} from "../../../../../redux/type_redux_hook/useTypedSelector";
+import {useActions} from "../../../../../redux/type_redux_hook/useAction";
+import {notifyError, notifySuccess} from "../../../../Utils/utils_options/ToastNotify";
+import {ToastContainer} from "react-toastify";
 
 
-    region:'',
-    empl_company:'',
-    direction:'',
-    position:'',
-    employment_date:'',
-    dismissal_date:'',
-};
 type EmployeeFormDataProps = {
     setEmployeeGeneralInfo:(val:boolean)=>void
 }
 const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGeneralInfo}) => {
+    const {updateEmployeeGeneralListAC,recoveryEmployeesState} = useActions()
+    const {employeeById, error,success_update} = useTypedSelector(state => state.employees)
+    let {employee}:any = employeeById
+    let {region,company,directions,position,end_work_date ,start_work_date,experience_months,
+        experience_years,}:any = employee;
+const id:number = 17
+    let regionOptions = [region, region, region].map(
+        (option: any) => ({
+            key: option.id,
+            value: option.id ? option.id : 0,
+            label: option.name,
+        })
+    );
+
+    let positionOptions = [position, position, position].map(
+        (option: any) => ({
+            key: option.id,
+            value: option.id ? option.id : 0,
+            label: option.name,
+        })
+    );
+    let companyOptions = [company, company, company].map(
+        (option: any) => ({
+            key: option.id,
+            value: option.id ? option.id : 0,
+            label: option.name,
+        })
+    );
+
+    useEffect( ()=>{
+        if(error){
+            notifyError();
+            recoveryEmployeesState()
+        }
+        if(success_update === "ABOUT_INFO"){
+            notifySuccess();
+            recoveryEmployeesState()
+            setEmployeeGeneralInfo(true)
+
+        }
+    },[error,success_update])
+    const initialValues = {
+        region_id:region ? region.id :null,
+        green_legal_id:company ? company.id : null,
+        position_id:position ? position.id :null,
+        start_work_date:start_work_date ? start_work_date : "",
+        end_work_date:end_work_date? end_work_date : "",
+        directions:[directions ? directions[0].id :null],
+    };
+
+    const {assetsOptionsDirections} = InputAssetsOptions()
     const classes = useStylesEmployeeForm();
     return(
         <div className={classes.root}>
+            <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
             <Formik
                 initialValues={initialValues}
                 onSubmit={async (values) => {
-                    await new Promise((r) => setTimeout(r, 500));
-                    alert(JSON.stringify(values, null, 2));
+
+                    updateEmployeeGeneralListAC(values,id)
                 }}
             >
                 {({ values, setFieldValue,touched,handleChange,errors }) => (
-                    <div>
+                    <Form>
             <div className={classes.title} >
                 <Typography  className={classes.typographyTitle}>
                     Общие сведения
                 </Typography>
                 <Button color="primary" type="submit"
-                        onClick={()=>setEmployeeGeneralInfo(true)}
+                        // onClick={()=>console.log(values,"values")}
                         className={classes.saveButton}>
                     Сохранить
                 </Button>
@@ -65,16 +108,37 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
                                 Регион:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                <TextField
-                                    fullWidth
-                                    placeholder={"Выберите"}
-                                    variant={"outlined"}
-                                    name="region"
-                                    value={values.region}
-                                    onChange={handleChange}
-                                    error={touched.region && Boolean(errors.region)}
-                                    helperText={touched.region && errors.region}
-                                />
+                                {/*<TextField*/}
+                                {/*    fullWidth*/}
+                                {/*    placeholder={"Выберите"}*/}
+                                {/*    variant={"outlined"}*/}
+                                {/*    name="region_id"*/}
+                                {/*    value={values.region_id}*/}
+                                {/*    onChange={handleChange}*/}
+                                {/*    error={touched.region_id && Boolean(errors.region_id)}*/}
+                                {/*    helperText={touched.region_id && errors.region_id}*/}
+                                {/*/>*/}
+                                <ValidationErrorWrapper
+                                    inputClassName="ant-select-selector"
+                                    error={
+                                        touched.region_id &&
+                                        Boolean(errors.region_id)
+                                    }
+                                    helperText={
+                                        touched.region_id &&
+                                        errors.region_id
+                                    }
+                                >
+                                    <InputFilterSelectedType
+                                        name="region_id"
+                                        handleChange={(value: any) => {
+                                            setFieldValue("region_id", value);
+                                        }}
+                                        value={values.region_id}
+                                         options={regionOptions}
+                                        placeholder="Выберите"
+                                    />
+                                </ValidationErrorWrapper>
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -82,16 +146,37 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
                                 Компания трудоустройства
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                <TextField
-                                    fullWidth
-                                    placeholder={"Выберите"}
-                                    variant={"outlined"}
-                                    name="empl_company"
-                                    value={values.empl_company}
-                                    onChange={handleChange}
-                                    error={touched.empl_company && Boolean(errors.empl_company)}
-                                    helperText={touched.empl_company && errors.empl_company}
-                                />
+                                {/*<TextField*/}
+                                {/*    fullWidth*/}
+                                {/*    placeholder={"Выберите"}*/}
+                                {/*    variant={"outlined"}*/}
+                                {/*    name="empl_company"*/}
+                                {/*    value={values.empl_company}*/}
+                                {/*    onChange={handleChange}*/}
+                                {/*    error={touched.empl_company && Boolean(errors.empl_company)}*/}
+                                {/*    helperText={touched.empl_company && errors.empl_company}*/}
+                                {/*/>*/}
+                                <ValidationErrorWrapper
+                                    inputClassName="ant-select-selector"
+                                    error={
+                                        touched.green_legal_id &&
+                                        Boolean(errors.green_legal_id)
+                                    }
+                                    helperText={
+                                        touched.green_legal_id &&
+                                        errors.green_legal_id
+                                    }
+                                >
+                                    <InputFilterSelectedType
+                                        name="green_legal_id"
+                                        handleChange={(value: any) => {
+                                            setFieldValue("green_legal_id", value);
+                                        }}
+                                        value={values.green_legal_id}
+                                         options={companyOptions}
+                                        placeholder="Выберите"
+                                    />
+                                </ValidationErrorWrapper>
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -99,16 +184,70 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
                                 Направление:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                <TextField
-                                    fullWidth
-                                    placeholder={"Выберите"}
-                                    variant={"outlined"}
-                                    name="direction"
-                                    value={values.direction}
-                                    onChange={handleChange}
-                                    error={touched.direction && Boolean(errors.direction)}
-                                    helperText={touched.direction && errors.direction}
-                                />
+                                {/*<TextField*/}
+                                {/*    fullWidth*/}
+                                {/*    placeholder={"Выберите"}*/}
+                                {/*    variant={"outlined"}*/}
+                                {/*    name="direction"*/}
+                                {/*    value={values.direction}*/}
+                                {/*    onChange={handleChange}*/}
+                                {/*    error={touched.direction && Boolean(errors.direction)}*/}
+                                {/*    helperText={touched.direction && errors.direction}*/}
+                                {/*/>*/}
+                                <FieldArray name="directions">
+                                    {() => {
+                                        return (
+                                            <div>
+                                                {
+                                                    values.directions?.map((direction, index) => {
+                                                        const fieldName = `directions[${index}]`;
+                                                        const touchedFieldName = getIn(
+                                                            touched,
+                                                            fieldName
+                                                        );
+                                                        const errorFieldName = getIn(
+                                                            errors,
+                                                            fieldName
+                                                        );
+                                                        return (
+                                                            <ValidationErrorWrapper
+                                                                inputClassName="ant-select-selector"
+                                                                helperText={
+                                                                    touchedFieldName &&
+                                                                    errorFieldName
+                                                                        ? errorFieldName
+                                                                        : ""
+                                                                }
+                                                                error={Boolean(
+                                                                    touchedFieldName &&
+                                                                    errorFieldName
+                                                                )}
+                                                            >
+                                                                <InputFilterSelectedType
+                                                                    // className={classes.input}
+                                                                    name={fieldName}
+                                                                    value={direction}
+                                                                    handleChange={(
+                                                                        value: any
+                                                                    ) =>
+                                                                        setFieldValue(
+                                                                            fieldName,
+                                                                            value
+                                                                        )
+                                                                    }
+                                                                    options={
+                                                                        assetsOptionsDirections
+                                                                    }
+                                                                    placeholder="Выберите"
+                                                                />
+                                                            </ValidationErrorWrapper>
+                                                        );
+                                                    })}
+
+                                            </div>
+                                        );
+                                    }}
+                                </FieldArray>
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -124,16 +263,37 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
                                 Должность:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                <TextField
-                                    fullWidth
-                                    placeholder={"Выберите"}
-                                    variant={"outlined"}
-                                    name={"position"}
-                                    value={values.position}
-                                    onChange={handleChange}
-                                    error={touched.position && Boolean(errors.position)}
-                                    helperText={touched.position && errors.position}
-                                />
+                                {/*<TextField*/}
+                                {/*    fullWidth*/}
+                                {/*    placeholder={"Выберите"}*/}
+                                {/*    variant={"outlined"}*/}
+                                {/*    name={"position_id"}*/}
+                                {/*    value={values.position_id}*/}
+                                {/*    onChange={handleChange}*/}
+                                {/*    error={touched.position_id && Boolean(errors.position_id)}*/}
+                                {/*    helperText={touched.position_id && errors.position_id}*/}
+                                {/*/>*/}
+                                <ValidationErrorWrapper
+                                    inputClassName="ant-select-selector"
+                                    error={
+                                        touched.position_id &&
+                                        Boolean(errors.position_id)
+                                    }
+                                    helperText={
+                                        touched.position_id &&
+                                        errors.position_id
+                                    }
+                                >
+                                    <InputFilterSelectedType
+                                        name="position_id"
+                                        handleChange={(value: any) => {
+                                            setFieldValue("position_id", value);
+                                        }}
+                                        value={values.position_id}
+                                        options={positionOptions}
+                                        placeholder="Выберите"
+                                    />
+                                </ValidationErrorWrapper>
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -200,7 +360,7 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
                     </div>
                 </div>
             </Paper>
-                    </div>
+                    </Form>
                     )}
             </Formik>
         </div>

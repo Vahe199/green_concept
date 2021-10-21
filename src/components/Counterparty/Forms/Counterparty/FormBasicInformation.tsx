@@ -13,6 +13,7 @@ import {validationSchemaBasicInformation} from "./BasicInformationFormValidation
 import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
 import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
 import {counterpartiesApi} from "../../../../api/api";
+import {Input} from "antd";
 
 type InfoProps = {
   // change: boolean;
@@ -27,6 +28,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
   const [contractorId, setContractorId] = React.useState(1);
   const { AuthorData } = useTypedSelector((state) => state.author);
   const { id }: any = AuthorData;
+    const { TextArea } = Input;
 
   const {assetsOptionsRoles,assetsOptionsCounterpartyType,assetsOptionsBranches} = InputAssetsOptions();
 
@@ -130,39 +132,81 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Фамилия:</span>
-            <TextField
-                variant={"outlined"}
-                name="surname"
-                placeholder={"Фамилия"}
-                value={values.surname}
-                onChange={handleChange}
-                error={touched.surname && Boolean(errors.surname)}
-                helperText={touched.surname && errors.surname}
-            />
+              <div style={{width:"60%"}}>
+                  <ValidationErrorWrapper
+                      inputClassName="ant-input"
+                          error={touched.surname && Boolean(errors.surname)}
+                          helperText={touched.surname && errors.surname}
+                  >
+                      <Input
+                          name="surname"
+                          value={values.surname}
+                          onChange={handleChange}
+                          autoComplete={'off'}
+                          placeholder={"Фамилия"} />
+                  </ValidationErrorWrapper>
+              </div>
+            {/*<TextField*/}
+            {/*    variant={"outlined"}*/}
+            {/*    name="surname"*/}
+            {/*    placeholder={"Фамилия"}*/}
+            {/*    value={values.surname}*/}
+            {/*    onChange={handleChange}*/}
+            {/*    error={touched.surname && Boolean(errors.surname)}*/}
+            {/*    helperText={touched.surname && errors.surname}*/}
+            {/*/>*/}
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Имя</span>
-            <TextField
-                variant={"outlined"}
-                name="firstname"
-                placeholder={"Имя"}
-                value={values.firstname}
-                onChange={handleChange}
-                error={touched.firstname && Boolean(errors.firstname)}
-                helperText={touched.firstname && errors.firstname}
-            />
+              <div style={{width:"60%"}}>
+                  <ValidationErrorWrapper
+                      inputClassName="ant-input"
+                      error={touched.firstname && Boolean(errors.firstname)}
+                      helperText={touched.firstname && errors.firstname}
+                  >
+                      <Input
+                          name="firstname"
+                          value={values.firstname}
+                          onChange={handleChange}
+                          autoComplete={'off'}
+                          placeholder={"Имя"} />
+                  </ValidationErrorWrapper>
+              </div>
+            {/*<TextField*/}
+            {/*    variant={"outlined"}*/}
+            {/*    name="firstname"*/}
+            {/*    placeholder={"Имя"}*/}
+            {/*    value={values.firstname}*/}
+            {/*    onChange={handleChange}*/}
+            {/*    error={touched.firstname && Boolean(errors.firstname)}*/}
+            {/*    helperText={touched.firstname && errors.firstname}*/}
+            {/*/>*/}
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Отчество</span>
-            <TextField
-                variant={"outlined"}
-                name="middlename"
-                placeholder={"Отчество"}
-                value={values.middlename}
-                onChange={handleChange}
-                error={touched.middlename && Boolean(errors.middlename)}
-                helperText={touched.middlename && errors.middlename }
-            />
+              <div style={{width:"60%"}}>
+                  <ValidationErrorWrapper
+                      inputClassName="ant-input"
+                      error={touched.middlename && Boolean(errors.middlename)}
+                      helperText={touched.middlename && errors.middlename}
+                  >
+                      <Input
+                          name="middlename"
+                          value={values.middlename}
+                          onChange={handleChange}
+                          autoComplete={'off'}
+                          placeholder={"Отчество"} />
+                  </ValidationErrorWrapper>
+              </div>
+            {/*<TextField*/}
+            {/*    variant={"outlined"}*/}
+            {/*    name="middlename"*/}
+            {/*    placeholder={"Отчество"}*/}
+            {/*    value={values.middlename}*/}
+            {/*    onChange={handleChange}*/}
+            {/*    error={touched.middlename && Boolean(errors.middlename)}*/}
+            {/*    helperText={touched.middlename && errors.middlename }*/}
+            {/*/>*/}
           </div>
           <div className={classes.label}>
             <span className={classes.spanTitle}>Пол</span>
@@ -263,21 +307,42 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                 const errorFieldName = getIn(errors, fieldName);
 
                 return(
-                    <TextField
-                        variant={"outlined"}
-                        name={fieldName}
-                        placeholder={"Должность"}
-                        value={values.contact_contractors.position}
-                        onChange={handleChange}
-                        error={Boolean(
-                            touchedFieldName && errorFieldName
-                        )}
-                        helperText={
-                          touchedFieldName && errorFieldName
-                              ? errorFieldName
-                              : ""
-                        }
-                    />)}}
+                    // <TextField
+                    //     variant={"outlined"}
+                    //     name={fieldName}
+                    //     placeholder={"Должность"}
+                    //     value={values.contact_contractors.position}
+                    //     onChange={handleChange}
+                    //     error={Boolean(
+                    //         touchedFieldName && errorFieldName
+                    //     )}
+                    //     helperText={
+                    //       touchedFieldName && errorFieldName
+                    //           ? errorFieldName
+                    //           : ""
+                    //     }
+                    // />
+                    <div style={{width:"60%"}}>
+                        <ValidationErrorWrapper
+                            inputClassName="ant-input"
+                            error={Boolean(
+                                touchedFieldName && errorFieldName
+                            )}
+                            helperText={
+                                touchedFieldName && errorFieldName
+                                    ? errorFieldName
+                                    : ""
+                            }
+                        >
+                            <Input
+                                name={fieldName}
+                                value={values.contact_contractors.position}
+                                onChange={handleChange}
+                                autoComplete={'off'}
+                                placeholder={"Должность"} />
+                        </ValidationErrorWrapper>
+                    </div>
+                )}}
             </FieldArray>
           </div>
           <div className={classes.label}>
@@ -381,17 +446,32 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                                                   return (phone.phone_type == 'Рабочий' &&
                                                       <div key={index}
                                                            style={{display: "flex", flexDirection: "row"}}>
-                                                        <TextField
-                                                            fullWidth
-                                                            style={{width: "100%", marginBottom: 16}}
-                                                            placeholder={"+79999999999"}
-                                                            variant={"outlined"}
-                                                            name={fieldName}
-                                                            value={phone.phone}
-                                                            onChange={handleChange}
-                                                            error={Boolean(touchedFieldName && errorFieldName)}
-                                                            helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
-                                                        />
+                                                          <div style={{width:"100%", marginBottom: 16}}>
+                                                              <ValidationErrorWrapper
+                                                                  inputClassName="ant-input"
+                                                                  error={Boolean(touchedFieldName && errorFieldName)}
+                                                                  helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                              >
+                                                                  <Input
+                                                                      name={fieldName}
+                                                                      style={{width: "100%"}}
+                                                                      value={phone.phone}
+                                                                      onChange={handleChange}
+                                                                      autoComplete={'off'}
+                                                                      placeholder={"+79999999999"} />
+                                                              </ValidationErrorWrapper>
+                                                          </div>
+                                                        {/*<TextField*/}
+                                                        {/*    fullWidth*/}
+                                                        {/*    style={{width: "100%", marginBottom: 16}}*/}
+                                                        {/*    placeholder={"+79999999999"}*/}
+                                                        {/*    variant={"outlined"}*/}
+                                                        {/*    name={fieldName}*/}
+                                                        {/*    value={phone.phone}*/}
+                                                        {/*    onChange={handleChange}*/}
+                                                        {/*    error={Boolean(touchedFieldName && errorFieldName)}*/}
+                                                        {/*    helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}*/}
+                                                        {/*/>*/}
                                                          <div style={{marginLeft: 16}}
                                                               onClick={() => remove(index)}>
                                                           <TrashIcon/>
@@ -433,17 +513,32 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                                                   const errorFieldName = getIn(errors, fieldName);
                                                   return( phone.phone_type == 'Мобильный' &&
                                                       <div key={index} style={{display:"flex",flexDirection:"row"}}>
-                                                        <TextField
-                                                            fullWidth
-                                                            style={{ width: "100%", marginBottom:16}}
-                                                            placeholder={"+79999999999"}
-                                                            variant={"outlined"}
-                                                            name={fieldName}
-                                                            value={phone.phone}
-                                                            onChange={handleChange}
-                                                            error={Boolean(touchedFieldName && errorFieldName)}
-                                                            helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
-                                                        />
+                                                          <div style={{width:"100%", marginBottom: 16}}>
+                                                              <ValidationErrorWrapper
+                                                                  inputClassName="ant-input"
+                                                                  error={Boolean(touchedFieldName && errorFieldName)}
+                                                                  helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                              >
+                                                                  <Input
+                                                                      name={fieldName}
+                                                                      style={{width: "100%"}}
+                                                                      value={phone.phone}
+                                                                      onChange={handleChange}
+                                                                      autoComplete={'off'}
+                                                                      placeholder={"+79999999999"} />
+                                                              </ValidationErrorWrapper>
+                                                          </div>
+                                                        {/*<TextField*/}
+                                                        {/*    fullWidth*/}
+                                                        {/*    style={{ width: "100%", marginBottom:16}}*/}
+                                                        {/*    placeholder={"+79999999999"}*/}
+                                                        {/*    variant={"outlined"}*/}
+                                                        {/*    name={fieldName}*/}
+                                                        {/*    value={phone.phone}*/}
+                                                        {/*    onChange={handleChange}*/}
+                                                        {/*    error={Boolean(touchedFieldName && errorFieldName)}*/}
+                                                        {/*    helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}*/}
+                                                        {/*/>*/}
                                                        <div style={{marginLeft: 16}}
                                                                            onClick={() => remove(index)}>
                                                           <TrashIcon/>
@@ -484,18 +579,34 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                                                 const errorFieldName = getIn(errors, fieldName);
                                                 return(
                                                     <div key={index} style={{display:"flex",flexDirection:"row"}}>
-                                                      <TextField
-                                                          fullWidth
-                                                          style={{ width: "90%", marginBottom:16}}
-                                                          placeholder={`email${index + 1}@email.com`}
-                                                          variant={"outlined"}
-                                                          name={fieldName}
-                                                          type="email"
-                                                          value={email.email}
-                                                          onChange={handleChange}
-                                                          error={Boolean(touchedFieldName && errorFieldName)}
-                                                          helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
-                                                      />
+                                                        <div style={{width:"100%", marginBottom: 16}}>
+                                                            <ValidationErrorWrapper
+                                                                inputClassName="ant-input"
+                                                                error={Boolean(touchedFieldName && errorFieldName)}
+                                                                helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                            >
+                                                                <Input
+                                                                    name={fieldName}
+                                                                    style={{width: "100%"}}
+                                                                    value={email.email}
+                                                                    onChange={handleChange}
+                                                                    type="email"
+                                                                    autoComplete={'off'}
+                                                                    placeholder={`email${index + 1}@email.com`} />
+                                                            </ValidationErrorWrapper>
+                                                        </div>
+                                                      {/*<TextField*/}
+                                                      {/*    fullWidth*/}
+                                                      {/*    style={{ width: "90%", marginBottom:16}}*/}
+                                                      {/*    placeholder={`email${index + 1}@email.com`}*/}
+                                                      {/*    variant={"outlined"}*/}
+                                                      {/*    name={fieldName}*/}
+                                                      {/*    type="email"*/}
+                                                      {/*    value={email.email}*/}
+                                                      {/*    onChange={handleChange}*/}
+                                                      {/*    error={Boolean(touchedFieldName && errorFieldName)}*/}
+                                                      {/*    helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}*/}
+                                                      {/*/>*/}
                                                       <div style={{marginLeft:16}}
                                                            onClick={() => remove(index)}>
                                                         <TrashIcon />
@@ -515,21 +626,33 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
               </div>
             </span>
           </div>
-          <div className={classes.label}>
+          <div className={classes.label2}>
             <span className={classes.spanTitle}>Адрес доставки</span>
 
-            <TextField
-                variant={"outlined"}
-                className={classes.textArea}
-                multiline
-                rows={3}
-                name="delivery_address"
-                placeholder={"Адрес доставки адрес вторая линия"}
-                value={values.delivery_address}
-                onChange={handleChange}
-                error={touched.delivery_address && Boolean(errors.delivery_address)}
-                helperText={touched.delivery_address && errors.delivery_address}
-            />
+              <div style={{width:"60%"}}>
+                  <ValidationErrorWrapper
+                      inputClassName="ant-input"
+                      error={
+                          touched.delivery_address &&
+                          Boolean(errors.delivery_address)
+                      }
+                      helperText={
+                          touched.delivery_address && errors.delivery_address
+                      }
+                  >
+                      <TextArea
+                          name="delivery_address"
+                          value={values.delivery_address}
+                          onChange={handleChange}
+                          style={{height: '80px'}}
+                          //multiline
+                          //rows={2}
+                          autoSize={false}
+                          //className={classes.textAreaCN}
+                          autoComplete={'off'}
+                          placeholder={'Адрес доставки адрес вторая линия'} />
+                  </ValidationErrorWrapper>
+              </div>
           </div>
         </Paper>
             </Form>

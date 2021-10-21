@@ -12,6 +12,7 @@ import { validationSchemaGeneralInfo } from "./GeneralInformationValidationSchem
 import { useStylesGeneralInformation } from "./GeneralInformationStyles";
 import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
 import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
+import {Input} from "antd";
 
 type Props = {
   // change: boolean;
@@ -291,41 +292,83 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
               </div>
               <div className={classes.label}>
                 <span style={{width: "40%"}}>ИНН</span>
-                <TextField style={{width: "60%"}}
-                  variant={"outlined"}
-                  name="inn"
-                  placeholder={"1234556789101112"}
-                  value={values.inn}
-                  onChange={handleChange}
-                  error={touched.inn && Boolean(errors.inn)}
-                  helperText={touched.inn && errors.inn}
-                />
+                <div style={{width:"60%"}}>
+                  <ValidationErrorWrapper
+                      inputClassName="ant-input"
+                      error={touched.inn && Boolean(errors.inn)}
+                      helperText={touched.inn && errors.inn}
+                  >
+                    <Input
+                        name="inn"
+                        value={values.inn}
+                        onChange={handleChange}
+                        autoComplete={'off'}
+                        placeholder={"1234556789101112"} />
+                  </ValidationErrorWrapper>
+                </div>
+                {/*<TextField style={{width: "60%"}}*/}
+                {/*  variant={"outlined"}*/}
+                {/*  name="inn"*/}
+                {/*  placeholder={"1234556789101112"}*/}
+                {/*  value={values.inn}*/}
+                {/*  onChange={handleChange}*/}
+                {/*  error={touched.inn && Boolean(errors.inn)}*/}
+                {/*  helperText={touched.inn && errors.inn}*/}
+                {/*/>*/}
               </div>
               {values.org_type === "ЮЛ" && (
                 <div className={classes.label}>
                   <span style={{width: "40%"}}>КПП</span>
-                  <TextField style={{width: "60%"}}
-                    variant={"outlined"}
-                    name="kpp"
-                    placeholder={"1234556789101112"}
-                    value={values.kpp}
-                    onChange={handleChange}
-                    error={touched.kpp && Boolean(errors.kpp)}
-                    helperText={touched.kpp && errors.kpp}
-                  />
+                  <div style={{width:"60%"}}>
+                    <ValidationErrorWrapper
+                        inputClassName="ant-input"
+                        error={touched.kpp && Boolean(errors.kpp)}
+                        helperText={touched.kpp && errors.kpp}
+                    >
+                      <Input
+                          name="kpp"
+                          value={values.kpp}
+                          onChange={handleChange}
+                          autoComplete={'off'}
+                          placeholder={"1234556789101112"} />
+                    </ValidationErrorWrapper>
+                  </div>
+                  {/*<TextField style={{width: "60%"}}*/}
+                  {/*  variant={"outlined"}*/}
+                  {/*  name="kpp"*/}
+                  {/*  placeholder={"1234556789101112"}*/}
+                  {/*  value={values.kpp}*/}
+                  {/*  onChange={handleChange}*/}
+                  {/*  error={touched.kpp && Boolean(errors.kpp)}*/}
+                  {/*  helperText={touched.kpp && errors.kpp}*/}
+                  {/*/>*/}
                 </div>
               )}
               <div className={classes.label}>
                 <span style={{width: "40%"}}>{values.org_type === "ФЛ" ? "ОГРНИП" : "ОГРН"}</span>
-                <TextField style={{width: "60%"}}
-                  variant={"outlined"}
-                  name="ogrn"
-                  placeholder={"1234556789101112"}
-                  value={values.ogrn}
-                  onChange={handleChange}
-                  error={touched.ogrn && Boolean(errors.ogrn)}
-                  helperText={touched.ogrn && errors.ogrn}
-                />
+                <div style={{width:"60%"}}>
+                  <ValidationErrorWrapper
+                      inputClassName="ant-input"
+                      error={touched.ogrn && Boolean(errors.ogrn)}
+                      helperText={touched.ogrn && errors.ogrn}
+                  >
+                    <Input
+                        name="ogrn"
+                        value={values.ogrn}
+                        onChange={handleChange}
+                        autoComplete={'off'}
+                        placeholder={"1234556789101112"} />
+                  </ValidationErrorWrapper>
+                </div>
+                {/*<TextField style={{width: "60%"}}*/}
+                {/*  variant={"outlined"}*/}
+                {/*  name="ogrn"*/}
+                {/*  placeholder={"1234556789101112"}*/}
+                {/*  value={values.ogrn}*/}
+                {/*  onChange={handleChange}*/}
+                {/*  error={touched.ogrn && Boolean(errors.ogrn)}*/}
+                {/*  helperText={touched.ogrn && errors.ogrn}*/}
+                {/*/>*/}
               </div>
               <div  className={clsx(classes.label, classes.NDASection)}>
                 <span style={{ width: "37%" }}>NDA</span>

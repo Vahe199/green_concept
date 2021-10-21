@@ -10,6 +10,7 @@ import {useStylesCompanyDetails} from "./GeneralInformationStyles";
 import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
 import {MagnifyingGlass} from "../../../../IMG/SVG/MagnifyingGlass";
 import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
+import {Input} from "antd";
 
 type Props = {
   // change: boolean;
@@ -35,6 +36,8 @@ export const FormCompanyDetails: React.FC<Props> = ({
   const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
       []
   );
+
+  const { TextArea } = Input;
   const [group, setGroup] = useState("");
   const companyGroupFilter =
       group.length === 0 || group.length > 3
@@ -106,33 +109,65 @@ export const FormCompanyDetails: React.FC<Props> = ({
           {errorMsg === "CompanyDetails" && (
             <div style={{ color: "red" }}>{error}</div>
           )}
-          <div className={classes.label}>
+          <div className={classes.label2}>
             <span>Полное наименование компании</span>
-
-            <TextField
-              variant={"outlined"}
-              className={classes.textArea}
-              multiline
-              rows={3}
-              name="full_name"
-              placeholder={'ООО "Северо-Западная концессионная компания”'}
-              value={values.full_name}
-              onChange={handleChange}
-              error={touched.full_name && Boolean(errors.full_name)}
-              helperText={touched.full_name && errors.full_name}
-            />
+            <div style={{width:"85%"}}>
+              <ValidationErrorWrapper
+                  inputClassName="ant-input"
+                  error={touched.full_name && Boolean(errors.full_name)}
+                  helperText={touched.full_name && errors.full_name}
+              >
+                <TextArea
+                    name="full_name"
+                    value={values.full_name}
+                    onChange={handleChange}
+                    style={{height: '80px'}}
+                    //multiline
+                    //rows={2}
+                    autoSize={false}
+                    //className={classes.textAreaCN}
+                    autoComplete={'off'}
+                    placeholder={'ООО "Северо-Западная компания”'} />
+              </ValidationErrorWrapper>
+            </div>
+            {/*<TextField*/}
+            {/*  variant={"outlined"}*/}
+            {/*  className={classes.textArea}*/}
+            {/*  multiline*/}
+            {/*  rows={3}*/}
+            {/*  name="full_name"*/}
+            {/*  placeholder={'ООО "Северо-Западная концессионная компания”'}*/}
+            {/*  value={values.full_name}*/}
+            {/*  onChange={handleChange}*/}
+            {/*  error={touched.full_name && Boolean(errors.full_name)}*/}
+            {/*  helperText={touched.full_name && errors.full_name}*/}
+            {/*/>*/}
           </div>
           <div className={classes.label}>
-            <span>Краткое наименование компании</span>
-            <TextField
-              variant={"outlined"}
-              name="short_name"
-              placeholder={"Краткое наименование компании"}
-              value={values.short_name}
-              onChange={handleChange}
-              error={touched.short_name && Boolean(errors.short_name)}
-              helperText={touched.short_name && errors.short_name}
-            />
+            <span >Краткое наименование компании</span>
+            <div style={{width:"85%"}}>
+              <ValidationErrorWrapper
+                  inputClassName="ant-input"
+                  error={touched.short_name && Boolean(errors.short_name)}
+                  helperText={touched.short_name && errors.short_name}
+              >
+                <Input
+                    name="short_name"
+                    value={values.short_name}
+                    onChange={handleChange}
+                    autoComplete={'off'}
+                    placeholder={"Краткое наименование компании"} />
+              </ValidationErrorWrapper>
+            </div>
+            {/*<TextField*/}
+            {/*  variant={"outlined"}*/}
+            {/*  name="short_name"*/}
+            {/*  placeholder={"Краткое наименование компании"}*/}
+            {/*  value={values.short_name}*/}
+            {/*  onChange={handleChange}*/}
+            {/*  error={touched.short_name && Boolean(errors.short_name)}*/}
+            {/*  helperText={touched.short_name && errors.short_name}*/}
+            {/*/>*/}
           </div>
           <div className={classes.label}>
             <span style={{width:"40%"}}>Группа компаний (при наличии)</span>

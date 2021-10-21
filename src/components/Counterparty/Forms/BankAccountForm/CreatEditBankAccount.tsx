@@ -7,6 +7,8 @@ import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSele
 import * as yup from "yup";
 import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
+import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
+import {Input} from "antd";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -214,16 +216,31 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
                 justifyContent: "space-between",
               }}
             >
-              <TextField
-                name="bik"
-                style={{ width: "75%" }}
-                variant={"outlined"}
-                placeholder={"1234556789101112"}
-                value={formik.values.bik}
-                onChange={formik.handleChange}
-                error={formik.touched.bik && Boolean(formik.errors.bik)}
-                helperText={formik.touched.bik && formik.errors.bik}
-              />
+              <div style={{width:"70%"}}>
+                <ValidationErrorWrapper
+                    inputClassName="ant-input"
+                      error={formik.touched.bik && Boolean(formik.errors.bik)}
+                      helperText={formik.touched.bik && formik.errors.bik}
+                >
+                  <Input
+                      name="bik"
+                      style={{ width: "100%" }}
+                      onChange={formik.handleChange}
+                      autoComplete={'off'}
+                      value={formik.values.bik}
+                      placeholder={"1234556789101112"} />
+                </ValidationErrorWrapper>
+              </div>
+              {/*<TextField*/}
+              {/*  name="bik"*/}
+              {/*  style={{ width: "75%" }}*/}
+              {/*  variant={"outlined"}*/}
+              {/*  placeholder={"1234556789101112"}*/}
+              {/*  value={formik.values.bik}*/}
+              {/*  onChange={formik.handleChange}*/}
+              {/*  error={formik.touched.bik && Boolean(formik.errors.bik)}*/}
+              {/*  helperText={formik.touched.bik && formik.errors.bik}*/}
+              {/*/>*/}
               <Button
                 variant="contained"
                 color="primary"
@@ -235,55 +252,115 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
           </div>
           <div className={classes.label}>
             <span className={classes.textInTable}>Наименование банка</span>
-            <TextField
-              style={{ width: "75%" }}
-              variant={"outlined"}
-              name="name"
-              placeholder={"Наименование банка"}
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              error={formik.touched.name && Boolean(formik.errors.name)}
-              helperText={formik.touched.name && formik.errors.name}
-            />
+            <div style={{width:"75%"}}>
+              <ValidationErrorWrapper
+                  inputClassName="ant-input"
+                    error={formik.touched.name && Boolean(formik.errors.name)}
+                    helperText={formik.touched.name && formik.errors.name}
+              >
+                <Input
+                    name="name"
+                    style={{ width: "100%" }}
+                    onChange={formik.handleChange}
+                    autoComplete={'off'}
+                    value={formik.values.name}
+                    placeholder={"Наименование банка"} />
+              </ValidationErrorWrapper>
+            </div>
+            {/*<TextField*/}
+            {/*  style={{ width: "75%" }}*/}
+            {/*  variant={"outlined"}*/}
+            {/*  name="name"*/}
+            {/*  placeholder={"Наименование банка"}*/}
+            {/*  value={formik.values.name}*/}
+            {/*  onChange={formik.handleChange}*/}
+            {/*  error={formik.touched.name && Boolean(formik.errors.name)}*/}
+            {/*  helperText={formik.touched.name && formik.errors.name}*/}
+            {/*/>*/}
           </div>
           <div className={classes.label}>
             <span className={classes.textInTable}>Город</span>
-            <TextField
-              style={{ width: "75%" }}
-              variant={"outlined"}
-              name="city"
-              placeholder={"Город"}
-              value={formik.values.city}
-              onChange={formik.handleChange}
-              error={formik.touched.city && Boolean(formik.errors.city)}
-              helperText={formik.touched.city && formik.errors.city}
-            />
+            <div style={{width:"75%"}}>
+              <ValidationErrorWrapper
+                  inputClassName="ant-input"
+                  error={formik.touched.city && Boolean(formik.errors.city)}
+                  helperText={formik.touched.city && formik.errors.city}
+              >
+                <Input
+                    name="city"
+                    style={{ width: "100%" }}
+                    onChange={formik.handleChange}
+                    autoComplete={'off'}
+                    value={formik.values.city}
+                    placeholder={"Город"} />
+              </ValidationErrorWrapper>
+            </div>
+            {/*<TextField*/}
+            {/*  style={{ width: "75%" }}*/}
+            {/*  variant={"outlined"}*/}
+            {/*  name="city"*/}
+            {/*  placeholder={"Город"}*/}
+            {/*  value={formik.values.city}*/}
+            {/*  onChange={formik.handleChange}*/}
+            {/*  error={formik.touched.city && Boolean(formik.errors.city)}*/}
+            {/*  helperText={formik.touched.city && formik.errors.city}*/}
+            {/*/>*/}
           </div>
           <div className={classes.label}>
             <span className={classes.textInTable}>К/c</span>
-            <TextField
-              style={{ width: "75%" }}
-              variant={"outlined"}
-              name="ks"
-              placeholder={"123456789101112"}
-              value={formik.values.ks}
-              onChange={formik.handleChange}
-              error={formik.touched.ks && Boolean(formik.errors.ks)}
-              helperText={formik.touched.ks && formik.errors.ks}
-            />
+            <div style={{width:"75%"}}>
+              <ValidationErrorWrapper
+                  inputClassName="ant-input"
+                  error={formik.touched.ks && Boolean(formik.errors.ks)}
+                  helperText={formik.touched.ks && formik.errors.ks}
+              >
+                <Input
+                    name="ks"
+                    style={{ width: "100%" }}
+                    onChange={formik.handleChange}
+                    autoComplete={'off'}
+                    value={formik.values.ks}
+                    placeholder={"123456789101112"} />
+              </ValidationErrorWrapper>
+            </div>
+            {/*<TextField*/}
+            {/*  style={{ width: "75%" }}*/}
+            {/*  variant={"outlined"}*/}
+            {/*  name="ks"*/}
+            {/*  placeholder={"123456789101112"}*/}
+            {/*  value={formik.values.ks}*/}
+            {/*  onChange={formik.handleChange}*/}
+            {/*  error={formik.touched.ks && Boolean(formik.errors.ks)}*/}
+            {/*  helperText={formik.touched.ks && formik.errors.ks}*/}
+            {/*/>*/}
           </div>
           <div className={classes.label}>
             <span className={classes.textInTable}>Р/c</span>
-            <TextField
-              style={{ width: "75%" }}
-              variant={"outlined"}
-              name="rs"
-              placeholder={"123456789101112"}
-              value={formik.values.rs}
-              onChange={formik.handleChange}
-              error={formik.touched.rs && Boolean(formik.errors.rs)}
-              helperText={formik.touched.rs && formik.errors.rs}
-            />
+            <div style={{width:"75%"}}>
+              <ValidationErrorWrapper
+                  inputClassName="ant-input"
+                  error={formik.touched.rs && Boolean(formik.errors.rs)}
+                  helperText={formik.touched.rs && formik.errors.rs}
+              >
+                <Input
+                    name="rs"
+                    style={{ width: "100%" }}
+                    onChange={formik.handleChange}
+                    autoComplete={'off'}
+                    value={formik.values.rs}
+                    placeholder={"123456789101112"} />
+              </ValidationErrorWrapper>
+            </div>
+            {/*<TextField*/}
+            {/*  style={{ width: "75%" }}*/}
+            {/*  variant={"outlined"}*/}
+            {/*  name="rs"*/}
+            {/*  placeholder={"123456789101112"}*/}
+            {/*  value={formik.values.rs}*/}
+            {/*  onChange={formik.handleChange}*/}
+            {/*  error={formik.touched.rs && Boolean(formik.errors.rs)}*/}
+            {/*  helperText={formik.touched.rs && formik.errors.rs}*/}
+            {/*/>*/}
           </div>
           <div className={classes.label}>
             <span className={classes.textInTable}>Счет активный</span>

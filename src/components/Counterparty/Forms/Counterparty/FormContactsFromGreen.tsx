@@ -14,6 +14,7 @@ import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
 import {SearchContactPerson} from "../../../Utils/utils_options/SearchContactPerson";
 import {counterpartiesApi} from "../../../../api/api";
 import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
+import {Input} from "antd";
 
 
 type InfoProps = {
@@ -28,6 +29,7 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
     const [branch, setBranch] = useState("");
     const { AuthorData,loading: assetsLoading} = useTypedSelector((state) => state.author);
     const { id }: any = AuthorData;
+    const { TextArea } = Input;
 
     const searchOptions = SearchContactPerson()
     const {assetsOptionsDirections} = InputAssetsOptions();
@@ -193,22 +195,49 @@ const initialValues = {
                                 <div className={classes.label} style={{alignItems:"flex-start"}}>
                                   <span style={index == 0 ?{width:"35%"}:{width:"37%"}}>Дополнительная информация</span>
                                   <div style={index == 0 ?{width:"65%"}:{width:"63%"}}>
-                                      <ValidationErrorWrapper
-                                          inputClassName="makeStyles-textAreas"
-                                          error={Boolean(touchedFieldInfo && errorFieldInfo)}
-                                          helperText={touchedFieldInfo && errorFieldInfo ? errorFieldInfo : ""}
-                                      >
-                                                <textarea
-                                                    className={classes.textAreas}
-                                                    name={fieldInfo}
-                                                    placeholder={"Введите текст"}
-                                                    value={employees.info}
-                                                    onChange={handleChange}
+                                      <div style={{width:"100%"}}>
+                                          <ValidationErrorWrapper
+                                              inputClassName="ant-input"
+                                              error={Boolean(
+                                                  touchedFieldInfo &&
+                                                  errorFieldInfo
+                                              )}
+                                              helperText={
+                                                  touchedFieldInfo &&
+                                                  errorFieldInfo
+                                                      ? errorFieldInfo
+                                                      : ""
+                                              }
+                                          >
+                                              <TextArea
+                                                  name={fieldInfo}
+                                                  value={employees.info}
+                                                  onChange={handleChange}
+                                                  style={{height: '120px'}}
+                                                  //multiline
+                                                  //rows={2}
+                                                  autoSize={false}
+                                                  //className={classes.textAreaCN}
+                                                  autoComplete={'off'}
+                                                  placeholder={'Введите текст'} />
+                                          </ValidationErrorWrapper>
+                                      </div>
+                                      {/*<ValidationErrorWrapper*/}
+                                      {/*    inputClassName="makeStyles-textAreas"*/}
+                                      {/*    error={Boolean(touchedFieldInfo && errorFieldInfo)}*/}
+                                      {/*    helperText={touchedFieldInfo && errorFieldInfo ? errorFieldInfo : ""}*/}
+                                      {/*>*/}
+                                      {/*          <textarea*/}
+                                      {/*              className={classes.textAreas}*/}
+                                      {/*              name={fieldInfo}*/}
+                                      {/*              placeholder={"Введите текст"}*/}
+                                      {/*              value={employees.info}*/}
+                                      {/*              onChange={handleChange}*/}
 
-                                                >
-                                                  Расскажите о себе
-                                                </textarea>
-                                      </ValidationErrorWrapper>
+                                      {/*          >*/}
+                                      {/*            Расскажите о себе*/}
+                                      {/*          </textarea>*/}
+                                      {/*</ValidationErrorWrapper>*/}
                                   </div>
                                 </div>
                               </div>

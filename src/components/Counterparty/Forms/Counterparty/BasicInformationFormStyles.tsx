@@ -75,6 +75,13 @@ export const useStylesBasicInformation = makeStyles((theme: Theme) =>
             marginBottom: 16,
             fontSize: 12,
         },
+        label2: {
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            marginBottom: 16,
+            fontSize: 12,
+        },
         input:{
             width: "60% !important"
         },

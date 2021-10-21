@@ -136,6 +136,14 @@ export const useStylesCompanyDetails = makeStyles((theme: Theme) =>
             fontWeight: 500,
             fontSize: 16,
         },
+        label2: {
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            marginBottom: 16,
+            fontWeight: 500,
+            fontSize: 16,
+        },
         addItem: {
             marginTop: 12,
             cursor: "pointer",

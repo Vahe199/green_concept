@@ -8,6 +8,7 @@ import {useStylesInformationCongratulations} from "./BasicInformationFormStyles"
 import {validationSchemaInformationCongratulations} from "./BasicInformationFormValidationSchema";
 import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
 import {counterpartiesApi} from "../../../../api/api";
+import {Input} from "antd";
 
 
 type InfoCongratulations = {
@@ -93,15 +94,29 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
                                         <div className={classes.label}>
                                           <span style={index == 0 ?{width:"35%"}:{width:"37%"}}>Праздник</span>
                                           <div style={index == 0 ?{width:"65%"}:{width:"63%"}}>
-                                            <TextField style={{width:"100%"}}
-                                                       variant={"outlined"}
-                                                       name={fieldName}
-                                                       value={congratulations.name}
-                                                       placeholder={"Название праздника"}
-                                                       onChange={handleChange}
-                                                       error={Boolean(touchedFieldName && errorFieldName)}
-                                                       helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
-                                            />
+                                              <div style={{width:"100%"}}>
+                                                  <ValidationErrorWrapper
+                                                      inputClassName="ant-input"
+                                                      error={Boolean(touchedFieldName && errorFieldName)}
+                                                      helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                  >
+                                                      <Input
+                                                          name={fieldName}
+                                                          value={congratulations.name}
+                                                          onChange={handleChange}
+                                                          autoComplete={'off'}
+                                                          placeholder={"Название праздника"} />
+                                                  </ValidationErrorWrapper>
+                                              </div>
+                                            {/*<TextField style={{width:"100%"}}*/}
+                                            {/*           variant={"outlined"}*/}
+                                            {/*           name={fieldName}*/}
+                                            {/*           value={congratulations.name}*/}
+                                            {/*           placeholder={"Название праздника"}*/}
+                                            {/*           onChange={handleChange}*/}
+                                            {/*           error={Boolean(touchedFieldName && errorFieldName)}*/}
+                                            {/*           helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}*/}
+                                            {/*/>*/}
                                           </div>
                                         </div>
                                         <div className={classes.label}>
@@ -150,15 +165,29 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
                                         <div className={classes.label}>
                                           <span style={index == 0 ?{width:"35%"}:{width:"37%"} }>Другое</span>
                                           <div style={index == 0 ?{width:"65%"}:{width:"63%"}}>
-                                            <TextField style={{width:"100%"}}
-                                                       variant={"outlined"}
-                                                       name={fieldOther}
-                                                       placeholder={"Другое"}
-                                                       value={congratulations.other}
-                                                       onChange={handleChange}
-                                                       error={Boolean(touchedFieldOther && errorFieldOther)}
-                                                       helperText={touchedFieldOther && errorFieldOther ?errorFieldOther : ""}
-                                            />
+                                              <div style={{width:"100%"}}>
+                                                  <ValidationErrorWrapper
+                                                      inputClassName="ant-input"
+                                                      error={Boolean(touchedFieldOther && errorFieldOther)}
+                                                      helperText={touchedFieldOther && errorFieldOther ?errorFieldOther : ""}
+                                                  >
+                                                      <Input
+                                                          name={fieldOther}
+                                                          value={congratulations.other}
+                                                          onChange={handleChange}
+                                                          autoComplete={'off'}
+                                                          placeholder={"Другое"} />
+                                                  </ValidationErrorWrapper>
+                                              </div>
+                                            {/*<TextField style={{width:"100%"}}*/}
+                                            {/*           variant={"outlined"}*/}
+                                            {/*           name={fieldOther}*/}
+                                            {/*           placeholder={"Другое"}*/}
+                                            {/*           value={congratulations.other}*/}
+                                            {/*           onChange={handleChange}*/}
+                                            {/*           error={Boolean(touchedFieldOther && errorFieldOther)}*/}
+                                            {/*           helperText={touchedFieldOther && errorFieldOther ?errorFieldOther : ""}*/}
+                                            {/*/>*/}
                                           </div>
                                         </div>
                                       </div>

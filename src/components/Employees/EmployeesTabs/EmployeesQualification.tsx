@@ -2,6 +2,7 @@ import React from "react";
 import EmployeeEducation from "./EmployeesQualificationTabs/EmployeeEducation";
 import EmployeeSpecializedRegisters from "./EmployeesQualificationTabs/EmployeeSpecializedRegisters";
 import EmployeeTraining from "./EmployeesQualificationTabs/EmployeeTraining";
+import EmployeeEducationForm from "./EmployeesQualificationTabs/EmployeesQualificationFormTabs/EmployeeEducationForm";
 
 
 const EmployeesQualification:React.FC = () => {
@@ -12,7 +13,8 @@ const EmployeesQualification:React.FC = () => {
              backgroundColor:"#F2F3F4"
         }}>
             <div style={{width:'48%',marginLeft:32}}>
-              <EmployeeEducation/>
+              {/*<EmployeeEducation/>*/}
+                <EmployeeEducationForm/>
               <EmployeeSpecializedRegisters/>
             </div>
             <div style={{width:'45%',marginRight:32}}>

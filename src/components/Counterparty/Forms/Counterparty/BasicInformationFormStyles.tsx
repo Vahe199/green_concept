@@ -239,6 +239,7 @@ export const useStylesContactsFromGreen = makeStyles((theme: Theme) =>
                 zIndex: 4,
             },
         },
+
     })
 );
 export const useStylesInformationCongratulations = makeStyles((theme: Theme) =>

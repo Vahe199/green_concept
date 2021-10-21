@@ -95,8 +95,7 @@ const useStyles = makeStyles((theme) => ({
 const CreateCounterparty = (props: any) => {
   const { AuthorData, loading } = useTypedSelector((state) => state.author);
   let { contractor }: any = AuthorData;
-  const { id = null}: any = contractor;
-
+  const { id = null }: any = contractor;
 
   const { getContactPersonsDataWithId } = useActions();
   useEffect(() => {
@@ -118,7 +117,7 @@ const CreateCounterparty = (props: any) => {
       <Paper square className={classes.root}>
         <Typography variant="subtitle1" noWrap className={classes.typography}>
           {props.match.params.item === "author"
-            ? `ООО «Контрагент №${id ?id : ''}»`
+            ? `ООО «Контрагент №${id ? id : ""}»`
             : "Новый контрагент"}
         </Typography>
 
@@ -189,7 +188,7 @@ const CreateCounterparty = (props: any) => {
               {selectedTab === 2 && <CreatingBankDetails />}
             </div>
           </div>
-        ) : props.match.params.item === "new contractor" ? (
+        ) : props.match.params.item === "new-contractor" ? (
           <div>
             {selectedTab === 0 && <GeneralInformationForCreating />}
             {selectedTab === 1 && <ContactPersonsForCreating />}

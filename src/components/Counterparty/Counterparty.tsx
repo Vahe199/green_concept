@@ -10,16 +10,15 @@ import { useStyles } from "./Styles";
 import ModalListOfContacts from "./Core/Modals/ModalListOfContacts";
 
 export const Counterparty = () => {
-  const { fetchAuthorsList, getAssetsListData } =
-    useActions();
+  const { fetchAuthorsList, getAssetsListData } = useActions();
   //const [showModal, setShowModal] = React.useState(true); //TODO modal put here for testing
-  const getData =  () => {
-     // fetchCounterpartiesList();
+  const getData = () => {
+    // fetchCounterpartiesList();
     fetchAuthorsList();
     getAssetsListData();
   };
   useEffect(() => {
-     getData();
+    getData();
   }, []);
 
   let history = useHistory();
@@ -32,7 +31,7 @@ export const Counterparty = () => {
   const handleClick = (path: string) => {
     history.push(`/counterparty/${path}`);
   };
-  return  (
+  return (
     <div className={classes.container}>
       <Paper square className={classes.root}>
         <Typography
@@ -46,7 +45,7 @@ export const Counterparty = () => {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <span style={{ display: "flex" }}>
             <Button
-              onClick={() => handleClick("new contractor")}
+              onClick={() => handleClick("new-contractor")}
               variant="contained"
               color="primary"
               startIcon={<AddIcon />}

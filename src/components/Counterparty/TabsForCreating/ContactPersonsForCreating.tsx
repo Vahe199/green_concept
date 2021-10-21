@@ -35,6 +35,45 @@ import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
 import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 import BackToAddress from "../../Utils/BackToAddress";
 
+type PersonContactType = {
+  PersonContact: {
+    firstname: string;
+    middlename: string;
+    surname: string;
+    contractor_type_id: string;
+    sex: string;
+    birthdate: string;
+    delivery_address: string;
+    emails: [
+      {
+        [key: string]: any;
+      }
+    ];
+
+    phones: { phone: string; phone_type: string }[];
+    contact_contractors: {
+      main: number;
+      role_id: any;
+      position: string;
+      contractor_id: number;
+    };
+    contact_employees: {
+      direction_id: string;
+      employee_id: number;
+      info: string;
+    }[];
+    contact_congratulations: {
+      name: string;
+      congratulation_type_id: number;
+      other: string;
+    }[];
+    branches: string[];
+    [key: string]: any;
+  };
+  error: boolean;
+  success: boolean;
+};
+
 export const ContactPersonsForCreating: React.FC = () => {
   const {
     insertContractorContactData,
@@ -82,7 +121,7 @@ export const ContactPersonsForCreating: React.FC = () => {
     label: option.name,
   }));
 
-  const initialValues = {
+  const defaultValues = {
     firstname: "",
     middlename: "",
     surname: "",
@@ -109,7 +148,26 @@ export const ContactPersonsForCreating: React.FC = () => {
     service_type_id: null,
     branches: [""],
   };
-  console.log(PersonContact, initialValues);
+  const initialValues = {
+    ...PersonContact,
+    // @ts-ignore
+    branches: PersonContact.branches?.map((branch) => branch.id),
+    // @ts-ignore
+    contact_contractors: PersonContact.contractors?.map((contractor: any) => ({
+      ...contractor,
+      contractor_id: contractor.id,
+    })),
+    // @ts-ignore
+    contact_employees: PersonContact.employees?.map(
+      (employee: any) => employee
+    ),
+    // @ts-ignore
+    contact_congratulations: PersonContact.congratulations?.map(
+      (congratulation: any) => congratulation
+    ),
+  };
+
+  console.log(initialValues);
 
   useEffect(() => {
     if (attachedContact) {
@@ -126,7 +184,7 @@ export const ContactPersonsForCreating: React.FC = () => {
       <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
       <BackToAddress address="/counterparties" title="списку" />
       <Formik
-        initialValues={initialValues}
+        initialValues={defaultValues}
         validationSchema={validationSchemaContactPerson}
         onSubmit={async (values, action) => {
           console.log(values, "values");

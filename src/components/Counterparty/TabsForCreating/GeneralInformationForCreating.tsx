@@ -452,10 +452,10 @@ export const GeneralInformationForCreating = () => {
                     className={classes.label}
                     style={{ alignItems: "flex-start" }}
                   >
-                    <span style={{ marginTop: "1%" }}>
+                    <span style={{ marginTop: "1%" ,width:"40%"}}>
                       Полное наименование компании
                     </span>
-                    <div style={{width:"90%"}}>
+                    <div style={{width:"60%"}}>
                       <ValidationErrorWrapper
                           inputClassName="ant-input"
                           error={touched.full_name && Boolean(errors.full_name)}
@@ -488,8 +488,8 @@ export const GeneralInformationForCreating = () => {
                     {/*/>*/}
                   </div>
                   <div className={classes.label2}>
-                    <span>Краткое наименование компании</span>
-                    <div style={{width:"90%"}}>
+                    <span style={{width:"40%"}}>Краткое наименование компании</span>
+                    <div style={{width:"60%"}}>
                       <ValidationErrorWrapper
                           inputClassName="ant-input"
                           error={touched.short_name && Boolean(errors.short_name)}

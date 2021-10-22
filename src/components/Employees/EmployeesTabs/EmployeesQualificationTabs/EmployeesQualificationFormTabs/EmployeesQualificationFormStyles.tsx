@@ -14,7 +14,9 @@ export const useStylesEmployeeQualificationForm = makeStyles((theme: Theme) =>
             marginBottom: 8.5,
         },
         paper: {
-            padding:16
+            padding:16,
+            border:" 1px solid #3AB994",
+            borderRadius:4
         },
         row:{
             display:'flex',

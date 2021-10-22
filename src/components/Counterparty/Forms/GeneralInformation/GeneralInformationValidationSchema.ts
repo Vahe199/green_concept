@@ -41,8 +41,8 @@ export const validationSchemaFormCompanyDetails = (value: any) => yup.object().s
     full_name: yup.string().min(0, "должен состоять минимум из 10 символов")
         .max(250, "должен состоять максимум из 250 символов")
         .required("Обязательное поле"),
-    short_name: yup.string() .min(0, "должен состоять минимум из 10 символов")
-        .max(value == "ЮЛ" ? 250 : 50, `должен состоять максимум из ${value == "ЮЛ" ? 250 : 50} символов`)
+    short_name: yup.string() .min(10, "должен состоять минимум из 10 символов")
+        .max(value == "ЮЛ" ? 100 : 50, `должен состоять максимум из ${value == "ЮЛ" ? 100 : 50} символов`)
         .required("Обязательное поле"),
        // parent_id: yup.string() .min(0, "должен состоять минимум из 1 символов")
        //  .max(250, "должен состоять максимум из 250 символов"),
@@ -56,16 +56,25 @@ export const validationSchemaFormCompanyDetails = (value: any) => yup.object().s
 });
 
 
-export const validationSchemaCompanyContacts = yup.object().shape({
+export const validationSchemaCompanyContacts = (value: any) => yup.object().shape({
     actual_address: yup.string().min(0, "должен состоять минимум из 10 символов")
-        .max(18, "должен состоять максимум из 18 символов")
+        .max(
+            value == "ЮЛ" ? 300 : 100,
+            `должен состоять максимум из ${value == "ЮЛ" ? 300 : 100} символов`
+        )
         .required("Обязательное поле"),
     legal_registration_address: yup.string()
         .min(0, "должен состоять минимум из 10 символов")
-        .max(18, "должен состоять максимум из 18 символов")
+        .max(
+            value == "ЮЛ" ? 300 : 100,
+            `должен состоять максимум из ${value == "ЮЛ" ? 300 : 100} символов`
+        )
         .required("Обязательное поле"),
     post_address: yup.string().min(0, "должен состоять минимум из 10 символов")
-        .max(250, "должен состоять максимум из 250 символов")
+        .max(
+            value == "ЮЛ" ? 300 : 100,
+            `должен состоять максимум из ${value == "ЮЛ" ? 300 : 100} символов`
+        )
         .required("Обязательное поле"),
 
     sites: yup.array()

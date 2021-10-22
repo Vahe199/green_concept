@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {FieldArray, Form, Formik, getIn} from "formik";
 import {Button, Checkbox, Paper, TextField} from "@material-ui/core";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
@@ -35,6 +35,11 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
   const [matchesAddressActualAddress, setMatchesAddressActualAddress] = React.useState<boolean>(true);
   const [matchesAddressMailingAddress, setMatchesAddressMailingAddress] = React.useState<boolean>(true);
 
+  const { contractor }: any = AuthorData;
+  const { org_type }: any = contractor;
+
+  const [validateValue, setValidateValue] = useState<any>(org_type);
+
   let errorMessage: string = "ContactInfo";
   useEffect(() => {
     if (error) {
@@ -60,7 +65,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
     <div className={classes.root}>
       <Formik
           initialValues={initialValues}
-          validationSchema={validationSchemaCompanyContacts}
+          validationSchema={() => validationSchemaCompanyContacts(validateValue)}
           onSubmit={async (values,action) => {
             console.log(values,"values")
             changeAuthorContactInfoData(values, id, errorMessage)

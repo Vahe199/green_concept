@@ -26,13 +26,12 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
     let {region,company,directions,position,end_work_date ,start_work_date}:any = employee;
 const id:number = 17
 
-
     useEffect( ()=>{
         if(error){
             notifyError();
             recoveryEmployeesState()
         }
-        if(success_update === "ABOUT_INFO"){
+        if(success_update === "GENERAL_INFO"){
             notifySuccess();
             recoveryEmployeesState()
             setEmployeeGeneralInfo(true)
@@ -45,7 +44,7 @@ const id:number = 17
         position_id:position ? position.id :null,
         start_work_date:start_work_date ? start_work_date : "",
         end_work_date:end_work_date? end_work_date : "",
-        directions:[directions ? directions[0].id :null],
+        directions:[directions ? directions[0]?.id :null],
     };
 
     const {assetsOptionsDirections} = InputAssetsOptions()

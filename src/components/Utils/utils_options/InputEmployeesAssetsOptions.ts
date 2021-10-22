@@ -6,8 +6,13 @@ export const InputEmployeesAssetsOptions = () => {
     );
     const {assets}:any = employees_assets
     const {
-        companies, employee_positions, regions
+        companies, employee_positions, regions, education_types
     }: any = assets;
+    const assetsOptionsEducationTypes =  education_types?.map((option: any) => ({
+        key: option.id,
+        value: option.id ? option.id : 0,
+        label: option.name,
+    }));
     const assetsOptionsCompanies =  companies?.map((option: any) => ({
         key: option.id,
         value: option.id ? option.id : 0,
@@ -27,7 +32,7 @@ export const InputEmployeesAssetsOptions = () => {
     }));
 
     return {
-        assetsOptionsCompanies, assetsOptionsRegions, assetsOptionsEmployeePositions
+        assetsOptionsCompanies, assetsOptionsRegions, assetsOptionsEmployeePositions, assetsOptionsEducationTypes
     }
 }
 

@@ -21,7 +21,6 @@ const EmployeeAboutItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeAbout
     const initialValues = {
         about:about ? about :""
     };
-    console.log(success_update,"success_update !!!")
     useEffect( ()=>{
         if(error){
             notifyError();

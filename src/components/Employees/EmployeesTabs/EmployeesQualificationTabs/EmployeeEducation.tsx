@@ -3,8 +3,10 @@ import {Divider, Paper,Typography} from "@material-ui/core";
 import {PencilSimpleIcon} from "../../../../IMG/SVG/PencilSimpleIcon";
 import {useStylesEmployeeQualification} from "./EmployeesQualificationStyles";
 
-
-const EmployeeEducation:React.FC = () => {
+type EmployeeEducationProps = {
+    setEmployeeEducation:(val:boolean) =>void
+}
+const EmployeeEducation:React.FC<EmployeeEducationProps> = ({setEmployeeEducation}) => {
     let EducationState = [1,2,3]
     const classes = useStylesEmployeeQualification();
     return(
@@ -13,7 +15,7 @@ const EmployeeEducation:React.FC = () => {
                 <Typography  className={classes.typographyTitle}>
                     Образование
                 </Typography>
-                <div onClick={() => console.log('true 11')}>
+                <div onClick={() => setEmployeeEducation(false)}>
                     <PencilSimpleIcon color="#3B4750" />
                 </div>
             </div>

@@ -26,7 +26,7 @@ debugger
     }
 }
 export const updateEmployeeGeneralListAC = (formData:any ,id:number) => async (dispatch: Dispatch<EmployeeListAction>) => {
-debugger
+
     try {
         dispatch({type:EmployeeListActionType.UPDATE_EMPLOYEES_LIST})
         const {data} = await employeesApi.updateEmployeeGeneralInfoById(formData,id)

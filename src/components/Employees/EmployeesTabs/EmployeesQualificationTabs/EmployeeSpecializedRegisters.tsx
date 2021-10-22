@@ -3,8 +3,10 @@ import { Paper, Typography} from "@material-ui/core";
 import {PencilSimpleIcon} from "../../../../IMG/SVG/PencilSimpleIcon";
 import {useStylesEmployeeQualification} from "./EmployeesQualificationStyles";
 
-
-const EmployeeSpecializedRegisters:React.FC = () => {
+type EmployeeSpecializedProps = {
+    setEmployeeSpecialized:(val:boolean)=>void
+}
+const EmployeeSpecializedRegisters:React.FC<EmployeeSpecializedProps> = ({setEmployeeSpecialized}) => {
     const classes = useStylesEmployeeQualification();
     return(
         <div className={classes.root}style={{marginBottom:50}}>
@@ -13,7 +15,7 @@ const EmployeeSpecializedRegisters:React.FC = () => {
                     color: '#3B4750'}}>
                     Данные о включении в специализированные реестры
                 </Typography>
-                <div onClick={() => console.log('true 11')}>
+                <div onClick={() => setEmployeeSpecialized(false)}>
                     <PencilSimpleIcon color="#3B4750" />
                 </div>
             </div>

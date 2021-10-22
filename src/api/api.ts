@@ -53,7 +53,7 @@ export const counterpartiesApi = {
       ...config,
     });
   },
-  getContractorsDataWithId(id:number) {
+  getContractorsDataWithId(id: number) {
     return axios.request({
       method: "get",
       url: `contractors/${id}`,
@@ -153,26 +153,45 @@ export const contractorApi = {
   },
 };
 
-
 export const employeesApi = {
   getEmployeesAssets() {
-    return axios.request({ method: "get", url: "employees/get_assets" });
+    return axios.request({method: "get", url: "employees/get_assets"});
   },
-  searchContactPersonData() {
-    return axios.request({ method: "get", url: "employees" });
-  },
-  getEmployeeDataById(id:number) {
-    return axios.request({ method: "get", url: `employees/${id}` });
-  },
-  updateEmployeeDataById(data:any, id:number) {
-    return axios.request({ method: "put", url: `employees/employee_data/${id}`, data, headers: {"Content-Type": "multipart/form-data"} })
-       },
-  updateEmployeeGeneralInfoById(data:any, id:number) {
-    return axios.request({ method: "put", url: `employees/general_info/${id}`, data })
-  },
-  updateEmployeeAboutInfoById(data:any, id:number) {
-    return axios.request({ method: "put", url: `employees/about_info/${id}`, data })},
 
+  searchContactPersonData() {
+    return axios.request({method: "get", url: "employees"});
+  },
+
+  getEmployeeDataById(id: number) {
+    return axios.request({method: "get", url: `employees/${id}`});
+  },
+
+
+  updateEmployeeDataById(data: any, id: number) {
+    return axios.request({
+      method: "put",
+      url: `employees/employee_data/${id}`,
+      data,
+      headers: {"Content-Type": "multipart/form-data"},
+    });
+  },
+  updateEmployeeGeneralInfoById(data: any, id: number) {
+    return axios.request({
+      method: "put",
+      url: `employees/general_info/${id}`,
+      data,
+    });
+  },
+  updateEmployeeAboutInfoById(data: any, id: number) {
+    return axios.request({
+      method: "put",
+      url: `employees/about_info/${id}`,
+      data,
+    });
+
+  },
+
+  //employee educations
 
   updateEmployeeEducationsById(data:any, id:number) {
     return axios.request({ method: "put", url: `employee_educations/${id}`, data })
@@ -186,6 +205,6 @@ export const employeesApi = {
           debugger
           return e
         })
-  },
-};
+  }
+}
 

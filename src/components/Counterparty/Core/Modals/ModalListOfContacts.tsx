@@ -15,10 +15,16 @@ const useStyles = makeStyles({
   root: {
     "&.ant-modal": {
       width: "max-content!important",
-      marginLeft: 64,
-      marginTop: -64,
+      minWidth: 1160,
+      marginLeft: 32,
+      top: 16,
+
       "& .ant-modal-body": {
         padding: 20,
+      },
+
+      "@media(max-width: 1400px)": {
+        minWidth: "unset",
       },
     },
     "& .ant-select": {

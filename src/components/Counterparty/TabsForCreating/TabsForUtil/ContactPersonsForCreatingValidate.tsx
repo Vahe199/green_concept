@@ -2,8 +2,8 @@ import * as yup from "yup";
 
 export const validationSchemaContactPerson = yup.object({
 
-  firstname: yup.string().required("Обязательное поле"),
-  surname: yup.string().required("Обязательное поле"),
+  firstname: yup.string().required("Обязательное поле").max(100, "должен состоять максимум из 100 символов"),
+  surname: yup.string().required("Обязательное поле").max(100, "должен состоять максимум из 100 символов"),
   birthdate: yup.string().required("Обязательное поле"),
     branches: yup.array()
         .of(yup.number().required("Обязательное поле"))
@@ -35,7 +35,7 @@ export const validationSchemaContactPerson = yup.object({
           role_id: yup.number()
               .nullable(true)
               .required("Обязательное поле"),
-          position: yup.string().required("Обязательное поле"),
+          position: yup.string().required("Обязательное поле").max(100, "должен состоять максимум из 100 символов"),
           main: yup.number().nullable(true).required("Обязательное поле"),
       }),
 
@@ -53,7 +53,7 @@ export const validationSchemaContactPerson = yup.object({
       })
     )
     .required("Обязательное поле"),
-  middlename: yup.string().required("Обязательное поле"),
+  middlename: yup.string().required("Обязательное поле").max(100, "должен состоять максимум из 100 символов"),
   phones: yup
     .array()
     .of(

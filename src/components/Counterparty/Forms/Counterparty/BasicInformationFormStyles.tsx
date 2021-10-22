@@ -86,6 +86,13 @@ export const useStylesBasicInformation = makeStyles((theme: Theme) =>
         input:{
             width: "60% !important"
         },
+        input2: {
+            fontSize: 16,
+            '&::placeholder': {
+                fontSize: 16,
+                fontWeight: 400,
+            }
+        },
         addItemCRM: {
             fontSize:14,
             fontWeight:400,
@@ -201,6 +208,13 @@ export const useStylesContactsFromGreen = makeStyles((theme: Theme) =>
             }
         },
 
+        input: {
+            fontSize: 16,
+            '&::placeholder': {
+                fontSize: 16,
+                fontWeight: 400,
+            }
+        },
 
         addItemCRM: {
             fontSize:14,
@@ -292,6 +306,13 @@ export const useStylesInformationCongratulations = makeStyles((theme: Theme) =>
             border: "1px solid #3ab994",
             boxShadow: "none",
             marginBottom: 50
+        },
+        input: {
+            fontSize: 16,
+            '&::placeholder': {
+                fontSize: 16,
+                fontWeight: 400,
+            }
         },
         label: {
             display: "flex",

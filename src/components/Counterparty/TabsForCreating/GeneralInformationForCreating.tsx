@@ -851,7 +851,8 @@ export const GeneralInformationForCreating = () => {
                     className={classes.label}
                     style={{ alignItems: "flex-start" }}
                   >
-                    <span>Сайт компании</span>
+                    <span>{values.org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}</span>
+
                     <div
                       style={{
                         width: "60%",

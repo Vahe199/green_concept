@@ -211,7 +211,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
             </span>
           </div>
           <div className={classes.label} style={{ alignItems: "flex-start" }}>
-            <span>Сайт компании</span>
+            {org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}
             <span style={{ width: "60%", flexDirection: "column" }}>
               <FieldArray name="sites">
                    {({insert, remove, push}) => (

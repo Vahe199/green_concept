@@ -39,7 +39,7 @@ export const validationSchemaGeneralInfo = (value: any) =>  yup.object().shape({
 export const validationSchemaFormCompanyDetails = (value: any) => yup.object().shape({
 
     full_name: yup.string().min(0, "должен состоять минимум из 10 символов")
-        .max(250, "должен состоять максимум из 250 символов")
+        .max(300, `должен состоять максимум из 300 символов`)
         .required("Обязательное поле"),
     short_name: yup.string() .min(10, "должен состоять минимум из 10 символов")
         .max(value == "ЮЛ" ? 100 : 50, `должен состоять максимум из ${value == "ЮЛ" ? 100 : 50} символов`)

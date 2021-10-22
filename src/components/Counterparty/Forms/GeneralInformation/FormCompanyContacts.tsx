@@ -100,6 +100,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                     name="legal_registration_address"
                     value={values.legal_registration_address}
                     onChange={handleChange}
+                    className={classes.input2}
                     autoComplete={'off'}
                     placeholder={"123456 город улица строени дом офис"} />
               </ValidationErrorWrapper>
@@ -126,6 +127,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                     name="actual_address"
                     value={values.actual_address}
                     onChange={handleChange}
+                    className={classes.input2}
                     autoComplete={'off'}
                     placeholder={"123456 город улица строени дом офис"} />
               </ValidationErrorWrapper>
@@ -170,6 +172,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                     name="post_address"
                     value={values.post_address}
                     onChange={handleChange}
+                    className={classes.input2}
                     autoComplete={'off'}
                     placeholder={"123456 город улица строени дом офис"} />
               </ValidationErrorWrapper>
@@ -223,7 +226,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                                    >
                                      <Input
                                          name={fieldName}
-                                         //className={classes.input}
+                                         className={classes.input2}
                                          value={url.url}
                                          onChange={handleChange}
                                          autoComplete={'off'}
@@ -285,6 +288,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                                                               value={phone.phone}
                                                                   style={{ width: "100%"}}
                                                               onChange={handleChange}
+                                                              className={classes.input2}
                                                               autoComplete={'off'}
                                                               placeholder={"+79991234567"} />
                                                         </ValidationErrorWrapper>
@@ -343,6 +347,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                                                         >
                                                           <Input
                                                               name={fieldName}
+                                                              className={classes.input2}
                                                               //className={classes.input}
                                                               value={email.email}
                                                               style={{ width: "100%"}}

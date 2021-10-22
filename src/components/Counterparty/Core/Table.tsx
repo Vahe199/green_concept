@@ -26,6 +26,8 @@ const useStyles = makeStyles({
     },
     "& .ant-select-selection-placeholder": {
       lineHeight: "36px !important",
+      fontWeight: 400,
+      fontSize: '16px',
     },
     "& .ant-picker": {
       height: "40px !important",

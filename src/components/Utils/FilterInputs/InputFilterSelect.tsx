@@ -8,13 +8,20 @@ const useStyles = makeStyles((theme: Theme) =>
     select: {
       "& .ant-select": {
         height: "100%",
-        fontSize: 14,
+        fontSize: 16,
+        fontWeight: 400,
         border: "1px solid #F1F2F3",
       },
 
       "& .ant-select-selector": {
         height: "100% !important",
-        fontSize: 14,
+        fontSize: 16,
+        fontWeight: 400,
+      },
+
+      "& .ant-select-selection-placeholder": {
+        fontSize: 16,
+        fontWeight: 400,
       },
 
       "& svg": {

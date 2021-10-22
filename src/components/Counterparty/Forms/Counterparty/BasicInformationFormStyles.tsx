@@ -30,7 +30,8 @@ export const useStylesBasicInformation = makeStyles((theme: Theme) =>
                 marginTop: 16
             },
             "& .ant-select-selection-placeholder":{
-                fontSize:16
+                fontSize:16,
+                fontWeight: 400,
             },
             "& .ant-select-selection-item":{
                 fontSize:16,
@@ -123,7 +124,8 @@ export const useStylesContactsFromGreen = makeStyles((theme: Theme) =>
                 fontSize: 16,
             },
             "& .ant-select-selection-placeholder":{
-                fontSize:16
+                fontSize:16,
+                fontWeight: 400,
             },
             "& .ant-select-selection-item":{
                 fontSize:16,
@@ -276,7 +278,8 @@ export const useStylesInformationCongratulations = makeStyles((theme: Theme) =>
                 fontSize: 10,
             },
             "& .ant-select-selection-placeholder":{
-                fontSize:16
+                fontSize:16,
+                fontWeight: 400,
             },
             "& .ant-select-selection-item":{
                 fontSize:16,

@@ -47,6 +47,13 @@ const useStyles = makeStyles((theme: Theme) =>
       border: "1px solid #3ab994",
       boxShadow: "none",
     },
+    input: {
+      fontSize: 16,
+      '&::placeholder': {
+        fontSize: 16,
+        fontWeight: 400,
+      }
+    },
     textInTable: {
       color: "#3B4750",
       fontWeight: 500,
@@ -227,6 +234,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
                       style={{ width: "100%" }}
                       onChange={formik.handleChange}
                       autoComplete={'off'}
+                      className={classes.input}
                       value={formik.values.bik}
                       placeholder={"1234556789101112"} />
                 </ValidationErrorWrapper>
@@ -263,6 +271,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
                     style={{ width: "100%" }}
                     onChange={formik.handleChange}
                     autoComplete={'off'}
+                    className={classes.input}
                     value={formik.values.name}
                     placeholder={"Наименование банка"} />
               </ValidationErrorWrapper>
@@ -291,6 +300,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
                     style={{ width: "100%" }}
                     onChange={formik.handleChange}
                     autoComplete={'off'}
+                    className={classes.input}
                     value={formik.values.city}
                     placeholder={"Город"} />
               </ValidationErrorWrapper>
@@ -319,6 +329,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
                     style={{ width: "100%" }}
                     onChange={formik.handleChange}
                     autoComplete={'off'}
+                    className={classes.input}
                     value={formik.values.ks}
                     placeholder={"123456789101112"} />
               </ValidationErrorWrapper>
@@ -347,6 +358,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
                     style={{ width: "100%" }}
                     onChange={formik.handleChange}
                     autoComplete={'off'}
+                    className={classes.input}
                     value={formik.values.rs}
                     placeholder={"123456789101112"} />
               </ValidationErrorWrapper>

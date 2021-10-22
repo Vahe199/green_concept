@@ -252,7 +252,20 @@ export const useStylesContactPersons = makeStyles((theme: Theme) =>
 
     input: {
       width: "60% !important",
+        '&::placeholder': {
+            fontSize: 16,
+            fontWeight: 400,
+        }
     },
+
+      input2: {
+        fontSize: 16,
+          '&::placeholder': {
+              fontSize: 16,
+              fontWeight: 400,
+          }
+      },
+
       searchWraper: {
           position: "relative",
 

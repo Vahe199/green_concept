@@ -37,6 +37,11 @@ export const FormCompanyDetails: React.FC<Props> = ({
       []
   );
 
+  const { contractor }: any = AuthorData;
+  const { org_type }: any = contractor;
+
+  const [validateValue, setValidateValue] = useState<any>(org_type);
+
   const { TextArea } = Input;
   const [group, setGroup] = useState("");
   const companyGroupFilter =
@@ -80,7 +85,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
     <div className={classes.root}>
       <Formik
           initialValues={initialValues}
-          validationSchema={validationSchemaFormCompanyDetails}
+          validationSchema={() => validationSchemaFormCompanyDetails(validateValue)}
           onSubmit={async (values,action) => {
             // console.log(values,"values")
             changeAuthorCompanyDetailsData(values, id, errorMessage)
@@ -110,8 +115,8 @@ export const FormCompanyDetails: React.FC<Props> = ({
             <div style={{ color: "red" }}>{error}</div>
           )}
           <div className={classes.label2}>
-            <span>Полное наименование компании</span>
-            <div style={{width:"85%"}}>
+            <span style={{width:"40%"}}>Полное наименование компании</span>
+            <div style={{width:"60%"}}>
               <ValidationErrorWrapper
                   inputClassName="ant-input"
                   error={touched.full_name && Boolean(errors.full_name)}
@@ -122,6 +127,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
                     value={values.full_name}
                     onChange={handleChange}
                     style={{height: '80px'}}
+                    className={classes.input2}
                     //multiline
                     //rows={2}
                     autoSize={false}
@@ -144,8 +150,8 @@ export const FormCompanyDetails: React.FC<Props> = ({
             {/*/>*/}
           </div>
           <div className={classes.label}>
-            <span >Краткое наименование компании</span>
-            <div style={{width:"85%"}}>
+            <span style={{width:"40%"}}>Краткое наименование компании</span>
+            <div style={{width:"60%"}}>
               <ValidationErrorWrapper
                   inputClassName="ant-input"
                   error={touched.short_name && Boolean(errors.short_name)}
@@ -155,6 +161,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
                     name="short_name"
                     value={values.short_name}
                     onChange={handleChange}
+                    className={classes.input2}
                     autoComplete={'off'}
                     placeholder={"Краткое наименование компании"} />
               </ValidationErrorWrapper>

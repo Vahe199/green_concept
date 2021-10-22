@@ -62,6 +62,7 @@ export const GeneralInformationForCreating = () => {
   );
   const { TextArea } = Input;
 
+
   const [validateValue, setValidateValue] = useState<string>("ЮЛ");
 
   useEffect(() => {
@@ -252,6 +253,7 @@ export const GeneralInformationForCreating = () => {
                                           ]}
                                           placeholder="Фамилия Имя"
                                           loading={assetsLoading}
+                                         // className={classes.input}
                                         />
                                       </ValidationErrorWrapper>
                                     </div>
@@ -295,7 +297,8 @@ export const GeneralInformationForCreating = () => {
                         }
                       >
                         <InputFilterSelectedType
-                          // className={classes.input}
+                           //className={classes.input}
+                            //inputClassName="ant-select-selector"
                           name="contractor_type_id"
                           handleChange={(value: any) => {
                             setFieldValue("contractor_type_id", value);
@@ -355,6 +358,7 @@ export const GeneralInformationForCreating = () => {
                       >
                         <Input
                             name="inn"
+                            className={classes.input}
                             value={values.inn}
                             onChange={handleChange}
                             autoComplete={'off'}
@@ -403,6 +407,7 @@ export const GeneralInformationForCreating = () => {
                             value={values.ogrn}
                             onChange={handleChange}
                             autoComplete={'off'}
+                            className={classes.input}
                             placeholder={"1234556789101112"} />
                       </ValidationErrorWrapper>
                     </div>
@@ -469,6 +474,7 @@ export const GeneralInformationForCreating = () => {
                             //multiline
                             //rows={2}
                             autoSize={false}
+                            className={classes.input}
                             //className={classes.textAreaCN}
                             autoComplete={'off'}
                             placeholder={'ООО "Северо-Западная компания”'} />
@@ -500,6 +506,7 @@ export const GeneralInformationForCreating = () => {
                             value={values.short_name}
                             onChange={handleChange}
                             autoComplete={'off'}
+                            className={classes.input}
                             placeholder={"Краткое наименование компании"} />
                       </ValidationErrorWrapper>
                     </div>
@@ -538,6 +545,7 @@ export const GeneralInformationForCreating = () => {
                         name="parent_id"
                         placeholder={"Группа компаний"}
                         onSearch={setGroup}
+                        //className={classes.input}
                         value={values.parent_id}
                         options={companyGroupFilter.map((option: any) => ({
                           key: option.id,
@@ -688,6 +696,7 @@ export const GeneralInformationForCreating = () => {
                             name="legal_registration_address"
                             value={values.legal_registration_address}
                             onChange={handleChange}
+                            className={classes.input}
                             autoComplete={'off'}
                               onBlur={() =>
                                 setLegalRegistrationAddress(
@@ -730,6 +739,7 @@ export const GeneralInformationForCreating = () => {
                             name="actual_address"
                             value={values.actual_address}
                             onChange={handleChange}
+                            className={classes.input}
                             autoComplete={'off'}
                             placeholder={"123456 город улица строени дом офис"} />
                       </ValidationErrorWrapper>
@@ -789,6 +799,7 @@ export const GeneralInformationForCreating = () => {
                         <Input
                             name="post_address"
                             value={values.post_address}
+                            className={classes.input}
                             onChange={handleChange}
                             autoComplete={'off'}
                             placeholder={"123456 город улица строени дом офис"} />
@@ -884,6 +895,7 @@ export const GeneralInformationForCreating = () => {
                                         <Input
                                             name={fieldName}
                                             value={url.url}
+                                            className={classes.input}
                                             onChange={handleChange}
                                               style={
                                                 index > 0
@@ -985,6 +997,7 @@ export const GeneralInformationForCreating = () => {
                                         <Input
                                             name={fieldName}
                                             value={phone.phone}
+                                            className={classes.input}
                                             onChange={handleChange}
                                             style={{ width: "90%" }}
                                             autoComplete={'off'}
@@ -1076,6 +1089,7 @@ export const GeneralInformationForCreating = () => {
                                             name={fieldName}
                                             onChange={handleChange}
                                             style={{ width: "90%" }}
+                                            className={classes.input}
                                             autoComplete={'off'}
                                             type="email"
                                             //value={email}

@@ -139,7 +139,11 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
             fontWeight: 500,
         },
         input: {
-             marginBottom:16
+            fontSize: 16,
+            '&::placeholder': {
+                fontSize: 16,
+                fontWeight: 400,
+            }
         },
         searchWraper: {
             position: "relative",
@@ -154,6 +158,7 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
             "& .ant-select-selection-placeholder":{
                 fontSize:16,
                 marginLeft:18,
+                fontWeight:400
             },
             "& .searchMode .ant-select-selection-search": {
                 // top: 4,

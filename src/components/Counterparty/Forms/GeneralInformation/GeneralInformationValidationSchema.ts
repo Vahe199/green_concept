@@ -38,13 +38,13 @@ export const validationSchemaGeneralInfo = (value: any) =>  yup.object().shape({
 
 });
 
-export const validationSchemaFormCompanyDetails = yup.object().shape({
+export const validationSchemaFormCompanyDetails = (value: any) => yup.object().shape({
 
     full_name: yup.string().min(0, "должен состоять минимум из 10 символов")
         .max(250, "должен состоять максимум из 250 символов")
         .required("Обязательное поле"),
     short_name: yup.string() .min(0, "должен состоять минимум из 10 символов")
-        .max(250, "должен состоять максимум из 250 символов")
+        .max(value == "ЮЛ" ? 250 : 50, `должен состоять максимум из ${value == "ЮЛ" ? 250 : 50} символов`)
         .required("Обязательное поле"),
        // parent_id: yup.string() .min(0, "должен состоять минимум из 1 символов")
        //  .max(250, "должен состоять максимум из 250 символов"),

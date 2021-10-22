@@ -342,6 +342,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                           name="surname"
                           value={values.surname}
                           onChange={handleChange}
+                          className={classes.input2}
                           autoComplete={"off"}
                           placeholder={"Фамилия"}
                         />
@@ -370,6 +371,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                           value={values.firstname}
                           onChange={handleChange}
                           autoComplete={"off"}
+                          className={classes.input2}
                           placeholder={"Имя"}
                         />
                       </ValidationErrorWrapper>
@@ -397,6 +399,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                           value={values.middlename}
                           onChange={handleChange}
                           autoComplete={"off"}
+                          className={classes.input2}
                           placeholder={"Отчество"}
                         />
                       </ValidationErrorWrapper>
@@ -527,6 +530,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                 value={values.contact_contractors.position}
                                 onChange={handleChange}
                                 autoComplete={"off"}
+                                className={classes.input2}
                                 placeholder={"Должность"}
                               />
                             </ValidationErrorWrapper>
@@ -706,6 +710,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                 }}
                                                 onChange={handleChange}
                                                 autoComplete={"off"}
+                                                className={classes.input2}
                                                 placeholder={"+79999999999"}
                                               />
                                             </ValidationErrorWrapper>
@@ -815,6 +820,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                               <Input
                                                 name={fieldName}
                                                 value={phone.phone}
+                                                className={classes.input2}
                                                 style={{
                                                   width: "100%",
                                                 }}
@@ -924,6 +930,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                         >
                                           <Input
                                             name={fieldName}
+                                            className={classes.input2}
                                             value={email.email}
                                             type="email"
                                             style={{
@@ -999,6 +1006,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                           name="delivery_address"
                           value={values.delivery_address}
                           onChange={handleChange}
+                          className={classes.input2}
                           style={{ height: "80px" }}
                           //multiline
                           //rows={2}
@@ -1265,6 +1273,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                       name={fieldInfo}
                                                       value={employees.info}
                                                       onChange={handleChange}
+                                                      className={classes.input2}
                                                       style={{
                                                         height: "120px",
                                                       }}
@@ -1442,6 +1451,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                   <Input
                                                     name={fieldName}
                                                     value={congratulations.name}
+                                                    className={classes.input2}
                                                     onChange={handleChange}
                                                     autoComplete={"off"}
                                                     placeholder={
@@ -1558,6 +1568,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                 >
                                                   <Input
                                                     name={fieldOther}
+                                                    className={classes.input2}
                                                     onChange={handleChange}
                                                     style={{ width: "100%" }}
                                                     autoComplete={"off"}

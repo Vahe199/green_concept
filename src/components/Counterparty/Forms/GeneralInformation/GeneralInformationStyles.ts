@@ -30,7 +30,8 @@ export const useStylesGeneralInformation = makeStyles((theme: Theme) =>
                 paddingRight: 0,
             },
             "& .ant-select-selection-placeholder":{
-                fontSize:16
+                fontSize:16,
+                fontWeight: 400,
             },
             "& .ant-select-selection-item":{
                 fontSize:16,
@@ -96,7 +97,8 @@ export const useStylesCompanyDetails = makeStyles((theme: Theme) =>
                 marginLeft: 0,
             },
             "& .ant-select-selection-placeholder":{
-                fontSize:16
+                fontSize:16,
+                fontWeight:400,
             },
             "& .ant-select-selection-item":{
                 fontSize:16,
@@ -164,6 +166,13 @@ export const useStylesCompanyDetails = makeStyles((theme: Theme) =>
         input: {
             marginBottom:16
         },
+        input2: {
+            fontSize: 16,
+            '&::placeholder': {
+                fontSize: 16,
+                fontWeight: 400,
+            }
+        },
         searchWraper: {
             position: "relative",
 
@@ -177,6 +186,7 @@ export const useStylesCompanyDetails = makeStyles((theme: Theme) =>
             "& .ant-select-selection-placeholder":{
                 fontSize:16,
                 marginLeft:18,
+                fontWeight: 400,
             },
             "& .searchMode .ant-select-selection-search": {
                 // top: 4,
@@ -228,7 +238,8 @@ export const useStylesCompanyContacts = makeStyles((theme: Theme) =>
                 fontSize: 16,
             },
             "& .ant-select-selection-placeholder":{
-                fontSize:16
+                fontSize:16,
+                fontWeight:400
             }
         },
         paper: {
@@ -267,6 +278,13 @@ export const useStylesCompanyContacts = makeStyles((theme: Theme) =>
         },
         input:{
             marginBottom: 16
-        }
+        },
+        input2: {
+            fontSize: 16,
+            '&::placeholder': {
+                fontSize: 16,
+                fontWeight: 400,
+            }
+        },
     })
 );

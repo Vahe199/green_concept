@@ -102,6 +102,7 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
                                                   >
                                                       <Input
                                                           name={fieldName}
+                                                          className={classes.input}
                                                           value={congratulations.name}
                                                           onChange={handleChange}
                                                           autoComplete={'off'}
@@ -173,6 +174,7 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
                                                   >
                                                       <Input
                                                           name={fieldOther}
+                                                          className={classes.input}
                                                           value={congratulations.other}
                                                           onChange={handleChange}
                                                           autoComplete={'off'}

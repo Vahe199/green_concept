@@ -115,7 +115,7 @@ const initialValues = {
                                           )}
                                       >
                                           <InputFilterSelectedType
-                                              // className={classes.input}
+                                               //className={classes.input}
                                               name={fieldDirection}
                                               value={employees.direction_id}
                                               handleChange={(value: any) =>
@@ -212,6 +212,7 @@ const initialValues = {
                                               <TextArea
                                                   name={fieldInfo}
                                                   value={employees.info}
+                                                  className={classes.input}
                                                   onChange={handleChange}
                                                   style={{height: '120px'}}
                                                   //multiline

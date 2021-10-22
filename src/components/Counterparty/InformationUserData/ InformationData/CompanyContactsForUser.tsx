@@ -44,6 +44,8 @@ export const CompanyContactsForUser: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
   const { AuthorData } = useTypedSelector((state) => state.author);
+  const { contractor }: any = AuthorData;
+  const { org_type }: any = contractor;
 
   const {
     legal_registration_address,
@@ -97,7 +99,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
         </div>
         <div className={classes.div}>
           <Typography variant={"button"} className={classes.description}>
-            Сайт компании
+            {org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}
           </Typography>
           <Typography variant={"body2"} className={classes.title}>
             www.сайткомпании.ru

@@ -8,7 +8,7 @@ const headers = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JlZW4ta2lzLnRlY21hbi5ydVwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNDgyNzUwMSwiZXhwIjoxNjM0OTEzOTAxLCJuYmYiOjE2MzQ4Mjc1MDEsImp0aSI6IlVrbDIwaDhSa1RvMkZydlEiLCJzdWIiOjE1NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oyeNI3_LNYJQMCUCuzb2Jiathv7IO4-JjM66CRleuWM`,
+  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JlZW4ta2lzLnRlY21hbi5ydVwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNDkyMDU2NiwiZXhwIjoxNjM1MDA2OTY2LCJuYmYiOjE2MzQ5MjA1NjYsImp0aSI6IjVwdnBCYThQYjZrRU5yZ3ciLCJzdWIiOjE1NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.cW0Chpj24GBIuCaTNkSIxsagaG-QY4BwQdHAqoV1_bI`,
 };
 
 const createAxios = () => {
@@ -195,6 +195,10 @@ export const employeesApi = {
 
   updateEmployeeEducationsById(data:any, id:number) {
     return axios.request({ method: "put", url: `employee_educations/${id}`, data })
+
+  }  ,
+  updateEmployeeSkillsById(data:any, id:number) {
+    return axios.request({ method: "put", url: `employee_skills/${id}`, data })
 
   }
 }

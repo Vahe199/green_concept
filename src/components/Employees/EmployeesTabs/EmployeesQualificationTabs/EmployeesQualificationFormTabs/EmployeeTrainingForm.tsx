@@ -20,7 +20,7 @@ type TrainingFormProps = {
 
 const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining}) => {
 
-    const {recoveryEmployeesQualificationState} = useActions()
+    const {recoveryEmployeesQualificationState,updateEmployeeSkillsDataAC } = useActions()
     const {error, success} = useTypedSelector(state => state.employeesQualification)
     useEffect(()=>{
         if(error){
@@ -34,16 +34,11 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
         }
     },[error, success])
     const initialValues = {
-
-        employee_educations:[{
-            education_type_id:null,
+        employee_skills:[{
             educational_institution_name:"",
             education_document:"",
-            speciality:"",
-            end_date:""
-        }],
-        experience_months:"",
-        experience_years:""
+            expire_date:""
+        }]
     }
     const classes = useStylesEmployeeQualificationForm();
     return(
@@ -52,10 +47,10 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
             <Formik
                 initialValues={initialValues}
                 // validationSchema={validationSchemaContactsFromGreen}
-                onSubmit={async ({experience_years, experience_months,...values},action) => {
-                    // console.log (111, {...values, experience_months: moment(month).format("MM"), experience_years: 222})
-                    console.log (111, {...values})
-                    setEmployeeTraining(true)
+                onSubmit={async (values,action) => {
+                    console.log (111,values)
+                     updateEmployeeSkillsDataAC(values,17)
+                    // setEmployeeTraining(true) gevor
                 }}
             >
                 {({ values, touched, handleChange,errors,setFieldValue }) => (
@@ -75,23 +70,23 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
                 </Button>
             </div>
             <Paper elevation={0} className={classes.paper}>
-                    <FieldArray name="employee_educations">
+                    <FieldArray name="employee_skills">
                         {({ remove, push }) => {
                             return (<div>
-                                    {values.employee_educations.length > 0 &&
-                                    values.employee_educations?.map((education:any, index:number) => {
+                                    {values.employee_skills.length > 0 &&
+                                    values.employee_skills?.map((skills:any, index:number) => {
 
-                                        const field_education_document = `employee_educations[${index}].education_document`;
-                                        const touched_field_education_document = getIn(touched, field_education_document);
-                                        const error_field_education_document = getIn(errors, field_education_document);
+                                        const field_institution_name = `employee_skills[${index}].educational_institution_name`;
+                                        const touched_field_institution_name = getIn(touched, field_institution_name);
+                                        const error_field_institution_name = getIn(errors, field_institution_name);
 
-                                        const field_speciality = `employee_educations[${index}].speciality`;
-                                        const touched_field_speciality = getIn(touched, field_speciality);
-                                        const error_field_speciality = getIn(errors, field_speciality);
+                                        const field_document = `employee_skills[${index}].education_document`;
+                                        const touched_field_document = getIn(touched, field_document);
+                                        const error_field_document = getIn(errors, field_document);
 
-                                        const field_end_date = `employee_educations[${index}].end_date`;
-                                        const touched_field_end_date = getIn(touched, field_end_date);
-                                        const error_field_end_date = getIn(errors, field_end_date);
+                                        const field_expire_date = `employee_skills[${index}].expire_date`;
+                                        const touched_field_expire_date = getIn(touched, field_expire_date);
+                                        const error_field_expire_date = getIn(errors, field_expire_date);
 
                                         return (
                                             <div className={classes.row}>
@@ -109,19 +104,19 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
                                                                     <ValidationErrorWrapper
                                                                         inputClassName="ant-input"
                                                                         helperText={
-                                                                            touched_field_education_document &&
-                                                                            error_field_education_document
-                                                                                ? error_field_education_document
+                                                                            touched_field_institution_name &&
+                                                                            error_field_institution_name
+                                                                                ? error_field_institution_name
                                                                                 : ""
                                                                         }
                                                                         error={Boolean(
-                                                                            touched_field_education_document &&
-                                                                            error_field_education_document
+                                                                            touched_field_institution_name &&
+                                                                            error_field_institution_name
                                                                         )}
                                                                     >
                                                                         <Input
-                                                                            name={field_education_document}
-                                                                            value={education.education_document}
+                                                                            name={field_institution_name}
+                                                                            value={skills.educational_institution_name}
                                                                             onChange={handleChange}
                                                                             placeholder="Наименование учебного заведения" />
                                                                     </ValidationErrorWrapper>
@@ -135,19 +130,19 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
                                                                     <ValidationErrorWrapper
                                                                         inputClassName="ant-input"
                                                                         helperText={
-                                                                            touched_field_speciality &&
-                                                                            error_field_speciality
-                                                                                ? error_field_speciality
+                                                                            touched_field_document &&
+                                                                            error_field_document
+                                                                                ? error_field_document
                                                                                 : ""
                                                                         }
                                                                         error={Boolean(
-                                                                            touched_field_speciality &&
-                                                                            error_field_speciality
+                                                                            touched_field_document &&
+                                                                            error_field_document
                                                                         )}
                                                                     >
                                                                         <Input
-                                                                            name={field_speciality}
-                                                                            value={education.speciality}
+                                                                            name={field_document}
+                                                                            value={skills.education_document}
                                                                             onChange={handleChange}
                                                                             placeholder="Впишите название документа" />
                                                                     </ValidationErrorWrapper>
@@ -163,26 +158,26 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
                                                                     <ValidationErrorWrapper
                                                                         inputClassName="ant-picker"
                                                                         helperText={
-                                                                            touched_field_end_date &&
-                                                                            error_field_end_date
-                                                                                ? error_field_end_date
+                                                                            touched_field_expire_date &&
+                                                                            error_field_expire_date
+                                                                                ? error_field_expire_date
                                                                                 : ""
                                                                         }
                                                                         error={Boolean(
-                                                                            touched_field_end_date &&
-                                                                            error_field_end_date
+                                                                            touched_field_expire_date &&
+                                                                            error_field_expire_date
                                                                         )}
                                                                     >
                                                                         <InputFilterDatePicker
-                                                                            name={field_end_date}
+                                                                            name={field_expire_date}
                                                                             value={
-                                                                                education.end_date
-                                                                                    ? moment(education.end_date, "YYYY-MM-DD")
+                                                                                skills.expire_date
+                                                                                    ? moment(skills.expire_date, "YYYY-MM-DD")
                                                                                     : null
                                                                             }
                                                                             handleChange={(date: any) =>
                                                                                 setFieldValue(
-                                                                                    field_end_date,
+                                                                                    field_expire_date,
                                                                                     moment(date).format("YYYY-MM-DD")
                                                                                 )
                                                                             }
@@ -209,11 +204,9 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
                                             <div
                                                 className={classes.addItem} style={{marginLeft:16}}
                                                 onClick={() => push( {
-                                                    education_type_id:null,
                                                     educational_institution_name:"",
                                                     education_document:"",
-                                                    speciality:"",
-                                                    end_date:""
+                                                    expire_date:""
                                                 })}
                                             >
                                                 + Добавить повышение квалификации

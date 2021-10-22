@@ -12,18 +12,19 @@ import moment from "moment";
 import 'moment/locale/ru'
 import { DatePicker } from 'antd';
 import locale from 'antd/es/date-picker/locale/ru_RU';
+import {employeesApi} from "../../../../../api/api";
 const EmployeeEducationForm:React.FC = () => {
     const initialValues = {
 
-        employee_education:[{
-            education_type_id:null,
+        employee_educations:[{
+            education_type_id:1,
             educational_institution_name:"",
             education_document:"",
             speciality:"",
             end_date:""
         }],
-        month:"",
-        year:""
+        experience_months:"",
+        experience_years:""
     }
     const classes = useStylesEmployeeQualificationForm();
     return(
@@ -31,8 +32,11 @@ const EmployeeEducationForm:React.FC = () => {
             <Formik
                 initialValues={initialValues}
                 // validationSchema={validationSchemaContactsFromGreen}
-                onSubmit={async ({year, month,...values},action) => {
-                    console.log (111, {...values, month: moment(month).format("MM"), year: 222})
+                onSubmit={async ({experience_years, experience_months,...values},action) => {
+                    // console.log (111, {...values, experience_months: moment(month).format("MM"), experience_years: 222})
+                     console.log (111, {...values})
+                    employeesApi.updateEmployeeEducationsById({...values},17)
+
                 }}
             >
                 {({ values, touched, handleChange,errors,setFieldValue }) => (
@@ -62,15 +66,15 @@ const EmployeeEducationForm:React.FC = () => {
                             <DatePicker
 
                                 className={classes.yearPiker}
-                                        name={"year"}
+                                        name={"experience_years"}
                                         value={
-                                            values.year
-                                                ? moment(values.year, "YYYY-MM-DD")
+                                            values.experience_years
+                                                ? moment(values.experience_years, "YYYY-MM-DD")
                                                 : null
                                         }
                                         onChange={(_:any,date: any) => {
                                             setFieldValue(
-                                                "year",
+                                                "experience_years",
                                                 moment(date).format("YYYY-MM-DD")
                                             )
                                         }
@@ -84,16 +88,16 @@ const EmployeeEducationForm:React.FC = () => {
 
                             <DatePicker
                                 locale={locale}
-                                name={"month"}
+                                name={"experience_months"}
                                 value={
-                                    values.month
-                                        ? moment(values.month, "MMM")
+                                    values.experience_months
+                                        ? moment(values.experience_months, "MMM")
                                         : null
                                 }
                                 onChange={(date:any) => {
                                     console.log(date)
 
-                                    setFieldValue("month", date)
+                                    setFieldValue("experience_months", date)
                                 }
                                 }
                                 className={classes.monthPiker}
@@ -106,28 +110,28 @@ const EmployeeEducationForm:React.FC = () => {
 
                     </div>
                 </div>
-                <FieldArray name="employee_education">
+                <FieldArray name="employee_educations">
                     {({ remove, push }) => {
                         return (<div>
-                                {values.employee_education.length > 0 &&
-                                values.employee_education?.map((education:any, index:number) => {
-                                    const field_education_type = `employee_education[${index}].education_type_id`;
+                                {values.employee_educations.length > 0 &&
+                                values.employee_educations?.map((education:any, index:number) => {
+                                    const field_education_type = `employee_educations[${index}].education_type_id`;
                                     const touched_field_education_type = getIn(touched, field_education_type);
                                     const error_field_education_type = getIn(errors, field_education_type);
 
-                                    const field_institution_name = `employee_education[${index}].educational_institution_name`;
+                                    const field_institution_name = `employee_educations[${index}].educational_institution_name`;
                                     const touched_field_institution_name = getIn(touched, field_institution_name);
                                     const error_field_institution_name = getIn(errors, field_institution_name);
 
-                                    const field_education_document = `employee_education[${index}].education_document`;
+                                    const field_education_document = `employee_educations[${index}].education_document`;
                                     const touched_field_education_document = getIn(touched, field_education_document);
                                     const error_field_education_document = getIn(errors, field_education_document);
 
-                                    const field_speciality = `employee_education[${index}].speciality`;
+                                    const field_speciality = `employee_educations[${index}].speciality`;
                                     const touched_field_speciality = getIn(touched, field_speciality);
                                     const error_field_speciality = getIn(errors, field_speciality);
 
-                                    const field_end_date = `employee_education[${index}].end_date`;
+                                    const field_end_date = `employee_educations[${index}].end_date`;
                                     const touched_field_end_date = getIn(touched, field_end_date);
                                     const error_field_end_date = getIn(errors, field_end_date);
 
@@ -278,7 +282,7 @@ const EmployeeEducationForm:React.FC = () => {
                                             }
                                             handleChange={(date: any) =>
                                                 setFieldValue(
-                                                    "birthdate",
+                                                    field_end_date,
                                                     moment(date).format("YYYY-MM-DD")
                                                 )
                                             }

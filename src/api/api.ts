@@ -173,5 +173,19 @@ export const employeesApi = {
   updateEmployeeAboutInfoById(data:any, id:number) {
     return axios.request({ method: "put", url: `employees/about_info/${id}`, data })},
 
+
+  updateEmployeeEducationsById(data:any, id:number) {
+    return axios.request({ method: "put", url: `employee_educations/${id}`, data })
+        .then(res => {
+          console.log(res)
+          debugger
+          return res
+        })
+        .catch((e)=>{
+          console.log(e.response)
+          debugger
+          return e
+        })
+  },
 };
 

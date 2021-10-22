@@ -11,6 +11,7 @@ import { contractorBankDetailsReducer } from "./reducer/contractor/contractorBan
 import {counterpartiesContactPersonReducer} from "./reducer/conterparties/conterpartiesContactPersonReducer";
 import {employeesListReducer} from "./reducer/employees/employeesReducer";
 import {employeesAssetsReducer} from "./reducer/employees/employeesAssetsReducer";
+import {employeesQualificationReducer} from "./reducer/employees/employeesQualificationReducer";
 
 const reducer = combineReducers({
   counterparties: counterpartiesReducer,
@@ -21,7 +22,8 @@ const reducer = combineReducers({
   authorsList: counterpartiesAuthorsListReducer,
   author: counterpartiesAuthorDataReducer,
   contactPerson:counterpartiesContactPersonReducer,
-  employees:employeesListReducer
+  employees:employeesListReducer,
+  employeesQualification:employeesQualificationReducer
 });
 // convert object to string and store in localStorage
 function saveToLocalStorage(state: any) {

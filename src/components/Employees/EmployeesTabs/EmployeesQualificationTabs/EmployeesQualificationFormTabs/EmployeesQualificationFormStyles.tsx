@@ -42,10 +42,24 @@ export const useStylesEmployeeQualificationForm = makeStyles((theme: Theme) =>
             color: '#3B4750',
             width:"50%",
         },
+        typographyTitleEnh:{
+            fontSize: 16,
+            fontWeight:500,
+            color: '#3B4750',
+            width:"40%",
+        },
         typographyValue:{
             display:'flex',
             flexDirection:'column',
              width:"50%",
+            textAlign:"left",
+            fontSize: 16,
+            color: '#3B4750'
+        },
+        typographyValueEnh:{
+            display:'flex',
+            flexDirection:'column',
+            width:"60%",
             textAlign:"left",
             fontSize: 16,
             color: '#3B4750'

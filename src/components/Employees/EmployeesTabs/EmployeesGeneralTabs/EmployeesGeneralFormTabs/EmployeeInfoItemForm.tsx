@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Avatar, Button, Paper, TextField, Typography} from "@material-ui/core";
 import {FieldArray, Form, Formik, getIn} from 'formik';
-
+import {Input} from "antd";
 import {useStylesEmployeeForm} from "./EmployeesFormStyles";
 import {TrashIcon} from "../../../../../IMG/SVG/TrashIcon";
 import {useTypedSelector} from "../../../../../redux/type_redux_hook/useTypedSelector";
@@ -111,16 +111,18 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                 Фамилия:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                <TextField
-                                    fullWidth
-                                    placeholder={"Фамилия"}
-                                    variant={"outlined"}
-                                    name="surname"
-                                    value={values.surname}
-                                    onChange={handleChange}
+                                <ValidationErrorWrapper
+                                    inputClassName="ant-input"
                                     error={touched.surname && Boolean(errors.surname)}
                                     helperText={touched.surname && errors.surname}
-                                />
+                                >
+                                    <Input
+                                        name="surname"
+                                        placeholder={"Фамилия"}
+                                        value={values.surname}
+                                        onChange={handleChange}
+                                    />
+                                </ValidationErrorWrapper>
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -128,16 +130,18 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                 Имя
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                <TextField
-                                    fullWidth
-                                    placeholder={"Имя"}
-                                    variant={"outlined"}
-                                    name="firstname"
-                                    value={values.firstname}
-                                    onChange={handleChange}
+                                <ValidationErrorWrapper
+                                    inputClassName="ant-input"
                                     error={touched.firstname && Boolean(errors.firstname)}
                                     helperText={touched.firstname && errors.firstname}
-                                />
+                                >
+                                    <Input
+                                        name="firstname"
+                                        placeholder={"Имя"}
+                                        value={values.firstname}
+                                        onChange={handleChange}
+                                    />
+                                </ValidationErrorWrapper>
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -145,16 +149,18 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                 Отчество
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                <TextField
-                                    fullWidth
-                                    placeholder={"Отчество"}
-                                    variant={"outlined"}
-                                    name="middlename"
-                                    value={values.middlename}
-                                    onChange={handleChange}
+                                <ValidationErrorWrapper
+                                    inputClassName="ant-input"
                                     error={touched.middlename && Boolean(errors.middlename)}
                                     helperText={touched.middlename && errors.middlename}
-                                />
+                                >
+                                    <Input
+                                        name="middlename"
+                                        placeholder={"Отчество"}
+                                        value={values.middlename}
+                                        onChange={handleChange}
+                                    />
+                                </ValidationErrorWrapper>
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -206,22 +212,24 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                                         fieldName
                                                     );
                                                     return (
-                                                                <TextField
-                                                                    fullWidth
-                                                                    placeholder={"+79999999999"}
-                                                                    variant={"outlined"}
-                                                                    name={fieldName}
-                                                                    value={phone}
-                                                                    onChange={handleChange}
-                                                                    error={Boolean(
-                                                                        touchedFieldName && errorFieldName
-                                                                    )}
-                                                                    helperText={
-                                                                        touchedFieldName && errorFieldName
-                                                                            ? errorFieldName
-                                                                            : ""
-                                                                    }
-                                                                />
+                                                        <ValidationErrorWrapper
+                                                            inputClassName="ant-input"
+                                                            error={Boolean(
+                                                                touchedFieldName && errorFieldName
+                                                            )}
+                                                            helperText={
+                                                                touchedFieldName && errorFieldName
+                                                                    ? errorFieldName
+                                                                    : ""
+                                                            }
+                                                        >
+                                                            <Input
+                                                                name={fieldName}
+                                                                placeholder={"+79999999999"}
+                                                                value={phone}
+                                                                onChange={handleChange}
+                                                            />
+                                                        </ValidationErrorWrapper>
                                                     );
                                                 })}
 
@@ -246,18 +254,31 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                                 const errorFieldName = getIn(errors, fieldName);
                                                 return(
                                                     <div key={index} style={{display:"flex",flexDirection:"row"}}>
-                                                        <TextField
-                                                            fullWidth
-                                                            style={{ width: "80%", marginBottom:16}}
-                                                            placeholder={`email${index + 1}@email.com`}
-                                                            variant={"outlined"}
-                                                            name={fieldName}
-                                                            type="email"
-                                                            value={email}
-                                                            onChange={handleChange}
+                                                        {/*<TextField*/}
+                                                        {/*    fullWidth*/}
+                                                        {/*    style={{ width: "80%", marginBottom:16}}*/}
+                                                        {/*    placeholder={`email${index + 1}@email.com`}*/}
+                                                        {/*    variant={"outlined"}*/}
+                                                        {/*    name={fieldName}*/}
+                                                        {/*    type="email"*/}
+                                                        {/*    value={email}*/}
+                                                        {/*    onChange={handleChange}*/}
+                                                        {/*    error={Boolean(touchedFieldName && errorFieldName)}*/}
+                                                        {/*     helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}*/}
+                                                        {/*/>*/}
+                                                        <ValidationErrorWrapper
+                                                            inputClassName="ant-input"
                                                             error={Boolean(touchedFieldName && errorFieldName)}
-                                                             helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
-                                                        />
+                                                            helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
+                                                        >
+                                                            <Input
+                                                                style={{ width: "100%", marginBottom:16}}
+                                                                name={fieldName}
+                                                                placeholder={`email${index + 1}@email.com`}
+                                                                value={email}
+                                                                onChange={handleChange}
+                                                            />
+                                                        </ValidationErrorWrapper>
                                                         <div style={{marginLeft:"10%"}}
                                                              onClick={() => remove(index)}>
                                                             <TrashIcon />

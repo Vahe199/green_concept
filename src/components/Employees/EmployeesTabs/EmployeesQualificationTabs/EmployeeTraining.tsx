@@ -5,8 +5,11 @@ import AddIcon from "@material-ui/icons/Add";
 import {useStylesEmployeeQualification} from "./EmployeesQualificationStyles";
 import {PencilSimpleIcon} from "../../../../IMG/SVG/PencilSimpleIcon";
 
+type TrainingProps = {
+    setEmployeeTraining:(val:boolean)=>void
+}
 
-const EmployeeTraining:React.FC = () => {
+const EmployeeTraining:React.FC<TrainingProps> = ({setEmployeeTraining}) => {
     let EducationState = [1,2]
     const classes = useStylesEmployeeQualification();
     return(
@@ -15,7 +18,7 @@ const EmployeeTraining:React.FC = () => {
                 <Typography  className={classes.typographyTitle}>
                     Повышение квалификации
                 </Typography>
-                <div onClick={() => console.log('true 11')}>
+                <div onClick={() => setEmployeeTraining(false)}>
                     <PencilSimpleIcon color="#3B4750" />
                 </div>
             </div>

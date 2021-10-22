@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Button, Divider, Paper, Typography} from "@material-ui/core";
 import {useStylesEmployeeQualificationForm} from "./EmployeesQualificationFormStyles";
 import {FieldArray, Form, Formik, getIn} from "formik";
@@ -12,12 +12,33 @@ import moment from "moment";
 import 'moment/locale/ru'
 import { DatePicker } from 'antd';
 import locale from 'antd/es/date-picker/locale/ru_RU';
-import {employeesApi} from "../../../../../api/api";
-const EmployeeEducationForm:React.FC = () => {
+import {InputEmployeesAssetsOptions} from "../../../../Utils/utils_options/InputEmployeesAssetsOptions";
+import {useActions} from "../../../../../redux/type_redux_hook/useAction";
+import {useTypedSelector} from "../../../../../redux/type_redux_hook/useTypedSelector";
+import {notifyError, notifySuccess} from "../../../../Utils/utils_options/ToastNotify";
+import {ToastContainer} from "react-toastify";
+
+type EmployeeEducationFormProps = {
+    setEmployeeEducation:(val:boolean) =>void
+}
+const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployeeEducation}) => {
+    const {updateEmployeeQualificationDataAC,recoveryEmployeesQualificationState} = useActions()
+    const {error, success} = useTypedSelector(state => state.employeesQualification)
+    useEffect(()=>{
+        if(error){
+            notifyError();
+            recoveryEmployeesQualificationState()
+        }
+        if(success){
+            notifySuccess();
+            recoveryEmployeesQualificationState()
+            setEmployeeEducation(true)
+        }
+    },[error, success])
     const initialValues = {
 
         employee_educations:[{
-            education_type_id:1,
+            education_type_id:null,
             educational_institution_name:"",
             education_document:"",
             speciality:"",
@@ -26,16 +47,18 @@ const EmployeeEducationForm:React.FC = () => {
         experience_months:"",
         experience_years:""
     }
+    const {assetsOptionsEducationTypes} = InputEmployeesAssetsOptions()
     const classes = useStylesEmployeeQualificationForm();
     return(
         <div className={classes.root}>
+            <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
             <Formik
                 initialValues={initialValues}
                 // validationSchema={validationSchemaContactsFromGreen}
                 onSubmit={async ({experience_years, experience_months,...values},action) => {
                     // console.log (111, {...values, experience_months: moment(month).format("MM"), experience_years: 222})
                      console.log (111, {...values})
-                    employeesApi.updateEmployeeEducationsById({...values},17)
+                    updateEmployeeQualificationDataAC({...values},17)
 
                 }}
             >
@@ -169,9 +192,9 @@ const EmployeeEducationForm:React.FC = () => {
                                                     value
                                                 )
                                             }
-                                            // options={
-                                            //     assetsOptionsDirections
-                                            // }
+                                            options={
+                                                assetsOptionsEducationTypes
+                                            }
                                             placeholder="Выберите"
                                         />
                                     </ValidationErrorWrapper>

@@ -85,7 +85,6 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                 const fileReader = new FileReader();
                                 fileReader.onload = () => {
                                     if (fileReader.readyState === 2) {
-                                        debugger
                                         setFieldValue('photo', e.target.files[0]);
                                          setAvatarPreview(fileReader.result);
                                     }

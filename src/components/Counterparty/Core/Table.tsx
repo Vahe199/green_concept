@@ -11,7 +11,7 @@ import { useActions } from "../../../redux/type_redux_hook/useAction";
 import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicker";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
-import { Table } from "antd";
+import { Table, Divider } from "antd";
 
 const useStyles = makeStyles({
   root: {
@@ -27,10 +27,25 @@ const useStyles = makeStyles({
     "& .ant-select-selection-placeholder": {
       lineHeight: "36px !important",
       fontWeight: 400,
-      fontSize: '16px',
+      fontSize: "16px",
     },
     "& .ant-picker": {
       height: "40px !important",
+    },
+  },
+  titleWrapper: {
+    padding: "16px 16px 0 16px",
+    fontSize: 16,
+    color: "#5B6770",
+
+    "& span": {
+      color: "#3B4750",
+      fontWeight: 500,
+    },
+
+    "& .ant-divider.ant-divider-horizontal": {
+      margin: "8px 0 6px 0",
+      borderColor: "#ADB3B8",
     },
   },
   table: {
@@ -451,6 +466,13 @@ export default function CounterpartiesTable(props: any) {
 
   return (
     <Paper className={classes.root}>
+      <div className={classes.titleWrapper}>
+        <div>
+          Найдено <span>{data.length}</span> из <span>{data.length}</span>
+        </div>
+        <Divider />
+      </div>
+
       <Table
         onRow={(record) => ({
           onClick: () => getUserData(record),

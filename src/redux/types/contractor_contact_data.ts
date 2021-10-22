@@ -1,9 +1,7 @@
-import { getContactPersonsListData } from "../store/action_creator/contractors_action_creatot/ContractorContactAC";
-
 export interface ContractorContactDataState {
   ContactPerson: any[];
   NewContactPerson: any[];
-  PersonContact: any[];
+  PersonContact: { [key: string]: any };
   loading: boolean;
   error: boolean | string;
   success: boolean | string;
@@ -35,7 +33,7 @@ interface GetContactPersonsListAction {
 }
 interface GetContactPersonsListWithIdAction {
   type: ContractorContactDataActionType.GET_CONTRACTOR_CONTACT_DATA_WITH_ID;
-  payload: any[];
+  payload: { [key: string]: any };
 }
 interface RecoveryState {
   type: ContractorContactDataActionType.RECOVERY_CONTRACTOR_CONTACT_DATA_STATE;

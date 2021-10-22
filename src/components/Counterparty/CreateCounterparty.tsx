@@ -97,11 +97,6 @@ const CreateCounterparty = (props: any) => {
   let { contractor }: any = AuthorData;
   const { id = null }: any = contractor;
 
-  const { getContactPersonsDataWithId } = useActions();
-  useEffect(() => {
-    getContactPersonsDataWithId(110);
-  }, []);
-
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [edit, setEdit] = useState(true);

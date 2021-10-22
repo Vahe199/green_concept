@@ -163,32 +163,35 @@ export const ContactPersonsForCreating: React.FC = () => {
       "birthdate",
       "delivery_address",
       "service_type_id",
-      "status_id"
+      "status_id",
     ]),
+
     // @ts-ignore
-    branches: PersonContact.branches?.map((branch) => branch.id),
-    // @ts-ignore
-    contact_contractors: {...pick(get(PersonContact.contractors, "[0]", {}), ["main", "role_id", "position", "contractor_id"]), contractor_id: get(PersonContact.contractors, "[0]id", ""),},
-    // @ts-ignore
-    contact_employees: PersonContact.employees?.map((employee: any) =>
-      pick(employee, ["direction_id", "employee_id", "info"])
+    branches: get(PersonContact, "branches", []).map((branch: any) =>
+      get(branch, "id", "")
     ),
-    // @ts-ignore
-    contact_congratulations: PersonContact.congratulations?.map(
+    contact_contractors: {
+      ...pick(get(PersonContact, "contractors[0]", {}), [
+        "main",
+        "role_id",
+        "position",
+        "contractor_id",
+      ]),
+      contractor_id: get(PersonContact, "contractors[0]id", ""),
+    },
+    contact_employees: get(PersonContact, "employees", []).map(
+      (employee: any) => pick(employee, ["direction_id", "employee_id", "info"])
+    ),
+    contact_congratulations: get(PersonContact, "congratulations", []).map(
       (congratulation: any) =>
         pick(congratulation, ["name", "congratulation_type_id", "other"])
     ),
-    // @ts-ignore
-    emails: PersonContact.emails?.map((email: any) => pick(email, ["email"])),
-    // @ts-ignore
-    contact_employees: PersonContact.phones?.map((phone: any) =>
+    emails: get(PersonContact, "emails", []).map((email: any) =>
+      pick(email, ["email"])
+    ),
+    phones: get(PersonContact, "phones", []).map((phone: any) =>
       pick(phone, ["phone", "phone_type"])
     ),
-    // emails: [{ email: "" }],
-    // phones: [
-    //   { phone: "", phone_type: "Рабочий" },
-    //   { phone: "", phone_type: "Мобильный" },
-    // ],
   };
   console.log(PersonContact, initialValues);
 
@@ -196,6 +199,10 @@ export const ContactPersonsForCreating: React.FC = () => {
     if (attachedContact) {
       getContactPersonsDataWithId(+attachedContact);
     }
+
+    return () => {
+      getContactPersonsDataWithId(null);
+    };
   }, [attachedContact]);
 
   useEffect(() => {

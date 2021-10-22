@@ -5,7 +5,6 @@ import {employeesApi} from "../../../../api/api";
 
 
 export const updateEmployeeEmployeeDataAC = (formData:any ,id:number) => async (dispatch: Dispatch<EmployeeListAction>) => {
-debugger
     try {
         dispatch({type:EmployeeListActionType.UPDATE_EMPLOYEES_LIST})
         const {data} = await employeesApi.updateEmployeeDataById(id, formData)
@@ -16,7 +15,6 @@ debugger
 }
 
 export const updateEmployeeAboutListAC = (formData:any ,id:number) => async (dispatch: Dispatch<EmployeeListAction>) => {
-debugger
     try {
         dispatch({type:EmployeeListActionType.UPDATE_EMPLOYEES_LIST})
         const {data} = await employeesApi.updateEmployeeAboutInfoById(formData, id)

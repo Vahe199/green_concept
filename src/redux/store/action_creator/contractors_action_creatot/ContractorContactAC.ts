@@ -45,9 +45,13 @@ export const getContactPersonsListData =
 
 //get contact by id
 export const getContactPersonsDataWithId =
-  (id: number) => async (dispatch: Dispatch<ContractorContactDataAction>) => {
+  (id: number | null) =>
+  async (dispatch: Dispatch<ContractorContactDataAction>) => {
     try {
-      const { data } = await contractorApi.getContractorContactDataWithId(id);
+      const { data }: { data: { contact: { [key: string]: any } } } = id
+        ? await contractorApi.getContractorContactDataWithId(id)
+        : { data: { contact: {} } };
+
       dispatch({
         type: ContractorContactDataActionType.GET_CONTRACTOR_CONTACT_DATA_WITH_ID,
         payload: data.contact,

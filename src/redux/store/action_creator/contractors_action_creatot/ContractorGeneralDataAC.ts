@@ -7,7 +7,6 @@ import {
 
 export const insertContractorGeneralData =
   (formData: any) => async (dispatch: Dispatch<AuthorDataAction>) => {
-  debugger
     try {
       dispatch({
         type: AuthorDataActionType.CHANGE_AUTHOR_DATA,

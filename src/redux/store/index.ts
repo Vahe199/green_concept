@@ -58,5 +58,6 @@ store.subscribe(() =>
   saveToLocalStorage({
     author: store.getState().author,
     assets: store.getState().assets,
+    employees:store.getState().employees
   })
 );

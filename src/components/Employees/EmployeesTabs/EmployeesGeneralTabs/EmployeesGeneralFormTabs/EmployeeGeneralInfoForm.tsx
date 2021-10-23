@@ -23,9 +23,7 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
     const {updateEmployeeGeneralListAC,recoveryEmployeesState} = useActions()
     const {employeeById, error,success_update} = useTypedSelector(state => state.employees)
     let {employee}:any = employeeById
-    let {region,company,directions,position,end_work_date ,start_work_date}:any = employee;
-const id:number = 17
-
+    let {region,company,directions,position,end_work_date ,start_work_date, id}:any = employee;
     useEffect( ()=>{
         if(error){
             notifyError();
@@ -87,16 +85,7 @@ const id:number = 17
                                 Регион:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                {/*<TextField*/}
-                                {/*    fullWidth*/}
-                                {/*    placeholder={"Выберите"}*/}
-                                {/*    variant={"outlined"}*/}
-                                {/*    name="region_id"*/}
-                                {/*    value={values.region_id}*/}
-                                {/*    onChange={handleChange}*/}
-                                {/*    error={touched.region_id && Boolean(errors.region_id)}*/}
-                                {/*    helperText={touched.region_id && errors.region_id}*/}
-                                {/*/>*/}
+
                                 <ValidationErrorWrapper
                                     inputClassName="ant-select-selector"
                                     error={
@@ -125,16 +114,6 @@ const id:number = 17
                                 Компания трудоустройства
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                {/*<TextField*/}
-                                {/*    fullWidth*/}
-                                {/*    placeholder={"Выберите"}*/}
-                                {/*    variant={"outlined"}*/}
-                                {/*    name="empl_company"*/}
-                                {/*    value={values.empl_company}*/}
-                                {/*    onChange={handleChange}*/}
-                                {/*    error={touched.empl_company && Boolean(errors.empl_company)}*/}
-                                {/*    helperText={touched.empl_company && errors.empl_company}*/}
-                                {/*/>*/}
                                 <ValidationErrorWrapper
                                     inputClassName="ant-select-selector"
                                     error={
@@ -163,16 +142,6 @@ const id:number = 17
                                 Направление:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                {/*<TextField*/}
-                                {/*    fullWidth*/}
-                                {/*    placeholder={"Выберите"}*/}
-                                {/*    variant={"outlined"}*/}
-                                {/*    name="direction"*/}
-                                {/*    value={values.direction}*/}
-                                {/*    onChange={handleChange}*/}
-                                {/*    error={touched.direction && Boolean(errors.direction)}*/}
-                                {/*    helperText={touched.direction && errors.direction}*/}
-                                {/*/>*/}
                                 <FieldArray name="directions">
                                     {() => {
                                         return (
@@ -242,16 +211,6 @@ const id:number = 17
                                 Должность:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                {/*<TextField*/}
-                                {/*    fullWidth*/}
-                                {/*    placeholder={"Выберите"}*/}
-                                {/*    variant={"outlined"}*/}
-                                {/*    name={"position_id"}*/}
-                                {/*    value={values.position_id}*/}
-                                {/*    onChange={handleChange}*/}
-                                {/*    error={touched.position_id && Boolean(errors.position_id)}*/}
-                                {/*    helperText={touched.position_id && errors.position_id}*/}
-                                {/*/>*/}
                                 <ValidationErrorWrapper
                                     inputClassName="ant-select-selector"
                                     error={

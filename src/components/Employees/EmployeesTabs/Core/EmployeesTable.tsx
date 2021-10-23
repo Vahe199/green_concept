@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {useEffect, useState} from "react";
 import Paper from "@material-ui/core/Paper";
-import moment from "moment";
-import { MagnifyingGlass } from "../../../../IMG/SVG/MagnifyingGlass";
+import {MagnifyingGlass} from "../../../../IMG/SVG/MagnifyingGlass";
 import InputFilterSearch from "../../../Utils/FilterInputs/InputFilterSearch";
 
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
-import InputFilterDatePicker from "../../../Utils/FilterInputs/InputFilterDatePicker";
-import { SortingButtons } from "../../../../IMG/SVG/sortingButtonsIcon";
-import { Table } from "antd";
+import {SortingButtons} from "../../../../IMG/SVG/sortingButtonsIcon";
+import {Table} from "antd";
 import {useActions} from "../../../../redux/type_redux_hook/useAction";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import {useTableStyles} from "../EmployeesStyle/EmployeesTableStyles";
@@ -35,23 +33,21 @@ const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePosition
     const {employeesData,loading} = useTypedSelector((state) => state.employees);
     const {employees}:any = employeesData;
 
-
-    const { getAuthorData } = useActions();
-
-    const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
-        []
-    );
-
     const [params, setParams] = useState<any>({
         include: "type,crms,branches,service,sites,emails,phones,author,group",
     });
-    const [services, setServices] = useState("");
-    const [fullName, setFullName] = useState("");
-    const [branch, setBranch] = useState("");
-    const [group, setGroup] = useState("");
-    const [crm, setCrm] = useState("");
-    const [createdAt, setCreatedAt] = useState<any>(null);
-    const [updatedAt, setUpdatedAt] = useState<any>(null);
+
+
+const [filterField, setFilterField] = useState<any>({
+    empId:"",
+    fullName:"",
+    companies:"",
+    region:"",
+    direction:"",
+    ositions:"",
+    status:""
+})
+
 
 
     const getUserData = (data: any) => {
@@ -59,6 +55,43 @@ const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePosition
         history.push(`/employee`);
         fetchEmployeeByIdtAC(data.id);
     };
+
+
+
+
+    const employeeData = employees?.map(({
+       id,firstname,middlename, surname, region, directions, position, phones, status, company
+                                        }:EmployeesType) => {
+        return {
+            key: id, id, FIO:`${surname} ${firstname} ${middlename}`,company,region, directions, position, phones, status
+        }
+    })
+    const [filterData, setFilterData] = useState<any>(employeeData);
+
+    const searchFilter = (text:any, field:string) => {
+        if (text) {
+            const newData = employeeData.filter((item:any) => {
+                const itemData = field == "FIO" ?
+                    item.FIO.toUpperCase() : item[field];
+                const textData = field == "FIO" ? text.toUpperCase() : text;
+                return field == "FIO" ? itemData.indexOf(textData) > -1:field == "id" ? item.id == +text : item[field].id == +text;
+            });
+            setFilterData(newData);
+        } else {
+            setFilterData(employeeData);
+        }
+    }
+debugger
+    useEffect(() => {
+        const newParams: any = {};
+        Object.entries(params).forEach(([key, value]) => {
+            if (value) {
+                newParams[key] = value;
+            }
+        });
+
+        fetchCounterpartiesList({ params: newParams });
+    }, [params]);
 
     const columns = [
         {
@@ -69,11 +102,12 @@ const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePosition
                         <InputFilterSearch
                             handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                 const { value } = e.target;
-                                setFullName(value);
+                                searchFilter(value, "id")
+                                setFilterField({empId:value});
                                 (value.length === 0 || value.length > 3) &&
-                                setParams({ ...params, "filter[full_name]": value });
+                                setParams({ ...params, "filter[green_legal_id]": value });
                             }}
-                            value={fullName}
+                            value={filterField.empId}
                             className={classes.input}
                         />
                     </div>
@@ -92,16 +126,17 @@ const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePosition
             </span>
                     </div>
 
-                        <InputFilterSearch
-                            handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                const { value } = e.target;
-                                setFullName(value);
-                                (value.length === 0 || value.length > 3) &&
-                                setParams({ ...params, "filter[full_name]": value });
-                            }}
-                            value={fullName}
-                            className={classes.input}
-                        />
+                    <InputFilterSearch
+                        handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            const { value } = e.target;
+                            setFilterField({fullName:value})
+                            searchFilter(value,"FIO");
+                            (value.length === 0 || value.length > 3) &&
+                            setParams({ ...params, "filter[fio]": value });
+                        }}
+                        value={filterField.fullName}
+                        className={classes.input}
+                    />
                 </>
             ),
             dataIndex: "FIO",
@@ -115,12 +150,13 @@ const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePosition
                     <InputFilterSelect
                         options={assetsOptionsCompanies}
                         filterOption={false}
-                        onSearch={setBranch}
                         onSelect={(id: number) => {
-                            setParams({ ...params, "filter[branches.id]": id });
+                            setFilterField({companies:id})
+                            searchFilter(id, "company")
+                            // setParams({ ...params, "filter[branches.id]": id });
                         }}
                         notFoundContent={null}
-                        value={params["filter[branches.id]"]}
+                        value={filterField.companies}
                         className={"searchMode " + classes.input}
                         prefix={<MagnifyingGlass className={classes.icon} />}
                         showSearch
@@ -138,12 +174,13 @@ const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePosition
                     <InputFilterSelect
                         options={assetsOptionsRegions}
                         filterOption={false}
-                        onSearch={setBranch}
                         onSelect={(id: number) => {
-                            setParams({ ...params, "filter[branches.id]": id });
+                            setFilterField({region:id})
+                            searchFilter(id, "region")
+                            // setParams({ ...params, "filter[branches.id]": id });
                         }}
                         notFoundContent={null}
-                        value={params["filter[branches.id]"]}
+                        value={filterField.region}
                         className={"searchMode " + classes.input}
                         prefix={<MagnifyingGlass className={classes.icon} />}
                         showSearch
@@ -161,12 +198,13 @@ const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePosition
                     <InputFilterSelect
                         options={assetsOptionsRegions}
                         filterOption={false}
-                        onSearch={setBranch}
                         onSelect={(id: number) => {
-                            setParams({ ...params, "filter[branches.id]": id });
+                            setFilterField({direction:id})
+                            searchFilter(id,"region" )
+                            // setParams({ ...params, "filter[branches.id]": id });
                         }}
                         notFoundContent={null}
-                        value={params["filter[branches.id]"]}
+                        value={filterField.direction}
                         className={"searchMode " + classes.input}
                         prefix={<MagnifyingGlass className={classes.icon} />}
                         showSearch
@@ -179,7 +217,7 @@ const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePosition
                     return (
                         <div key={direction.id}>
                             {direction.name}
-            </div>
+                        </div>
                     );
                 });
             },
@@ -191,12 +229,13 @@ const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePosition
                     <InputFilterSelect
                         options={assetsOptionsEmployeePositions}
                         filterOption={false}
-                        onSearch={setBranch}
                         onSelect={(id: number) => {
-                            setParams({ ...params, "filter[branches.id]": id });
+                            setFilterField({positions:id})
+                            searchFilter(id,"position" )
+                            // setParams({ ...params, "filter[branches.id]": id });
                         }}
                         notFoundContent={null}
-                        value={params["filter[branches.id]"]}
+                        value={filterField.positions}
                         className={"searchMode " + classes.input}
                         prefix={<MagnifyingGlass className={classes.icon} />}
                         showSearch
@@ -230,20 +269,22 @@ const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePosition
         {
             title: () => (
                 <>
-                        <span className={classes.titleText}>Статус</span>
-                        <InputFilterSelect
-                            options={assetsOptionsRegions}
-                            filterOption={false}
-                            onSearch={setBranch}
-                            onSelect={(id: number) => {
-                                setParams({ ...params, "filter[branches.id]": id });
-                            }}
-                            notFoundContent={null}
-                            value={params["filter[branches.id]"]}
-                            className={"searchMode " + classes.input}
-                            prefix={<MagnifyingGlass className={classes.icon} />}
-                            showSearch
-                        />
+                    <span className={classes.titleText}>Статус</span>
+                    <InputFilterSelect
+                        options={assetsOptionsRegions}
+                        filterOption={false}
+                        // onSearch={}
+                        onSelect={(id: number) => {
+                            setFilterField({status:id})
+                            searchFilter(id,"region" )
+                            // setParams({ ...params, "filter[branches.id]": id });
+                        }}
+                        notFoundContent={null}
+                        value={filterField.status}
+                        className={"searchMode " + classes.input}
+                        prefix={<MagnifyingGlass className={classes.icon} />}
+                        showSearch
+                    />
                 </>
             ),
             dataIndex: "status",
@@ -252,28 +293,6 @@ const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePosition
         },
 
     ];
-
-
-    const employeeDa = employees?.map(({
-       id,firstname,middlename, surname, region, directions, position, phones, status, company
-                                        }:EmployeesType) => {
-        return {
-            key: id, id, FIO:`${surname} ${firstname} ${middlename}`,company,region, directions, position, phones, status
-        }
-    })
-debugger
-    useEffect(() => {
-        const newParams: any = {};
-        Object.entries(params).forEach(([key, value]) => {
-            if (value) {
-                newParams[key] = value;
-            }
-        });
-
-        fetchCounterpartiesList({ params: newParams });
-    }, [params]);
-
-
     return (
         <Paper className={classes.root}>
             <Table
@@ -281,7 +300,7 @@ debugger
                     onClick: () => getUserData(record),
                 })}
                 columns={columns}
-                 dataSource={employeeDa}
+                 dataSource={filterData}
                 pagination={false}
                 scroll={{ y: window.innerHeight - 328 }}
                 className={classes.table}

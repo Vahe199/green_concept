@@ -79,7 +79,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Должность:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                {position.name}
+                                {position?.name}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -87,7 +87,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Дата приема на работу:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                {start_work_date.replaceAll("-",".")}
+                                {start_work_date ? start_work_date.replaceAll("-",".") : ""}
                             </Typography>
                         </div>
                         <div className={classes.column}>
@@ -95,7 +95,7 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                                 Дата увольнения:
                             </Typography>
                             <Typography className={classes.typographyValue}>
-                                {end_work_date.replaceAll("-",".")}
+                                {end_work_date ? end_work_date.replaceAll("-",".") : ""}
                             </Typography>
                         </div>
                         <div className={classes.column}>

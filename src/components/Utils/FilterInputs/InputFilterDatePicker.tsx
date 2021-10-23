@@ -18,8 +18,12 @@ const useStyles = makeStyles((theme: Theme) =>
       "& .ant-picker-input:hover .ant-picker-suffix": {
         display: "none",
       },
+        "& .ant-picker-suffix":{
+            height:16
+        },
     },
     iconCalendar: {
+        fontSize:18,
       //backgroundColor: 'green',
       //cursor: 'pointer',
       "&:hover": {

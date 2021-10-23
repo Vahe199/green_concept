@@ -1,5 +1,5 @@
 export interface EmployeesListState {
-    employees: any[];
+    employeesData: any[];
     employeeById: any[];
     loading: boolean;
     load_update: boolean;

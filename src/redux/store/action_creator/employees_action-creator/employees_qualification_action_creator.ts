@@ -27,6 +27,18 @@ export const updateEmployeeSkillsDataAC = (formData:any ,id:number) => async (di
     }
 }
 
+export const updateEmployeeRegisterDataAC = (formData:any ,id:number) => async (dispatch: Dispatch<EmployeeQualificationListAction>) => {
+debugger
+    try {
+        dispatch({type:EmployeeQualificationListActionType.UPDATE_EMPLOYEES_QUALIFICATION_LIST})
+        const {data} = await employeesApi.updateEmployeeRegisterById(id, formData)
+        dispatch({type:EmployeeQualificationListActionType.UPDATE_EMPLOYEES_QUALIFICATION_LIST_SUCCESS, payload:data})
+    }catch (e:any) {
+    console.log(e.response)
+        dispatch({type:EmployeeQualificationListActionType.UPDATE_EMPLOYEES_QUALIFICATION_LIST_ERROR,payload:"что-то пошло не так"})
+    }
+}
+
 
 
 export const recoveryEmployeesQualificationState = () => ({type:EmployeeQualificationListActionType.RECOVERY_EMPLOYEES_QUALIFICATION_STATE})

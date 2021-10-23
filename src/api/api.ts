@@ -148,17 +148,15 @@ export const contractorApi = {
   getContractorContactDataWithId(id: number) {
     return axios.request({ method: "get", url: `contacts/${id}` });
   },
-  searchContactPersonData() {
-    return axios.request({ method: "get", url: "employees" });
-  },
 };
 
 export const employeesApi = {
+
   getEmployeesAssets() {
     return axios.request({method: "get", url: "employees/get_assets"});
   },
 
-  searchContactPersonData() {
+  getEmployeesData() {
     return axios.request({method: "get", url: "employees"});
   },
 
@@ -197,8 +195,14 @@ export const employeesApi = {
     return axios.request({ method: "put", url: `employee_educations/${id}`, data })
 
   }  ,
-  updateEmployeeSkillsById(data:any, id:number) {
+  updateEmployeeSkillsById( id:number,data:any,) {
+    debugger
     return axios.request({ method: "put", url: `employee_skills/${id}`, data })
+
+  },
+  updateEmployeeRegisterById( id:number,data:any,) {
+    debugger
+    return axios.request({ method: "put", url: `employee_registers/${id}`, data })
 
   }
 }

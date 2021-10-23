@@ -102,7 +102,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Employees = (props: any) => {
-    const {fetchEmployeeByIdtAC,getEmployeeAssetsAC} = useActions()
     const {loading} = useTypedSelector(state => state.employees)
     let history = useHistory();
     const classes = useStyles();
@@ -110,12 +109,8 @@ const Employees = (props: any) => {
 
     const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: string) => {
          setSelectedTab(newValue);
-        history.push(`/employees/${newValue}`)
+        history.push(`/employee/${newValue}`)
     };
-useEffect(()=>{
-    fetchEmployeeByIdtAC(17)
-    getEmployeeAssetsAC()
-},[])
     return (
         <div className={classes.container}>
             <Paper square className={classes.root}>

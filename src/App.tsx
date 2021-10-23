@@ -8,6 +8,7 @@ import { Route } from "react-router-dom";
 import CreateCounterparty from "./components/Counterparty/CreateCounterparty";
 import Employees from "./components/Employees/Employees";
 import "./App.less";
+import {EmployeesTab} from "./components/Employees/EmployeesTabs/EmployeesTab";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,7 +51,8 @@ const App: React.FC = (props: PropsWithChildren<any>) => {
 
         <main className={classes.content}>
           <Route path="/counterparties" render={() => <Counterparty />} />
-          <Route path="/employees/:item?" render={() => <Employees />} />
+          <Route path="/employee/:item?" render={() => <Employees />} />
+          <Route path="/employees" render={() => <EmployeesTab />} />
           <Route
             path="/counterparty/:item?"
             render={() => <CreateCounterparty />}

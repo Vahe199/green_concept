@@ -1,18 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FieldArray, Form, Formik, getIn } from "formik";
-import {
-  Button,
-  Checkbox,
-  InputAdornment,
-  Paper,
-  Radio,
-  TextField,
-} from "@material-ui/core";
+import { Button, Checkbox, Paper, Radio } from "@material-ui/core";
 import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
 import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
 import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
-import SearchIcon from "@material-ui/icons/Search";
 import Divider from "@material-ui/core/Divider";
 import { useStylesContactPersons } from "./TabsForUtil/ContactPersonsForCreatingStyles";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
@@ -22,7 +14,8 @@ import { validationSchemaContactPerson } from "./TabsForUtil/ContactPersonsForCr
 import { useActions } from "../../../redux/type_redux_hook/useAction";
 import ModalListOfContacts from "../Core/Modals/ModalListOfContacts";
 import ValidationErrorWrapper from "../../Utils/utils_options/ValidationErrorWrapper";
-import { Input, Modal } from "antd";
+import { Input } from "antd";
+import MaskedInput from "antd-mask-input";
 import { InputAssetsOptions } from "../../Utils/utils_options/InputAssetsOptions";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -193,7 +186,6 @@ export const ContactPersonsForCreating: React.FC = () => {
       pick(phone, ["phone", "phone_type"])
     ),
   };
-  console.log(PersonContact, initialValues);
 
   useEffect(() => {
     if (attachedContact) {
@@ -709,16 +701,17 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                   : ""
                                               }
                                             >
-                                              <Input
+                                              <MaskedInput
                                                 name={fieldName}
                                                 value={phone.phone}
                                                 style={{
                                                   width: "100%",
                                                 }}
                                                 onChange={handleChange}
-                                                autoComplete={"off"}
                                                 className={classes.input2}
-                                                placeholder={"+79999999999"}
+                                                placeholder={"7 999 999 99 99"}
+                                                mask="1 111 111 11 11"
+                                                prefix={<>+</>}
                                               />
                                             </ValidationErrorWrapper>
                                           </div>
@@ -824,16 +817,17 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                   : ""
                                               }
                                             >
-                                              <Input
+                                              <MaskedInput
                                                 name={fieldName}
                                                 value={phone.phone}
-                                                className={classes.input2}
                                                 style={{
                                                   width: "100%",
                                                 }}
                                                 onChange={handleChange}
-                                                autoComplete={"off"}
-                                                placeholder={"+79999999999"}
+                                                className={classes.input2}
+                                                placeholder={"7 999 999 99 99"}
+                                                mask="1 111 111 11 11"
+                                                prefix={<>+</>}
                                               />
                                             </ValidationErrorWrapper>
                                           </div>

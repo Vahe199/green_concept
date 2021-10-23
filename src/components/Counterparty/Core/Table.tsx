@@ -11,120 +11,137 @@ import { useActions } from "../../../redux/type_redux_hook/useAction";
 import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicker";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
-import { Table, Divider } from "antd";
+import { Table, Divider, Spin } from "antd";
 
-const useStyles = makeStyles({
-  root: {
-    width: "100%",
-    color: "#3b475080",
+const useStyles = (loading: boolean) =>
+  makeStyles({
+    root: {
+      width: "100%",
+      color: "#3b475080",
+      position: "relative",
 
-    "& .ant-select": {
-      height: "40px !important",
+      "& .ant-select": {
+        height: "40px !important",
+      },
+      "& .ant-select-selection-item": {
+        lineHeight: "36px !important",
+      },
+      "& .ant-select-selection-placeholder": {
+        lineHeight: "36px !important",
+        fontWeight: 400,
+        fontSize: "16px",
+      },
+      "& .ant-picker": {
+        height: "40px !important",
+      },
     },
-    "& .ant-select-selection-item": {
-      lineHeight: "36px !important",
+    titleWrapper: {
+      padding: "16px 16px 0 16px",
+      fontSize: 16,
+      color: "#5B6770",
+
+      "& span": {
+        color: "#3B4750",
+        fontWeight: 500,
+      },
+
+      "& .ant-divider.ant-divider-horizontal": {
+        margin: "8px 0 6px 0",
+        borderColor: "#ADB3B8",
+      },
     },
-    "& .ant-select-selection-placeholder": {
-      lineHeight: "36px !important",
-      fontWeight: 400,
+    table: {
+      color: "#3B4750",
+      fontSize: 15,
+      borderRadius: "4px",
+      overflow: "hidden",
+
+      "& thead": {
+        "& tr": {
+          "& th": {
+            alignItems: "flex-start",
+            background: "#FFFFFF",
+            "&::before": { display: "none" },
+            minHeight: 104,
+          },
+        },
+      },
+      "& tbody": {
+        ...(loading ? { visibility: "hidden" } : {}),
+        minHeight: 320,
+
+        "& tr": {
+          cursor: "pointer",
+
+          "&:nth-child(odd) ": {
+            background: " #F2F3F4",
+          },
+
+          "&:nth-child(even) ": {
+            background: " #FFFFFF",
+          },
+          "&:hover": {
+            boxShadow:
+              "0px 0px 12px rgba(51, 63, 79, 0.08), 0px 0px 2px rgba(51, 63, 79, 0.32)",
+          },
+          "&:active": {
+            boxShadow: "0px 0px 6px 0px #333F4F3D inset",
+          },
+
+          "&.ant-table-row:hover > td": {
+            background: "transparent",
+          },
+        },
+      },
+    },
+    spinner: {
+      position: "absolute",
+      width: "100%",
+      height: "300px",
+      bottom: 0,
+      top: "70%",
+    },
+    titleText: {
+      fontsize: "15px",
+    },
+    input: {
+      marginTop: 16,
+    },
+    icon: {
       fontSize: "16px",
     },
-    "& .ant-picker": {
-      height: "40px !important",
-    },
-  },
-  titleWrapper: {
-    padding: "16px 16px 0 16px",
-    fontSize: 16,
-    color: "#5B6770",
+    searchWraper: {
+      position: "relative",
 
-    "& span": {
-      color: "#3B4750",
-      fontWeight: 500,
-    },
-
-    "& .ant-divider.ant-divider-horizontal": {
-      margin: "8px 0 6px 0",
-      borderColor: "#ADB3B8",
-    },
-  },
-  table: {
-    color: "#3B4750",
-    fontSize: 15,
-    borderRadius: "4px",
-    overflow: "hidden",
-
-    "& thead": {
-      "& tr": {
-        "& th": {
-          alignItems: "flex-start",
-          background: "#FFFFFF",
-          "&::before": { display: "none" },
-          minHeight: 104,
-        },
+      "& .searchMode .ant-select-arrow": {
+        display: "none",
+      },
+      "& .searchMode .ant-select-selection-search": {
+        top: 4,
+        left: 24,
+      },
+      "& .searchMode .ant-select-selection-item": {
+        top: 0,
+        left: 15,
+      },
+      "& svg": {
+        position: "absolute",
+        left: 8,
+        top: 28,
+        zIndex: 4,
       },
     },
-    "& tbody": {
-      "& tr": {
-        cursor: "pointer",
-
-        "&:nth-child(odd) ": {
-          background: " #F2F3F4",
-        },
-
-        "&:nth-child(even) ": {
-          background: " #FFFFFF",
-        },
-        "&:hover": {
-          boxShadow:
-            "0px 0px 12px rgba(51, 63, 79, 0.08), 0px 0px 2px rgba(51, 63, 79, 0.32)",
-        },
-        "&:active": {
-          boxShadow: "0px 0px 6px 0px #333F4F3D inset",
-        },
-      },
-    },
-  },
-  titleText: {
-    fontsize: "15px",
-  },
-  input: {
-    marginTop: 16,
-  },
-  icon: {
-    fontSize: "16px",
-  },
-  searchWraper: {
-    position: "relative",
-
-    "& .searchMode .ant-select-arrow": {
-      display: "none",
-    },
-    "& .searchMode .ant-select-selection-search": {
-      top: 4,
-      left: 24,
-    },
-    "& .searchMode .ant-select-selection-item": {
-      top: 0,
-      left: 15,
-    },
-    "& svg": {
-      position: "absolute",
-      left: 8,
-      top: 28,
-      zIndex: 4,
-    },
-  },
-});
+  });
 
 export default function CounterpartiesTable(props: any) {
   const { fetchCounterpartiesList } = useActions();
 
   const history = useHistory();
-  const classes = useStyles();
   const { contractors, loading } = useTypedSelector(
     (state) => state.counterparties
   );
+  const classes = useStyles(loading)();
+
   const { authors: crms } = useTypedSelector((state) => state.authorsList);
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
@@ -158,24 +175,69 @@ export default function CounterpartiesTable(props: any) {
   const [createdAt, setCreatedAt] = useState<any>(null);
   const [updatedAt, setUpdatedAt] = useState<any>(null);
 
-  //It's for change position arrow in select type
+  // full name options
+  const getFilteredFullNameOptions = () => {
+    const filteredFullName =
+      fullName.length > 3
+        ? contractors.filter(({ full_name = "" }: { full_name: string }) =>
+            full_name.includes(fullName)
+          )
+        : [];
 
-  const filteredBranches =
-    branch.length === 0 || branch.length > 3
-      ? branches.filter(({ name }: { name: string }) => name.includes(branch))
-      : branches;
+    return (
+      filteredFullName.length
+        ? [{ id: -1, full_name: "Все" }, ...filteredFullName]
+        : []
+    ).map((option: any) => ({
+      key: option.id,
+      value: option.full_name !== "Все" ? option.id : "",
+      label: option.full_name,
+    }));
+  };
 
-  const companyGroupFilter =
-    group.length === 0 || group.length > 3
-      ? companyGroupFilterInital.filter(
-          ({ full_name }: { full_name: string }) => full_name.includes(group)
-        )
-      : companyGroupFilterInital;
+  // barnches options
+  const getFilteredBranchesOptions = () => {
+    const filteredBranches =
+      branch.length > 3
+        ? branches.filter(({ name }: { name: string }) => name.includes(branch))
+        : [];
+
+    return (
+      filteredBranches.length
+        ? [{ id: -1, name: "Все" }, ...filteredBranches]
+        : []
+    ).map((option: any) => ({
+      key: option.id,
+      value: option.id >= 0 ? option.id : "",
+      label: option.name,
+    }));
+  };
+
+  // company group options
+  const getCompanyGroupFilterOptions = () => {
+    const companyGroupFilter =
+      group.length > 3
+        ? companyGroupFilterInital.filter(
+            ({ full_name }: { full_name: string }) => full_name.includes(group)
+          )
+        : [];
+
+    return (
+      companyGroupFilter.length
+        ? [{ id: -1, name: "Все" }, ...companyGroupFilter]
+        : []
+    ).map((option: any) => ({
+      key: option.id,
+      value: option.id >= 0 ? option.id : "",
+      label: option.full_name,
+    }));
+  };
 
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/${data.id}`);
     getAuthorData(data.id);
   };
+  console.log(group);
 
   const columns = [
     {
@@ -211,16 +273,29 @@ export default function CounterpartiesTable(props: any) {
       title: () => (
         <>
           <span className={classes.titleText}>Наименование</span>
-          <InputFilterSearch
-            handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const { value } = e.target;
-              setFullName(value);
-              (value.length === 0 || value.length > 3) &&
-                setParams({ ...params, "filter[full_name]": value });
-            }}
-            value={fullName}
-            className={classes.input}
-          />
+          <div className={classes.searchWraper}>
+            <MagnifyingGlass className="searchIcon" />
+            <InputFilterSelect
+              options={getFilteredFullNameOptions()}
+              filterOption={false}
+              onSearch={setFullName}
+              onSelect={(id: number, { value, label }: any) => {
+                setParams({
+                  ...params,
+                  "filter[full_name]": label === "Все" ? "" : label,
+                });
+
+                if (value === "") {
+                  setFullName("");
+                }
+              }}
+              notFoundContent={null}
+              value={params["filter[full_name]"]}
+              className={"searchMode " + classes.input}
+              prefix={<MagnifyingGlass className={classes.icon} />}
+              showSearch
+            />
+          </div>
         </>
       ),
       dataIndex: "full_name",
@@ -233,15 +308,15 @@ export default function CounterpartiesTable(props: any) {
           <div className={classes.searchWraper}>
             <MagnifyingGlass className="searchIcon" />
             <InputFilterSelect
-              options={filteredBranches.map((option: any) => ({
-                key: option.id,
-                value: option.id,
-                label: option.name,
-              }))}
+              options={getFilteredBranchesOptions()}
               filterOption={false}
               onSearch={setBranch}
-              onSelect={(id: number) => {
+              onSelect={(id: number, { value }: any) => {
                 setParams({ ...params, "filter[branches.id]": id });
+
+                if (value === "") {
+                  setBranch("");
+                }
               }}
               notFoundContent={null}
               value={params["filter[branches.id]"]}
@@ -274,14 +349,16 @@ export default function CounterpartiesTable(props: any) {
             <InputFilterSelect
               onSearch={setGroup}
               value={params["filter[parent_id]"]}
-              options={companyGroupFilter.map((option: any) => ({
-                key: option.id,
-                value: option.id,
-                label: option.full_name,
-              }))}
+              options={getCompanyGroupFilterOptions()}
               filterOption={false}
-              onSelect={(id: number) => {
+              onSelect={(id: number, { value }: any) => {
                 setParams({ ...params, "filter[parent_id]": id });
+
+                if (value === "") {
+                  console.log(1111);
+
+                  setGroup("");
+                }
               }}
               notFoundContent={null}
               className={"searchMode " + classes.input}
@@ -309,7 +386,7 @@ export default function CounterpartiesTable(props: any) {
                 setParams({ ...params, "filter[created_by]": id });
               }}
               notFoundContent={null}
-              value={params["filter[created_by]"]}
+              value={""}
               className={"searchMode " + classes.input}
               prefix={<MagnifyingGlass className={classes.icon} />}
               loading={assetsLoading}
@@ -448,6 +525,12 @@ export default function CounterpartiesTable(props: any) {
     }
   );
 
+  const tableProps = {
+    columns: columns,
+    scroll: { y: window.innerHeight - 328 },
+    className: classes.table,
+  };
+
   useEffect(() => {
     const newParams: any = {};
     Object.entries(params).forEach(([key, value]) => {
@@ -472,18 +555,15 @@ export default function CounterpartiesTable(props: any) {
         </div>
         <Divider />
       </div>
-
       <Table
         onRow={(record) => ({
           onClick: () => getUserData(record),
         })}
-        columns={columns}
         dataSource={data}
         pagination={false}
-        scroll={{ y: window.innerHeight - 328 }}
-        className={classes.table}
-        loading={loading}
+        {...tableProps}
       />
+      {loading ? <Spin className={classes.spinner} /> : null}
     </Paper>
   );
 }

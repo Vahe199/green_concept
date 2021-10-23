@@ -1,43 +1,36 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { DatePicker } from "antd";
 import { Calendar } from "../../../IMG/SVG/calendar";
-import img from "../../../IMG/icons/close.png";
 import { useState } from "react";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    select: {
-      "& .ant-select": {
-        height: "50%",
-        border: "1px solid #F1F2F3",
-      },
-      "& .ant-select-selector": {
-        height: "100% !important",
-      },
+const useStyles = (value: string) =>
+  makeStyles((theme: Theme) =>
+    createStyles({
+      select: {
+        "& .ant-select": {
+          height: "50%",
+          border: "1px solid #F1F2F3",
+        },
+        "& .ant-select-selector": {
+          height: "100% !important",
+        },
 
-      "& .ant-picker-input:hover .ant-picker-suffix": {
-        display: "none",
+        "& .ant-picker-input:hover .ant-picker-suffix": {
+          opacity: value ? 0 : 1,
+        },
       },
-    },
-    iconCalendar: {
-      //backgroundColor: 'green',
-      //cursor: 'pointer',
-      "&:hover": {
-        backgroundColor: "red",
-      },
-    },
-  })
-);
+    })
+  );
 
 export default function InputFilterDatePicker({
-                                                  value = "",
-                                                  handleChange,
-                                                  className = "",
-                                                  ...props
-                                              }: any): any {
-    const classes = useStyles();
+  value = "",
+  handleChange,
+  className = "",
+  ...props
+}: any): any {
+  const classes = useStyles(value || "")();
 
-    const [openCalendar, setOpenCalendar] = useState(true);
+  const [openCalendar, setOpenCalendar] = useState(true);
 
   return (
     <DatePicker
@@ -47,21 +40,7 @@ export default function InputFilterDatePicker({
       onChange={handleChange}
       onMouseOver={() => setOpenCalendar(true)}
       style={{ width: "100%" }}
-      //autoFocus={() => value && setOpenCalendar(false)}
-      //onOpenChange={() => setOpenCalendar(!openCalendar)}
-      suffixIcon={
-        openCalendar && (
-          <span
-            onClick={() => console.log("dc")}
-            className={classes.iconCalendar}
-          >
-            {" "}
-            <Calendar />{" "}
-          </span>
-        )
-      }
-      //onFocus={() => value && setOpenCalendar(false)}
-      //onBlur={() => setOpenCalendar(true)}
+      suffixIcon={openCalendar && <Calendar />}
       {...props}
     />
   );

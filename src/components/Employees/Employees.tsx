@@ -1,16 +1,4 @@
-// import { Button, Typography } from "@material-ui/core";
-// import Paper from "@material-ui/core/Paper";
-// import AddIcon from "@material-ui/icons/Add";
-// import React, { useEffect } from "react";
-// // import { useStyles } from "./Styles";
-//
-// export const Employees = () => {
-//   return (
-//     <div style={{ width: 800, height: "800px", background: "red" }}>
-//       <Paper square>test</Paper>
-//     </div>
-//   );
-// };
+
 
 import { Link, Typography } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
@@ -30,11 +18,6 @@ import {useActions} from "../../redux/type_redux_hook/useAction";
 import Loader from "../Layout/Loader/Loader";
 import {getEmployeeAssetsAC} from "../../redux/store/action_creator/employees_action-creator/employees_assets_action_creator";
 
-// interface TabPanelProps {
-//   children?: React.ReactNode;
-//   index: any;
-//   value: any;
-// }
 
 const useStyles = makeStyles((theme) => ({
     menuRoot: {
@@ -102,7 +85,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Employees = (props: any) => {
-    const {loading} = useTypedSelector(state => state.employees)
+    let empData = {
+        surname:"",
+        firstname:""
+    }
+    const {loading,employeeById} = useTypedSelector(state => state.employees)
+    const {employee}:any = employeeById;
+    const {surname, firstname} = employee ? employee : empData;
+    debugger
     let history = useHistory();
     const classes = useStyles();
     const [selectedTab, setSelectedTab] = React.useState<string>('Общие сведения');
@@ -115,7 +105,7 @@ const Employees = (props: any) => {
         <div className={classes.container}>
             <Paper square className={classes.root}>
                 <Typography variant="subtitle1" noWrap className={classes.typography}>
-                   Инна Карпова
+                    {firstname + " " + surname}
                 </Typography>
 
                 <div style={{ display: "flex" }}>

@@ -185,7 +185,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                             )
                                         }
                                         placeholder="01.01.1970"
-                                        format="DD.MM.YYYY"
+                                         format="DD.MM.YYYY"
                                     />
                                 </ValidationErrorWrapper>
                             </Typography>

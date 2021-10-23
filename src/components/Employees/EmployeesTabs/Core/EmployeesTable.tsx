@@ -6,7 +6,7 @@ import InputFilterSearch from "../../../Utils/FilterInputs/InputFilterSearch";
 import {useHistory} from "react-router-dom";
 import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
 import {SortingButtons} from "../../../../IMG/SVG/sortingButtonsIcon";
-import {Table} from "antd";
+import {Divider, Table} from "antd";
 import {useActions} from "../../../../redux/type_redux_hook/useAction";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import {useTableStyles} from "../EmployeesStyle/EmployeesTableStyles";
@@ -29,10 +29,10 @@ export default function EmployeesTable(props: any) {
     const { fetchCounterpartiesList, fetchEmployeeByIdtAC } = useActions();
 const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePositions} = InputEmployeesAssetsOptions()
     const history = useHistory();
-    const classes = useTableStyles();
+
     const {employeesData,loading} = useTypedSelector((state) => state.employees);
     const {employees}:any = employeesData;
-
+    const classes = useTableStyles(loading)();
     const [params, setParams] = useState<any>({
         include: "type,crms,branches,service,sites,emails,phones,author,group",
     });
@@ -74,14 +74,14 @@ const [filterField, setFilterField] = useState<any>({
                 const itemData = field == "FIO" ?
                     item.FIO.toUpperCase() : item[field];
                 const textData = field == "FIO" ? text.toUpperCase() : text;
-                return field == "FIO" ? itemData.indexOf(textData) > -1:field == "id" ? item.id == +text : item[field].id == +text;
+                return field == "FIO" ? itemData.indexOf(textData) > -1:field == "id" ? item.id.toString().indexOf(text) > -1 : item[field].id == +text;
             });
             setFilterData(newData);
         } else {
             setFilterData(employeeData);
         }
     }
-debugger
+
     useEffect(() => {
         const newParams: any = {};
         Object.entries(params).forEach(([key, value]) => {
@@ -295,6 +295,12 @@ debugger
     ];
     return (
         <Paper className={classes.root}>
+            <div className={classes.titleWrapper}>
+                <div>
+                    Найдено <span>{filterData.length}</span> из <span>{employeeData.length}</span>
+                </div>
+                <Divider />
+            </div>
             <Table
                 onRow={(record) => ({
                     onClick: () => getUserData(record),

@@ -2,17 +2,17 @@ import { Checkbox, Paper, Radio } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
-import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
-import {CheckSquareChecked} from "../../../../IMG/SVG/CheckSquareChecked";
-import {CheckSquareUnChecked} from "../../../../IMG/SVG/CheckSquareUnChecked";
+import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
+import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
+import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       margin: "4%",
-      "& .MuiIconButton-root.Mui-disabled":{
-        color:"#5B6770 !important"
-      }
+      "& .MuiIconButton-root.Mui-disabled": {
+        color: "#5B6770 !important",
+      },
     },
     paper: {
       padding: 16, //10
@@ -37,48 +37,48 @@ type InfoProps = {
   setChangeBasicInformation: (val: boolean) => void;
 };
 type PhoneProps = {
-  id:number
-  phone: string
-  phone_type: string
-  phoneable_id: any
-  phoneable_type:any
+  id: number;
+  phone: string;
+  phone_type: string;
+  phoneable_id: any;
+  phoneable_type: any;
 };
 type EmailProps = {
-  email:string
-  emailable_id:any
-  emailable_type: any
-  id: number
+  email: string;
+  emailable_id: any;
+  emailable_type: any;
+  id: number;
 };
 type PersonContactState = {
-  firstname:string,
-  surname:string,
-  middlename:string,
-  sex:string,
-  birthdate:string,
-  contractors:any[],
-  branches:any[],
-  emails:any[],
-  phones:any[],
-  delivery_address:string}
+  firstname: string;
+  surname: string;
+  middlename: string;
+  sex: string;
+  birthdate: string;
+  contractors: any[];
+  branches: any[];
+  emails: any[];
+  phones: any[];
+  delivery_address: string;
+};
 
 export const InformationContactFacesData: React.FC<InfoProps> = ({
   setChangeBasicInformation,
 }) => {
+  const { PersonContact } = useTypedSelector((state) => state.contactPerson);
 
-  const {PersonContact} = useTypedSelector(state => state.contactPerson)
-
-
-    const {
+  const {
     firstname = "",
-      surname = "",
-      middlename = "",
-      sex = "",
-      birthdate = " ",
-      contractors = [],
-      branches = [],
-      emails = [],
-      phones =[],
-      delivery_address = ""}:any = PersonContact
+    surname = "",
+    middlename = "",
+    sex = "",
+    birthdate = " ",
+    contractors = [],
+    branches = [],
+    emails = [],
+    phones = [],
+    delivery_address = "",
+  }: any = PersonContact;
 
   const classes = useStyles();
   const [checked, setChecked] = React.useState(sex);
@@ -105,18 +105,17 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
           <span className={classes.spanTitle}>Основное контактное лицо</span>
           <span style={{ width: "61%" }}>
             <Checkbox
-                disabled={true}
-                checked={contractors[0]?.main ? true : false}
+              disabled={true}
+              checked={contractors[0]?.main ? true : false}
               name="main_contact_person"
               color="default"
               inputProps={{ "aria-label": "checkbox with default color" }}
-                // icon={<CheckSquareChecked color="#5B6770" />}
-                // checkedIcon={
-                //   <CheckSquareUnChecked color="#5B6770" />
-                // }
-                icon={<CheckSquareUnChecked color="#ADB3B8" />}
-                checkedIcon={<CheckSquareChecked color="#5B6770" />}
-
+              // icon={<CheckSquareChecked color="#5B6770" />}
+              // checkedIcon={
+              //   <CheckSquareUnChecked color="#5B6770" />
+              // }
+              icon={<CheckSquareUnChecked color="#ADB3B8" />}
+              checkedIcon={<CheckSquareChecked color="#5B6770" />}
             />
           </span>
         </div>
@@ -169,7 +168,9 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Роль</span>
-          <span style={{ width: "60%" }}>{contractors[0]?.contact_role?.name}</span>
+          <span style={{ width: "60%" }}>
+            {contractors[0]?.contact_role?.name}
+          </span>
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Должность</span>
@@ -177,44 +178,57 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Тип контрагента</span>
-          <span style={{ width: "60%" }}>{contractors[0]?.contractor?.full_name}</span>
+          <span style={{ width: "60%" }}>
+            {contractors[0]?.contractor?.full_name}
+          </span>
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Тип услуг</span>
-          <span style={{ width: "60%" }}>{contractors[0]?.contractor?.short_name}</span>
+          <span style={{ width: "60%" }}>
+            {contractors[0]?.contractor?.short_name}
+          </span>
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Отрасль</span>
-          <samp style={{ width: "60%" }}>{branches[0]?.name}</samp>
+          <span style={{ width: "60%" }}>{branches[0]?.name}</span>
         </div>
         <div className={classes.label} style={{ alignItems: "self-start" }}>
           <span className={classes.spanTitle}>Телефон рабочий</span>
           <span style={{ width: "60%" }}>
-            {phones?.map((phone:PhoneProps) => {
-              return(phone?.phone_type == "Рабочий" && <div key={phone.id}>{phone?.phone}</div>)
+            {phones?.map((phone: PhoneProps) => {
+              return (
+                phone?.phone_type == "Рабочий" && (
+                  <div key={phone.id}>{phone?.phone}</div>
+                )
+              );
             })}
           </span>
         </div>
         <div className={classes.label} style={{ alignItems: "self-start" }}>
           <span className={classes.spanTitle}>Телефон мобильный</span>
           <span style={{ width: "60%" }}>
-            {phones?.map((phone:PhoneProps) => {
-              return(phone?.phone_type == "Мобильный" && <div key={phone.id}>{phone.phone}</div>)
+            {phones?.map((phone: PhoneProps) => {
+              return (
+                phone?.phone_type == "Мобильный" && (
+                  <div key={phone.id}>{phone.phone}</div>
+                )
+              );
             })}
           </span>
         </div>
         <div className={classes.label} style={{ alignItems: "self-start" }}>
           <span className={classes.spanTitle}>E-mail</span>
-          <span style={{ width: "60%" }}> {emails?.map((email:EmailProps) =>
-          ( <div key={email.id}>{email.email}</div>)
-          )}</span>
+          <span style={{ width: "60%" }}>
+            {" "}
+            {emails?.map((email: EmailProps) => (
+              <div key={email.id}>{email.email}</div>
+            ))}
+          </span>
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Адрес доставки</span>
 
-          <span style={{ width: "60%" }}>
-          {delivery_address}
-          </span>
+          <span style={{ width: "60%" }}>{delivery_address}</span>
         </div>
       </Paper>
     </div>

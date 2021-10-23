@@ -28,7 +28,8 @@ import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 import { InputAssetsOptions } from "../../Utils/utils_options/InputAssetsOptions";
 import { recoveryAuthorDataState } from "../../../redux/store/action_creator/contractors_action_creatot/recoveryAuthorDataState";
 import BackToAddress from "../../Utils/BackToAddress";
-import {Input} from "antd";
+import { Input } from "antd";
+import MaskedInput from "antd-mask-input";
 
 export const GeneralInformationForCreating = () => {
   const formikRef = useRef<any>();
@@ -61,7 +62,6 @@ export const GeneralInformationForCreating = () => {
     ({ full_name }: { full_name: string }) => full_name.includes(group)
   );
   const { TextArea } = Input;
-
 
   const [validateValue, setValidateValue] = useState<string>("ЮЛ");
 
@@ -253,7 +253,7 @@ export const GeneralInformationForCreating = () => {
                                           ]}
                                           placeholder="Фамилия Имя"
                                           loading={assetsLoading}
-                                         // className={classes.input}
+                                          // className={classes.input}
                                         />
                                       </ValidationErrorWrapper>
                                     </div>
@@ -297,8 +297,8 @@ export const GeneralInformationForCreating = () => {
                         }
                       >
                         <InputFilterSelectedType
-                           //className={classes.input}
-                            //inputClassName="ant-select-selector"
+                          //className={classes.input}
+                          //inputClassName="ant-select-selector"
                           name="contractor_type_id"
                           handleChange={(value: any) => {
                             setFieldValue("contractor_type_id", value);
@@ -350,37 +350,39 @@ export const GeneralInformationForCreating = () => {
                     {/*  error={touched.inn && Boolean(errors.inn)}*/}
                     {/*  helperText={touched.inn && errors.inn}*/}
                     {/*/>*/}
-                    <div style={{width:"60%"}}>
+                    <div style={{ width: "60%" }}>
                       <ValidationErrorWrapper
-                          inputClassName="ant-input"
-                          error={touched.inn && Boolean(errors.inn)}
-                          helperText={touched.inn && errors.inn}
+                        inputClassName="ant-input"
+                        error={touched.inn && Boolean(errors.inn)}
+                        helperText={touched.inn && errors.inn}
                       >
                         <Input
-                            name="inn"
-                            className={classes.input}
-                            value={values.inn}
-                            onChange={handleChange}
-                            autoComplete={'off'}
-                            placeholder={"1234556789101112"} />
+                          name="inn"
+                          className={classes.input}
+                          value={values.inn}
+                          onChange={handleChange}
+                          autoComplete={"off"}
+                          placeholder={"1234556789101112"}
+                        />
                       </ValidationErrorWrapper>
                     </div>
                   </div>
                   {values.org_type === "ЮЛ" && (
                     <div className={classes.label}>
                       <span>КПП</span>
-                      <div style={{width:"60%"}}>
+                      <div style={{ width: "60%" }}>
                         <ValidationErrorWrapper
-                            inputClassName="ant-input"
-                            error={touched.kpp && Boolean(errors.kpp)}
-                            helperText={touched.kpp && errors.kpp}
+                          inputClassName="ant-input"
+                          error={touched.kpp && Boolean(errors.kpp)}
+                          helperText={touched.kpp && errors.kpp}
                         >
                           <Input
-                              name="kpp"
-                              value={values.kpp}
-                              onChange={handleChange}
-                              autoComplete={'off'}
-                              placeholder={"1234556789101112"} />
+                            name="kpp"
+                            value={values.kpp}
+                            onChange={handleChange}
+                            autoComplete={"off"}
+                            placeholder={"1234556789101112"}
+                          />
                         </ValidationErrorWrapper>
                       </div>
                       {/*<TextField*/}
@@ -396,19 +398,20 @@ export const GeneralInformationForCreating = () => {
                   )}
                   <div className={classes.label}>
                     <span>{values.org_type === "ЮЛ" ? "ОГРН" : "ОГРНИП"}</span>
-                    <div style={{width:"60%"}}>
+                    <div style={{ width: "60%" }}>
                       <ValidationErrorWrapper
-                          inputClassName="ant-input"
-                          error={touched.ogrn && Boolean(errors.ogrn)}
-                          helperText={touched.ogrn && errors.ogrn}
+                        inputClassName="ant-input"
+                        error={touched.ogrn && Boolean(errors.ogrn)}
+                        helperText={touched.ogrn && errors.ogrn}
                       >
                         <Input
-                            name="ogrn"
-                            value={values.ogrn}
-                            onChange={handleChange}
-                            autoComplete={'off'}
-                            className={classes.input}
-                            placeholder={"1234556789101112"} />
+                          name="ogrn"
+                          value={values.ogrn}
+                          onChange={handleChange}
+                          autoComplete={"off"}
+                          className={classes.input}
+                          placeholder={"1234556789101112"}
+                        />
                       </ValidationErrorWrapper>
                     </div>
                     {/*<TextField*/}
@@ -457,27 +460,28 @@ export const GeneralInformationForCreating = () => {
                     className={classes.label}
                     style={{ alignItems: "flex-start" }}
                   >
-                    <span style={{ marginTop: "1%" ,width:"40%"}}>
+                    <span style={{ marginTop: "1%", width: "40%" }}>
                       Полное наименование компании
                     </span>
-                    <div style={{width:"60%"}}>
+                    <div style={{ width: "60%" }}>
                       <ValidationErrorWrapper
-                          inputClassName="ant-input"
-                          error={touched.full_name && Boolean(errors.full_name)}
-                          helperText={touched.full_name && errors.full_name}
+                        inputClassName="ant-input"
+                        error={touched.full_name && Boolean(errors.full_name)}
+                        helperText={touched.full_name && errors.full_name}
                       >
                         <TextArea
-                            name="full_name"
-                            value={values.full_name}
-                            onChange={handleChange}
-                            style={{height: '80px'}}
-                            //multiline
-                            //rows={2}
-                            autoSize={false}
-                            className={classes.input}
-                            //className={classes.textAreaCN}
-                            autoComplete={'off'}
-                            placeholder={'ООО "Северо-Западная компания”'} />
+                          name="full_name"
+                          value={values.full_name}
+                          onChange={handleChange}
+                          style={{ height: "80px" }}
+                          //multiline
+                          //rows={2}
+                          autoSize={false}
+                          className={classes.input}
+                          //className={classes.textAreaCN}
+                          autoComplete={"off"}
+                          placeholder={'ООО "Северо-Западная компания”'}
+                        />
                       </ValidationErrorWrapper>
                     </div>
                     {/*<TextField*/}
@@ -494,20 +498,23 @@ export const GeneralInformationForCreating = () => {
                     {/*/>*/}
                   </div>
                   <div className={classes.label2}>
-                    <span style={{width:"40%"}}>Краткое наименование компании</span>
-                    <div style={{width:"60%"}}>
+                    <span style={{ width: "40%" }}>
+                      Краткое наименование компании
+                    </span>
+                    <div style={{ width: "60%" }}>
                       <ValidationErrorWrapper
-                          inputClassName="ant-input"
-                          error={touched.short_name && Boolean(errors.short_name)}
-                          helperText={touched.short_name && errors.short_name}
+                        inputClassName="ant-input"
+                        error={touched.short_name && Boolean(errors.short_name)}
+                        helperText={touched.short_name && errors.short_name}
                       >
                         <Input
-                            name="short_name"
-                            value={values.short_name}
-                            onChange={handleChange}
-                            autoComplete={'off'}
-                            className={classes.input}
-                            placeholder={"Краткое наименование компании"} />
+                          name="short_name"
+                          value={values.short_name}
+                          onChange={handleChange}
+                          autoComplete={"off"}
+                          className={classes.input}
+                          placeholder={"Краткое наименование компании"}
+                        />
                       </ValidationErrorWrapper>
                     </div>
                     {/*<TextField*/}
@@ -686,24 +693,31 @@ export const GeneralInformationForCreating = () => {
                 <Paper className={classes.paper}>
                   <div className={classes.label}>
                     <span>Юридический адрес </span>
-                    <div style={{width:"60%"}}>
+                    <div style={{ width: "60%" }}>
                       <ValidationErrorWrapper
-                          inputClassName="ant-input"
-                          error={touched.legal_registration_address && Boolean(errors.legal_registration_address)}
-                          helperText={touched.legal_registration_address && errors.legal_registration_address}
+                        inputClassName="ant-input"
+                        error={
+                          touched.legal_registration_address &&
+                          Boolean(errors.legal_registration_address)
+                        }
+                        helperText={
+                          touched.legal_registration_address &&
+                          errors.legal_registration_address
+                        }
                       >
                         <Input
-                            name="legal_registration_address"
-                            value={values.legal_registration_address}
-                            onChange={handleChange}
-                            className={classes.input}
-                            autoComplete={'off'}
-                              onBlur={() =>
-                                setLegalRegistrationAddress(
-                                  values.legal_registration_address
-                                )
-                              }
-                            placeholder={"123456 город улица строени дом офис"} />
+                          name="legal_registration_address"
+                          value={values.legal_registration_address}
+                          onChange={handleChange}
+                          className={classes.input}
+                          autoComplete={"off"}
+                          onBlur={() =>
+                            setLegalRegistrationAddress(
+                              values.legal_registration_address
+                            )
+                          }
+                          placeholder={"123456 город улица строени дом офис"}
+                        />
                       </ValidationErrorWrapper>
                     </div>
                     {/*<TextField*/}
@@ -729,19 +743,25 @@ export const GeneralInformationForCreating = () => {
                   </div>
                   <div className={classes.label}>
                     <span>Фактический адрес</span>
-                    <div style={{width:"60%"}}>
+                    <div style={{ width: "60%" }}>
                       <ValidationErrorWrapper
-                          inputClassName="ant-input"
-                          error={touched.actual_address && Boolean(errors.actual_address)}
-                          helperText={touched.actual_address && errors.actual_address}
+                        inputClassName="ant-input"
+                        error={
+                          touched.actual_address &&
+                          Boolean(errors.actual_address)
+                        }
+                        helperText={
+                          touched.actual_address && errors.actual_address
+                        }
                       >
                         <Input
-                            name="actual_address"
-                            value={values.actual_address}
-                            onChange={handleChange}
-                            className={classes.input}
-                            autoComplete={'off'}
-                            placeholder={"123456 город улица строени дом офис"} />
+                          name="actual_address"
+                          value={values.actual_address}
+                          onChange={handleChange}
+                          className={classes.input}
+                          autoComplete={"off"}
+                          placeholder={"123456 город улица строени дом офис"}
+                        />
                       </ValidationErrorWrapper>
                     </div>
                     {/*<TextField*/}
@@ -790,19 +810,22 @@ export const GeneralInformationForCreating = () => {
                   </div>
                   <div className={classes.label}>
                     <span>Почтовый адрес</span>
-                    <div style={{width:"60%"}}>
+                    <div style={{ width: "60%" }}>
                       <ValidationErrorWrapper
-                          inputClassName="ant-input"
-                          error={touched.post_address && Boolean(errors.post_address)}
-                          helperText={touched.post_address && errors.post_address}
+                        inputClassName="ant-input"
+                        error={
+                          touched.post_address && Boolean(errors.post_address)
+                        }
+                        helperText={touched.post_address && errors.post_address}
                       >
                         <Input
-                            name="post_address"
-                            value={values.post_address}
-                            className={classes.input}
-                            onChange={handleChange}
-                            autoComplete={'off'}
-                            placeholder={"123456 город улица строени дом офис"} />
+                          name="post_address"
+                          value={values.post_address}
+                          className={classes.input}
+                          onChange={handleChange}
+                          autoComplete={"off"}
+                          placeholder={"123456 город улица строени дом офис"}
+                        />
                       </ValidationErrorWrapper>
                     </div>
                     {/*<TextField*/}
@@ -851,7 +874,9 @@ export const GeneralInformationForCreating = () => {
                     className={classes.label}
                     style={{ alignItems: "flex-start" }}
                   >
-                    <span>{values.org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}</span>
+                    <span>
+                      {values.org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}
+                    </span>
 
                     <div
                       style={{
@@ -864,7 +889,7 @@ export const GeneralInformationForCreating = () => {
                         {({ insert, remove, push }) => (
                           <div style={{ width: "100%" }}>
                             {values.sites.length > 0 &&
-                              values.sites.map((url:any, index:any) => {
+                              values.sites.map((url: any, index: any) => {
                                 const fieldName = `sites[${index}].url`;
                                 const touchedFieldName = getIn(
                                   touched,
@@ -881,30 +906,31 @@ export const GeneralInformationForCreating = () => {
                                       marginBottom: 12,
                                     }}
                                   >
-                                    <div style={{width:"100%"}}>
+                                    <div style={{ width: "100%" }}>
                                       <ValidationErrorWrapper
-                                          inputClassName="ant-input"
-                                            error={Boolean(
-                                              touchedFieldName && errorFieldName
-                                            )}
-                                            helperText={
-                                              touchedFieldName && errorFieldName
-                                                ? errorFieldName
-                                                : ""
-                                            }
+                                        inputClassName="ant-input"
+                                        error={Boolean(
+                                          touchedFieldName && errorFieldName
+                                        )}
+                                        helperText={
+                                          touchedFieldName && errorFieldName
+                                            ? errorFieldName
+                                            : ""
+                                        }
                                       >
                                         <Input
-                                            name={fieldName}
-                                            value={url.url}
-                                            className={classes.input}
-                                            onChange={handleChange}
-                                              style={
-                                                index > 0
-                                                  ? { width: "90%" }
-                                                  : { width: "100%" }
-                                              }
-                                            autoComplete={'off'}
-                                            placeholder={"www.сайткомпании.ru"} />
+                                          name={fieldName}
+                                          value={url.url}
+                                          className={classes.input}
+                                          onChange={handleChange}
+                                          style={
+                                            index > 0
+                                              ? { width: "90%" }
+                                              : { width: "100%" }
+                                          }
+                                          autoComplete={"off"}
+                                          placeholder={"www.сайткомпании.ru"}
+                                        />
                                       </ValidationErrorWrapper>
                                     </div>
                                     {/*<TextField*/}
@@ -983,26 +1009,35 @@ export const GeneralInformationForCreating = () => {
                                       flexDirection: "row",
                                     }}
                                   >
-                                    <div style={{width:"100%", marginBottom: 16}}>
+                                    <div
+                                      style={{
+                                        width: "100%",
+                                        marginBottom: 16,
+                                      }}
+                                    >
                                       <ValidationErrorWrapper
-                                          inputClassName="ant-input"
-                                            error={Boolean(
-                                              touchedFieldName && errorFieldName
-                                            )}
-                                            helperText={
-                                              touchedFieldName && errorFieldName
-                                                ? errorFieldName
-                                                : ""
-                                            }
+                                        inputClassName="ant-input"
+                                        error={Boolean(
+                                          touchedFieldName && errorFieldName
+                                        )}
+                                        helperText={
+                                          touchedFieldName && errorFieldName
+                                            ? errorFieldName
+                                            : ""
+                                        }
                                       >
-                                        <Input
-                                            name={fieldName}
-                                            value={phone.phone}
-                                            className={classes.input}
-                                            onChange={handleChange}
-                                            style={{ width: "90%" }}
-                                            autoComplete={'off'}
-                                            placeholder={"+79991234567"} />
+                                        <MaskedInput
+                                          name={fieldName}
+                                          value={phone.phone}
+                                          style={{
+                                            width: "90%",
+                                          }}
+                                          onChange={handleChange}
+                                          className={classes.input}
+                                          placeholder={"7 999 999 99 99"}
+                                          mask="1 111 111 11 11"
+                                          prefix={<>+</>}
+                                        />
                                       </ValidationErrorWrapper>
                                     </div>
                                     {/*<TextField*/}
@@ -1074,29 +1109,35 @@ export const GeneralInformationForCreating = () => {
                                       flexDirection: "row",
                                     }}
                                   >
-                                    <div style={{width:"100%", marginBottom: 16}}>
+                                    <div
+                                      style={{
+                                        width: "100%",
+                                        marginBottom: 16,
+                                      }}
+                                    >
                                       <ValidationErrorWrapper
-                                          inputClassName="ant-input"
-                                            error={Boolean(
-                                              touchedFieldName && errorFieldName
-                                            )}
-                                            helperText={
-                                              touchedFieldName && errorFieldName
-                                                ? errorFieldName
-                                                : ""
-                                            }
+                                        inputClassName="ant-input"
+                                        error={Boolean(
+                                          touchedFieldName && errorFieldName
+                                        )}
+                                        helperText={
+                                          touchedFieldName && errorFieldName
+                                            ? errorFieldName
+                                            : ""
+                                        }
                                       >
                                         <Input
-                                            name={fieldName}
-                                            onChange={handleChange}
-                                            style={{ width: "90%" }}
-                                            className={classes.input}
-                                            autoComplete={'off'}
-                                            type="email"
-                                            //value={email}
-                                            placeholder={`email${
-                                                index + 1
-                                            }@email.com`} />
+                                          name={fieldName}
+                                          onChange={handleChange}
+                                          style={{ width: "90%" }}
+                                          className={classes.input}
+                                          autoComplete={"off"}
+                                          type="email"
+                                          //value={email}
+                                          placeholder={`email${
+                                            index + 1
+                                          }@email.com`}
+                                        />
                                       </ValidationErrorWrapper>
                                     </div>
                                     {/*<TextField*/}

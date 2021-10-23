@@ -106,7 +106,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
           <span style={{ width: "61%" }}>
             <Checkbox
                 disabled={true}
-                checked={contractors[0].main ? true : false}
+                checked={contractors[0]?.main ? true : false}
               name="main_contact_person"
               color="default"
               inputProps={{ "aria-label": "checkbox with default color" }}
@@ -185,7 +185,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Отрасль</span>
-          <samp style={{ width: "60%" }}>{branches[0].name}</samp>
+          <samp style={{ width: "60%" }}>{branches[0]?.name}</samp>
         </div>
         <div className={classes.label} style={{ alignItems: "self-start" }}>
           <span className={classes.spanTitle}>Телефон рабочий</span>

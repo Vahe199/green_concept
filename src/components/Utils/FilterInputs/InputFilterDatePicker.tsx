@@ -19,8 +19,20 @@ const useStyles = (value: string) =>
           opacity: value ? 0 : 1,
         },
       },
-    })
-  );
+        "& .ant-picker-suffix":{
+            height:16
+        },
+    },
+    iconCalendar: {
+        fontSize:18,
+      //backgroundColor: 'green',
+      //cursor: 'pointer',
+      "&:hover": {
+        backgroundColor: "red",
+      },
+    },
+  })
+);
 
 export default function InputFilterDatePicker({
   value = "",

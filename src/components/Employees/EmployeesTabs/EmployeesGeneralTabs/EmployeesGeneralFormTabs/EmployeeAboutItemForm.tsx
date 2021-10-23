@@ -16,8 +16,7 @@ const EmployeeAboutItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeAbout
     const {recoveryEmployeesState,updateEmployeeAboutListAC} = useActions()
     const {employeeById ,error,success_update} = useTypedSelector(state => state.employees)
     const {employee}:any =employeeById;
-    const {about}:any =employee;
-    let id:number = 17
+    const {about, id}:any =employee;
     const initialValues = {
         about:about ? about :""
     };

@@ -1,5 +1,5 @@
 import React from "react";
-import {contractorApi} from "../../../api/api";
+import {contractorApi, employeesApi} from "../../../api/api";
 
 
 export const SearchContactPerson = () => {
@@ -8,13 +8,11 @@ const [filterData,setFilterData] = React.useState<any>([])
 
 
     const fetchContactPerson = async () => {
-
-            await contractorApi.searchContactPersonData()
+            await employeesApi.getEmployeesData()
                 .then((response) => response)
                 .then(({data}:any) => {
                     const {employees} = data;
                     setFilterData(employees)
-
                 }).catch((error) => {
                     console.error(error.response)
                     setFilterData([])

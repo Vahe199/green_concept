@@ -8,13 +8,14 @@ import {useTypedSelector} from "../../../../../redux/type_redux_hook/useTypedSel
 import {notifyError, notifySuccess} from "../../../../Utils/utils_options/ToastNotify";
 import {useActions} from "../../../../../redux/type_redux_hook/useAction";
 import {ToastContainer} from "react-toastify";
+import {updateEmployeeRegisterDataAC} from "../../../../../redux/store/action_creator/employees_action-creator/employees_qualification_action_creator";
 
 type EmployeeSpecializedFormProps = {
     setEmployeeSpecialized:(val:boolean)=>void
 }
 
 const EmployeeSpecializedRegistersForm:React.FC<EmployeeSpecializedFormProps> = ({setEmployeeSpecialized}) => {
-const {recoveryEmployeesQualificationState} = useActions()
+const {recoveryEmployeesQualificationState,updateEmployeeRegisterDataAC} = useActions()
     const {error, success} = useTypedSelector(state => state.employeesQualification)
     useEffect(()=>{
         if(error){
@@ -28,8 +29,8 @@ const {recoveryEmployeesQualificationState} = useActions()
         }
     },[error, success])
     const initialValues = {
-        roster_specialists:"",
-        register_specialists_engineering:""
+        construction_branch_register:"",
+        engineering_surveys_construction_design_register:"",
     }
     const classes = useStylesEmployeeQualificationForm();
     return(
@@ -40,7 +41,7 @@ const {recoveryEmployeesQualificationState} = useActions()
                 // validationSchema={validationSchemaContactsFromGreen}
                 onSubmit={async (values,action) => {
                     console.log (111, values)
-                    setEmployeeSpecialized(true)
+                    updateEmployeeRegisterDataAC(values,17)
                 }}
             >
                 {({ values, touched, handleChange,errors,setFieldValue }) => (
@@ -74,17 +75,17 @@ const {recoveryEmployeesQualificationState} = useActions()
                                 <ValidationErrorWrapper
                                     inputClassName="ant-input"
                                     error={
-                                        touched.roster_specialists &&
-                                        Boolean(errors.roster_specialists)
+                                        touched.construction_branch_register &&
+                                        Boolean(errors.construction_branch_register)
                                     }
                                     helperText={
-                                        touched.roster_specialists &&
-                                        errors.roster_specialists
+                                        touched.construction_branch_register &&
+                                        errors.construction_branch_register
                                     }
                                 >
                                     <Input
-                                        name={"roster_specialists"}
-                                        value={values.roster_specialists}
+                                        name={"construction_branch_register"}
+                                        value={values.construction_branch_register}
                                         onChange={handleChange}
                                         placeholder="Введите номер реестра" />
                                 </ValidationErrorWrapper>
@@ -98,17 +99,17 @@ const {recoveryEmployeesQualificationState} = useActions()
                                 <ValidationErrorWrapper
                                     inputClassName="ant-input"
                                     error={
-                                        touched.register_specialists_engineering &&
-                                        Boolean(errors.register_specialists_engineering)
+                                        touched.engineering_surveys_construction_design_register &&
+                                        Boolean(errors.engineering_surveys_construction_design_register)
                                     }
                                     helperText={
-                                        touched.register_specialists_engineering &&
-                                        errors.register_specialists_engineering
+                                        touched.engineering_surveys_construction_design_register &&
+                                        errors.engineering_surveys_construction_design_register
                                     }
                                 >
                                     <Input
-                                        name={"register_specialists_engineering"}
-                                        value={values.register_specialists_engineering}
+                                        name={"engineering_surveys_construction_design_register"}
+                                        value={values.engineering_surveys_construction_design_register}
                                         onChange={handleChange}
                                         placeholder="Введите номер реестра" />
                                 </ValidationErrorWrapper>

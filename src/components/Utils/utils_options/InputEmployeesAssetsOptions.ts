@@ -1,13 +1,16 @@
 import {useTypedSelector} from "../../../redux/type_redux_hook/useTypedSelector";
 
 export const InputEmployeesAssetsOptions = () => {
+    const assetsData = {
+        companies:[], employee_positions:[], regions:[], education_types:[]
+    }
     const { employees_assets} = useTypedSelector(
         (state) => state.assets_employees
     );
     const {assets}:any = employees_assets
     const {
         companies, employee_positions, regions, education_types
-    }: any = assets;
+    }: any = assets ? assets : assetsData;
     const assetsOptionsEducationTypes =  education_types?.map((option: any) => ({
         key: option.id,
         value: option.id ? option.id : 0,

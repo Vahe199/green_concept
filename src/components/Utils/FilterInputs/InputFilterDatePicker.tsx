@@ -22,15 +22,13 @@ const useStyles = (value: string) =>
         "& .ant-picker-suffix":{
             height:16
         },
-    },
-    iconCalendar: {
-        fontSize:18,
-      //backgroundColor: 'green',
-      //cursor: 'pointer',
-      "&:hover": {
-        backgroundColor: "red",
-      },
-    },
+        iconCalendar: {
+            fontSize:18,
+            "&:hover": {
+                backgroundColor: "#fff",
+            },
+        },
+
   })
 );
 

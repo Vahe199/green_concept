@@ -27,7 +27,7 @@ type EmployeesType = {
 
 export default function EmployeesTable(props: any) {
     const { fetchCounterpartiesList, fetchEmployeeByIdtAC } = useActions();
-const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePositions} = InputEmployeesAssetsOptions()
+const {assetsOptionsCompanies,assetsOptionsRegions,assetsOptionsEmployeePositions,assetsOptionsEmployeeStatuses,assetsOptionsDirections} = InputEmployeesAssetsOptions()
     const history = useHistory();
 
     const {employeesData,loading} = useTypedSelector((state) => state.employees);
@@ -69,12 +69,14 @@ const [filterField, setFilterField] = useState<any>({
     const [filterData, setFilterData] = useState<any>(employeeData);
 
     const searchFilter = (text:any, field:string) => {
+        debugger
         if (text) {
             const newData = employeeData.filter((item:any) => {
                 const itemData = field == "FIO" ?
                     item.FIO.toUpperCase() : item[field];
                 const textData = field == "FIO" ? text.toUpperCase() : text;
-                return field == "FIO" ? itemData.indexOf(textData) > -1:field == "id" ? item.id.toString().indexOf(text) > -1 : item[field].id == +text;
+                return field == "FIO" ? itemData.indexOf(textData) > -1:field == "id" ? item.id.toString().indexOf(text) > -1
+                    :field == "directions"? item.directions[0]?.id == +text : item[field].id == +text;
             });
             setFilterData(newData);
         } else {
@@ -196,11 +198,11 @@ const [filterField, setFilterField] = useState<any>({
                 <div style={{ minWidth: 125 }}>
                     <span className={classes.titleText}>Направление</span>
                     <InputFilterSelect
-                        options={assetsOptionsRegions}
+                        options={assetsOptionsDirections}
                         filterOption={false}
                         onSelect={(id: number) => {
                             setFilterField({direction:id})
-                            searchFilter(id,"region" )
+                            searchFilter(id,"directions" )
                             // setParams({ ...params, "filter[branches.id]": id });
                         }}
                         notFoundContent={null}
@@ -271,12 +273,12 @@ const [filterField, setFilterField] = useState<any>({
                 <>
                     <span className={classes.titleText}>Статус</span>
                     <InputFilterSelect
-                        options={assetsOptionsRegions}
+                        options={assetsOptionsEmployeeStatuses}
                         filterOption={false}
                         // onSearch={}
                         onSelect={(id: number) => {
                             setFilterField({status:id})
-                            searchFilter(id,"region" )
+                            searchFilter(id,"status" )
                             // setParams({ ...params, "filter[branches.id]": id });
                         }}
                         notFoundContent={null}

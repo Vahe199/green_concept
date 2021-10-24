@@ -116,6 +116,7 @@ const [filterField, setFilterField] = useState<any>({
                 </>
             ),
             dataIndex: "id",
+            width: "8%",
             render: (id: number) => <span style={{ color: "#3B4750" }}>{id}</span>,
         },
         {
@@ -190,7 +191,7 @@ const [filterField, setFilterField] = useState<any>({
                 </>
             ),
             dataIndex: "region",
-            width: "13%",
+            width: "10%",
             render: (region: any) => <span style={{ color: "#3B4750" }}>{region.name}</span>,
         },
         {
@@ -213,6 +214,7 @@ const [filterField, setFilterField] = useState<any>({
                     />
                 </div>
             ),
+            width:"11%",
             dataIndex: "directions",
             render: (directions: any[]) => {
                 return directions?.map((direction: any) => {
@@ -245,6 +247,7 @@ const [filterField, setFilterField] = useState<any>({
                 </>
             ),
             dataIndex: "position",
+            width: "12%",
             render: (position: any) => <span style={{ color: "#3B4750" }}>{position?.name}</span>,
         },
         {
@@ -258,6 +261,7 @@ const [filterField, setFilterField] = useState<any>({
                 </>
             ),
             dataIndex: "phones",
+            width: "11%",
             render: (phones: any[]) => {
                 return phones?.map((phone: any) => {
                     return (
@@ -290,7 +294,7 @@ const [filterField, setFilterField] = useState<any>({
                 </>
             ),
             dataIndex: "status",
-            width: "11%",
+            width: "10%",
             render: (status: any) => <span style={{ color: "#3B4750" }}>{status?.name}</span>,
         },
 

@@ -152,6 +152,16 @@ export const contractorApi = {
 
 export const employeesApi = {
 
+  creatNewEmployee(data: any) {
+    debugger
+    return axios.request({
+      method: "post",
+      url: `employees`,
+      data,
+      headers: {"Content-Type": "multipart/form-data"},
+    });
+  },
+
   getEmployeesAssets() {
     return axios.request({method: "get", url: "employees/get_assets"});
   },

@@ -2,13 +2,26 @@ import React from "react";
 import {Divider, Paper,Typography} from "@material-ui/core";
 import {PencilSimpleIcon} from "../../../../IMG/SVG/PencilSimpleIcon";
 import {useStylesEmployeeQualification} from "./EmployeesQualificationStyles";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 
 type EmployeeEducationProps = {
     setEmployeeEducation:(val:boolean) =>void
 }
 const EmployeeEducation:React.FC<EmployeeEducationProps> = ({setEmployeeEducation}) => {
-    let EducationState = [1,2,3]
+let employeeEduc = {educations:[{
+        education_document: "",
+        education_type_id: null,
+        educational_institution_name: "",
+        end_date: "",
+        speciality: "",
+        type: {name: ''}
+    }]
+}
+    const {employeeById} = useTypedSelector(state => state.employees)
+    const {employee}:any = employeeById;
+    const {educations}:any = employee.educations.length > 0 ? employee : employeeEduc ;
     const classes = useStylesEmployeeQualification();
+    debugger
     return(
         <div className={classes.root}>
             <div className={classes.title} >
@@ -30,14 +43,15 @@ const EmployeeEducation:React.FC<EmployeeEducationProps> = ({setEmployeeEducatio
                                 12 лет 11 месяцев
                             </Typography>
                         </div>
-                        {EducationState.map(educ =><div>
+                        {educations?.length >0 &&
+                        educations?.map((educ:any) =><div>
                             <Divider variant="middle" style={{marginBottom: 24, marginTop: 24}}/>
                             <div className={classes.column}>
                                 <Typography className={classes.typographyTitle}>
                                     Образование:
                                 </Typography>
                                 <Typography className={classes.typographyValue}>
-                                    Высшее
+                                    {educ.type.name}
                                 </Typography>
                             </div>
                             <div className={classes.column}>
@@ -45,7 +59,7 @@ const EmployeeEducation:React.FC<EmployeeEducationProps> = ({setEmployeeEducatio
                                     Наименование учебного заведения:
                                 </Typography>
                                 <Typography className={classes.typographyValue}>
-                                    Новосибирская государственная архитектурно-художественная академия
+                                    {educ.educational_institution_name}
                                 </Typography>
                             </div>
                             <div className={classes.column}>
@@ -53,7 +67,7 @@ const EmployeeEducation:React.FC<EmployeeEducationProps> = ({setEmployeeEducatio
                                     Документ об образовании:
                                 </Typography>
                                 <Typography className={classes.typographyValue}>
-                                    Диплом ДВС , регистрационный номер от 24.06.2003
+                                    {educ.education_document}
                                 </Typography>
                             </div>
                             <div className={classes.column}>
@@ -61,7 +75,7 @@ const EmployeeEducation:React.FC<EmployeeEducationProps> = ({setEmployeeEducatio
                                     Специальность:
                                 </Typography>
                                 <Typography className={classes.typographyValue}>
-                                    Архитектор по специальности "Архитектура"
+                                    {educ.speciality}
                                 </Typography>
                             </div>
                             <div className={classes.column}>
@@ -69,7 +83,7 @@ const EmployeeEducation:React.FC<EmployeeEducationProps> = ({setEmployeeEducatio
                                     Дата окончания:
                                 </Typography>
                                 <Typography className={classes.typographyValue}>
-                                    01.06.1994
+                                    {educ.end_date}
                                 </Typography>
                             </div>
                         </div>)}

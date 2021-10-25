@@ -165,7 +165,8 @@ export const employeesApi = {
   },
 
 
-  updateEmployeeDataById(data: any, id: number) {
+  updateEmployeeDataById(id: number,data: any) {
+    debugger
     return axios.request({
       method: "put",
       url: `employees/employee_data/${id}`,
@@ -191,17 +192,17 @@ export const employeesApi = {
 
   //employee educations
 
-  updateEmployeeEducationsById(data:any, id:number) {
+  updateEmployeeEducationsById(id:number, data:any) {
     return axios.request({ method: "put", url: `employee_educations/${id}`, data })
 
   }  ,
   updateEmployeeSkillsById( id:number,data:any,) {
-    debugger
+
     return axios.request({ method: "put", url: `employee_skills/${id}`, data })
 
   },
   updateEmployeeRegisterById( id:number,data:any,) {
-    debugger
+
     return axios.request({ method: "put", url: `employee_registers/${id}`, data })
 
   }

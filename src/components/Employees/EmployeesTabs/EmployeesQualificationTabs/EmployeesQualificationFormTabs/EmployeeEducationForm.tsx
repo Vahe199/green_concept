@@ -22,11 +22,11 @@ type EmployeeEducationFormProps = {
     setEmployeeEducation:(val:boolean) =>void
 }
 const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployeeEducation}) => {
-    const {updateEmployeeQualificationDataAC,recoveryEmployeesQualificationState} = useActions()
+    const {updateEmployeeQualificationDataAC,recoveryEmployeesQualificationState, fetchEmployeeByIdtAC} = useActions()
     const {error, success} = useTypedSelector(state => state.employeesQualification)
     const {employeeById} = useTypedSelector(state => state.employees)
-    const {id}:any = employeeById;
-    debugger
+    const {employee}:any = employeeById;
+    const {id,educations}:any = employee;
     useEffect(()=>{
         if(error){
             notifyError();
@@ -35,17 +35,18 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
         if(success){
             notifySuccess();
             recoveryEmployeesQualificationState()
+            fetchEmployeeByIdtAC(id)
             setEmployeeEducation(true)
         }
     },[error, success])
     const initialValues = {
 
         employee_educations:[{
-            education_type_id:null,
-            educational_institution_name:"",
-            education_document:"",
-            speciality:"",
-            end_date:""
+            education_type_id:educations.length > 0 ? educations[0].education_type_id : null,
+            educational_institution_name:educations.length > 0 ? educations[0].educational_institution_name:"",
+            education_document:educations.length > 0 ? educations[0].education_document:"",
+            speciality:educations.length > 0 ? educations[0].speciality:"",
+            end_date:educations.length > 0 ? educations[0].end_date:""
         }],
         experience_months:"",
         experience_years:""
@@ -61,7 +62,7 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
                 onSubmit={async ({experience_years, experience_months,...values},action) => {
                     // console.log (111, {...values, experience_months: moment(month).format("MM"), experience_years: 222})
                      console.log (111, {...values})
-                    updateEmployeeQualificationDataAC({...values},id)
+                    updateEmployeeQualificationDataAC(values,id)
 
                 }}
             >

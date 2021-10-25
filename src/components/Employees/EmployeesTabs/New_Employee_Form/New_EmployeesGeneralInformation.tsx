@@ -1,7 +1,4 @@
 import React, {useState} from "react";
-import EmployeeInfoItemForm from "../EmployeesGeneralTabs/EmployeesGeneralFormTabs/EmployeeInfoItemForm";
-import EmployeeGeneralInfoForm from "../EmployeesGeneralTabs/EmployeesGeneralFormTabs/EmployeeGeneralInfoForm";
-import EmployeeAboutItemForm from "../EmployeesGeneralTabs/EmployeesGeneralFormTabs/EmployeeAboutItemForm";
 import {useStylesNewEmployee} from "./newEmployeeStyles";
 import {FieldArray, Form, Formik, getIn} from 'formik';
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
@@ -17,7 +14,9 @@ import {employeesApi} from "../../../../api/api";
 import {ToastContainer} from "react-toastify";
 import {notifyError, notifySuccess} from "../../../Utils/utils_options/ToastNotify";
 import BackToAddress from "../../../Utils/BackToAddress";
+import MaskedInput from "antd-mask-input";
 
+const { TextArea } = Input;
 
 
 const NewEmployeesGeneralInformation:React.FC = () => {
@@ -239,12 +238,23 @@ const NewEmployeesGeneralInformation:React.FC = () => {
                                                                                     : ""
                                                                             }
                                                                         >
-                                                                            <Input
+                                                                            <MaskedInput
                                                                                 name={fieldName}
-                                                                                placeholder={"+79999999999"}
                                                                                 value={phone}
-                                                                                onChange={handleChange}
+                                                                                onChange={(e) => {
+                                                                                    setFieldValue(
+                                                                                        fieldName,
+                                                                                        e.target.value.replace(
+                                                                                            /[^0-9]/g,
+                                                                                            ""
+                                                                                        )
+                                                                                    );
+                                                                                }}
+                                                                                placeholder={"7 999 999 99 99"}
+                                                                                mask="1 111 111 11 11"
+                                                                                prefix={<>+</>}
                                                                             />
+
                                                                         </ValidationErrorWrapper>
                                                                     );
                                                                 })}
@@ -261,7 +271,7 @@ const NewEmployeesGeneralInformation:React.FC = () => {
                                         </Typography>
                                         <Typography className={classes.typographyValue}>
                                             <FieldArray name="emails">
-                                                {({ insert, remove, push }) => (
+                                                {({ remove, push }) => (
                                                     <div>
                                                         {values. emails.length > 0 &&
                                                         values. emails.map(( email, index) => {
@@ -284,7 +294,7 @@ const NewEmployeesGeneralInformation:React.FC = () => {
                                                                             onChange={handleChange}
                                                                         />
                                                                     </ValidationErrorWrapper>
-                                                                    <div style={{marginLeft:"10%"}}
+                                                                    <div style={{marginLeft:16}}
                                                                          onClick={() => remove(index)}>
                                                                         <TrashIcon />
                                                                     </div>
@@ -313,15 +323,25 @@ const NewEmployeesGeneralInformation:React.FC = () => {
                      </Typography>
                  </div>
                  <div >
-                <textarea
-                    className={classes.textArea}
-                    name="about"
-                    placeholder={"Расскажите о себе"}
-                    value={values.about}
-                    onChange={handleChange}
-                    // error={touched.about && Boolean(errors.about)}
-                    // helperText={touched.about && errors.about}
-                >Расскажите о себе</textarea>
+                     <ValidationErrorWrapper
+                         inputClassName="ant-input"
+                         error={touched.about && Boolean(errors.about)}
+                         helperText={touched.about && errors.about}
+                     >
+                     <TextArea
+                         name="about"
+                         value={values.about}
+                         onChange={handleChange}
+                         // className={classes.input2}
+                         style={{
+                             height: "238px ",
+                         }}
+                         autoSize={false}
+                         className={classes.textArea}
+                          autoComplete={"off"}
+                         placeholder={"Расскажите о себе"}
+                     />
+                     </ValidationErrorWrapper>
                  </div>
              </div>
             </div>

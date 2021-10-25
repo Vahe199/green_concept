@@ -43,8 +43,8 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
 
         },
         textArea: {
+            marginBottom:50,
             border: "1px solid #3ab994",
-            height: 238,
             width: "100%",
             maxWait: "100%",
             borderRadius: 4,

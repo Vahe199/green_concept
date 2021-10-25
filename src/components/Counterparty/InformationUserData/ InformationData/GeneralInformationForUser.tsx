@@ -1,6 +1,6 @@
 import { Checkbox, Paper, Typography } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import React from "react";
+import React, {useEffect} from "react";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 
@@ -55,6 +55,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
         <div key={type.id}>{type.label}</div>
     ))
 
+
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -82,22 +83,22 @@ export const GeneralInformationForUser: React.FC<Props> = ({
         >
           {org_type === "ФЛ" ? "Физическое лицо" : "Юридическое лицо"}
         </Typography>
-        <div className={classes.div}>
-          <Typography
-            variant={"button"}
-            style={{ width: "40%" }}
-            className={classes.title}
-          >
-            CRM
-          </Typography>
-          <Typography variant={"body2"}>
-            {crms?.map((crm: any, index: number) => (
-              <div key={index} className={classes.title2}>
-                {crm.surname + " " + crm.firstname}
-              </div>
-            ))}
-          </Typography>
-        </div>
+          {org_type === "ФЛ" && contractor_type_id !== 1 || <div className={classes.div}>
+              <Typography
+                  variant={"button"}
+                  style={{width: "40%"}}
+                  className={classes.title}
+              >
+                  CRM
+              </Typography>
+              <Typography variant={"body2"}>
+                  {crms?.map((crm: any, index: number) => (
+                      <div key={index} className={classes.title2}>
+                          {crm.surname + " " + crm.firstname}
+                      </div>
+                  ))}
+              </Typography>
+          </div>}
         <div className={classes.div}>
           <Typography
             variant={"button"}

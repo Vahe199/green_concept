@@ -75,7 +75,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
       <Paper className={classes.paper}>
         <div className={classes.div}>
           <Typography variant={"button"} className={classes.description}>
-            Юридический адрес
+            {org_type === "ЮЛ" ? "Юридический адрес" : "Адрес регистрации"}
           </Typography>
           <Typography variant={"body2"} className={classes.title}>
             {legal_registration_address}

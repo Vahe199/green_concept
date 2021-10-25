@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
@@ -45,7 +45,11 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
 }) => {
   const { AuthorData } = useTypedSelector((state) => state.author);
   const { contractor }: any = AuthorData;
-  const { full_name, short_name, group, branches }: any = contractor;
+  const { full_name, short_name, group, branches, org_type }: any = contractor;
+
+    useEffect(() => {
+        console.log(contractor.service.contractor_type_id, 'contractor')
+    }, [contractor])
 
   const classes = useStyles();
   return (
@@ -69,7 +73,7 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
       <Paper className={classes.paper}>
         <div className={classes.div}>
           <Typography variant={"button"} className={classes.description}>
-            Полное наименование компании
+              {org_type === "ЮЛ" ? "Полное наименование компании" : "ФИО"}
           </Typography>
           <Typography variant={"body2"} className={classes.val}>
             {full_name}
@@ -77,7 +81,7 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
         </div>
         <div className={classes.div}>
           <Typography variant={"button"} className={classes.description}>
-            Краткое наименование компании
+              {org_type === "ЮЛ" ? "Краткое наименование компании" : "Краткое наименование"}
           </Typography>
           <Typography variant={"body2"} className={classes.val}>
             {short_name}
@@ -91,20 +95,20 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
             {group ? group.full_name : "-----------------------"}
           </Typography>
         </div>
-        <div className={classes.div}>
-          <Typography variant={"button"} className={classes.description}>
-            Отрасль
-          </Typography>
-          <Typography variant={"body2"}>
-            {branches.length > 0
-              ? branches.map((branch: any) => (
-                  <div key={branch.id} className={classes.val}>
-                    {branch.name}
-                  </div>
-                ))
-              : ""}
-          </Typography>
-        </div>
+          {contractor.org_type === "ФЛ" && contractor.service.contractor_type_id !== 1 || <div className={classes.div}>
+              <Typography variant={"button"} className={classes.description}>
+                  Отрасль
+              </Typography>
+              <Typography variant={"body2"}>
+                  {branches.length > 0
+                      ? branches.map((branch: any) => (
+                          <div key={branch.id} className={classes.val}>
+                              {branch.name}
+                          </div>
+                      ))
+                      : ""}
+              </Typography>
+          </div>}
       </Paper>
     </div>
   );

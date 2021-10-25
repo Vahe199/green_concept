@@ -81,6 +81,8 @@ export const FormCompanyDetails: React.FC<Props> = ({
     branches: ['']
   }
 
+
+
   return (
     <div className={classes.root}>
       <Formik
@@ -115,7 +117,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
             <div style={{ color: "red" }}>{error}</div>
           )}
           <div className={classes.label2}>
-            <span style={{width:"40%"}}>Полное наименование компании</span>
+            <span style={{width:"40%"}}>{org_type === "ЮЛ" ? "Полное наименование компании" : "ФИО"}</span>
             <div style={{width:"60%"}}>
               <ValidationErrorWrapper
                   inputClassName="ant-input"
@@ -133,7 +135,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
                     autoSize={false}
                     //className={classes.textAreaCN}
                     autoComplete={'off'}
-                    placeholder={'ООО "Северо-Западная компания”'} />
+                    placeholder={org_type === "ЮЛ" ? 'ООО "Северо-Западная компания”' : 'ФИО'} />
               </ValidationErrorWrapper>
             </div>
             {/*<TextField*/}
@@ -150,7 +152,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
             {/*/>*/}
           </div>
           <div className={classes.label}>
-            <span style={{width:"40%"}}>Краткое наименование компании</span>
+            <span style={{width:"40%"}}>{org_type === "ЮЛ" ? "Краткое наименование компании" : "Краткое наименование"}</span>
             <div style={{width:"60%"}}>
               <ValidationErrorWrapper
                   inputClassName="ant-input"
@@ -163,7 +165,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
                     onChange={handleChange}
                     className={classes.input2}
                     autoComplete={'off'}
-                    placeholder={"Краткое наименование компании"} />
+                    placeholder={org_type === "ЮЛ" ? "Краткое наименование компании" : 'Краткое наименование'} />
               </ValidationErrorWrapper>
             </div>
             {/*<TextField*/}
@@ -200,11 +202,11 @@ export const FormCompanyDetails: React.FC<Props> = ({
               />
             </div>
           </div>
-          <div className={classes.label} style={{ alignItems: "flex-start" }}>
+          {contractor.org_type === "ФЛ" && contractor.service.contractor_type_id !== 1 || <div className={classes.label} style={{alignItems: "flex-start"}}>
             <span>Отрасль</span>
             <span style={{width: "60%", flexDirection: "column"}}>
               <FieldArray name="branches">
-                                        {({ remove, push}) => (
+                                        {({remove, push}) => (
                                             <div style={{width: "100%"}}>
                                               {values.branches.length > 0 &&
                                               values.branches.map((branch, index) => {
@@ -216,7 +218,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
                                                       display: "flex",
                                                       flexDirection: "row",
                                                       alignItems: "center",
-                                                      marginBottom:16
+                                                      marginBottom: 16
                                                     }}>
                                                       <div style={index > 0 ? {width: "90%"} : {width: "100%"}}>
                                                         <ValidationErrorWrapper
@@ -224,16 +226,16 @@ export const FormCompanyDetails: React.FC<Props> = ({
                                                             error={Boolean(touchedFieldName && errorFieldName)}
                                                             helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}
                                                         >
-                                                        <InputFilterSelectedType
-                                                            name={fieldName}
-                                                            handleChange={(value: any) =>
-                                                                setFieldValue(fieldName, value)
-                                                            }
-                                                            value={branch}
-                                                            options={assetsOptionsBranches}
-                                                            placeholder="Выберите отрасль"
-                                                            loading={assetsLoading}
-                                                        />
+                                                          <InputFilterSelectedType
+                                                              name={fieldName}
+                                                              handleChange={(value: any) =>
+                                                                  setFieldValue(fieldName, value)
+                                                              }
+                                                              value={branch}
+                                                              options={assetsOptionsBranches}
+                                                              placeholder="Выберите отрасль"
+                                                              loading={assetsLoading}
+                                                          />
                                                         </ValidationErrorWrapper>
                                                       </div>
 
@@ -254,7 +256,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
                                         )}
                    </FieldArray>
             </span>
-          </div>
+          </div>}
         </Paper>
             </Form>
         )}

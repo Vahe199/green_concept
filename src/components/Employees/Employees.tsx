@@ -92,7 +92,6 @@ const Employees = (props: any) => {
     const {loading,employeeById} = useTypedSelector(state => state.employees)
     const {employee}:any = employeeById;
     const {surname, firstname} = employee ? employee : empData;
-    debugger
     let history = useHistory();
     const classes = useStyles();
     const [selectedTab, setSelectedTab] = React.useState<string>('Общие сведения');

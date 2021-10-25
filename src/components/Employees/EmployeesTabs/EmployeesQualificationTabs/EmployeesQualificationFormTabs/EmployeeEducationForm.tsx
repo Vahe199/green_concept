@@ -24,6 +24,9 @@ type EmployeeEducationFormProps = {
 const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployeeEducation}) => {
     const {updateEmployeeQualificationDataAC,recoveryEmployeesQualificationState} = useActions()
     const {error, success} = useTypedSelector(state => state.employeesQualification)
+    const {employeeById} = useTypedSelector(state => state.employees)
+    const {id}:any = employeeById;
+    debugger
     useEffect(()=>{
         if(error){
             notifyError();
@@ -58,7 +61,7 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
                 onSubmit={async ({experience_years, experience_months,...values},action) => {
                     // console.log (111, {...values, experience_months: moment(month).format("MM"), experience_years: 222})
                      console.log (111, {...values})
-                    updateEmployeeQualificationDataAC({...values},17)
+                    updateEmployeeQualificationDataAC({...values},id)
 
                 }}
             >

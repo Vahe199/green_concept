@@ -16,6 +16,7 @@ import {InputEmployeesAssetsOptions} from "../../../Utils/utils_options/InputEmp
 import {employeesApi} from "../../../../api/api";
 import {ToastContainer} from "react-toastify";
 import {notifyError, notifySuccess} from "../../../Utils/utils_options/ToastNotify";
+import BackToAddress from "../../../Utils/BackToAddress";
 
 
 
@@ -46,6 +47,7 @@ const NewEmployeesGeneralInformation:React.FC = () => {
     };
     return(
         <div className={classes.root}>
+            <BackToAddress address="/employees" title="списку" />
             <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
         <Formik
             initialValues={initialValues}

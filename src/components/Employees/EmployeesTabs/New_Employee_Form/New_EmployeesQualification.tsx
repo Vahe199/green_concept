@@ -14,6 +14,7 @@ import InputFilterSelectedType from "../../../Utils/FilterInputs/InputFilterSele
 import InputFilterDatePicker from "../../../Utils/FilterInputs/InputFilterDatePicker";
 import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 import {InputEmployeesAssetsOptions} from "../../../Utils/utils_options/InputEmployeesAssetsOptions";
+import BackToAddress from "../../../Utils/BackToAddress";
 
 
 const NewEmployeesQualification:React.FC = () => {
@@ -41,6 +42,7 @@ const NewEmployeesQualification:React.FC = () => {
     }
     return(
         <div className={classes.root}>
+            <BackToAddress address="/employees" title="списку" />
             <Formik
                 initialValues={initialValues}
                 // validationSchema={validationSchemaContactsFromGreen}

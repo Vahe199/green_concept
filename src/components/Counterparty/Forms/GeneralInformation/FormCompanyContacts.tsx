@@ -100,7 +100,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                 <div style={{ color: "red" }}>{error}</div>
               )}
               <div className={classes.label}>
-                <span>Юридический адрес </span>
+                <span>{org_type === "ЮЛ" ? "Юридический адрес" : "Адрес регистрации"}</span>
                 <div style={{ width: "60%" }}>
                   <ValidationErrorWrapper
                     inputClassName="ant-input"
@@ -187,7 +187,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                   inputProps={{ "aria-label": "checkbox with default color" }}
                 />
                 <span style={{ fontSize: 16, fontWeight: 500 }}>
-                  Совпадает с юридическим адресом
+                  {org_type === "ЮЛ" ? "Совпадает с юридическим адресом" : "Совпадает с адресом регистрации"}
                 </span>
               </div>
               <div className={classes.label}>
@@ -242,7 +242,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                   inputProps={{ "aria-label": "checkbox with default color" }}
                 />
                 <span style={{ fontSize: 16, fontWeight: 500 }}>
-                  Совпадает с юридическим адресом
+                 {org_type === "ЮЛ" ? "Совпадает с юридическим адресом" : "Совпадает с адресом регистрации"}
                 </span>
               </div>
               <div

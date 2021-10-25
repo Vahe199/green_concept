@@ -149,91 +149,91 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                   />
                 </div>
               </div>
-              <div
-                className={classes.label}
-                style={{ alignItems: "flex-start" }}
+              {values.org_type === "ФЛ" && contractorId !== 1 ||  <div
+                  className={classes.label}
+                  style={{alignItems: "flex-start"}}
               >
                 <span style={{width: "40%"}}>CRM</span>
                 <div
-                  style={{
-                    width: "60%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
+                    style={{
+                      width: "60%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
                 >
                   <FieldArray name="crms">
-                    {({ remove, push }) => (
-                      <div style={{ width: "100%", alignItems: "center" }}>
-                        {values.crms.length > 0 &&
+                    {({remove, push}) => (
+                        <div style={{width: "100%", alignItems: "center"}}>
+                          {values.crms.length > 0 &&
                           values.crms.map((crm, index) => {
                             const fieldName = `crms[${index}]`;
                             const touchedFieldName = getIn(touched, fieldName);
                             const errorFieldName = getIn(errors, fieldName);
                             return (
-                              <div
-                                key={index}
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row",
-                                  marginBottom:16
-                                }}
-                              >
                                 <div
-                                  style={
-                                    index > 0
-                                      ? { width: "80%" }
-                                      : { width: "100%" }
-                                  }
+                                    key={index}
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "row",
+                                      marginBottom: 16
+                                    }}
                                 >
-                                  <ValidationErrorWrapper
-                                      inputClassName="ant-select-selector"
-                                      error={Boolean(
-                                          touchedFieldName && errorFieldName
-                                      )}
-                                      helperText={
-                                        touchedFieldName && errorFieldName
-                                            ? errorFieldName
-                                            : ""
+                                  <div
+                                      style={
+                                        index > 0
+                                            ? {width: "80%"}
+                                            : {width: "100%"}
                                       }
                                   >
-                                  <InputFilterSelectedType
+                                    <ValidationErrorWrapper
+                                        inputClassName="ant-select-selector"
+                                        error={Boolean(
+                                            touchedFieldName && errorFieldName
+                                        )}
+                                        helperText={
+                                          touchedFieldName && errorFieldName
+                                              ? errorFieldName
+                                              : ""
+                                        }
+                                    >
+                                      <InputFilterSelectedType
 
-                                    name={fieldName}
-                                    handleChange={(value: any) =>
-                                      setFieldValue(fieldName, value)
-                                    }
-                                    value={crm}
-                                    options={assetsOptionsCRMS}
-                                    placeholder="Фамилия Имя"
+                                          name={fieldName}
+                                          handleChange={(value: any) =>
+                                              setFieldValue(fieldName, value)
+                                          }
+                                          value={crm}
+                                          options={assetsOptionsCRMS}
+                                          placeholder="Фамилия Имя"
 
-                                  />
-                                  </ValidationErrorWrapper>
-                                </div>
-
-                                {index == 0 ? (
-                                  ""
-                                ) : (
-                                  <div
-                                    style={{ marginLeft: 16 }}
-                                    onClick={() => remove(index)}
-                                  >
-                                    <TrashIcon />
+                                      />
+                                    </ValidationErrorWrapper>
                                   </div>
-                                )}
-                              </div>
+
+                                  {index == 0 ? (
+                                      ""
+                                  ) : (
+                                      <div
+                                          style={{marginLeft: 16}}
+                                          onClick={() => remove(index)}
+                                      >
+                                        <TrashIcon/>
+                                      </div>
+                                  )}
+                                </div>
                             );
                           })}
-                        <div
-                          className={classes.addItemCRM}
-                          onClick={() => push("")}
-                        >
-                          + Добавить еще CRM
+                          <div
+                              className={classes.addItemCRM}
+                              onClick={() => push("")}
+                          >
+                            + Добавить еще CRM
+                          </div>
                         </div>
-                      </div>
                     )}
                   </FieldArray>
                 </div>
-              </div>
+              </div>}
 
               <div className={classes.label}>
                 <span style={{width: "40%"}}>Тип контрагента</span>

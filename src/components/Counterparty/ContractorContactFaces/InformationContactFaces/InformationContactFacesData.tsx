@@ -85,6 +85,9 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.value);
   };
+
+
+
   return (
     <div className={classes.root}>
       <div

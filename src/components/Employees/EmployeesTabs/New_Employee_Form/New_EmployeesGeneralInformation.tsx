@@ -75,7 +75,7 @@ const NewEmployeesGeneralInformation:React.FC = () => {
                         color="primary"
                         className={classes.btn}
                     >
-                        Сохранить Новый Сотрудник
+                        Сохранить карточку
                     </Button>
         <div className={classes.container}>
 

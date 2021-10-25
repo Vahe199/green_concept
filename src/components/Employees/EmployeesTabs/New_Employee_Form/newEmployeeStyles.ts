@@ -1,4 +1,5 @@
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import NewEmployeesQualification from "./New_EmployeesQualification";
 
 export const useStylesNewEmployee = makeStyles((theme: Theme) =>
     createStyles({
@@ -6,6 +7,14 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
         container:{
             display:'flex',flexWrap:"wrap",
             width:"100%", height:"100%",
+            justifyContent:'space-between',
+            backgroundColor:"#F2F3F4"
+        },
+        containerQualification:{
+            display:'flex',
+            flexWrap:"wrap",
+            width:"100%",
+            height:"100%",
             justifyContent:'space-between',
             backgroundColor:"#F2F3F4"
         },
@@ -168,6 +177,52 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             "&:active": {
                 backgroundColor: "#32A886",
             },
+        },
+        monthPiker:{
+            width:91,
+            height:30,
+            paddingRight:4,
+            paddingLeft:8,
+            "& input": {
+                fontSize: "16px !important",
+                textAlign:"center"
+            }
+        },
+        yearPiker:{
+            width:52,
+            height:30,
+            marginRight:24,
+            paddingRight:0,
+            paddingLeft:4,
+            "& input": {
+                fontSize: "16px !important",
+                textAlign:"center"
+            }
+        },
+        inputData: {
+            width: "60% !important",
+        },
+        addItem: {
+            fontSize:14,
+            fontWeight:400,
+            cursor: "pointer",
+            "&:hover": {
+                textDecoration: "underline",
+            }
+        },
+        typographyTitleEnh:{
+            fontSize: 16,
+            fontWeight:500,
+            color: '#3B4750',
+            width:"40%",
+        },
+        typographyValueEnh:{
+            display:'flex',
+            flexDirection:'column',
+            width:"60%",
+            textAlign:"left",
+            fontSize: 16,
+            color: '#3B4750'
         },
     })
 );

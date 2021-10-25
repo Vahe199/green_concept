@@ -18,6 +18,7 @@ import {useActions} from "../../redux/type_redux_hook/useAction";
 import Loader from "../Layout/Loader/Loader";
 import {getEmployeeAssetsAC} from "../../redux/store/action_creator/employees_action-creator/employees_assets_action_creator";
 import NewEmployeesGeneralInformation from "./EmployeesTabs/New_Employee_Form/New_EmployeesGeneralInformation";
+import NewEmployeesQualification from "./EmployeesTabs/New_Employee_Form/New_EmployeesQualification";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -188,7 +189,7 @@ const Employees = (props: any) => {
             <div>{loading ? <Loader/> :
                 <div>{props.match.params.item === "new-employee" ? <div>
                     {selectedTab == 'Общие сведения' && <NewEmployeesGeneralInformation/>}
-                    {selectedTab == 'Квалификация' && <div>Квалификация</div>}
+                    {selectedTab == 'Квалификация' && <NewEmployeesQualification/>}
                     {selectedTab == 'Развитие' && <div>Развитие</div>}
                     </div> :
                     <div>

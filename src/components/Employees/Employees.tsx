@@ -17,6 +17,7 @@ import EmployeesDevelopment from "./EmployeesTabs/EmployeesDevelopment";
 import {useActions} from "../../redux/type_redux_hook/useAction";
 import Loader from "../Layout/Loader/Loader";
 import {getEmployeeAssetsAC} from "../../redux/store/action_creator/employees_action-creator/employees_assets_action_creator";
+import NewEmployeesGeneralInformation from "./EmployeesTabs/New_Employee_Form/New_EmployeesGeneralInformation";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -85,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Employees = (props: any) => {
+    console.log(props,"props")
     let empData = {
         surname:"",
         firstname:""
@@ -98,14 +100,17 @@ const Employees = (props: any) => {
 
     const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: string) => {
          setSelectedTab(newValue);
-        history.push(`/employee/${newValue}`)
+        history.push(`/employee/${props.match.params.item}/${newValue}`)
     };
     return (
         <div className={classes.container}>
             <Paper square className={classes.root}>
-                <Typography variant="subtitle1" noWrap className={classes.typography}>
-                    {firstname + " " + surname}
+                {props.match.params.item === "new-employee" ?<Typography variant="subtitle1" noWrap className={classes.typography}>
+                        Новый Сотрудник
                 </Typography>
+                :<Typography variant="subtitle1" noWrap className={classes.typography}>
+                        {firstname + " " + surname}
+                    </Typography>}
 
                 <div style={{ display: "flex" }}>
                     <Tabs
@@ -181,10 +186,16 @@ const Employees = (props: any) => {
                 <Divider style={{ width: "102%" }} />
             </Paper>
             <div>{loading ? <Loader/> :
-                <div>
-                    {selectedTab == 'Общие сведения' && <EmployeesGeneralInformation/>}
-                    {selectedTab == 'Квалификация' && <EmployeesQualification/>}
-                    {selectedTab == 'Развитие' && <EmployeesDevelopment/>}
+                <div>{props.match.params.item === "new-employee" ? <div>
+                    {selectedTab == 'Общие сведения' && <NewEmployeesGeneralInformation/>}
+                    {selectedTab == 'Квалификация' && <div>Квалификация</div>}
+                    {selectedTab == 'Развитие' && <div>Развитие</div>}
+                    </div> :
+                    <div>
+                        {selectedTab == 'Общие сведения' && <EmployeesGeneralInformation/>}
+                        {selectedTab == 'Квалификация' && <EmployeesQualification/>}
+                        {selectedTab == 'Развитие' && <EmployeesDevelopment/>}
+                    </div>}
                 </div>}
             </div>
         </div>

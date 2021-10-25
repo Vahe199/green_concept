@@ -28,7 +28,7 @@ export const EmployeesTab = () => {
   //   setValue(newValue);
   // };
   const handleClick = (path: string) => {
-    history.push(`/counterparty/${path}`);
+    history.push(`/employee/${path}`);
   };
   return (
     <div className={classes.container}>
@@ -44,7 +44,7 @@ export const EmployeesTab = () => {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <span style={{ display: "flex" }}>
             <Button
-              // onClick={() => handleClick("new-contractor")}
+               onClick={() => handleClick("new-employee")}
               variant="contained"
               color="primary"
               startIcon={<AddIcon />}

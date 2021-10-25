@@ -4,13 +4,18 @@ import {Divider, Link, Paper, Typography} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import {useStylesEmployeeQualification} from "./EmployeesQualificationStyles";
 import {PencilSimpleIcon} from "../../../../IMG/SVG/PencilSimpleIcon";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 
 type TrainingProps = {
     setEmployeeTraining:(val:boolean)=>void
 }
 
 const EmployeeTraining:React.FC<TrainingProps> = ({setEmployeeTraining}) => {
-    let EducationState = [1,2]
+    let EducationSkills= {skills:[{educational_institution_name:"",education_document:"",expire_date:""}]}
+    const {employeeById} = useTypedSelector(state => state.employees)
+    const {employee}:any =employeeById;
+    const {skills}:any = employee.skills?.length > 0 ? employee : EducationSkills;
+    debugger
     const classes = useStylesEmployeeQualification();
     return(
         <div className={classes.root}>
@@ -25,14 +30,15 @@ const EmployeeTraining:React.FC<TrainingProps> = ({setEmployeeTraining}) => {
             <Paper elevation={0} className={classes.paper}>
                 <div className={classes.row}>
                     <div style={{width:"100%"}}>
-                        {EducationState.map((educ:any,index:number) =><div>
+                        {skills?.length > 0 &&
+                        skills?.map((skil:any,index:number) =><div>
                             {index != 0 && <Divider variant="middle" style={{marginBottom: 24, marginTop: 24}}/>}
                             <div className={classes.column}>
                                 <Typography className={classes.typographyTitle}>
                                     Наименование учебного заведения:
                                 </Typography>
                                 <Typography className={classes.typographyValue}>
-                                    Санкт-Петербургское государственное бюджетное образовательное учреждение дополнительного профессионального образования "Санкт-Петербургский межрегиональный ресурсный центр", программа "Авторское право на произведения архитектуры и градостроительства"
+                                    {skil.educational_institution_name}
                                 </Typography>
                             </div>
                             <div className={classes.column}>
@@ -40,7 +46,7 @@ const EmployeeTraining:React.FC<TrainingProps> = ({setEmployeeTraining}) => {
                                     Документ:
                                 </Typography>
                                 <Typography className={classes.typographyValue}>
-                                    Удостоверение о повышении квалификации, регистрационный номер от 09.11.2017
+                                    {skil.education_document}
                                 </Typography>
                             </div>
                             <div className={classes.column}>
@@ -48,7 +54,7 @@ const EmployeeTraining:React.FC<TrainingProps> = ({setEmployeeTraining}) => {
                                     Срок действия документа:
                                 </Typography>
                                 <Typography className={classes.typographyValue}>
-                                    30.10.2021
+                                    {skil.expire_date}
                                 </Typography>
                             </div>
 

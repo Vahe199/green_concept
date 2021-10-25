@@ -21,6 +21,7 @@ const EmployeesQualification:React.FC = () => {
             <div style={{width:'48%',marginLeft:32}}>
                 {employeeEducation ? <EmployeeEducation setEmployeeEducation={setEmployeeEducation}/>
                    : <EmployeeEducationForm setEmployeeEducation={setEmployeeEducation}/>}
+
                 {employeeSpecialized ?<EmployeeSpecializedRegisters setEmployeeSpecialized={setEmployeeSpecialized}/>
                    : <EmployeeSpecializedRegistersForm setEmployeeSpecialized={setEmployeeSpecialized}/>}
             </div>

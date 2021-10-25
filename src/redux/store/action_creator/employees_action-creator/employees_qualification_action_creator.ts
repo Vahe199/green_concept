@@ -7,6 +7,7 @@ import {
 
 
 export const updateEmployeeQualificationDataAC = (formData:any ,id:number) => async (dispatch: Dispatch<EmployeeQualificationListAction>) => {
+
     try {
         dispatch({type:EmployeeQualificationListActionType.UPDATE_EMPLOYEES_QUALIFICATION_LIST})
         const {data} = await employeesApi.updateEmployeeEducationsById(id, formData)
@@ -28,7 +29,7 @@ export const updateEmployeeSkillsDataAC = (formData:any ,id:number) => async (di
 }
 
 export const updateEmployeeRegisterDataAC = (formData:any ,id:number) => async (dispatch: Dispatch<EmployeeQualificationListAction>) => {
-debugger
+
     try {
         dispatch({type:EmployeeQualificationListActionType.UPDATE_EMPLOYEES_QUALIFICATION_LIST})
         const {data} = await employeesApi.updateEmployeeRegisterById(id, formData)

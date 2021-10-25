@@ -12,7 +12,7 @@ export const InputEmployeesAssetsOptions = () => {
         companies, employee_positions, regions, education_types, directions,employee_statuses
     }: any = assets ? assets : assetsData;
 
-    debugger
+
 
     const assetsOptionsEmployeeStatuses = employee_statuses?.map((option: any) => ({
         key: option.id,

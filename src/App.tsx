@@ -51,7 +51,7 @@ const App: React.FC = (props: PropsWithChildren<any>) => {
 
         <main className={classes.content}>
           <Route path="/counterparties" render={() => <Counterparty />} />
-          <Route path="/employee/:item?" render={() => <Employees />} />
+          <Route path="/employee/:item?/:pages?" render={() => <Employees />} />
           <Route path="/employees" render={() => <EmployeesTab />} />
           <Route
             path="/counterparty/:item?"

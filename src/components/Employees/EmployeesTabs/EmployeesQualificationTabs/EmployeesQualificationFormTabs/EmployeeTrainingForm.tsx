@@ -20,8 +20,11 @@ type TrainingFormProps = {
 
 const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining}) => {
 
-    const {recoveryEmployeesQualificationState,updateEmployeeSkillsDataAC } = useActions()
+    const {recoveryEmployeesQualificationState,updateEmployeeSkillsDataAC,fetchEmployeeByIdtAC } = useActions()
     const {error, success} = useTypedSelector(state => state.employeesQualification)
+    const {employeeById} = useTypedSelector(state => state.employees)
+    const {employee}:any =employeeById;
+    const {skills}:any =employee;
     useEffect(()=>{
         if(error){
             notifyError();
@@ -30,14 +33,15 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
         if(success){
             notifySuccess();
             recoveryEmployeesQualificationState()
+            fetchEmployeeByIdtAC(employee.id)
             setEmployeeTraining(true)
         }
     },[error, success])
     const initialValues = {
         employee_skills:[{
-            educational_institution_name:"",
-            education_document:"",
-            expire_date:""
+            educational_institution_name:skills.length > 0 ? skills[0].educational_institution_name:"",
+            education_document:skills.length > 0 ? skills[0].education_document:"",
+            expire_date:skills.length > 0 ? skills[0].expire_date:""
         }]
     }
     const classes = useStylesEmployeeQualificationForm();
@@ -49,7 +53,7 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
                 // validationSchema={validationSchemaContactsFromGreen}
                 onSubmit={async (values,action) => {
                     console.log (111,values)
-                     updateEmployeeSkillsDataAC(values,17)
+                     updateEmployeeSkillsDataAC(values,employee.id)
                     // setEmployeeTraining(true) gevor
                 }}
             >

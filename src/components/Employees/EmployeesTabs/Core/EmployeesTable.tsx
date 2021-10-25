@@ -52,7 +52,7 @@ const [filterField, setFilterField] = useState<any>({
 
     const getUserData = (data: any) => {
 
-        history.push(`/employee`);
+        history.push(`/employee/author`);
         fetchEmployeeByIdtAC(data.id);
     };
 
@@ -69,7 +69,7 @@ const [filterField, setFilterField] = useState<any>({
     const [filterData, setFilterData] = useState<any>(employeeData);
 
     const searchFilter = (text:any, field:string) => {
-        debugger
+
         if (text) {
             const newData = employeeData.filter((item:any) => {
                 const itemData = field == "FIO" ?

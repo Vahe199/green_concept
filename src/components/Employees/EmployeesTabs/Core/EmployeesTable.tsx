@@ -303,7 +303,7 @@ const [filterField, setFilterField] = useState<any>({
         <Paper className={classes.root}>
             <div className={classes.titleWrapper}>
                 <div>
-                    Найдено <span>{filterData.length}</span> из <span>{employeeData.length}</span>
+                    Найдено <span>{filterData?.length}</span> из <span>{employeeData?.length}</span>
                 </div>
                 <Divider />
             </div>

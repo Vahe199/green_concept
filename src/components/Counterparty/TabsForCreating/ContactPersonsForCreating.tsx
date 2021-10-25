@@ -102,10 +102,15 @@ export const ContactPersonsForCreating: React.FC = () => {
       recoveryContractorContactState();
     }
   }, [success, error]);
+
+
+
   const [contractorId, setContractorId] = useState(1);
   const [attachedContact, onAttachedContact] = useState("");
   const [showModal, setShowModal] = useState(false);
   const searchOptions = SearchContactPerson();
+
+
 
   const [branch, setBranch] = useState("");
   // const filteredBranches = branches.filter(({ name }: { name: string }) => name.includes(branch))
@@ -214,7 +219,7 @@ export const ContactPersonsForCreating: React.FC = () => {
       <Formik
         innerRef={formikRef}
         initialValues={defaultValues}
-        validationSchema={validationSchemaContactPerson}
+        validationSchema={() => validationSchemaContactPerson(contractorId)}
         onSubmit={async (values, action) => {
           console.log(values, "values");
           insertContractorContactData(values);
@@ -580,33 +585,33 @@ export const ContactPersonsForCreating: React.FC = () => {
                       </ValidationErrorWrapper>
                     </div>
                   </div>
-                  <div className={classes.label}>
+                  {contractorId !== 1 && <div className={classes.label}>
                     <span>Тип услуг</span>
-                    <div style={{ width: "60%" }}>
+                    <div style={{width: "60%"}}>
                       <ValidationErrorWrapper
-                        inputClassName="ant-select-selector"
-                        error={
-                          touched.service_type_id &&
-                          Boolean(errors.service_type_id)
-                        }
-                        helperText={
-                          touched.service_type_id && errors.service_type_id
-                        }
+                          inputClassName="ant-select-selector"
+                          error={
+                            touched.service_type_id &&
+                            Boolean(errors.service_type_id)
+                          }
+                          helperText={
+                            touched.service_type_id && errors.service_type_id
+                          }
                       >
                         <InputFilterSelectedType
-                          // className={classes.input}
-                          name="service_type_id"
-                          handleChange={(value: any) =>
-                            setFieldValue("service_type_id", value)
-                          }
-                          value={values.service_type_id}
-                          options={assetsOptionsServiceType}
-                          placeholder="Выберите"
-                          loading={assetsLoading}
+                            // className={classes.input}
+                            name="service_type_id"
+                            handleChange={(value: any) =>
+                                setFieldValue("service_type_id", value)
+                            }
+                            value={values.service_type_id}
+                            options={assetsOptionsServiceType}
+                            placeholder="Выберите"
+                            loading={assetsLoading}
                         />
                       </ValidationErrorWrapper>
                     </div>
-                  </div>
+                  </div>}
                   <div className={classes.label}>
                     <span>Отрасль</span>
                     <div style={{ width: "60%" }}>

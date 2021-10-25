@@ -5,21 +5,22 @@ export const validationSchemaGeneralInfo = (value: any) =>  yup.object().shape({
 
     crms: yup.array()
         .of(
-            yup.number().required("Обязательное поле"),
-        )
-        .required("Обязательное поле"),
+            yup.number(),
+                //.required("Обязательное поле"),
+        ),
+        //.required("Обязательное поле"),
     contractor_type_id: yup
         .string()
-        .required("Обязательное поле"),
+        .required("Обязательно к заполнению"),
     service_type_id: yup
-        .string()
-        .required("Обязательное поле"),
+        .string(),
+        //.required("Обязательное поле"),
     inn: yup
         .string()
         .min(value == "ЮЛ" ? 10 : 12, `должен состоять минимум из ${value == "ЮЛ" ? 10 : 12} символов`)
-        .max(value == "ЮЛ" ? 10 : 12, `должен состоять максимум из ${value == "ЮЛ" ? 10 : 12} символов` )
-        .required(`Обязательное поле`),
-    kpp: value == "ЮЛ" ? yup.string().required("Обязательное поле").min(9, "должен состоять минимум из 9 символов")
+        .max(value == "ЮЛ" ? 10 : 12, `должен состоять максимум из ${value == "ЮЛ" ? 10 : 12} символов` ),
+        //.required(`Обязательное поле`),
+    kpp: value == "ЮЛ" ? yup.string().min(9, "должен состоять минимум из 9 символов")
         .max(9, "должен состоять максимум из 9 символов").nullable(true) : yup.string().nullable(true),
     // kpp: yup
     //     .string().nullable(true)
@@ -40,16 +41,17 @@ export const validationSchemaFormCompanyDetails = (value: any) => yup.object().s
 
     full_name: yup.string().min(0, "должен состоять минимум из 10 символов")
         .max(300, `должен состоять максимум из 300 символов`)
-        .required("Обязательное поле"),
+        .required("Обязательно к заполнению"),
     short_name: yup.string() .min(10, "должен состоять минимум из 10 символов")
-        .max(value == "ЮЛ" ? 100 : 50, `должен состоять максимум из ${value == "ЮЛ" ? 100 : 50} символов`)
-        .required("Обязательное поле"),
+        .max(value == "ЮЛ" ? 100 : 50, `должен состоять максимум из ${value == "ЮЛ" ? 100 : 50} символов`),
+        //.required("Обязательное поле"),
        // parent_id: yup.string() .min(0, "должен состоять минимум из 1 символов")
        //  .max(250, "должен состоять максимум из 250 символов"),
         // .required("Обязательное поле"),
     branches: yup.array()
         .of(
-            yup.string().required("Обязательное поле"),
+            yup.string(),
+                //.required("Обязательное поле"),
         )
         .required("Обязательное поле"),
 

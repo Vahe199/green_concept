@@ -73,11 +73,15 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
     contractors_position: "",
   };
 
+  React.useEffect(() => {
+    console.log(contractorId, 'contractorId')
+  }, [contractorId])
+
   return (
     <div className={classes.root}>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchemaBasicInformation}
+        validationSchema={() => validationSchemaBasicInformation(contractorId)}
         onSubmit={async (values, action) => {
           console.log(values, "values");
           await counterpartiesApi
@@ -391,32 +395,32 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                   </ValidationErrorWrapper>
                 </div>
               </div>
-              <div className={classes.label}>
+              {contractorId !== 1 && <div className={classes.label}>
                 <span className={classes.spanTitle}>Тип услуг</span>
-                <div style={{ width: "60%" }}>
+                <div style={{width: "60%"}}>
                   <ValidationErrorWrapper
-                    inputClassName="ant-select-selector"
-                    error={
-                      touched.service_type_id && Boolean(errors.service_type_id)
-                    }
-                    helperText={
-                      touched.service_type_id && errors.service_type_id
-                    }
+                      inputClassName="ant-select-selector"
+                      error={
+                        touched.service_type_id && Boolean(errors.service_type_id)
+                      }
+                      helperText={
+                        touched.service_type_id && errors.service_type_id
+                      }
                   >
                     <InputFilterSelectedType
-                      // className={classes.input}
-                      name="service_type_id"
-                      handleChange={(value: any) =>
-                        setFieldValue("service_type_id", value)
-                      }
-                      value={values.service_type_id}
-                      options={assetsOptionsServiceType}
-                      placeholder="Выберите"
-                      loading={assetsLoading}
+                        // className={classes.input}
+                        name="service_type_id"
+                        handleChange={(value: any) =>
+                            setFieldValue("service_type_id", value)
+                        }
+                        value={values.service_type_id}
+                        options={assetsOptionsServiceType}
+                        placeholder="Выберите"
+                        loading={assetsLoading}
                     />
                   </ValidationErrorWrapper>
                 </div>
-              </div>
+              </div>}
               <div className={classes.label}>
                 <span className={classes.spanTitle}>Отрасль</span>
                 <div style={{ width: "60%" }}>

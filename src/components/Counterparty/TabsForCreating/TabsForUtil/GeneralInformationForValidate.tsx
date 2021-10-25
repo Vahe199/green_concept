@@ -4,16 +4,21 @@ export const validationSchema = (value: string) =>
   yup.object().shape({
     crms: yup
       .array()
-      .of(yup.number().required("Обязательное поле"))
-      .strict()
-      .required("Обязательное поле"),
+      .of(yup.number()
+          //.required("Обязательное поле")
+          )
+      .strict(),
+     // .required("Обязательное поле"),
     branches: yup
       .array()
-      .of(yup.number().required("Обязательное поле"))
-      .strict()
-      .required("Обязательное поле"),
-    contractor_type_id: yup.string().required("Обязательное поле"),
-    service_type_id: yup.string().required("Обязательное поле"),
+      .of(yup.number()
+          //.required("Обязательное поле")
+      )
+      .strict(),
+      //.required("Обязательное поле"),
+    contractor_type_id: yup.string().required("Обязательно к заполнению"),
+    service_type_id: yup.string(),
+       // .required("Обязательное поле"),
     inn: yup
       .string()
       .min(
@@ -23,13 +28,13 @@ export const validationSchema = (value: string) =>
       .max(
         value == "ЮЛ" ? 10 : 12,
         `должен состоять максимум из ${value == "ЮЛ" ? 10 : 12} символов`
-      )
-      .required("Обязательное поле"),
+      ),
+      //.required("Обязательное поле"),
     kpp:
       value == "ЮЛ"
         ? yup
             .string()
-            .required("Обязательное поле")
+            //.required("Обязательное поле")
             .min(9, "должен состоять минимум из 9 символов")
             .max(9, "должен состоять максимум из 9 символов")
             .nullable(true)
@@ -37,76 +42,76 @@ export const validationSchema = (value: string) =>
     ogrn: yup
       .string()
       .min(13, "должен состоять минимум из 13 символов")
-      .max(13, "должен состоять максимум из 13 символов")
-      .required("Обязательное поле"),
+      .max(13, "должен состоять максимум из 13 символов"),
+      //.required("Обязательное поле"),
     actual_address: yup
       .string()
       .min(0, "должен состоять минимум из 10 символов")
         .max(
             value == "ЮЛ" ? 300 : 100,
             `должен состоять максимум из ${value == "ЮЛ" ? 300 : 100} символов`
-        )
-      .required("Обязательное поле"),
+        ),
+      //.required("Обязательное поле"),
     legal_registration_address: yup
       .string()
       .min(0, "должен состоять минимум из 10 символов")
         .max(
             value == "ЮЛ" ? 300 : 100,
             `должен состоять максимум из ${value == "ЮЛ" ? 300 : 100} символов`
-        )
-      .required("Обязательное поле"),
+        ),
+     // .required("Обязательное поле"),
     post_address: yup
       .string()
       .min(0, "должен состоять минимум из 10 символов")
         .max(
             value == "ЮЛ" ? 300 : 100,
             `должен состоять максимум из ${value == "ЮЛ" ? 300 : 100} символов`
-        )
-      .required("Обязательное поле"),
+        ),
+      //.required("Обязательное поле"),
     full_name: yup
       .string()
       .min(0, "должен состоять минимум из 10 символов")
       .max(300, "должен состоять максимум из 300 символов")
-      .required("Обязательное поле"),
+      .required("Обязательно к заполнению"),
     short_name: yup.string() .min(10, "должен состоять минимум из 10 символов")
-        .max(value == "ЮЛ" ? 100 : 50, `должен состоять максимум из ${value == "ЮЛ" ? 100 : 50} символов`)
-        .required("Обязательное поле"),
+        .max(value == "ЮЛ" ? 100 : 50, `должен состоять максимум из ${value == "ЮЛ" ? 100 : 50} символов`),
+       // .required("Обязательное поле"),
     sites: yup
       .array()
       .of(
         yup.object().shape({
           url: yup
             .string()
-            .min(3, "Слишком короткый")
-            .required("Обязательное поле"),
+            .min(3, "Слишком короткый"),
+           // .required("Обязательное поле"),
           // salary: yup.string().min(3, 'cmon').required('Required'),
         })
-      )
-      .required("Обязательное поле"),
+      ),
+     // .required("Обязательное поле"),
     phones: yup
       .array()
       .of(
         yup.object().shape({
           phone: yup
             .string()
-            .min(10, "Слишком короткый")
-            .required("Обязательное поле"),
+            .min(10, "Слишком короткый"),
+           // .required("Обязательное поле"),
           // salary: yup.string().min(3, 'cmon').required('Required'),
         })
-      )
-      .required("Обязательное поле"),
+      ),
+      //.required("Обязательное поле"),
     emails: yup
       .array()
       .of(
         yup.object().shape({
           email: yup
             .string()
-            .email("Неверный адрес электронной почты")
-            .required("Обязательное поле"),
+            .email("Неверный адрес электронной почты"),
+           // .required("Обязательное поле"),
           // salary: yup.string().min(3, 'cmon').required('Required'),
         })
-      )
-      .required("Обязательное поле"),
+      ),
+      //.required("Обязательное поле"),
   });
 
 // org_type: "ЮЛ",

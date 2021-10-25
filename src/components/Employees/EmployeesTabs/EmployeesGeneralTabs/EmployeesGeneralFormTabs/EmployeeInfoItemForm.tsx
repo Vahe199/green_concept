@@ -253,18 +253,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                                 const errorFieldName = getIn(errors, fieldName);
                                                 return(
                                                     <div key={index} style={{display:"flex",flexDirection:"row"}}>
-                                                        {/*<TextField*/}
-                                                        {/*    fullWidth*/}
-                                                        {/*    style={{ width: "80%", marginBottom:16}}*/}
-                                                        {/*    placeholder={`email${index + 1}@email.com`}*/}
-                                                        {/*    variant={"outlined"}*/}
-                                                        {/*    name={fieldName}*/}
-                                                        {/*    type="email"*/}
-                                                        {/*    value={email}*/}
-                                                        {/*    onChange={handleChange}*/}
-                                                        {/*    error={Boolean(touchedFieldName && errorFieldName)}*/}
-                                                        {/*     helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}*/}
-                                                        {/*/>*/}
+
                                                         <ValidationErrorWrapper
                                                             inputClassName="ant-input"
                                                             error={Boolean(touchedFieldName && errorFieldName)}
@@ -278,7 +267,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                                                 onChange={handleChange}
                                                             />
                                                         </ValidationErrorWrapper>
-                                                        <div style={{marginLeft:"10%"}}
+                                                        <div style={{marginLeft:16}}
                                                              onClick={() => remove(index)}>
                                                             <TrashIcon />
                                                         </div>

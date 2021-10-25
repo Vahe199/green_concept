@@ -365,7 +365,15 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                                       style={{
                                         width: "100%",
                                       }}
-                                      onChange={handleChange}
+                                      onChange={(e) => {
+                                        setFieldValue(
+                                          fieldName,
+                                          e.target.value.replace(
+                                            /[^0-9]/g,
+                                            ""
+                                          )
+                                        );
+                                      }}
                                       className={classes.input2}
                                       placeholder={"7 999 999 99 99"}
                                       mask="1 111 111 11 11"

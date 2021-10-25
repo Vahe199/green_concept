@@ -73,9 +73,6 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
     contractors_position: "",
   };
 
-  React.useEffect(() => {
-    console.log(contractorId, 'contractorId')
-  }, [contractorId])
 
   return (
     <div className={classes.root}>
@@ -395,32 +392,35 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                   </ValidationErrorWrapper>
                 </div>
               </div>
-              {contractorId !== 1 && <div className={classes.label}>
-                <span className={classes.spanTitle}>Тип услуг</span>
-                <div style={{width: "60%"}}>
-                  <ValidationErrorWrapper
+              {contractorId !== 1 && (
+                <div className={classes.label}>
+                  <span className={classes.spanTitle}>Тип услуг</span>
+                  <div style={{ width: "60%" }}>
+                    <ValidationErrorWrapper
                       inputClassName="ant-select-selector"
                       error={
-                        touched.service_type_id && Boolean(errors.service_type_id)
+                        touched.service_type_id &&
+                        Boolean(errors.service_type_id)
                       }
                       helperText={
                         touched.service_type_id && errors.service_type_id
                       }
-                  >
-                    <InputFilterSelectedType
+                    >
+                      <InputFilterSelectedType
                         // className={classes.input}
                         name="service_type_id"
                         handleChange={(value: any) =>
-                            setFieldValue("service_type_id", value)
+                          setFieldValue("service_type_id", value)
                         }
                         value={values.service_type_id}
                         options={assetsOptionsServiceType}
                         placeholder="Выберите"
                         loading={assetsLoading}
-                    />
-                  </ValidationErrorWrapper>
+                      />
+                    </ValidationErrorWrapper>
+                  </div>
                 </div>
-              </div>}
+              )}
               <div className={classes.label}>
                 <span className={classes.spanTitle}>Отрасль</span>
                 <div style={{ width: "60%" }}>
@@ -500,7 +500,15 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                                             style={{
                                               width: "100%",
                                             }}
-                                            onChange={handleChange}
+                                            onChange={(e) => {
+                                              setFieldValue(
+                                                fieldName,
+                                                e.target.value.replace(
+                                                  /[^0-9]/g,
+                                                  ""
+                                                )
+                                              );
+                                            }}
                                             className={classes.input2}
                                             placeholder={"7 999 999 99 99"}
                                             mask="1 111 111 11 11"
@@ -601,7 +609,15 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                                             style={{
                                               width: "100%",
                                             }}
-                                            onChange={handleChange}
+                                            onChange={(e) => {
+                                              setFieldValue(
+                                                fieldName,
+                                                e.target.value.replace(
+                                                  /[^0-9]/g,
+                                                  ""
+                                                )
+                                              );
+                                            }}
                                             className={classes.input2}
                                             placeholder={"7 999 999 99 99"}
                                             mask="1 111 111 11 11"

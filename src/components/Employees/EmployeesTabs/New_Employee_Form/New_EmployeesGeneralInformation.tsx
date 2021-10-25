@@ -14,6 +14,7 @@ import {employeesApi} from "../../../../api/api";
 import {ToastContainer} from "react-toastify";
 import {notifyError, notifySuccess} from "../../../Utils/utils_options/ToastNotify";
 import BackToAddress from "../../../Utils/BackToAddress";
+import MaskedInput from "antd-mask-input";
 
 const { TextArea } = Input;
 
@@ -237,12 +238,23 @@ const NewEmployeesGeneralInformation:React.FC = () => {
                                                                                     : ""
                                                                             }
                                                                         >
-                                                                            <Input
+                                                                            <MaskedInput
                                                                                 name={fieldName}
-                                                                                placeholder={"+79999999999"}
                                                                                 value={phone}
-                                                                                onChange={handleChange}
+                                                                                onChange={(e) => {
+                                                                                    setFieldValue(
+                                                                                        fieldName,
+                                                                                        e.target.value.replace(
+                                                                                            /[^0-9]/g,
+                                                                                            ""
+                                                                                        )
+                                                                                    );
+                                                                                }}
+                                                                                placeholder={"7 999 999 99 99"}
+                                                                                mask="1 111 111 11 11"
+                                                                                prefix={<>+</>}
                                                                             />
+
                                                                         </ValidationErrorWrapper>
                                                                     );
                                                                 })}

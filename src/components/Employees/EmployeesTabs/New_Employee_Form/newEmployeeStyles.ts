@@ -43,8 +43,7 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
 
         },
         textArea: {
-            marginBottom:50,
-            border: "1px solid #3ab994",
+            // border: "1px solid #3ab994",
             width: "100%",
             maxWait: "100%",
             borderRadius: 4,
@@ -52,6 +51,11 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             resize: 'vertical',
             fontSize:16
         },
+        textAreaDiv:{
+            border: "1px solid #3ab994",
+            // padding:1,
+            marginBottom:50,
+            borderRadius:4},
         title:{
             display: "flex",
             justifyContent: "space-between",

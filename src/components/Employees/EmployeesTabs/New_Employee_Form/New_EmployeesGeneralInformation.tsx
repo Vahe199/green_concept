@@ -15,6 +15,7 @@ import {ToastContainer} from "react-toastify";
 import {notifyError, notifySuccess} from "../../../Utils/utils_options/ToastNotify";
 import BackToAddress from "../../../Utils/BackToAddress";
 import MaskedInput from "antd-mask-input";
+import {validationSchemaEmployeesGeneralInfForm} from "./employeesFormValidationSchema";
 
 const { TextArea } = Input;
 
@@ -33,29 +34,30 @@ const NewEmployeesGeneralInformation:React.FC = () => {
         surname: "",
         photo:"",
         birthdate: "",
-        emails: [""],
-        phones:[""],
-        about:"",
         region_id:null,
         green_legal_id: null,
         position_id:null,
         start_work_date:"",
         end_work_date:"",
+        emails: [""],
+        phones:[""],
         directions:[null],
-
-    };
+        about:"",
+       };
     return(
         <div className={classes.root}>
             <BackToAddress address="/employees" title="списку" />
             <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
         <Formik
             initialValues={initialValues}
+            validationSchema={validationSchemaEmployeesGeneralInfForm}
             onSubmit={async (values,action) => {
 
                 let formData = new FormData();
                 // @ts-ignore
-                Object.entries(values).forEach(([key, value]) => {formData.append(key, value)})
-                console.log(values,)
+                Object.entries(values).forEach(([key, value]) => {formData.append(Array.isArray(value) ? `${key}[]`: key, value);console.log(key,"key", value,"value")})
+
+                console.log(values,"values")
                 employeesApi.creatNewEmployee(formData).then(res =>{
                     notifySuccess();
                     action.resetForm()
@@ -103,6 +105,7 @@ const NewEmployeesGeneralInformation:React.FC = () => {
                                                 if (fileReader.readyState === 2) {
                                                     setFieldValue('photo', e.target.files[0]);
                                                     setAvatarPreview(fileReader.result);
+                                                    console.log(e.target.files[0],"e.target.files[0]")
                                                 }
                                             };
                                             if(e.target.files[0]) {
@@ -322,7 +325,7 @@ const NewEmployeesGeneralInformation:React.FC = () => {
                          Данные сотрудника
                      </Typography>
                  </div>
-                 <div >
+                 <div className={classes.textAreaDiv}>
                      <ValidationErrorWrapper
                          inputClassName="ant-input"
                          error={touched.about && Boolean(errors.about)}

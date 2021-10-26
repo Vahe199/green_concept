@@ -158,9 +158,15 @@ export const employeesApi = {
       method: "post",
       url: `employees`,
       data,
-      headers: {"Content-Type": "multipart/form-data"},
+       headers: {"Content-Type": "multipart/form-data"},
     });
   },
+
+  createNewEmployeeQualification(id:number,data:any) {
+    debugger
+    return axios.request({method: "post", url: `employee_skills/${id}`, data});
+  },
+
 
   getEmployeesAssets() {
     return axios.request({method: "get", url: "employees/get_assets"});
@@ -176,7 +182,6 @@ export const employeesApi = {
 
 
   updateEmployeeDataById(id: number,data: any) {
-    debugger
     return axios.request({
       method: "put",
       url: `employees/employee_data/${id}`,

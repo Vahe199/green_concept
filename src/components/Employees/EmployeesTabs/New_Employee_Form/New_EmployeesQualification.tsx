@@ -15,6 +15,10 @@ import InputFilterDatePicker from "../../../Utils/FilterInputs/InputFilterDatePi
 import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 import {InputEmployeesAssetsOptions} from "../../../Utils/utils_options/InputEmployeesAssetsOptions";
 import BackToAddress from "../../../Utils/BackToAddress";
+import {employeesApi} from "../../../../api/api";
+import {notifyError, notifySuccess} from "../../../Utils/utils_options/ToastNotify";
+import {ToastContainer} from "react-toastify";
+import {validationSchemaEmployeesQualificationForm} from "./employeesFormValidationSchema";
 
 
 const NewEmployeesQualification:React.FC = () => {
@@ -43,13 +47,23 @@ const NewEmployeesQualification:React.FC = () => {
     return(
         <div className={classes.root}>
             <BackToAddress address="/employees" title="списку" />
+            <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
             <Formik
                 initialValues={initialValues}
-                // validationSchema={validationSchemaContactsFromGreen}
+                 validationSchema={validationSchemaEmployeesQualificationForm}
                 onSubmit={async ({experience_years, experience_months,...values},action) => {
                     // console.log (111, {...values, experience_months: moment(month).format("MM"), experience_years: 222})
                     console.log (111, {...values})
-
+                    employeesApi.createNewEmployeeQualification(9,values ).then(res =>{
+                        notifySuccess();
+                        action.resetForm()
+                        console.log(res.data, "res data")
+                        return res
+                    })
+                        .catch((e)=>{
+                            notifyError();
+                            return e
+                        })
                 }}
             >
                 {({ values, touched, handleChange,errors,setFieldValue }) => (

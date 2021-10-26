@@ -5,9 +5,9 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { XLSIcon } from "../../../IMG/SVG/XLS";
 
-import Table from "./Core/EmployeesTable";
 import { useStyles } from "./EmployeesStyle/EmployeesStyle";
 import {useActions} from "../../../redux/type_redux_hook/useAction";
+import EmployeesTable from "./Core/EmployeesTable";
 
 export const EmployeesTab = () => {
   const {getEmployeeAssetsAC,getEmployeeDataAC  } = useActions();
@@ -66,7 +66,7 @@ export const EmployeesTab = () => {
         </div>
       </Paper>
       <div style={{ paddingLeft: "2%", paddingTop: "1%", paddingRight: "2%" }}>
-        <Table />
+       <EmployeesTable/>
       </div>
     </div>
   );

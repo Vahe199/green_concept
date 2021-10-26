@@ -95,7 +95,7 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
             {group ? group.full_name : "-----------------------"}
           </Typography>
         </div>
-          {contractor.org_type === "ФЛ" && contractor.service.contractor_type_id !== 1 || <div className={classes.div}>
+          {contractor.service.contractor_type_id !== 1 || <div className={classes.div}>
               <Typography variant={"button"} className={classes.description}>
                   Отрасль
               </Typography>

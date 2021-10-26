@@ -62,6 +62,9 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
     }
   }, [error, isChange, validateValue2]);
 
+  useEffect(() => {
+    console.log(validateValue2, 'contractorId')
+  }, [contractorId])
 
   const initialValues = {
     org_type: org_type ? org_type : "ЮЛ",
@@ -149,7 +152,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                   />
                 </div>
               </div>
-              {values.org_type === "ФЛ" && contractorId !== 1 ||  <div
+              {contractorId !== 1 ||  <div
                   className={classes.label}
                   style={{alignItems: "flex-start"}}
               >
@@ -264,9 +267,9 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                     </ValidationErrorWrapper>
                 </span>
               </div>
-              <div className={classes.label}>
+              {contractorId == 1 || <div className={classes.label}>
                 <span style={{width: "40%"}}>Тип услуг</span>
-                <span style={{ width: "60%" }}>
+                <span style={{width: "60%"}}>
                     <ValidationErrorWrapper
                         inputClassName="ant-select-selector"
                         error={
@@ -277,19 +280,19 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                         }
                     >
                   <InputFilterSelectedType
-                    // className={classes.input}
-                    name="service_type_id"
-                    handleChange={(value: any) =>
-                      setFieldValue("service_type_id", value)
-                    }
-                    value={values.service_type_id}
-                    options={assetsOptionsServiceType}
-                    placeholder="Другое"
-                    loading={assetsLoading}
+                      // className={classes.input}
+                      name="service_type_id"
+                      handleChange={(value: any) =>
+                          setFieldValue("service_type_id", value)
+                      }
+                      value={values.service_type_id}
+                      options={assetsOptionsServiceType}
+                      placeholder="Другое"
+                      loading={assetsLoading}
                   />
                     </ValidationErrorWrapper>
                 </span>
-              </div>
+              </div>}
               <div className={classes.label}>
                 <span style={{width: "40%"}}>ИНН</span>
                 <div style={{width:"60%"}}>

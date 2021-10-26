@@ -202,7 +202,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
               />
             </div>
           </div>
-          {contractor.org_type === "ФЛ" && contractor.service.contractor_type_id !== 1 || <div className={classes.label} style={{alignItems: "flex-start"}}>
+          {contractor.service.contractor_type_id !== 1 || <div className={classes.label} style={{alignItems: "flex-start"}}>
             <span>Отрасль</span>
             <span style={{width: "60%", flexDirection: "column"}}>
               <FieldArray name="branches">

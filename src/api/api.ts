@@ -158,7 +158,7 @@ export const employeesApi = {
       method: "post",
       url: `employees`,
       data,
-       headers: {"Content-Type": "multipart/form-data"},
+       headers: { "Content-Type": "multipart/form-data boundary=<calculated when request is sent>"},
     });
   },
 

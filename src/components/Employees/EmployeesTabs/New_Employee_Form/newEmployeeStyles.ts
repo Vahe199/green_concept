@@ -53,7 +53,7 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
         },
         textAreaDiv:{
             border: "1px solid #3ab994",
-            // padding:1,
+            padding:1,
             marginBottom:50,
             borderRadius:4},
         title:{

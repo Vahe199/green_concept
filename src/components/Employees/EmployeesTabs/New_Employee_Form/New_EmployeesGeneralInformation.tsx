@@ -50,12 +50,12 @@ const NewEmployeesGeneralInformation:React.FC = () => {
             <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
         <Formik
             initialValues={initialValues}
-            validationSchema={validationSchemaEmployeesGeneralInfForm}
+            // validationSchema={validationSchemaEmployeesGeneralInfForm}
             onSubmit={async (values,action) => {
 
                 let formData = new FormData();
                 // @ts-ignore
-                Object.entries(values).forEach(([key, value]) => {formData.append(Array.isArray(value) ? `${key}[]`: key, value);console.log(key,"key", value,"value")})
+                Object.entries(values).forEach(([key, value]) => {formData.append(Array.isArray(value) ? `${key}[]`: key, Array.isArray(value) ? `[${value}]` :value);console.log(key,"key", value,"value")})
 
                 console.log(values,"values")
                 employeesApi.creatNewEmployee(formData).then(res =>{
@@ -93,7 +93,7 @@ const NewEmployeesGeneralInformation:React.FC = () => {
                             <div className={classes.row}>
                                 <div style={{width:"37%"}}>
                                     <input
-                                        name={"photo"}
+                                        name="csrfToken"
                                         accept="image/*"
                                         style={{ display: 'none' }}
                                         id="raised-button-file"

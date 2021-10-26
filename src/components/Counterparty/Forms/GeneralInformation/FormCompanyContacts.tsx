@@ -285,7 +285,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                                       value={url.url}
                                       onChange={handleChange}
                                       autoComplete={"off"}
-                                      placeholder={"www.сайткомпании.ru"}
+                                      placeholder={org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}
                                     />
                                   </ValidationErrorWrapper>
                                 </div>

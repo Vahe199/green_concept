@@ -59,23 +59,22 @@ export const validationSchemaFormCompanyDetails = (value: any) => yup.object().s
 
 
 export const validationSchemaCompanyContacts = (value: any) => yup.object().shape({
-    actual_address: yup.string().min(0, "должен состоять минимум из 10 символов")
-        .max(
-            value == "ЮЛ" ? 300 : 100,
-            `должен состоять максимум из ${value == "ЮЛ" ? 300 : 100} символов`
+    actual_address: yup.string().min(10, "должен состоять минимум из 10 символов")
+        .max(300,
+            `должен состоять максимум из 300 символов`
         )
         .required("Обязательное поле"),
     legal_registration_address: yup.string()
-        .min(0, "должен состоять минимум из 10 символов")
+        .min(10, "должен состоять минимум из 10 символов")
         .max(
-            value == "ЮЛ" ? 300 : 100,
-            `должен состоять максимум из ${value == "ЮЛ" ? 300 : 100} символов`
+            300,
+            `должен состоять максимум из 300 символов`
         )
         .required("Обязательное поле"),
-    post_address: yup.string().min(0, "должен состоять минимум из 10 символов")
+    post_address: yup.string().min(10, "должен состоять минимум из 10 символов")
         .max(
-            value == "ЮЛ" ? 300 : 100,
-            `должен состоять максимум из ${value == "ЮЛ" ? 300 : 100} символов`
+            300,
+            `должен состоять максимум из 300 символов`
         )
         .required("Обязательное поле"),
 

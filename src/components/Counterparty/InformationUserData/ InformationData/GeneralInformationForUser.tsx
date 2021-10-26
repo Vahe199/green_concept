@@ -83,7 +83,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
         >
           {org_type === "ФЛ" ? "Физическое лицо" : "Юридическое лицо"}
         </Typography>
-          {org_type === "ФЛ" && contractor_type_id !== 1 || <div className={classes.div}>
+          {contractor_type_id !== 1 || <div className={classes.div}>
               <Typography
                   variant={"button"}
                   style={{width: "40%"}}

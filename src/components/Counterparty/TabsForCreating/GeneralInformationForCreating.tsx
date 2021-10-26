@@ -186,7 +186,7 @@ export const GeneralInformationForCreating = () => {
                       />
                     </div>
                   </div>
-                  {(values.org_type === "ФЛ" && contractorId !== 1) || (
+                  {(contractorId !== 1) || (
                     <div
                       className={classes.label}
                       style={{ alignItems: "flex-start" }}
@@ -320,33 +320,33 @@ export const GeneralInformationForCreating = () => {
                       </ValidationErrorWrapper>
                     </span>
                   </div>
-                  <div className={classes.label}>
+                  {contractorId == 1 || <div className={classes.label}>
                     <span>Тип услуг</span>
-                    <span style={{ width: "60%" }}>
+                    <span style={{width: "60%"}}>
                       <ValidationErrorWrapper
-                        inputClassName="ant-select-selector"
-                        error={
-                          touched.service_type_id &&
-                          Boolean(errors.service_type_id)
-                        }
-                        helperText={
-                          touched.service_type_id && errors.service_type_id
-                        }
+                          inputClassName="ant-select-selector"
+                          error={
+                            touched.service_type_id &&
+                            Boolean(errors.service_type_id)
+                          }
+                          helperText={
+                            touched.service_type_id && errors.service_type_id
+                          }
                       >
                         <InputFilterSelectedType
-                          // className={classes.input}
-                          name="service_type_id"
-                          handleChange={(value: any) =>
-                            setFieldValue("service_type_id", value)
-                          }
-                          value={values.service_type_id}
-                          options={assetsOptionsServiceType}
-                          placeholder="Другое"
-                          loading={assetsLoading}
+                            // className={classes.input}
+                            name="service_type_id"
+                            handleChange={(value: any) =>
+                                setFieldValue("service_type_id", value)
+                            }
+                            value={values.service_type_id}
+                            options={assetsOptionsServiceType}
+                            placeholder="Другое"
+                            loading={assetsLoading}
                         />
                       </ValidationErrorWrapper>
                     </span>
-                  </div>
+                  </div>}
                   <div className={classes.label}>
                     <span>ИНН</span>
                     {/*<TextField*/}
@@ -599,7 +599,7 @@ export const GeneralInformationForCreating = () => {
                       </ValidationErrorWrapper>
                     </div>
                   </div>
-                  {(values.org_type === "ФЛ" && contractorId !== 1) || (
+                  {(contractorId !== 1) || (
                     <div
                       className={classes.label}
                       style={{ alignItems: "flex-start" }}
@@ -972,7 +972,12 @@ export const GeneralInformationForCreating = () => {
                                               : { width: "100%" }
                                           }
                                           autoComplete={"off"}
-                                          placeholder={"www.сайткомпании.ru"}
+                                          //placeholder={"www.сайткомпании.ru"}
+                                          placeholder={
+                                            values.org_type === "ЮЛ"
+                                                ? 'www.сайткомпании.ru”'
+                                                : "Сайт"
+                                          }
                                         />
                                       </ValidationErrorWrapper>
                                     </div>

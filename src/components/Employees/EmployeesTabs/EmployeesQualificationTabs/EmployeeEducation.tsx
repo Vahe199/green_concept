@@ -21,7 +21,7 @@ let employeeEduc = {educations:[{
     const {employee}:any = employeeById;
     const {educations}:any = employee.educations.length > 0 ? employee : employeeEduc ;
     const classes = useStylesEmployeeQualification();
-    debugger
+
     return(
         <div className={classes.root}>
             <div className={classes.title} >

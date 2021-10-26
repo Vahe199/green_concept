@@ -102,16 +102,13 @@ export default function EmployeesTable(props: any) {
       const [key, value] = filter;
 
       const field = item[key];
-
       if (field) {
         if (!value) {
           check = !check ? false : true;
-        } else if (Array.isArray(field) && typeof value === "string") {
-          check = !check
-            ? false
-            : field?.some((el: string) => {
-                isInclude(el, value);
-              });
+        } else if (Array.isArray(field) ) {
+            // @ts-ignore
+          check = !check ? false : field?.some((el:any) => el.id == +value);
+
         } else if (typeof field === "object") {
           check = !check ? false : field?.id === value;
         } else {
@@ -145,7 +142,7 @@ export default function EmployeesTable(props: any) {
             <InputFilterSearch
               handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const { value } = e.target;
-                setFilterField({ ...filterField, id: +value });
+                setFilterField({ ...filterField, id: value });
               }}
               value={filterField.id}
               className={classes.input}

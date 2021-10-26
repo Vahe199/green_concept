@@ -287,7 +287,7 @@ export const useStylesContactPersons = makeStyles((theme: Theme) =>
 
               "& .ant-select-selection-search-input": {
                   fontSize:16,
-                  paddingLeft:8,
+                  paddingLeft:6,
                   fontWeight:400,
 
               },

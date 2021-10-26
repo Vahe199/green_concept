@@ -15,7 +15,7 @@ const EmployeeTraining:React.FC<TrainingProps> = ({setEmployeeTraining}) => {
     const {employeeById} = useTypedSelector(state => state.employees)
     const {employee}:any =employeeById;
     const {skills}:any = employee.skills?.length > 0 ? employee : EducationSkills;
-    debugger
+
     const classes = useStylesEmployeeQualification();
     return(
         <div className={classes.root}>

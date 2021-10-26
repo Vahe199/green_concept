@@ -9,7 +9,7 @@ export const validationSchemaBasicInformation = (value: any) => yup.object({
     //     .of(yup.number().nullable(true).required("Обязательное поле"))
     //     .strict()
     //     .required("Обязательное поле"),
-    delivery_address: yup.string(),
+    delivery_address: yup.string().max(200, "не больше 200 символов"),
     emails: yup.array()
         .of(
             yup.object().shape({
@@ -17,7 +17,7 @@ export const validationSchemaBasicInformation = (value: any) => yup.object({
                 // salary: yup.string().min(3, 'cmon').required('Required'),
             })
         ),
-    middlename:yup.string().max(100, " не больше 100 символов"),
+    middlename:yup.string().max(100, "не больше 100 символов"),
     phones: yup.array()
         .of(
             yup.object().shape({

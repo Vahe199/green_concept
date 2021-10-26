@@ -1,15 +1,15 @@
-import { FormControlLabel } from "@material-ui/core";
 import { Divider, Radio } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Modal, Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import close from "../../../../IMG/icons/close.png";
 import { MagnifyingGlass } from "../../../../IMG/SVG/MagnifyingGlass";
 import { useActions } from "../../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterSearch from "../../../Utils/FilterInputs/InputFilterSearch";
 import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
+import get from "lodash/get";
+import { COUNTERPARTY_TYPES_MAPPER } from "../../../Constants/counterparty";
 
 const useStyles = makeStyles({
   root: {
@@ -87,54 +87,84 @@ const useStyles = makeStyles({
 
 export default function ModalListOfContacts(props: any) {
   const { attachedContact, onAttachedContact, onCancel, ...modalProps } = props;
-  const { getContactPersonsListData } = useActions();
+
   const classes = useStyles();
-  const [services, setServices] = React.useState(1);
-  const [author, setAuthor] = React.useState(null);
+
+  const { getContactPersonsListData } = useActions();
+
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
   const { ContactPerson } = useTypedSelector((state) => state.contactPerson);
 
-  let history = useHistory();
-  const { contractors, loading } = useTypedSelector(
-    (state) => state.counterparties
+  const [params, setParams] = useState<any>({});
+  const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
+    []
   );
-  const { authors: crms } = useTypedSelector((state) => state.authorsList);
-
-  const { types_and_services = [], branches = [] }: any = assets;
-  const assetsOptions = types_and_services?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
-  const crmsOptions = crms?.map((option: any) => ({
-    key: option.author_id,
-    value: option.author_id,
-    label: option.author_fio,
-  }));
-
-  const { getAuthorData } = useActions();
-
-  const [params, setParams] = useState<any>({
-    include: "type,crms,branches,service,sites,emails,phones,author,group",
-  });
+  const [typeOfServices, setTypeOfServices] = useState();
   const [fullName, setFullName] = useState("");
   const [branch, setBranch] = useState("");
   const [group, setGroup] = useState("");
   const [crm, setCrm] = useState("");
-  const [selectedValue, setSelectedValue] = useState<null | number>(null);
   const [createdAt, setCreatedAt] = useState<any>(null);
   const [updatedAt, setUpdatedAt] = useState<any>(null);
 
-  const filteredBranches =
-    branch.length === 0 || branch.length > 3
-      ? branches.filter(({ name }: { name: string }) => name.includes(branch))
-      : branches;
+  const { types_and_services = [], branches = [], crms = [] }: any = assets;
 
-  const getUserData = (data: any) => {
-    history.push(`/counterparty/author/${data.id}`);
-    getAuthorData(data);
+  const typesOptions = types_and_services?.map((option: any) => ({
+    key: option.id,
+    value: option.id ? option.id : 0,
+    label: option.name,
+  }));
+
+  const serviceOptions = get(
+    types_and_services,
+    `${typeOfServices}.services`,
+    []
+  ).map((option: any) => ({
+    key: option.id,
+    value: option.id,
+    label: option.name,
+  }));
+
+  console.log(types_and_services, typeOfServices, serviceOptions);
+
+  // branches options
+  const getFilteredBranchesOptions = () => {
+    const filteredBranches =
+      branch.length > 3
+        ? branches.filter(({ name }: { name: string }) => name.includes(branch))
+        : [];
+
+    return (
+      filteredBranches.length
+        ? [{ id: -1, name: "Все" }, ...filteredBranches]
+        : []
+    ).map((option: any) => ({
+      key: option.id,
+      value: option.id >= 0 ? option.id : "",
+      label: option.name,
+    }));
+  };
+
+  // full name options
+  const getFilteredFullNameOptions = () => {
+    const filteredFullName =
+      fullName.length > 3
+        ? ContactPerson.filter(({ full_name = "" }: { full_name: string }) =>
+            full_name.includes(fullName)
+          )
+        : [];
+
+    return (
+      filteredFullName.length
+        ? [{ id: -1, full_name: "Все" }, ...filteredFullName]
+        : []
+    ).map((option: any) => ({
+      key: option.id,
+      value: option.full_name !== "Все" ? option.id : "",
+      label: option.full_name,
+    }));
   };
 
   const columns = [
@@ -153,9 +183,26 @@ export default function ModalListOfContacts(props: any) {
       title: () => (
         <>
           ФИО
-          <div>
-            <InputFilterSearch className={classes.input} />
-          </div>
+          <InputFilterSelect
+            options={getFilteredFullNameOptions()}
+            filterOption={false}
+            onSearch={setFullName}
+            onSelect={(id: number, { value, label }: any) => {
+              setParams({
+                ...params,
+                "filter[full_name]": label === "Все" ? "" : label,
+              });
+
+              if (value === "") {
+                setFullName("");
+              }
+            }}
+            notFoundContent={null}
+            value={params["filter[full_name]"]}
+            className={"searchMode " + classes.input}
+            prefix={<MagnifyingGlass className={classes.icon} />}
+            showSearch
+          />
         </>
       ),
       dataIndex: "name",
@@ -176,21 +223,19 @@ export default function ModalListOfContacts(props: any) {
         <>
           Отрасль
           <InputFilterSelect
-            options={filteredBranches.map((option: any) => ({
-              key: option.id,
-              value: option.id,
-              label: option.name,
-            }))}
+            options={getFilteredBranchesOptions()}
             filterOption={false}
-            onSearch={(value: string) => {
-              setBranch(value);
-            }}
-            onSelect={(id: number) => {
+            onSearch={setBranch}
+            onSelect={(id: number, { value }: any) => {
               setParams({ ...params, "filter[branches.id]": id });
+
+              if (value === "") {
+                setBranch("");
+              }
             }}
             notFoundContent={null}
-            value={branch}
-            className={classes.input}
+            value={params["filter[branches.id]"]}
+            className={"searchMode " + classes.input}
             prefix={<MagnifyingGlass className={classes.icon} />}
             showSearch
           />
@@ -217,11 +262,15 @@ export default function ModalListOfContacts(props: any) {
           <InputFilterSelect
             className={classes.input}
             handleChange={(id: any) => {
-              setServices(id);
-              setParams({ ...params, "filter[contractor_type_id]": id });
+              setTypeOfServices(id);
+              setParams({
+                ...params,
+                "filter[contractor_type_id]": id,
+                "filter[service_type_id]": "",
+              });
             }}
-            value={services}
-            options={assetsOptions}
+            value={params["filter[contractor_type_id]"]}
+            options={[{ key: "", value: "", label: "Все" }, ...typesOptions]}
             placeholder="Другое"
             loading={assetsLoading}
           />
@@ -236,7 +285,7 @@ export default function ModalListOfContacts(props: any) {
             textAlign: "center",
           }}
         >
-          {record.contractor_type_id}
+          {get(COUNTERPARTY_TYPES_MAPPER, record.contractor_type_id, "")}
         </span>
       ),
     },
@@ -247,11 +296,10 @@ export default function ModalListOfContacts(props: any) {
           <InputFilterSelect
             className={classes.input}
             handleChange={(id: any) => {
-              setServices(id);
-              setParams({ ...params, "filter[contractor_type_id]": id });
+              setParams({ ...params, "filter[service_type_id]": id });
             }}
-            value={services}
-            options={assetsOptions}
+            value={params["filter[service_type_id]"]}
+            options={[{ key: "", value: "", label: "Все" }, ...serviceOptions]}
             placeholder="Другое"
             loading={assetsLoading}
           />

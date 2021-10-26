@@ -149,7 +149,7 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
 
       "& .ant-select-selection-search-input": {
         fontSize: 16,
-        paddingLeft: 8,
+        paddingLeft: 6,
       },
       "& .searchMode .ant-select-arrow": {
         display: "none",

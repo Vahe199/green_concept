@@ -19,7 +19,7 @@ const {recoveryEmployeesQualificationState,updateEmployeeRegisterDataAC} = useAc
     const {error, success} = useTypedSelector(state => state.employeesQualification)
     const {employeeById} = useTypedSelector(state => state.employees)
     const {employee}:any =employeeById;
-debugger
+
     useEffect(()=>{
         if(error){
             notifyError();

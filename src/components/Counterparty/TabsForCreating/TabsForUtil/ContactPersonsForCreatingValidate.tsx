@@ -37,7 +37,7 @@ export const validationSchemaContactPerson = (value: any) => yup.object({
       }),
 
   contractor_type_id: yup.string().required("Обязательно к заполнению"),
-  delivery_address: yup.string(),
+  delivery_address: yup.string().max(200, "должен состоять максимум из 200 символов"),
   emails: yup
     .array()
     .of(

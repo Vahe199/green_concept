@@ -153,7 +153,6 @@ export const contractorApi = {
 export const employeesApi = {
 
   creatNewEmployee(data: any) {
-    debugger
     return axios.request({
       method: "post",
       url: `employees`,
@@ -163,7 +162,6 @@ export const employeesApi = {
   },
 
   createNewEmployeeQualification(id:number,data:any) {
-    debugger
     return axios.request({method: "post", url: `employee_skills/${id}`, data});
   },
 

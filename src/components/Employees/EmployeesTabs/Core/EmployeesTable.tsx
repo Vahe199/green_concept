@@ -105,10 +105,10 @@ export default function EmployeesTable(props: any) {
       if (field) {
         if (!value) {
           check = !check ? false : true;
-        } else if (Array.isArray(field) ) {
-            // @ts-ignore
-          check = !check ? false : field?.some((el:any) => el.id == +value);
-
+        } else if (Array.isArray(field)) {
+          if (typeof value === "string" || typeof value === "number") {
+            check = !check ? false : field?.some((el: any) => el.id == +value);
+          }
         } else if (typeof field === "object") {
           check = !check ? false : field?.id === value;
         } else {

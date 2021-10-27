@@ -69,7 +69,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
   const initialValues = {
     org_type: org_type ? org_type : "ЮЛ",
     contractor_type_id:service ? service.contractor_type_id : "",
-    crms: [crms.length > 0 ?crms[0]?.id : " "],
+    crms: [crms.length > 0 ?crms[0]?.id : null],
     service_type_id: service && service?.contractor_type_id == 1 ? "" : service?.id ,
     inn: inn,
     kpp:kpp ? kpp : null,

@@ -2,8 +2,8 @@ import * as yup from "yup";
 
 export const validationSchemaContactPerson = (value: any) => yup.object({
 
-  firstname: yup.string().max(100, "должен состоять максимум из 100 символов"),
-  surname: yup.string().max(100, "должен состоять максимум из 100 символов"),
+  firstname: yup.string().max(100, "должен состоять максимум из 100 символов").required("Обязательно к заполнению"),
+  surname: yup.string().max(100, "должен состоять максимум из 100 символов").required("Обязательно к заполнению"),
   birthdate: yup.string(),
     branches: yup.array()
         .of(yup.number())
@@ -50,12 +50,12 @@ export const validationSchemaContactPerson = (value: any) => yup.object({
     ),
   middlename: yup.string().max(100, "должен состоять максимум из 100 символов"),
   phones: yup
-    .array()
+    .array().required("Обязательно к заполнению")
     .of(
       yup.object().shape({
         phone: yup
           .string()
-          .min(10, "Слишком короткый"),
+          .min(10, "Слишком короткый").required("Обязательно к заполнению"),
         // salary: yup.string().min(3, 'cmon').required('Required'),
       })
     ),

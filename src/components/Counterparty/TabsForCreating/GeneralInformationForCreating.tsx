@@ -915,7 +915,7 @@ export const GeneralInformationForCreating = () => {
                   </div>
                   <div
                     className={classes.label}
-                    style={{ alignItems: "flex-start" }}
+                    style={{ alignItems: "center" }}
                   >
                     <span>
                       {values.org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}
@@ -1028,7 +1028,7 @@ export const GeneralInformationForCreating = () => {
                   </div>
                   <div
                     className={classes.label}
-                    style={{ alignItems: "flex-start" }}
+                    style={{ alignItems: "center" }}
                   >
                     <span>Телефон</span>
                     <div
@@ -1136,7 +1136,7 @@ export const GeneralInformationForCreating = () => {
 
                   <div
                     className={classes.label}
-                    style={{ alignItems: "flex-start" }}
+                    style={{ alignItems: "center" }}
                   >
                     <span>E-mail</span>
                     <div

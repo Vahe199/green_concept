@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
 export const validationSchemaBasicInformation = (value: any) => yup.object({
-    firstname: yup.string().max(100, " не больше 100 символов"),
-    surname: yup.string().max(100, " не больше 100 символов"),
+    firstname: yup.string().max(100, " не больше 100 символов").required('Обязательно к заполнению'),
+    surname: yup.string().max(100, " не больше 100 символов").required('Обязательно к заполнению'),
     birthdate:yup.string(),
     contractor_type_id: yup.string().required("Обязательное поле"),
     // branches: yup.array()
@@ -21,7 +21,7 @@ export const validationSchemaBasicInformation = (value: any) => yup.object({
     phones: yup.array()
         .of(
             yup.object().shape({
-                phone: yup.string().min(10, 'Слишком короткый'),
+                phone: yup.string().min(10, 'Слишком короткый').required('Обязательно к заполнению'),
                 // salary: yup.string().min(3, 'cmon').required('Required'),
             })
         ),

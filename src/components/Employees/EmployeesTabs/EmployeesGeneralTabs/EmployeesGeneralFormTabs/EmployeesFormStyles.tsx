@@ -104,6 +104,14 @@ export const useStylesEmployeeForm = makeStyles((theme: Theme) =>
             color: '#3B4750',
             width:"40%"
         },
+        input2: {
+            fontSize: 16,
+            "&::placeholder": {
+              fontSize: 16,
+              fontWeight: 400,
+            },
+          },
+
         typographyValue:{
             display:'flex',
             flexDirection:'column',

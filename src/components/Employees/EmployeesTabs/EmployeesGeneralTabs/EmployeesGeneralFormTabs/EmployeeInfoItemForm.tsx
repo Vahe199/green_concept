@@ -116,12 +116,15 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                     error={touched.surname && Boolean(errors.surname)}
                                     helperText={touched.surname && errors.surname}
                                 >
-                                    <Input
+                                    <Input 
                                         name="surname"
                                         placeholder={"Фамилия"}
+                                        className={classes.input2}
+                                        autoComplete="off"
                                         value={values.surname}
                                         onChange={handleChange}
-                                    />
+                                    
+                                        />
                                 </ValidationErrorWrapper>
                             </Typography>
                         </div>
@@ -140,6 +143,8 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                         placeholder={"Имя"}
                                         value={values.firstname}
                                         onChange={handleChange}
+                                        className={classes.input2}
+                                        autoComplete="off"
                                     />
                                 </ValidationErrorWrapper>
                             </Typography>
@@ -159,6 +164,8 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                         placeholder={"Отчество"}
                                         value={values.middlename}
                                         onChange={handleChange}
+                                        className={classes.input2}
+                                        autoComplete="off"
                                     />
                                 </ValidationErrorWrapper>
                             </Typography>
@@ -277,6 +284,8 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                                                 placeholder={`email${index + 1}@email.com`}
                                                                 value={email}
                                                                 onChange={handleChange}
+                                                                className={classes.input2}
+                                                                autoComplete="off"
                                                             />
                                                         </ValidationErrorWrapper>
                                                         <div style={{marginLeft:16}}

@@ -151,7 +151,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "id",
-      width: "8%",
+      width: 148,
       render: (id: number) => <span style={{ color: "#3B4750" }}>{id}</span>,
     },
     {
@@ -175,7 +175,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "FIO",
-      width: 250,
+      width: 300,
       render: (FIO: string) => <span style={{ color: "#3B4750" }}>{FIO}</span>,
     },
     {
@@ -197,7 +197,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "company",
-      width: 230,
+      width: 289,
       render: (company: any) => (
         <span style={{ color: "#3B4750" }}>{company.name}</span>
       ),
@@ -221,7 +221,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "region",
-      width: "10%",
+      width: 172,
       render: (region: any) => (
         <span style={{ color: "#3B4750" }}>{region.name}</span>
       ),
@@ -244,7 +244,7 @@ export default function EmployeesTable(props: any) {
           />
         </div>
       ),
-      width: "11%",
+      width: 180,
       dataIndex: "directions",
       render: (directions: any[]) => {
         return directions?.map((direction: any) => {
@@ -271,7 +271,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "position",
-      width: "12%",
+      width: 189,
       render: (position: any) => (
         <span style={{ color: "#3B4750" }}>{position?.name}</span>
       ),
@@ -286,7 +286,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "phones",
-      width: "11%",
+      width: 104,
       render: (phones: any[]) => {
         return phones?.map((phone: any) => {
           return <div key={phone?.id}>{phone?.phone}</div>;
@@ -313,7 +313,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "status",
-      width: "10%",
+      width: 104,
       render: (status: any) => (
         <span style={{ color: "#3B4750" }}>{status?.name}</span>
       ),

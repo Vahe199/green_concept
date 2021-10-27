@@ -19,7 +19,8 @@ import {
 import BackToAddress from "../../../Utils/BackToAddress";
 import MaskedInput from "antd-mask-input";
 import { validationSchemaEmployeesGeneralInfForm } from "./employeesFormValidationSchema";
-import get from "lodash/get";
+import get from "lodash/get"
+
 
 const { TextArea } = Input;
 
@@ -45,11 +46,12 @@ const NewEmployeesGeneralInformation: React.FC = () => {
         position_id: null,
         start_work_date: "",
         end_work_date: "",
-        emails: [""],
-        phones: [""],
+        emails: [''],
+        phones: [''],
         directions: [null],
         about: "",
     };
+
     return (
         <div className={classes.root}>
             <BackToAddress address="/employees" title="списку" />
@@ -60,32 +62,38 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                 onSubmit={async (values, action) => {
                     let formData = new FormData();
                     console.log(values,"values");
-                    // @ts-ignore
-                    // Object.entries(values).forEach(([key, value]) => {formData.append(Array.isArray(value) ? `${key}[]`: key, value);console.log(key, value)})
 
-                    // Object.entries(values).forEach((item) => {
-                    //     const key = get(item, "[0]", "");
-                    //     const value = get(item, "[1]", "");
-                    //
-                    //     // if (Array.isArray(value)) {
-                    //     //   value.forEach((val) => {
-                    //     //     formData.append(`${key}[]`, val);
-                    //     //   });
-                    //     // }
-                    //     // else {
-                    //     formData.append(key, value);
-                    //     // }
-                    // });
+                    Object.entries(values).forEach((item) => {
+                        const key = get(item, "[0]", "");
+                        const value = get(item, "[1]", "");
+
+                        const nameMapper = {
+                            phones: "phone",
+                            emails: "email",
+                            directions: "direction"
+                        }
+
+                        if (Array.isArray(value)) {
+                          value.forEach((val, index) => {
+                            formData.append(`${key}[${index}][${nameMapper[key as keyof typeof nameMapper]}]`, val);
+                          });
+                        }
+                        else {
+                        formData.append(key, value);
+                        }
+                    });
 
                     employeesApi
                         .creatNewEmployee(formData)
                         .then((res) => {
                             notifySuccess();
                             action.resetForm();
+                            console.log(res,"res")
                             return res;
                         })
                         .catch((e) => {
                             notifyError();
+                            console.log(e.response)
                             return e;
                         });
                 }}
@@ -259,7 +267,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                 return (
                                                                     <div>
                                                                         {values.phones?.map((phone, index) => {
-                                                                            const fieldName = `phones[][${index}]`;
+                                                                            const fieldName = `phones[${index}]`;
                                                                             const touchedFieldName = getIn(
                                                                                 touched,
                                                                                 fieldName
@@ -318,7 +326,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                 <div>
                                                                     {values.emails.length > 0 &&
                                                                     values.emails.map((email, index) => {
-                                                                        const fieldName = `emails[][${index}]`;
+                                                                        const fieldName = `emails[${index}]`;
                                                                         const touchedFieldName = getIn(
                                                                             touched,
                                                                             fieldName
@@ -328,6 +336,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                             fieldName
                                                                         );
                                                                         return (
+
                                                                             <div
                                                                                 key={index}
                                                                                 style={{

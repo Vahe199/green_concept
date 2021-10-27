@@ -1,4 +1,4 @@
-import {Button, Paper, TextField} from "@material-ui/core";
+import {Button, Paper} from "@material-ui/core";
 import {FieldArray, Form, Formik, getIn} from "formik";
 import React, {useEffect, useState} from "react";
 import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
@@ -6,11 +6,12 @@ import {useActions} from "../../../../redux/type_redux_hook/useAction";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import {validationSchemaFormCompanyDetails} from "./GeneralInformationValidationSchema";
 import InputFilterSelectedType from "../../../Utils/FilterInputs/InputFilterSelect";
+import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
 import {useStylesCompanyDetails} from "./GeneralInformationStyles";
 import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
 import {MagnifyingGlass} from "../../../../IMG/SVG/MagnifyingGlass";
-import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
 import {Input} from "antd";
+import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
 
 type Props = {
   // change: boolean;
@@ -20,16 +21,14 @@ type Props = {
 export const FormCompanyDetails: React.FC<Props> = ({
   setChangeCompanyDetails,
 }) => {
-  const { changeAuthorCompanyDetailsData, recoveryAuthorDataState } =
-    useActions();
-  const { AuthorData, error, isChange, errorMsg } = useTypedSelector(
-    (state) => state.author
-  );
-  const { id, full_name, short_name, parent_id }: any =
-    AuthorData;
-  const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
-  const { branches,}: any = assets;
-  const { contractors, loading } = useTypedSelector(
+const {assetsOptionsBranches} = InputAssetsOptions()
+  const { changeAuthorCompanyDetailsData, recoveryAuthorDataState } = useActions();
+  const { AuthorData,error, isChange, errorMsg } = useTypedSelector((state) => state.author);
+   const { contractor  }: any = AuthorData
+  const { id, full_name, short_name, parent_id ,org_type, branches}: any =  contractor;
+
+
+  const { contractors,} = useTypedSelector(
       (state) => state.counterparties
   );
   const classes = useStylesCompanyDetails();
@@ -37,10 +36,8 @@ export const FormCompanyDetails: React.FC<Props> = ({
       []
   );
 
-  const { contractor }: any = AuthorData;
-  const { org_type }: any = contractor;
 
-  const [validateValue, setValidateValue] = useState<any>(org_type);
+  const [validateValue] = useState<any>(org_type);
 
   const { TextArea } = Input;
   const [group, setGroup] = useState("");
@@ -68,17 +65,11 @@ export const FormCompanyDetails: React.FC<Props> = ({
     }
   }, [error, isChange]);
 
-
-  const assetsOptionsBranches = branches?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
   const initialValues = {
     full_name: full_name,
     short_name: short_name,
     parent_id: parent_id ? parent_id : null,
-    branches: ['']
+    branches: [branches && branches.length > 0 ? branches[0]?.id : ""]
   }
 
 
@@ -138,18 +129,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
                     placeholder={org_type === "ЮЛ" ? 'ООО "Северо-Западная компания”' : 'ФИО'} />
               </ValidationErrorWrapper>
             </div>
-            {/*<TextField*/}
-            {/*  variant={"outlined"}*/}
-            {/*  className={classes.textArea}*/}
-            {/*  multiline*/}
-            {/*  rows={3}*/}
-            {/*  name="full_name"*/}
-            {/*  placeholder={'ООО "Северо-Западная концессионная компания”'}*/}
-            {/*  value={values.full_name}*/}
-            {/*  onChange={handleChange}*/}
-            {/*  error={touched.full_name && Boolean(errors.full_name)}*/}
-            {/*  helperText={touched.full_name && errors.full_name}*/}
-            {/*/>*/}
+
           </div>
           <div className={classes.label}>
             <span style={{width:"40%"}}>{org_type === "ЮЛ" ? "Краткое наименование компании" : "Краткое наименование"}</span>
@@ -168,15 +148,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
                     placeholder={org_type === "ЮЛ" ? "Краткое наименование компании" : 'Краткое наименование'} />
               </ValidationErrorWrapper>
             </div>
-            {/*<TextField*/}
-            {/*  variant={"outlined"}*/}
-            {/*  name="short_name"*/}
-            {/*  placeholder={"Краткое наименование компании"}*/}
-            {/*  value={values.short_name}*/}
-            {/*  onChange={handleChange}*/}
-            {/*  error={touched.short_name && Boolean(errors.short_name)}*/}
-            {/*  helperText={touched.short_name && errors.short_name}*/}
-            {/*/>*/}
+
           </div>
           <div className={classes.label}>
             <span style={{width:"40%"}}>Группа компаний (при наличии)</span>
@@ -202,7 +174,7 @@ export const FormCompanyDetails: React.FC<Props> = ({
               />
             </div>
           </div>
-          {contractor.service.contractor_type_id !== 1 || <div className={classes.label} style={{alignItems: "flex-start"}}>
+          {contractor?.service?.contractor_type_id !== 1 || <div className={classes.label} style={{alignItems: "flex-start"}}>
             <span>Отрасль</span>
             <span style={{width: "60%", flexDirection: "column"}}>
               <FieldArray name="branches">
@@ -234,7 +206,6 @@ export const FormCompanyDetails: React.FC<Props> = ({
                                                               value={branch}
                                                               options={assetsOptionsBranches}
                                                               placeholder="Выберите отрасль"
-                                                              loading={assetsLoading}
                                                           />
                                                         </ValidationErrorWrapper>
                                                       </div>

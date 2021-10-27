@@ -56,23 +56,26 @@ const NewEmployeesGeneralInformation: React.FC = () => {
             <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
             <Formik
                 initialValues={initialValues}
-                validationSchema={validationSchemaEmployeesGeneralInfForm}
+                 validationSchema={validationSchemaEmployeesGeneralInfForm}
                 onSubmit={async (values, action) => {
                     let formData = new FormData();
-                    console.log(values);
+                    console.log(values,"values");
+                    // @ts-ignore
+                    // Object.entries(values).forEach(([key, value]) => {formData.append(Array.isArray(value) ? `${key}[]`: key, value);console.log(key, value)})
 
-                    Object.entries(values).forEach((item) => {
-                        const key = get(item, "[0]", "");
-                        const value = get(item, "[1]", "");
-
-                        // if (Array.isArray(value)) {
-                        //   value.forEach((val) => {
-                        //     formData.append(`${key}[]`, val);
-                        //   });
-                        // } else {
-                        formData.append(key, value);
-                        // }
-                    });
+                    // Object.entries(values).forEach((item) => {
+                    //     const key = get(item, "[0]", "");
+                    //     const value = get(item, "[1]", "");
+                    //
+                    //     // if (Array.isArray(value)) {
+                    //     //   value.forEach((val) => {
+                    //     //     formData.append(`${key}[]`, val);
+                    //     //   });
+                    //     // }
+                    //     // else {
+                    //     formData.append(key, value);
+                    //     // }
+                    // });
 
                     employeesApi
                         .creatNewEmployee(formData)
@@ -256,7 +259,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                 return (
                                                                     <div>
                                                                         {values.phones?.map((phone, index) => {
-                                                                            const fieldName = `phones[${index}]`;
+                                                                            const fieldName = `phones[][${index}]`;
                                                                             const touchedFieldName = getIn(
                                                                                 touched,
                                                                                 fieldName
@@ -315,7 +318,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                 <div>
                                                                     {values.emails.length > 0 &&
                                                                     values.emails.map((email, index) => {
-                                                                        const fieldName = `emails[${index}]`;
+                                                                        const fieldName = `emails[][${index}]`;
                                                                         const touchedFieldName = getIn(
                                                                             touched,
                                                                             fieldName
@@ -397,7 +400,6 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                 name="about"
                                                 value={values.about}
                                                 onChange={handleChange}
-                                                // className={classes.input2}
                                                 style={{
                                                     height: "238px ",
                                                 }}
@@ -490,7 +492,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                     <div>
                                                                         {values.directions?.map(
                                                                             (direction, index) => {
-                                                                                const fieldName = `directions[${index}]`;
+                                                                                const fieldName = `directions[][${index}]`;
                                                                                 const touchedFieldName = getIn(
                                                                                     touched,
                                                                                     fieldName

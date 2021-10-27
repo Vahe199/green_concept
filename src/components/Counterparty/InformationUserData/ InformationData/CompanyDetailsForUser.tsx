@@ -47,9 +47,6 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
   const { contractor }: any = AuthorData;
   const { full_name, short_name, group, branches, org_type }: any = contractor;
 
-    useEffect(() => {
-        console.log(contractor.service.contractor_type_id, 'contractor')
-    }, [contractor])
 
   const classes = useStyles();
   return (
@@ -92,16 +89,16 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
             Группа компаний (при наличии)
           </Typography>
           <Typography variant={"body2"} className={classes.val}>
-            {group ? group.full_name : "-----------------------"}
+            {group ? group?.full_name : "-----------------------"}
           </Typography>
         </div>
-          {contractor.service.contractor_type_id !== 1 || <div className={classes.div}>
+          {contractor?.service?.contractor_type_id !== 1 || <div className={classes.div}>
               <Typography variant={"button"} className={classes.description}>
                   Отрасль
               </Typography>
               <Typography variant={"body2"}>
-                  {branches.length > 0
-                      ? branches.map((branch: any) => (
+                  {branches?.length > 0
+                      ? branches?.map((branch: any) => (
                           <div key={branch.id} className={classes.val}>
                               {branch.name}
                           </div>

@@ -30,6 +30,20 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
   const { types_and_services }: any = assets;
   const [contractorId, setContractorId] = React.useState(1);
   const { AuthorData } = useTypedSelector((state) => state.author);
+  const { PersonContact } = useTypedSelector((state) => state.contactPerson);
+
+  const {
+    firstname = "",
+    surname = "",
+    middlename = "",
+    sex = "",
+    birthdate = " ",
+    contractors = [],
+    branches = [],
+    emails = [],
+    phones = [],
+    delivery_address = "",
+  }: any = PersonContact;
   const { id }: any = AuthorData;
   const { TextArea } = Input;
 
@@ -48,14 +62,14 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
   }));
 
   const initialValues = {
-    firstname: "",
-    middlename: "",
-    surname: "",
+    firstname: firstname,
+    middlename: middlename,
+    surname: surname,
     contractor_type_id: "",
     service_type_id: null,
-    sex: "Муж",
-    birthdate: "",
-    delivery_address: "",
+    sex: sex ? sex :"Муж",
+    birthdate: birthdate,
+    delivery_address: delivery_address,
     emails: [{ email: "" }],
     phones: [
       { phone: "", phone_type: "Рабочий" },

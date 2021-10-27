@@ -47,10 +47,11 @@ type Props = {
 export const GeneralInformationForUser: React.FC<Props> = ({
   setChangeGeneralInformation,
 }) => {
+    const {assetsOptionsCongratulation} = InputAssetsOptions()
   const { AuthorData } = useTypedSelector((state) => state.author);
     const { contractor }: any = AuthorData;
-    const {assetsOptionsCongratulation} = InputAssetsOptions()
   const { crms, org_type, inn, kpp, ogrn, nda, contractor_type_id }: any = contractor;
+
     let contractorType= assetsOptionsCongratulation.filter((type:any) =>type.key == contractor_type_id).map((type:any) =>(
         <div key={type.id}>{type.label}</div>
     ))

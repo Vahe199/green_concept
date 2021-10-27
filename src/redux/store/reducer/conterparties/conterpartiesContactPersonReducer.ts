@@ -57,7 +57,7 @@ export const counterpartiesContactPersonReducer = (
     case ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA_ERROR:
       return {
         ContactPerson: [],
-        PersonContact: {},
+        PersonContact: state.PersonContact,
         NewContactPerson: [],
         error: true,
         loading: true,
@@ -67,7 +67,7 @@ export const counterpartiesContactPersonReducer = (
     case ContractorContactDataActionType.RECOVERY_CONTRACTOR_CONTACT_DATA_STATE:
       return {
         ContactPerson: [],
-        PersonContact: {},
+        PersonContact: state.PersonContact,
         NewContactPerson: [],
         error: false,
         loading: false,

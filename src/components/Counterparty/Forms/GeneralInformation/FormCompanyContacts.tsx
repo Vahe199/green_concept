@@ -22,6 +22,8 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
   const { AuthorData, error, isChange, errorMsg } = useTypedSelector(
     (state) => state.author
   );
+  const { contractor }: any = AuthorData;
+
   const {
     id,
     legal_registration_address,
@@ -30,15 +32,14 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
     emails = [],
     sites = [],
     phones = [],
-  }: any = AuthorData;
+    org_type
+  }: any = contractor;;
 
   const [matchesAddressActualAddress, setMatchesAddressActualAddress] =
     React.useState<boolean>(true);
   const [matchesAddressMailingAddress, setMatchesAddressMailingAddress] =
     React.useState<boolean>(true);
 
-  const { contractor }: any = AuthorData;
-  const { org_type }: any = contractor;
 
   const [validateValue, setValidateValue] = useState<any>(org_type);
 

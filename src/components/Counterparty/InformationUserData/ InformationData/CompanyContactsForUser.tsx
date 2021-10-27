@@ -45,15 +45,12 @@ export const CompanyContactsForUser: React.FC<Props> = ({
   const classes = useStyles();
   const { AuthorData } = useTypedSelector((state) => state.author);
   const { contractor }: any = AuthorData;
-  const { org_type }: any = contractor;
-
-  const {
-    legal_registration_address,
+  const { org_type,  legal_registration_address,
     actual_address,
     post_address,
     emails=[],
-    phones=[],
-  }: any = AuthorData;
+    phones=[], }: any = contractor;
+
   return (
     <div className={classes.root}>
       <div

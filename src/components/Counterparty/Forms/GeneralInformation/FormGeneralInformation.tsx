@@ -1,15 +1,15 @@
-import { Button, Checkbox, Paper, Radio, TextField } from "@material-ui/core";
+import {Button, Checkbox, Paper, Radio} from "@material-ui/core";
 import clsx from "clsx";
-import { FieldArray, Form, Formik, getIn } from "formik";
-import React, { useEffect } from "react";
-import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
-import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
-import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
-import { useActions } from "../../../../redux/type_redux_hook/useAction";
-import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
+import {FieldArray, Form, Formik, getIn} from "formik";
+import React, {useEffect} from "react";
+import {CheckSquareChecked} from "../../../../IMG/SVG/CheckSquareChecked";
+import {CheckSquareUnChecked} from "../../../../IMG/SVG/CheckSquareUnChecked";
+import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
+import {useActions} from "../../../../redux/type_redux_hook/useAction";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterSelectedType from "../../../Utils/FilterInputs/InputFilterSelect";
-import { validationSchemaGeneralInfo } from "./GeneralInformationValidationSchema";
-import { useStylesGeneralInformation } from "./GeneralInformationStyles";
+import {validationSchemaGeneralInfo} from "./GeneralInformationValidationSchema";
+import {useStylesGeneralInformation} from "./GeneralInformationStyles";
 import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
 import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
 import {Input} from "antd";
@@ -24,11 +24,11 @@ export const FormGeneralInformation: React.FC<Props> = ({
   const { changeAuthorGeneralData, recoveryAuthorDataState } = useActions();
   const classes = useStylesGeneralInformation();
 
-  const { AuthorData, error, isChange } = useTypedSelector(
+  const { AuthorData, error, isChange, errorMsg } = useTypedSelector(
     (state) => state.author
   );
-  let { id, org_type, inn, kpp, ogrn, nda, type, service, errorMsg }: any =
-    AuthorData;
+  const { contractor }: any = AuthorData;
+  let { id, crms,org_type, inn, kpp, ogrn, nda, service }: any = contractor
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
@@ -68,9 +68,9 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
 
   const initialValues = {
     org_type: org_type ? org_type : "ЮЛ",
-    contractor_type_id: type,
-    crms: [""],
-    service_type_id: service,
+    contractor_type_id:service ? service.contractor_type_id : "",
+    crms: [crms.length > 0 ?crms[0]?.id : " "],
+    service_type_id: service && service?.contractor_type_id == 1 ? "" : service?.id ,
     inn: inn,
     kpp:kpp ? kpp : null,
     ogrn: ogrn,

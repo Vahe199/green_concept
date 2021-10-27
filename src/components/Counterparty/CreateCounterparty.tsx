@@ -91,11 +91,13 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 32,
   },
 }));
-
+const AuthorState ={
+  contractor:{id:0}
+}
 const CreateCounterparty = (props: any) => {
-  const { AuthorData, loading } = useTypedSelector((state) => state.author);
-  let { contractor }: any = AuthorData;
-  const { id = null }: any = contractor;
+  const { AuthorData } = useTypedSelector((state) => state.author);
+  let { contractor }: any = AuthorData ? AuthorData :AuthorState;
+  const { id }: any = contractor;
 
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);

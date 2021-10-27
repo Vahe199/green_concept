@@ -95,7 +95,7 @@ export default function EmployeesTable(props: any) {
       .includes(item.toString().toUpperCase());
   };
 
-  const filterData = employeeData.filter((item: any, index: any) => {
+  const filterData = employeeData?.filter((item: any, index: any) => {
     let check = true;
 
     Object.entries(filterField).forEach((filter) => {

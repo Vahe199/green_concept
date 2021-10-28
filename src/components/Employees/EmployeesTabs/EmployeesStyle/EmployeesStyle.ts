@@ -35,6 +35,8 @@ export const useStyles = makeStyles({
         fontSize: 18,
         fontWeight: 400,
         height: "37px",
+        width: 247,
+        whiteSpace: "nowrap",
         paddingBottom: 4,
         backgroundColor: "#3AB994",
         textTransform: "none",

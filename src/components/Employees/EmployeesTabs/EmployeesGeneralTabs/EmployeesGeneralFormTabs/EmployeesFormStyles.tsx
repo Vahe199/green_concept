@@ -40,7 +40,7 @@ export const useStylesEmployeeForm = makeStyles((theme: Theme) =>
             justifyContent: "space-between",
             alignItems: "center",
             width: "100%",
-            marginBottom: 5,
+            marginBottom: 8,
             fontSize:16,
             fontWeight:400
         },

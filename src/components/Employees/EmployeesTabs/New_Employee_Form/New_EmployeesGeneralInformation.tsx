@@ -88,6 +88,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                         .then((res) => {
                             notifySuccess();
                             action.resetForm();
+                            setAvatarPreview("")
                             console.log(res,"res")
                             return res;
                         })

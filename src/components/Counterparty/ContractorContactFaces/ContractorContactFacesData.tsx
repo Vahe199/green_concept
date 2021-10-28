@@ -9,6 +9,7 @@ import { InformationContactCongratulations } from "./InformationContactFaces/Inf
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import { useActions } from "../../../redux/type_redux_hook/useAction";
 import BackToAddress from "../../Utils/BackToAddress";
+import {counterpartiesApi} from "../../../api/api";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -19,7 +20,9 @@ const useStyles = makeStyles((theme) => ({
 
 export const ContractorContactFacesData = () => {
   const classes = useStyles();
-
+useEffect(()=>{
+  counterpartiesApi.getContactById(202)
+},[])
   const [changeBasicInformation, setChangeBasicInformation] =
     useState<boolean>(true);
   const [changeContactsFromGreen, setChangeContactsFromGreen] =

@@ -8,7 +8,7 @@ const headers = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JlZW4ta2lzLnRlY21hbi5ydVwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTMxNjg0NywiZXhwIjoxNjM1NDAzMjQ3LCJuYmYiOjE2MzUzMTY4NDcsImp0aSI6IlVCV1FHOUI0dlE0SmIxV0siLCJzdWIiOjE1NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.gQO6s2rxt-4YJauvCjtD3hhovSjG7SDZH2t6EJ-3RiM`,
+  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JlZW4ta2lzLnRlY21hbi5ydVwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTQwMzE1MSwiZXhwIjoxNjM1NDg5NTUxLCJuYmYiOjE2MzU0MDMxNTEsImp0aSI6IldlbXJrOXNtSGZvUHJGRlAiLCJzdWIiOjE1NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.qmmqi93CKT-6KYoe_kWpY_PLVuy094aJEfOf3iS0tSA`,
 };
 
 const createAxios = () => {
@@ -94,7 +94,21 @@ export const counterpartiesApi = {
       data: formData,
     });
   },
+getContactById(id:number){
+  return axios.request({
+    method: "get",
+    url: `contacts?filter[fio]=&filter[branches.id]=&filter[service_type_id]=&filter[contractors.contractor_id]=${id}&filter[contractors.contractor.group.full_name]=&filter[status_id]=&filter[created_by]=&sort=surname,firstname,middlename `,
 
+  }).then(res => {
+    console.log(res)
+    debugger
+    return res
+  }).catch((e)=>{
+    console.log(e.response)
+    debugger
+    return e
+  });
+},
   //contacts update
   changeContactGeneralInfoData(formData: any, id: any) {
     return axios.request({

@@ -2,7 +2,6 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { DatePicker } from "antd";
 import { Calendar } from "../../../IMG/SVG/calendar";
 import { useState } from "react";
-import moment from "moment";
 
 const useStyles = (value: string) =>
   makeStyles((theme: Theme) =>
@@ -51,7 +50,6 @@ export default function InputFilterDatePicker({
       onChange={handleChange}
       onMouseOver={() => setOpenCalendar(true)}
       style={{ width: "100%" }}
-      //defaultValue={moment('1970/01/01', dateFormat)}
       suffixIcon={openCalendar && <Calendar />}
       {...props}
     />

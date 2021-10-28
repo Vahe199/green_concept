@@ -47,7 +47,7 @@ const EmployeeAboutItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeAbout
                     <Form>
             <div className={classes.title} >
                 <Typography  className={classes.typographyTitle}>
-                    Данные сотрудника
+                    О себе
                 </Typography>
                 <Button color="primary" type="submit"
                         // onClick={()=>setEmployeeAboutData(true)}

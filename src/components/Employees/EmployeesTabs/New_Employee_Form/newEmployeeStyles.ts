@@ -218,9 +218,8 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             fontSize:14,
             fontWeight:400,
             cursor: "pointer",
-            "&:hover": {
-                textDecoration: "underline",
-            }
+            textDecoration: "underline",
+            
         },
         typographyTitleEnh:{
             fontSize: 16,

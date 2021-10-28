@@ -31,9 +31,12 @@ export const insertContractorContactData =
 
 // get contacts all
 export const getContactPersonsListData =
-  () => async (dispatch: Dispatch<ContractorContactDataAction>) => {
+  (config: any) => async (dispatch: Dispatch<ContractorContactDataAction>) => {
     try {
-      const { data } = await contractorApi.getContractorContactData();
+      dispatch({
+        type: ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_LIST_DATA,
+      });
+      const { data } = await contractorApi.getContractorContactData(config);
       dispatch({
         type: ContractorContactDataActionType.GET_CONTRACTOR_CONTACT_LIST_DATA,
         payload: data.contacts,

@@ -187,7 +187,7 @@ export default function CounterpartiesTable(props: any) {
     return (
       filteredFullName.length
         ? [{ id: -1, full_name: "Все" }, ...filteredFullName]
-        : []
+        : [{ id: -1, full_name: "Все" }]
     ).map((option: any) => ({
       key: option.id,
       value: option.full_name !== "Все" ? option.id : "",
@@ -237,7 +237,7 @@ export default function CounterpartiesTable(props: any) {
     history.push(`/counterparty/author/${data.id}`);
     getAuthorData(data.id);
   };
-  
+
   const columns = [
     {
       title: () => (

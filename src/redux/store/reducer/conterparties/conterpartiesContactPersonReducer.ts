@@ -36,6 +36,14 @@ export const counterpartiesContactPersonReducer = (
         success: true,
       };
 
+    case ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_LIST_DATA:
+      return {
+        ...state,
+        error: false,
+        loading: true,
+        success: false,
+      };
+
     case ContractorContactDataActionType.GET_CONTRACTOR_CONTACT_LIST_DATA:
       return {
         ...state,

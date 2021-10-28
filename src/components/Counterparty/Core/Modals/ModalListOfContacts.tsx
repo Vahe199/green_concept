@@ -1,6 +1,6 @@
 import { Divider, Radio } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Modal, Table } from "antd";
+import { Modal, Table, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import close from "../../../../IMG/icons/close.png";
 import { MagnifyingGlass } from "../../../../IMG/SVG/MagnifyingGlass";
@@ -11,103 +11,134 @@ import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
 import get from "lodash/get";
 import { COUNTERPARTY_TYPES_MAPPER } from "../../../Constants/counterparty";
 
-const useStyles = makeStyles({
-  root: {
-    "&.ant-modal": {
-      width: "max-content!important",
-      minWidth: 1160,
-      marginLeft: 32,
-      top: 16,
+const useStyles = (loading: boolean) =>
+  makeStyles({
+    root: {
+      "&.ant-modal": {
+        width: "max-content!important",
+        minWidth: 1160,
+        marginLeft: 32,
+        top: 16,
 
-      "& .ant-modal-body": {
-        padding: 20,
-      },
+        "& .ant-modal-body": {
+          padding: 20,
+        },
 
-      "@media(max-width: 1400px)": {
-        minWidth: "unset",
-      },
-    },
-    "& .ant-select": {
-      height: "40px !important",
-    },
-    "& .ant-select-selection-item": {
-      lineHeight: "36px !important",
-    },
-    "& .ant-picker": {
-      height: "40px !important",
-    },
-  },
-
-  table: {
-    color: "#3B4750",
-    fontSize: 15,
-    borderRadius: "4px",
-    overflow: "hidden",
-
-    "& thead": {
-      "& tr": {
-        "& th": {
-          alignItems: "center",
-          background: "#FFFFFF",
-          "&::before": { display: "none" },
-          minHeight: 104,
+        "@media(max-width: 1400px)": {
+          minWidth: "unset",
         },
       },
+      "& .ant-select": {
+        height: "40px !important",
+      },
+      "& .ant-select-selection-item": {
+        lineHeight: "36px !important",
+      },
+      "& .ant-picker": {
+        height: "40px !important",
+      },
     },
-    "& tbody": {
-      "& tr": {
-        "&:nth-child(odd) ": {
-          background: " #F2F3F4",
+    table: {
+      color: "#3B4750",
+      fontSize: 15,
+      borderRadius: "4px",
+      overflow: "hidden",
+
+      "& thead": {
+        "& tr": {
+          "& th": {
+            alignItems: "flex-start",
+            background: "#FFFFFF",
+            "&::before": { display: "none" },
+            minHeight: 104,
+          },
         },
-        "&:nth-child(even) ": {
-          background: " #FFFFFF",
-        },
-        "&:hover": {
-          boxShadow:
-            "0px 0px 12px rgba(51, 63, 79, 0.08), 0px 0px 2px rgba(51, 63, 79, 0.32)",
-        },
-        "&:active": {
-          boxShadow: "0px 0px 6px 0px #333F4F3D inset",
+      },
+      "& tbody": {
+        ...(loading ? { visibility: "hidden" } : {}),
+        minHeight: 320,
+
+        "& tr": {
+          cursor: "pointer",
+
+          "&:nth-child(odd) ": {
+            background: " #F2F3F4",
+          },
+
+          "&:nth-child(even) ": {
+            background: " #FFFFFF",
+          },
+          "&:hover": {
+            boxShadow:
+              "0px 0px 12px rgba(51, 63, 79, 0.08), 0px 0px 2px rgba(51, 63, 79, 0.32)",
+          },
+          "&:active": {
+            boxShadow: "0px 0px 6px 0px #333F4F3D inset",
+          },
+
+          "&.ant-table-row:hover > td": {
+            background: "transparent",
+          },
         },
       },
     },
-  },
-  input: {
-    marginTop: 16,
-  },
-  header: {
-    // backgroundColor: "red",
-    height: 200,
-    width: "100%",
-  },
-  icon: {
-    fontSize: "16px",
-  },
-});
+    input: {
+      marginTop: 16,
+    },
+    header: {
+      // backgroundColor: "red",
+      height: 200,
+      width: "100%",
+    },
+    icon: {
+      fontSize: "16px",
+    },
+    spinner: {
+      position: "absolute",
+      width: "100%",
+      height: "300px",
+      bottom: 0,
+      top: "70%",
+    },
+    searchWraper: {
+      position: "relative",
+
+      "& .searchMode .ant-select-arrow": {
+        display: "none",
+      },
+      "& .searchMode .ant-select-selection-search": {
+        top: 4,
+        left: 24,
+      },
+      "& .searchMode .ant-select-selection-item": {
+        top: 0,
+        left: 15,
+      },
+      "& svg": {
+        position: "absolute",
+        left: 8,
+        top: 28,
+        zIndex: 4,
+      },
+    },
+  });
 
 export default function ModalListOfContacts(props: any) {
   const { attachedContact, onAttachedContact, onCancel, ...modalProps } = props;
-
-  const classes = useStyles();
-
   const { getContactPersonsListData } = useActions();
-
+  const { ContactPerson, loading } = useTypedSelector(
+    (state) => state.contactPerson
+  );
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
-  const { ContactPerson } = useTypedSelector((state) => state.contactPerson);
+
+  const classes = useStyles(loading)();
 
   const [params, setParams] = useState<any>({});
-  const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
-    []
-  );
+
   const [typeOfServices, setTypeOfServices] = useState();
   const [fullName, setFullName] = useState("");
-  const [branch, setBranch] = useState("");
-  const [group, setGroup] = useState("");
-  const [crm, setCrm] = useState("");
-  const [createdAt, setCreatedAt] = useState<any>(null);
-  const [updatedAt, setUpdatedAt] = useState<any>(null);
 
   const { types_and_services = [], branches = [], crms = [] }: any = assets;
 
@@ -127,44 +158,39 @@ export default function ModalListOfContacts(props: any) {
     label: option.name,
   }));
 
-  console.log(types_and_services, typeOfServices, serviceOptions);
-
-  // branches options
-  const getFilteredBranchesOptions = () => {
-    const filteredBranches =
-      branch.length > 3
-        ? branches.filter(({ name }: { name: string }) => name.includes(branch))
-        : [];
-
-    return (
-      filteredBranches.length
-        ? [{ id: -1, name: "Все" }, ...filteredBranches]
-        : []
-    ).map((option: any) => ({
-      key: option.id,
-      value: option.id >= 0 ? option.id : "",
-      label: option.name,
-    }));
-  };
-
   // full name options
   const getFilteredFullNameOptions = () => {
     const filteredFullName =
       fullName.length > 3
-        ? ContactPerson.filter(({ full_name = "" }: { full_name: string }) =>
-            full_name.includes(fullName)
+        ? ContactPerson.filter(({ fio = "" }: { fio: string }) =>
+            fio
+              .toString()
+              .toLocaleUpperCase()
+              .includes(fullName.toString().toLocaleUpperCase())
           )
         : [];
+    console.log(filteredFullName);
 
     return (
       filteredFullName.length
-        ? [{ id: -1, full_name: "Все" }, ...filteredFullName]
-        : []
+        ? [{ id: -1, fio: "Все" }, ...filteredFullName]
+        : [{ id: -1, fio: "Все" }]
     ).map((option: any) => ({
       key: option.id,
-      value: option.full_name !== "Все" ? option.id : "",
-      label: option.full_name,
+      value: option.fio !== "Все" ? get(option, "contractors[0].id", "") : "",
+      label: option.fio,
     }));
+  };
+
+  // branches options
+  const getBranchesOptions = () => {
+    return (branches.length ? [{ id: -1, name: "Все" }, ...branches] : []).map(
+      (option: any) => ({
+        key: option.id,
+        value: option.id >= 0 ? option.id : "",
+        label: option.name,
+      })
+    );
   };
 
   const columns = [
@@ -183,26 +209,32 @@ export default function ModalListOfContacts(props: any) {
       title: () => (
         <>
           ФИО
-          <InputFilterSelect
-            options={getFilteredFullNameOptions()}
-            filterOption={false}
-            onSearch={setFullName}
-            onSelect={(id: number, { value, label }: any) => {
-              setParams({
-                ...params,
-                "filter[full_name]": label === "Все" ? "" : label,
-              });
+          <div className={classes.searchWraper}>
+            <MagnifyingGlass className="searchIcon" />
+            <InputFilterSelect
+              options={getFilteredFullNameOptions()}
+              filterOption={false}
+              onSearch={setFullName}
+              onSelect={(id: number, { value, label }: any) => {
+                console.log(value, id);
 
-              if (value === "") {
-                setFullName("");
-              }
-            }}
-            notFoundContent={null}
-            value={params["filter[full_name]"]}
-            className={"searchMode " + classes.input}
-            prefix={<MagnifyingGlass className={classes.icon} />}
-            showSearch
-          />
+                setParams({
+                  ...params,
+                  "filter[contractors.contractor_id]":
+                    label === "Все" ? "" : value,
+                });
+
+                if (value === "") {
+                  setFullName("");
+                }
+              }}
+              notFoundContent={null}
+              value={params["filter[contractors.contractor_id]"]}
+              className={"searchMode " + classes.input}
+              prefix={<MagnifyingGlass className={classes.icon} />}
+              showSearch
+            />
+          </div>
         </>
       ),
       dataIndex: "name",
@@ -217,21 +249,17 @@ export default function ModalListOfContacts(props: any) {
           {`${record.surname} ${record.firstname} ${record.middlename}`}
         </span>
       ),
+      width: "20%",
     },
     {
       title: () => (
         <>
           Отрасль
           <InputFilterSelect
-            options={getFilteredBranchesOptions()}
+            options={getBranchesOptions()}
             filterOption={false}
-            onSearch={setBranch}
             onSelect={(id: number, { value }: any) => {
               setParams({ ...params, "filter[branches.id]": id });
-
-              if (value === "") {
-                setBranch("");
-              }
             }}
             notFoundContent={null}
             value={params["filter[branches.id]"]}
@@ -242,18 +270,17 @@ export default function ModalListOfContacts(props: any) {
         </>
       ),
       dataIndex: "branches",
-      width: "15%",
-      render: (branches: { name?: string }) => (
-        <span
-          style={{
-            color: "#3B4750",
-            whiteSpace: "nowrap",
-            textAlign: "center",
-          }}
-        >
-          {branches?.name || ""}
-        </span>
-      ),
+      render: (branches: any[]) => {
+        return branches?.map((branch: any, index: number) => {
+          return (
+            <span key={index}>
+              {branch.name}
+              {index < branches.length - 1 ? ", " : " "}
+            </span>
+          );
+        });
+      },
+      width: "20%",
     },
     {
       title: () => (
@@ -335,8 +362,15 @@ export default function ModalListOfContacts(props: any) {
   ];
 
   useEffect(() => {
-    getContactPersonsListData();
-  }, []);
+    const newParams: any = {};
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) {
+        newParams[key] = value;
+      }
+    });
+
+    getContactPersonsListData({ params: newParams });
+  }, [params]);
 
   return (
     <Modal {...modalProps} className={classes.root}>
@@ -350,7 +384,7 @@ export default function ModalListOfContacts(props: any) {
         }}
       >
         <span style={{ fontSize: 16, fontWeight: 500 }}>
-          Найдено 12 из 1112
+          Найдено {ContactPerson.length} из {ContactPerson.length}
         </span>
         <div onClick={() => onCancel()}>
           <img src={close} width={"20"} height={"20"} />
@@ -380,6 +414,7 @@ export default function ModalListOfContacts(props: any) {
         // scroll={{ y: window.innerHeight - 328 }}
         className={classes.table}
       />
+      {loading ? <Spin className={classes.spinner} /> : null}
     </Modal>
   );
 }

@@ -1,21 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import { Spin, Table } from "antd";
 import moment from "moment";
-import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
-import InputFilterSearch from "../../Utils/FilterInputs/InputFilterSearch";
-
-import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useActions } from "../../../redux/type_redux_hook/useAction";
-import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
-import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicker";
+import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
-import { Table, Divider, Spin } from "antd";
-import { useTableStyles } from "./useTableStyles";
+import { useActions } from "../../../redux/type_redux_hook/useAction";
+import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
+import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicker";
+import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 import { InputAssetsOptions } from "../../Utils/utils_options/InputAssetsOptions";
-import { fetchContractorContacts } from "../../../redux/store/action_creator/contractors_action_creatot/ContractorContactAC";
-import get from "lodash/get";
+import { useTableStyles } from "./useTableStyles";
+import { Button } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
 export default function TableForContact(props: any) {
   const { fetchContactsList } = useActions();
@@ -118,7 +115,6 @@ export default function TableForContact(props: any) {
     value: option.id,
     label: option.full_name,
   }));
-  console.log(authors);
 
   const columns = [
     {
@@ -474,14 +470,23 @@ export default function TableForContact(props: any) {
     !companyGroupFilterInital.length &&
       setCompanyGroupFilterInital(ContactList);
   }, [ContactList]);
-
+  const handleClick = (path: string) => {
+    history.push(`/counterparty/${path}`);
+  };
   return (
     <Paper className={classes.root}>
       <div className={classes.titleWrapper}>
         <div>
-          Найдено <span>{data.length}</span> из <span>{data.length}</span>
+          <Button
+            onClick={() => handleClick("new-contractor")}
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            className={classes.btn}
+          >
+            Новый контакт
+          </Button>
         </div>
-        <Divider />
       </div>
       <Table
         onRow={(record) => ({

@@ -3,7 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 export const useTableStyles = (loading: boolean) =>
   makeStyles({
     root: {
-      width: "100%",
+      marginLeft: "2%",
+      marginRight: "2%",
+      marginTop:16,
+      width: "96%",
       color: "#3b475080",
       position: "relative",
 
@@ -26,11 +29,6 @@ export const useTableStyles = (loading: boolean) =>
       padding: "16px 16px 0 16px",
       fontSize: 16,
       color: "#5B6770",
-
-      "& span": {
-        color: "#3B4750",
-        fontWeight: 500,
-      },
 
       "& .ant-divider.ant-divider-horizontal": {
         margin: "8px 0 6px 0",
@@ -96,6 +94,27 @@ export const useTableStyles = (loading: boolean) =>
     },
     icon: {
       fontSize: "16px",
+    },
+    btn: {
+      color: "#fff",
+      boxShadow: "none",
+      outline: "none",
+      fontSize: 18,
+      fontWeight: 400,
+      height: "37px",
+      paddingBottom: 4,
+      backgroundColor: "#3AB994",
+      textTransform: "none",
+      "&:hover": {
+        backgroundColor: "#36AD8B",
+        boxShadow: "none",
+      },
+      "&:active": {
+        backgroundColor: "#32A886",
+      },
+      "& .MuiButton-label": {
+        marginTop: -3,
+      },
     },
     searchWraper: {
       position: "relative",

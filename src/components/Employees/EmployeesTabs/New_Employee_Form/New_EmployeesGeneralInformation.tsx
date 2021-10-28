@@ -402,7 +402,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                 <div>
                                     <div className={classes.title}>
                                         <Typography className={classes.typographyTitle}>
-                                            Данные сотрудника
+                                            О себе
                                         </Typography>
                                     </div>
                                     <div className={classes.textAreaDiv}>

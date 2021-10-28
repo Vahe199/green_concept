@@ -98,9 +98,8 @@ export const useStylesEmployeeQualificationForm = makeStyles((theme: Theme) =>
             fontSize:14,
             fontWeight:400,
             cursor: "pointer",
-            "&:hover": {
-                textDecoration: "underline",
-            }
+            textDecoration: "underline",
+        
         },
         inputData: {
             width: "60% !important",
@@ -110,7 +109,7 @@ export const useStylesEmployeeQualificationForm = makeStyles((theme: Theme) =>
         },
         yearPiker:{
             width:52,
-            height:30,
+            height:27,
             marginRight:24,
             paddingRight:0,
             paddingLeft:4,
@@ -120,7 +119,7 @@ export const useStylesEmployeeQualificationForm = makeStyles((theme: Theme) =>
             }
         },
         monthPiker:{width:91,
-            height:30,
+            height:27,
             paddingRight:4,
             paddingLeft:8,
             "& input": {

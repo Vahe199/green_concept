@@ -188,7 +188,7 @@ export const employeesApi = {
       method: "put",
       url: `employees/employee_data/${id}`,
       data,
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: { "Content-Type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"},
     });
   },
   updateEmployeeGeneralInfoById(data: any, id: number) {

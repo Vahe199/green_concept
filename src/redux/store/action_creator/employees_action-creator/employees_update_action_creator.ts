@@ -9,7 +9,8 @@ export const updateEmployeeEmployeeDataAC = (formData:any ,id:number) => async (
         dispatch({type:EmployeeListActionType.UPDATE_EMPLOYEES_LIST})
         const {data} = await employeesApi.updateEmployeeDataById(id, formData)
         dispatch({type:EmployeeListActionType.UPDATE_EMPLOYEES_EMPLOYEE_DATA, payload:data})
-    }catch (e) {
+    }catch (e:any) {
+        console.log(e.response)
         dispatch({type:EmployeeListActionType.UPDATE_EMPLOYEES_LIST_ERROR,payload:"что-то пошло не так"})
     }
 }

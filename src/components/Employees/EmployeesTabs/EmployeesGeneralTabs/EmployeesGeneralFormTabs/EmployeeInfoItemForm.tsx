@@ -12,6 +12,7 @@ import {useActions} from "../../../../../redux/type_redux_hook/useAction";
 import {notifyError, notifySuccess} from "../../../../Utils/utils_options/ToastNotify";
 import {ToastContainer} from "react-toastify";
 import MaskedInput from "antd-mask-input";
+import get from "lodash/get";
 
 
 type EmployeeFormDataProps = {
@@ -54,9 +55,33 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                 onSubmit={async (values) => {
                     let formData = new FormData();
                     Object.entries(values).forEach(([key, value]) => {
-                        formData.append(key, value)
+                        if(key == "photo") {
+                            formData.append(key, "value")
+                        } else{
+                            formData.append(key, value)
+                        }
+
                     })
-                    console.log(values, formData)
+                    // Object.entries(values).forEach((item) => {
+                    //     const key = get(item, "[0]", "");
+                    //     const value = get(item, "[1]", "");
+                    //
+                    //     const nameMapper = {
+                    //         phones: "phone",
+                    //         emails: "email",
+                    //     }
+                    //
+                    //     if (Array.isArray(value)) {
+                    //         value.forEach((val, index) => {
+                    //             formData.append(`${key}[${index}][${nameMapper[key as keyof typeof nameMapper]}]`, val);
+                    //         });
+                    //     }
+                    //     else {
+                    //         formData.append(key, value);
+                    //     }
+                    // });
+
+                    console.log(values,"values", formData,'formData')
                      updateEmployeeEmployeeDataAC(formData, id)
                 }}
             >
@@ -116,14 +141,14 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                                     error={touched.surname && Boolean(errors.surname)}
                                     helperText={touched.surname && errors.surname}
                                 >
-                                    <Input 
+                                    <Input
                                         name="surname"
                                         placeholder={"Фамилия"}
                                         className={classes.input2}
                                         autoComplete="off"
                                         value={values.surname}
                                         onChange={handleChange}
-                                    
+
                                         />
                                 </ValidationErrorWrapper>
                             </Typography>

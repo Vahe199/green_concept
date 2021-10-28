@@ -29,22 +29,10 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
   );
   const { types_and_services }: any = assets;
   const [contractorId, setContractorId] = React.useState(1);
-  const { AuthorData } = useTypedSelector((state) => state.author);
-  const { PersonContact } = useTypedSelector((state) => state.contactPerson);
+  const { contractor_contacts } = useTypedSelector((state) => state.contactPerson);
+  const {id,firstname,surname, middlename, sex, birthdate,branches,emails,phones,delivery_address,contractors,service_type_id,contractor_type_id}:any =  contractor_contacts
+debugger
 
-  const {
-    firstname = "",
-    surname = "",
-    middlename = "",
-    sex = "",
-    birthdate = " ",
-    contractors = [],
-    branches = [],
-    emails = [],
-    phones = [],
-    delivery_address = "",
-  }: any = PersonContact;
-  const { id }: any = AuthorData;
   const { TextArea } = Input;
 
   const {
@@ -65,8 +53,8 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
     firstname: firstname,
     middlename: middlename,
     surname: surname,
-    contractor_type_id: "",
-    service_type_id: null,
+    contractor_type_id: contractor_type_id,
+    service_type_id: service_type_id,
     sex: sex ? sex :"Муж",
     birthdate: birthdate,
     delivery_address: delivery_address,
@@ -75,7 +63,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
       { phone: "", phone_type: "Рабочий" },
       { phone: "", phone_type: "Мобильный" },
     ],
-    branches: [""],
+    branches: [branches[0]?.id],
 
     contact_contractors: {
       main: 1,

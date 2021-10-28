@@ -12,9 +12,15 @@ import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationError
 import {MagnifyingGlass} from "../../../../IMG/SVG/MagnifyingGlass";
 import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
 import {SearchContactPerson} from "../../../Utils/utils_options/SearchContactPerson";
-import {counterpartiesApi} from "../../../../api/api";
+import {contractorApi, counterpartiesApi} from "../../../../api/api";
 import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
 import {Input} from "antd";
+import {useDispatch} from "react-redux";
+import {
+    ContractorContactDataAction,
+    ContractorContactDataActionType
+} from "../../../../redux/types/contractor_contact_data";
+import {Dispatch} from "redux";
 
 
 type InfoProps = {
@@ -25,17 +31,18 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
   setChangeContactsFromGreen,
 }) => {
   const classes = useStylesContactsFromGreen();
-
-    const [branch, setBranch] = useState("");
-    const { AuthorData,loading: assetsLoading} = useTypedSelector((state) => state.author);
-    const { id }: any = AuthorData;
     const { TextArea } = Input;
+    const [branch, setBranch] = useState("");
+
+  const dispatch: Dispatch<ContractorContactDataAction> = useDispatch()
+    const { contractor_contacts ,loading: assetsLoading} = useTypedSelector((state) => state.contactPerson);
+    const {id,employees }:any = contractor_contacts
 
     const searchOptions = SearchContactPerson()
     const {assetsOptionsDirections} = InputAssetsOptions();
 
 const initialValues = {
-  contact_employees:[{direction_id: '', employee_id: '', info: ''}]
+  contact_employees:[{direction_id: employees.length > 0 ? employees[0].direction_id:'', employee_id: employees.length > 0 ? employees[0].employee_id:"", info: employees.length > 0 ? employees[0].info :""}]
 }
   return (
     <div className={classes.root}>
@@ -44,9 +51,12 @@ const initialValues = {
           validationSchema={validationSchemaContactsFromGreen}
           onSubmit={async (values,action) => {
             console.log(values,"values")
-              await counterpartiesApi.changeContactEmployeesData(values,id)
+              await contractorApi.changeContactEmployeesData(id,values)
                   .then(res =>{
+                      const {data} = res
                       console.log(res)
+                      dispatch({type:ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
+                          payload:data?.contact})
                       setChangeContactsFromGreen(true)
                   }).catch((e)=>{
                       console.log(e.response)

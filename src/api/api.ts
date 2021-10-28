@@ -94,21 +94,6 @@ export const counterpartiesApi = {
       data: formData,
     });
   },
-getContactById(id:number){
-  return axios.request({
-    method: "get",
-    url: `contacts?filter[fio]=&filter[branches.id]=&filter[service_type_id]=&filter[contractors.contractor_id]=${id}&filter[contractors.contractor.group.full_name]=&filter[status_id]=&filter[created_by]=&sort=surname,firstname,middlename `,
-
-  }).then(res => {
-    console.log(res)
-    debugger
-    return res
-  }).catch((e)=>{
-    console.log(e.response)
-    debugger
-    return e
-  });
-},
   //contacts update
   changeContactGeneralInfoData(formData: any, id: any) {
     return axios.request({
@@ -124,19 +109,20 @@ getContactById(id:number){
       data: formData,
     });
   },
-  changeContactEmployeesData(formData: any, id: any) {
-    return axios.request({
-      method: "put",
-      url: `contacts/green_employee_info/${id}`,
-      data: formData,
-    });
-  },
+
   getAssetsData() {
     return axios.request({ method: "get", url: "contractors/get_assets" });
   },
 };
 
 export const contractorApi = {
+  fetchContractorsContactList(config = {}) {
+    return axios.request({
+      method: "get",
+      url: `contacts`,
+      ...config,
+    });
+  },
   fetchContractorBankDetailsData(id: any) {
     return axios.request({ method: "get", url: `bank_details/${id}` });
   },
@@ -148,6 +134,20 @@ export const contractorApi = {
       method: "put",
       url: `bank_details/${contractor_bank_detail}`,
       data,
+    });
+  },
+  getContactById(id:number){
+    return axios.request({
+      method: "get",
+      url: `contacts/${id}`,
+
+    })
+  },
+  changeContactEmployeesData( id: number, formData: any,) {
+    return axios.request({
+      method: "put",
+      url: `contacts/green_employee_info/${id}`,
+      data: formData,
     });
   },
   insertContractorGeneralData(data: any) {
@@ -199,7 +199,7 @@ export const employeesApi = {
 
   updateEmployeeDataById(id: number, data: any) {
     return axios.request({
-      method: "put",
+      method: "post",
       url: `employees/employee_data/${id}`,
       data,
       headers: { "Content-Type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"},

@@ -9,7 +9,8 @@ import { InformationContactCongratulations } from "./InformationContactFaces/Inf
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import { useActions } from "../../../redux/type_redux_hook/useAction";
 import BackToAddress from "../../Utils/BackToAddress";
-import {counterpartiesApi} from "../../../api/api";
+import TableForContact from "../Core/TableForContact";
+import {withRouter} from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -18,11 +19,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ContractorContactFacesData = () => {
+ const ContractorContactFacesData = (props:any) => {
+
+  const {fetchContractorContacts} = useActions()
+  const {AuthorData} = useTypedSelector(state => state.author)
+  const {contractor}:any = AuthorData
   const classes = useStyles();
-useEffect(()=>{
-  counterpartiesApi.getContactById(202)
-},[])
   const [changeBasicInformation, setChangeBasicInformation] =
     useState<boolean>(true);
   const [changeContactsFromGreen, setChangeContactsFromGreen] =
@@ -32,43 +34,45 @@ useEffect(()=>{
   return (
     <>
       <BackToAddress address="/counterparties" title="списку" />
-      <div className={classes.root}>
-        <div style={{ width: "50%" }}>
-          {changeBasicInformation ? (
+        {props.match.params.tab == "Контактные лица" ? <TableForContact/>:
+            <div className={classes.root}>
+            <div style={{width: "50%"}}>
+        {changeBasicInformation ? (
             <InformationContactFacesData
-              setChangeBasicInformation={setChangeBasicInformation}
+            setChangeBasicInformation={setChangeBasicInformation}
             />
-          ) : (
+            ) : (
             <FormBasicInformation
-              setChangeBasicInformation={setChangeBasicInformation}
+            setChangeBasicInformation={setChangeBasicInformation}
             />
-          )}
-        </div>
-        <div style={{ width: "50%" }}>
-          <div>
-            {changeContactsFromGreen ? (
-              <InformationContactsFromGreen
-                setChangeContactsFromGreen={setChangeContactsFromGreen}
-              />
-            ) : (
-              <FormContactsFromGreen
-                setChangeContactsFromGreen={setChangeContactsFromGreen}
-              />
             )}
-          </div>
-          <div>
-            {changeCongratulations ? (
-              <InformationContactCongratulations
-                setChangeCongratulations={setChangeCongratulations}
-              />
+            </div>
+            <div style={{width: "50%"}}>
+            <div>
+        {changeContactsFromGreen ? (
+            <InformationContactsFromGreen
+            setChangeContactsFromGreen={setChangeContactsFromGreen}
+            />
             ) : (
-              <FormInformationCongratulations
-                setChangeCongratulations={setChangeCongratulations}
-              />
+            <FormContactsFromGreen
+            setChangeContactsFromGreen={setChangeContactsFromGreen}
+            />
             )}
-          </div>
-        </div>
-      </div>
+            </div>
+            <div>
+        {changeCongratulations ? (
+            <InformationContactCongratulations
+            setChangeCongratulations={setChangeCongratulations}
+            />
+            ) : (
+            <FormInformationCongratulations
+            setChangeCongratulations={setChangeCongratulations}
+            />
+            )}
+            </div>
+            </div>
+            </div>}
     </>
   );
 };
+export default withRouter(ContractorContactFacesData)

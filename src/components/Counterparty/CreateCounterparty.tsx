@@ -5,11 +5,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import React, { useEffect, useState } from "react";
-import { useHistory, withRouter } from "react-router-dom";
+import { useParams, useHistory, withRouter } from "react-router-dom";
 import { CaretDoubleLeft } from "../../IMG/SVG/CaretDoubleLeft";
 import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
 import CreatingBankDetails from "./BankDetails/CreatingBankDetails";
-import { ContractorContactFacesData } from "./ContractorContactFaces/ContractorContactFacesData";
+import  ContractorContactFacesData from "./ContractorContactFaces/ContractorContactFacesData";
 import { InformationUserData } from "./InformationUserData/InformationUserData";
 import CreatEditBankAccount, {
   ContractorBankDetailType,
@@ -95,17 +95,22 @@ const AuthorState ={
   contractor:{id:0}
 }
 const CreateCounterparty = (props: any) => {
+
+  let history = useHistory();
+  let params = useParams<{item: string}>();
+  console.log(params)
   const { AuthorData } = useTypedSelector((state) => state.author);
   let { contractor }: any = AuthorData ? AuthorData :AuthorState;
   const { id }: any = contractor;
-  //console.log(contractor, id, 'id')
+
   const classes = useStyles();
-  const [selectedTab, setSelectedTab] = React.useState(0);
+  const [selectedTab, setSelectedTab] = React.useState<string>("Общие сведения");
   const [edit, setEdit] = useState(true);
   const [contractorBankDetail, setContractorBankDetail] =
     useState<ContractorBankDetailType>(initialBankDetails);
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+     history.push(`/counterparty/${params.item}/${newValue}${params.item == "author" ? `/${id}`  : ""}`);
     setSelectedTab(newValue);
   };
 
@@ -116,7 +121,7 @@ const CreateCounterparty = (props: any) => {
     <div className={classes.container}>
       <Paper square className={classes.root}>
         <Typography variant="subtitle1" noWrap className={classes.typography}>
-          {props.match.params.item === "author"
+          {params.item === "author"
             ? `ООО «Контрагент №${id ? id : ""}»`
             : "Новый контрагент"}
         </Typography>
@@ -130,7 +135,7 @@ const CreateCounterparty = (props: any) => {
             onChange={handleChange}
             aria-label="Новый контрагент"
           >
-            <Tab
+            <Tab value={"Общие сведения"}
               label={
                 <Typography variant="subtitle1" className={classes.tabStyle}>
                   Общие сведения
@@ -138,7 +143,7 @@ const CreateCounterparty = (props: any) => {
               }
               className={classes.rootTabStyle}
             />
-            <Tab
+            <Tab value={"Контактные лица"}
               label={
                 <Typography
                   variant="subtitle1"
@@ -150,7 +155,7 @@ const CreateCounterparty = (props: any) => {
               }
               className={classes.rootTabStyle}
             />
-            <Tab
+            <Tab value={"Банковские реквизиты"}
               label={
                 <Typography variant="subtitle1" className={classes.tabStyle}>
                   Банковские реквизиты
@@ -158,7 +163,7 @@ const CreateCounterparty = (props: any) => {
               }
               className={classes.rootTabStyle}
             />
-            <Tab
+            <Tab value={"Договоры"}
               label={
                 <Typography variant="subtitle1" className={classes.tabStyle}>
                   Договоры
@@ -166,7 +171,7 @@ const CreateCounterparty = (props: any) => {
               }
               className={classes.rootTabStyle}
             />
-            <Tab
+            <Tab value={"Официальная переписка"}
               label={
                 <Typography variant="subtitle1" className={classes.tabStyle}>
                   Официальная переписка
@@ -183,16 +188,16 @@ const CreateCounterparty = (props: any) => {
         {props.match.params.item === "author" ? (
           <div>
             <div>
-              {selectedTab === 0 && <InformationUserData />}
-              {selectedTab === 1 && <ContractorContactFacesData />}
-              {selectedTab === 2 && <CreatingBankDetails />}
+              {selectedTab === "Общие сведения" && <InformationUserData />}
+              {selectedTab === "Контактные лица" && <ContractorContactFacesData />}
+              {selectedTab === "Банковские реквизиты" && <CreatingBankDetails />}
             </div>
           </div>
-        ) : props.match.params.item === "new-contractor" ? (
+        ) : params.item === "new-contractor" ? (
           <div>
-            {selectedTab === 0 && <GeneralInformationForCreating />}
-            {selectedTab === 1 && <ContactPersonsForCreating />}
-            {selectedTab === 2 && (
+            {selectedTab === "Общие сведения" && <GeneralInformationForCreating />}
+            {selectedTab === "Контактные лица" && <ContactPersonsForCreating />}
+            {selectedTab === "Банковские реквизиты" && (
               <div>
                 <BackToAddress address="/counterparties" title="списку" />
                 {edit ? (
@@ -215,7 +220,7 @@ const CreateCounterparty = (props: any) => {
             )}
           </div>
         ) : (
-          <div>{props.match.params.item}</div>
+          <div>{params.item}</div>
         )}
       </div>
     </div>

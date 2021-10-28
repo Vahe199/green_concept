@@ -5,9 +5,11 @@ import {
 } from "../../../types/contractor_contact_data";
 
 const initialState: ContractorContactDataState = {
+  ContactList:[],
   ContactPerson: [],
   NewContactPerson: [],
   PersonContact: {},
+  contractor_contacts:[],
   loading: false,
   error: false,
   success: false,
@@ -19,9 +21,7 @@ export const counterpartiesContactPersonReducer = (
   switch (action.type) {
     case ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA:
       return {
-        ContactPerson: [],
-        PersonContact: {},
-        NewContactPerson: [],
+    ...state,
         error: false,
         loading: true,
         success: false,
@@ -35,7 +35,22 @@ export const counterpartiesContactPersonReducer = (
         loading: false,
         success: true,
       };
-
+    case ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_LIST_SUCCESS:
+      return {
+        ...state,
+        ContactList: action.payload,
+        error: false,
+        loading: false,
+        success: true,
+      };
+    case ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID:
+      return {
+        ...state,
+        contractor_contacts:action.payload,
+        error: false,
+        loading: false,
+        success: true,
+      };
     case ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_LIST_DATA:
       return {
         ...state,
@@ -64,19 +79,14 @@ export const counterpartiesContactPersonReducer = (
 
     case ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA_ERROR:
       return {
-        ContactPerson: [],
-        PersonContact: state.PersonContact,
-        NewContactPerson: [],
+        ...state,
         error: true,
         loading: true,
         success: false,
       };
 
     case ContractorContactDataActionType.RECOVERY_CONTRACTOR_CONTACT_DATA_STATE:
-      return {
-        ContactPerson: [],
-        PersonContact: state.PersonContact,
-        NewContactPerson: [],
+      return { ...state,
         error: false,
         loading: false,
         success: false,

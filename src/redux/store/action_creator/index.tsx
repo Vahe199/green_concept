@@ -12,6 +12,7 @@ import * as RecoveryAuthorDataAC from "./contractors_action_creatot/recoveryAuth
 import * as ContractorBankDetailsDataAC from "./contractors_action_creatot/ContractorBankDetailsDataAC";
 import * as ContractorGeneraDataAC from "./contractors_action_creatot/ContractorGeneralDataAC";
 import * as ContractorContactAC from "./contractors_action_creatot/ContractorContactAC";
+import * as UpdateContractorContactAC from "./contractors_action_creatot/ContractorContactUpdatingAC";
 import * as EmployeesListAC from "./employees_action-creator/employees_action_creator";
 import * as EmployeesListUpdateAC from "./employees_action-creator/employees_update_action_creator";
 import * as EmployeesQualificationListUpdateAC from "./employees_action-creator/employees_qualification_action_creator";
@@ -33,5 +34,6 @@ export default {
   ...EmployeesListAC,
   ...EmployeesListUpdateAC,
   ...AssetsEmployeesListDataAC,
-  ...EmployeesQualificationListUpdateAC
+  ...EmployeesQualificationListUpdateAC,
+  ...UpdateContractorContactAC
 };

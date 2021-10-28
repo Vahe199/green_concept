@@ -65,26 +65,25 @@ type PersonContactState = {
 export const InformationContactFacesData: React.FC<InfoProps> = ({
   setChangeBasicInformation,
 }) => {
-  const { PersonContact } = useTypedSelector((state) => state.contactPerson);
+  const contractor_contState={
 
-  const {
-    firstname = "",
-    surname = "",
-    middlename = "",
-    sex = "",
-    birthdate = " ",
-    contractors = [],
-    branches = [],
-    emails = [],
-    phones = [],
-    delivery_address = "",
-  }: any = PersonContact;
+      firstname: "",
+        surname: "",
+        middlename : "",
+        sex :"",
+        birthdate : " ",
+        contractors :[],
+        branches : [],
+        emails : [],
+        phones : [],
+        delivery_address : "",
+    service_type:{},
+    contractor_type_id:""
+}
+  const { contractor_contacts } = useTypedSelector((state) => state.contactPerson);
+const {firstname,surname, middlename, sex, birthdate,branches,emails,phones,delivery_address,contractors,service_type,contractor_type_id}:any = contractor_contacts ? contractor_contacts :   contractor_contState
 
   const classes = useStyles();
-  const [checked, setChecked] = React.useState(sex);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.value);
-  };
 
 
 
@@ -108,17 +107,11 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
           <span className={classes.spanTitle}>Основное контактное лицо</span>
           <span style={{ width: "61%" }}>
             <Checkbox
-              disabled={true}
-              checked={contractors[0]?.main ? true : false}
-              name="main_contact_person"
-              color="default"
-              inputProps={{ "aria-label": "checkbox with default color" }}
-              // icon={<CheckSquareChecked color="#5B6770" />}
-              // checkedIcon={
-              //   <CheckSquareUnChecked color="#5B6770" />
-              // }
-              icon={<CheckSquareUnChecked color="#ADB3B8" />}
-              checkedIcon={<CheckSquareChecked color="#5B6770" />}
+                disabled
+                checked={true}
+                inputProps={{ "aria-label": "disabled checked checkbox" }}
+                icon={<CheckSquareUnChecked color="#ADB3B8" />}
+                checkedIcon={<CheckSquareChecked color="#5B6770" />}
             />
           </span>
         </div>
@@ -140,10 +133,9 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
             <div>
               <span>Мужчина</span>
               <Radio
-                checked={checked === "Муж"}
+                checked={sex === "Муж"}
                 disabled={true}
-                onChange={handleChange}
-                value="a"
+                value="Муж"
                 color="default"
                 name="radio-button-demo"
                 size="medium"
@@ -153,10 +145,9 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
             <div>
               <span>Женщина</span>
               <Radio
-                checked={checked === "Жен"}
-                onChange={handleChange}
+                checked={sex === "Жен"}
                 disabled={true}
-                value="b"
+                value="Жен"
                 color="default"
                 name="radio-button-demo"
                 size="medium"
@@ -172,7 +163,7 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
         <div className={classes.label}>
           <span className={classes.spanTitle}>Роль</span>
           <span style={{ width: "60%" }}>
-            {contractors[0]?.contact_role?.name}
+            {contractors.length > 0 ?contractors[0].contact_role?.name: ""}
           </span>
         </div>
         <div className={classes.label}>
@@ -182,13 +173,13 @@ export const InformationContactFacesData: React.FC<InfoProps> = ({
         <div className={classes.label}>
           <span className={classes.spanTitle}>Тип контрагента</span>
           <span style={{ width: "60%" }}>
-            {contractors[0]?.contractor?.full_name}
+            {contractor_type_id}
           </span>
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Тип услуг</span>
           <span style={{ width: "60%" }}>
-            {contractors[0]?.contractor?.short_name}
+            {service_type?.name}
           </span>
         </div>
         <div className={classes.label}>

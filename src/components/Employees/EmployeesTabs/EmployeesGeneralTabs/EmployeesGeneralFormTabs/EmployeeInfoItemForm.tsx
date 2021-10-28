@@ -44,6 +44,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
         birthdate:birthdate? birthdate : "",
         emails: [""],
         phones:[""],
+        _method:"PUT"
 
     };
     const classes = useStylesEmployeeForm();
@@ -54,32 +55,32 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                  initialValues={initialValues}
                 onSubmit={async (values) => {
                     let formData = new FormData();
-                    Object.entries(values).forEach(([key, value]) => {
-                        if(key == "photo") {
-                            formData.append(key, "value")
-                        } else{
-                            formData.append(key, value)
+                    // Object.entries(values).forEach(([key, value]) => {
+                    //     if(key == "photo") {
+                    //         formData.append(key, "value")
+                    //     } else{
+                    //         formData.append(key, value)
+                    //     }
+                    //
+                    // })
+                    Object.entries(values).forEach((item) => {
+                        const key = get(item, "[0]", "");
+                        const value = get(item, "[1]", "");
+
+                        const nameMapper = {
+                            phones: "phone",
+                            emails: "email",
                         }
 
-                    })
-                    // Object.entries(values).forEach((item) => {
-                    //     const key = get(item, "[0]", "");
-                    //     const value = get(item, "[1]", "");
-                    //
-                    //     const nameMapper = {
-                    //         phones: "phone",
-                    //         emails: "email",
-                    //     }
-                    //
-                    //     if (Array.isArray(value)) {
-                    //         value.forEach((val, index) => {
-                    //             formData.append(`${key}[${index}][${nameMapper[key as keyof typeof nameMapper]}]`, val);
-                    //         });
-                    //     }
-                    //     else {
-                    //         formData.append(key, value);
-                    //     }
-                    // });
+                        if (Array.isArray(value)) {
+                            value.forEach((val, index) => {
+                                formData.append(`${key}[][${nameMapper[key as keyof typeof nameMapper]}]`, val);
+                            });
+                        }
+                        else {
+                            formData.append(key, value);
+                        }
+                    });
 
                     console.log(values,"values", formData,'formData')
                      updateEmployeeEmployeeDataAC(formData, id)

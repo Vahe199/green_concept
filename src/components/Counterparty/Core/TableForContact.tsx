@@ -12,36 +12,24 @@ import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicker";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
 import { Table, Divider, Spin } from "antd";
-import {useTableStyles} from "./useTableStyles";
-import {InputAssetsOptions} from "../../Utils/utils_options/InputAssetsOptions";
-import {fetchContractorContacts} from "../../../redux/store/action_creator/contractors_action_creatot/ContractorContactAC";
-
-
+import { useTableStyles } from "./useTableStyles";
+import { InputAssetsOptions } from "../../Utils/utils_options/InputAssetsOptions";
+import { fetchContractorContacts } from "../../../redux/store/action_creator/contractors_action_creatot/ContractorContactAC";
+import get from "lodash/get";
 
 export default function TableForContact(props: any) {
-  const { fetchContactsList} = useActions();
-const {assetsOptionsStatus} = InputAssetsOptions()
+  const { fetchContactsList } = useActions();
+  const { assetsOptionsStatus } = InputAssetsOptions();
   const history = useHistory();
   const { ContactList, loading } = useTypedSelector(
     (state) => state.contactPerson
   );
   const classes = useTableStyles(loading)();
 
-  const { authors: crms } = useTypedSelector((state) => state.authorsList);
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
-  const { types_and_services = [], branches = [] }: any = assets;
-  const assetsOptions = types_and_services?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
-  const crmsOptions = crms?.map((option: any) => ({
-    key: option.author_id,
-    value: option.author_id,
-    label: option.author_fio,
-  }));
+  const { branches = [], crms: authors = [] }: any = assets;
 
   const { fetchContractorContacts } = useActions();
 
@@ -49,16 +37,8 @@ const {assetsOptionsStatus} = InputAssetsOptions()
     []
   );
 
-  const [params, setParams] = useState<any>({
-      "filter[fio]": "",
-      "filter[branches.id]":null,
-      "filter[service_type_id]": null,
-      "filter[contractors.contractor_id]": null,
-      "filter[contractors.contractor.group.full_name]": "",
-      "filter[status_id]": null,
-      "filter[created_by]": null,
-      sort:""
-  });
+  const [params, setParams] = useState<any>({});
+
   const [services, setServices] = useState("");
   const [fullName, setFullName] = useState("");
   const [branch, setBranch] = useState("");
@@ -70,9 +50,14 @@ const {assetsOptionsStatus} = InputAssetsOptions()
   // full name options
   const getFilteredFullNameOptions = () => {
     const filteredFullName =
-      ContactList.filter(({ fio = "" }: { fio: string }) =>
-            fio.includes(fullName)
-          );
+      fullName.length > 3
+        ? ContactList.filter(({ fio = "" }: { fio: string }) =>
+            fio
+              .toString()
+              .toLocaleUpperCase()
+              .includes(fullName.toString().toLocaleUpperCase())
+          )
+        : [];
 
     return (
       filteredFullName.length
@@ -80,7 +65,7 @@ const {assetsOptionsStatus} = InputAssetsOptions()
         : [{ id: -1, fio: "Все" }]
     ).map((option: any) => ({
       key: option.id,
-      value: option.fio !== "Все" ? option.id : "",
+      value: option.fio !== "Все" ? option.fio : "",
       label: option.fio,
     }));
   };
@@ -124,21 +109,29 @@ const {assetsOptionsStatus} = InputAssetsOptions()
   };
 
   const getUserData = (data: any) => {
-     history.push(`/counterparty/author/contacts/${data.id}`);
-      fetchContractorContacts(data.id);
+    history.push(`/counterparty/author/contacts/${data.id}`);
+    fetchContractorContacts(data.id);
   };
+
+  const authorsOptions = authors?.map((option: any) => ({
+    key: option.id,
+    value: option.id,
+    label: option.full_name,
+  }));
+  console.log(authors);
 
   const columns = [
     {
       title: () => (
-          <>
+        <>
           <span className={classes.titleText}>&#x2116;</span>
-    <div>
-      <InputFilterSelect style={{visibility:"hidden"}}
-          className={classes.input}
-      />
-    </div>
-          </>
+          <div>
+            <InputFilterSelect
+              style={{ visibility: "hidden" }}
+              className={classes.input}
+            />
+          </div>
+        </>
       ), //todo Arsen change icon
       dataIndex: "id",
       width: "5%",
@@ -161,37 +154,6 @@ const {assetsOptionsStatus} = InputAssetsOptions()
           {/*    loading={assetsLoading}*/}
           {/*  />*/}
           {/*</div>*/}
-            <div className={classes.searchWraper}>
-                <MagnifyingGlass className="searchIcon" />
-                <InputFilterSelect
-                    options={getFilteredFullNameOptions()}
-                    filterOption={false}
-                    onSearch={setFullName}
-                    onSelect={(id: number, { value, label }: any) => {
-                        setParams({
-                            ...params,
-                            "filter[fio]": label === "Все" ? "" : label,
-                        });
-
-                        if (value === "") {
-                            setFullName("");
-                        }
-                    }}
-                    notFoundContent={null}
-                    value={params["filter[fio]"]}
-                    className={"searchMode " + classes.input}
-                    prefix={<MagnifyingGlass className={classes.icon} />}
-                    showSearch
-                />
-            </div>
-        </>
-      ),
-      dataIndex: "fio",
-    },
-    {
-      title: () => (
-        <>
-          <span className={classes.titleText}>Отрасль/Тип услуг</span>
           <div className={classes.searchWraper}>
             <MagnifyingGlass className="searchIcon" />
             <InputFilterSelect
@@ -201,7 +163,7 @@ const {assetsOptionsStatus} = InputAssetsOptions()
               onSelect={(id: number, { value, label }: any) => {
                 setParams({
                   ...params,
-                  "filter[full_name]": label === "Все" ? "" : label,
+                  "filter[fio]": label === "Все" ? "" : label,
                 });
 
                 if (value === "") {
@@ -209,21 +171,21 @@ const {assetsOptionsStatus} = InputAssetsOptions()
                 }
               }}
               notFoundContent={null}
-              value={params["filter[full_name]"]}
+              value={params["filter[fio]"]}
               className={"searchMode " + classes.input}
               prefix={<MagnifyingGlass className={classes.icon} />}
               showSearch
+              placeholder="Все"
             />
           </div>
         </>
       ),
-      dataIndex: "full_name",
-      width: "15%",
+      dataIndex: "fio",
     },
     {
       title: () => (
         <>
-          <span className={classes.titleText}>Контрагент</span>
+          <span className={classes.titleText}>Отрасль/Тип услуг</span>
           <div className={classes.searchWraper}>
             <MagnifyingGlass className="searchIcon" />
             <InputFilterSelect
@@ -254,6 +216,45 @@ const {assetsOptionsStatus} = InputAssetsOptions()
             <span key={index}>
               {branch.name}
               {index < branches.length - 1 ? ", " : " "}
+            </span>
+          );
+        });
+      },
+    },
+    {
+      title: () => (
+        <>
+          <span className={classes.titleText}>Контрагент</span>
+          <div className={classes.searchWraper}>
+            <MagnifyingGlass className="searchIcon" />
+            <InputFilterSelect
+              options={getFilteredBranchesOptions()}
+              filterOption={false}
+              onSearch={setBranch}
+              onSelect={(id: number, { value }: any) => {
+                setParams({ ...params, "filter[branches.id]": id });
+
+                if (value === "") {
+                  setBranch("");
+                }
+              }}
+              notFoundContent={null}
+              value={params["filter[branches.id]"]}
+              className={"searchMode " + classes.input}
+              prefix={<MagnifyingGlass className={classes.icon} />}
+              showSearch
+            />
+          </div>
+        </>
+      ),
+      dataIndex: "contractors",
+      width: "13%",
+      render: (contractors: any[]) => {
+        return contractors?.map((branch: any, index: number) => {
+          return (
+            <span key={index}>
+              {branch.name}
+              {index < contractors.length - 1 ? ", " : " "}
             </span>
           );
         });
@@ -312,23 +313,25 @@ const {assetsOptionsStatus} = InputAssetsOptions()
           {/*    showSearch*/}
           {/*  />*/}
           {/*</div>*/}
-            <InputFilterSelect
-                className={classes.input}
-                placeholder="Все"
-                // value={crm}
-                handleChange={(val: any) => {
-                    // setCrm(val);
-                    setParams({ ...params, "filter[status_id]": val }); // Todo Arsen, check backend field
-                }}
-                options={[{ key: "", value: "", label: "Все" }, ...assetsOptionsStatus]}
-                loading={assetsLoading}
-            />
+          <InputFilterSelect
+            className={classes.input}
+            placeholder="Все"
+            value={params["filter[status_id]"]}
+            handleChange={(val: any) => {
+              setParams({ ...params, "filter[status_id]": val }); // Todo Arsen, check backend field
+            }}
+            options={[
+              { key: "", value: "", label: "Все" },
+              ...assetsOptionsStatus,
+            ]}
+            loading={assetsLoading}
+          />
         </>
       ),
       dataIndex: "status",
-        render: (status: any) => (
-            <span style={{ color: "#3B4750" }}>{status.name}</span>
-        ),
+      render: (status: any) => (
+        <span style={{ color: "#3B4750" }}>{status.name}</span>
+      ),
     },
     {
       title: () => (
@@ -338,12 +341,14 @@ const {assetsOptionsStatus} = InputAssetsOptions()
             <InputFilterSelect
               className={classes.input}
               placeholder="Все"
-              value={crm}
+              value={params["filter[created_by]"]}
               handleChange={(val: any) => {
-                setCrm(val);
-                setParams({ ...params, "filter[created_by]": val }); // Todo Arsen, check backend field
+                setParams({ ...params, "filter[created_by]": val });
               }}
-              options={[{ key: "", value: "", label: "Все" }, ...crmsOptions]}
+              options={[
+                { key: "", value: "", label: "Все" },
+                ...authorsOptions,
+              ]}
               loading={assetsLoading}
             />
           </div>
@@ -353,7 +358,8 @@ const {assetsOptionsStatus} = InputAssetsOptions()
       render: (author: any = {}) => {
         const authorFullName = author
           ? `${author?.surname} ${author.firstname?.substring(0, 1)}. `
-          : "" +  `${author?.middlename ? author.middlename?.substring(0, 1) : ""}.`;
+          : "" +
+            `${author?.middlename ? author.middlename?.substring(0, 1) : ""}.`;
 
         return authorFullName;
       },
@@ -409,14 +415,14 @@ const {assetsOptionsStatus} = InputAssetsOptions()
   const data = ContactList.map(
     ({
       id,
-         fio,
-         service_type,
-         contractors,
-         branches,
-         status,
-         author,
-         created_at,
-         updated_at
+      fio,
+      service_type,
+      contractors,
+      branches,
+      status,
+      author,
+      created_at,
+      updated_at,
     }) => {
       // console.log({
       //   key: id,
@@ -434,11 +440,11 @@ const {assetsOptionsStatus} = InputAssetsOptions()
       return {
         key: id,
         id,
-          fio,
+        fio,
         branches,
-          service_type,
-          contractors,
-          status,
+        service_type,
+        contractors,
+        status,
         author,
         created_at,
         updated_at,
@@ -459,8 +465,9 @@ const {assetsOptionsStatus} = InputAssetsOptions()
         newParams[key] = value;
       }
     });
+    console.log(params);
 
-      fetchContactsList({ params: newParams });
+    fetchContactsList({ params: newParams });
   }, [params]);
 
   useEffect(() => {
@@ -480,7 +487,7 @@ const {assetsOptionsStatus} = InputAssetsOptions()
         onRow={(record) => ({
           onClick: () => getUserData(record),
         })}
-         dataSource={data}
+        dataSource={data}
         pagination={false}
         {...tableProps}
       />

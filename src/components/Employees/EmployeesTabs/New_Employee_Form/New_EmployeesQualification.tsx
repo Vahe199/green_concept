@@ -78,7 +78,7 @@ const NewEmployeesQualification:React.FC = () => {
                             Сохранить карточку
                         </Button>
         <div className={classes.containerQualification}>
-            <div style={{width:'48%',marginLeft:32}}>
+            <div className={classes.block1}>
             <div>
                 <div className={classes.title} >
                     <Typography  className={classes.typographyTitle}>
@@ -363,7 +363,7 @@ const NewEmployeesQualification:React.FC = () => {
                 </Paper>
             </div>
 
-               <div>
+               <div className={classes.block3}>
                    <div className={classes.title} >
                        <Typography  style={{fontSize: 16, fontWeight:500,
                            color: '#3B4750'}}>
@@ -375,10 +375,10 @@ const NewEmployeesQualification:React.FC = () => {
                            <div style={{width: "100%"}}>
 
                                <div className={classes.column}>
-                                   <Typography className={classes.typographyTitle} style={{width:"calc(50% - 20px)"}}>
+                                   <Typography className={classes.typographyTitle} style={{width:"60%"}}>
                                        Национальный реестр специалистов в области строительства:
                                    </Typography>
-                                   <Typography className={classes.typographyValue} style={{width:"calc(50% + 20px)"}}>
+                                   <Typography className={classes.typographyValue} style={{width:"40%"}}>
                                        <ValidationErrorWrapper
                                            inputClassName="ant-input"
                                            error={
@@ -401,10 +401,10 @@ const NewEmployeesQualification:React.FC = () => {
                                    </Typography>
                                </div>
                                <div className={classes.column}>
-                                   <Typography className={classes.typographyTitle} style={{width:"calc(50% - 20px)"}}>
+                                   <Typography className={classes.typographyTitle} style={{width:"60%"}}>
                                        Национальный реестр специалистов в области инженерных изысканий и архитектурно-строительного проектирования:
                                    </Typography>
-                                   <Typography className={classes.typographyValue} style={{width:"calc(50% + 20px)"}}>
+                                   <Typography className={classes.typographyValue} style={{width:"40%"}}>
                                        <ValidationErrorWrapper
                                            inputClassName="ant-input"
                                            error={
@@ -432,7 +432,7 @@ const NewEmployeesQualification:React.FC = () => {
                    </Paper>
                </div>
             </div>
-            <div style={{width:'45%',marginRight:32}}>
+            <div className={classes.block2}>
              <div>
                  <div className={classes.title} >
                      <Typography  className={classes.typographyTitle}>

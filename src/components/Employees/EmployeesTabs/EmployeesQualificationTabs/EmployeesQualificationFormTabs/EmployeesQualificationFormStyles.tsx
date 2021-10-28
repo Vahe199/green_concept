@@ -113,7 +113,7 @@ export const useStylesEmployeeQualificationForm = makeStyles((theme: Theme) =>
             marginRight:24,
             paddingRight:0,
             paddingLeft:4,
-            "& input": {
+            "&:: input": {
                 fontSize: "16px !important",
                 textAlign:"center"
             }

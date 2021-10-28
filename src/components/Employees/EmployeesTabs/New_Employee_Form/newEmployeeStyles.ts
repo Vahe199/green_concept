@@ -40,7 +40,26 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
                 marginTop: -2,
                 marginLeft: 0,
             },
-
+        },
+        block1:{
+            width:'864px',
+            marginLeft:32,
+            "@media (max-width: 1800px)": {
+                width:'48%',
+            }
+        },
+        block2:{
+            width:'864px',
+            marginRight:32,
+            "@media (max-width: 1800px)": {
+                width:'42%',
+            }
+        },
+        block3: {
+            width:'864px',
+            "@media (max-width: 1800px)": {
+                width:'100%',
+            }
         },
         textArea: {
             // border: "1px solid #3ab994",

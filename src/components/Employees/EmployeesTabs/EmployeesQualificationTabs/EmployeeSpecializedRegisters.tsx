@@ -9,7 +9,7 @@ type EmployeeSpecializedProps = {
 const EmployeeSpecializedRegisters:React.FC<EmployeeSpecializedProps> = ({setEmployeeSpecialized}) => {
     const classes = useStylesEmployeeQualification();
     return(
-        <div className={classes.root}style={{marginBottom:50}}>
+        <div className={classes.root} style={{marginBottom:50}}>
             <div className={classes.title} >
                 <Typography  style={{fontSize: 16, fontWeight:500,
                     color: '#3B4750'}}>

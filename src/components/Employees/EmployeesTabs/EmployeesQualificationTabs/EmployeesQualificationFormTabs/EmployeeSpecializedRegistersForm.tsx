@@ -71,10 +71,10 @@ const {recoveryEmployeesQualificationState,updateEmployeeRegisterDataAC} = useAc
                     <div style={{width: "100%"}}>
 
                         <div className={classes.column}>
-                            <Typography className={classes.typographyTitle} style={{width:"calc(50% - 20px)"}}>
+                            <Typography className={classes.typographyTitle} style={{width:"60%"}}>
                                 Национальный реестр специалистов в области строительства:
                             </Typography>
-                            <Typography className={classes.typographyValue} style={{width:"calc(50% + 20px)"}}>
+                            <Typography className={classes.typographyValue} style={{width:"40%"}}>
                                 <ValidationErrorWrapper
                                     inputClassName="ant-input"
                                     error={
@@ -97,10 +97,10 @@ const {recoveryEmployeesQualificationState,updateEmployeeRegisterDataAC} = useAc
                             </Typography>
                         </div>
                         <div className={classes.column}>
-                            <Typography className={classes.typographyTitle} style={{width:"calc(50% - 20px)"}}>
+                            <Typography className={classes.typographyTitle} style={{width:"60%"}}>
                                 Национальный реестр специалистов в области инженерных изысканий и архитектурно-строительного проектирования:
                             </Typography>
-                            <Typography className={classes.typographyValue} style={{width:"calc(50% + 20px)"}}>
+                            <Typography className={classes.typographyValue} style={{width:"40%"}}>
                                 <ValidationErrorWrapper
                                     inputClassName="ant-input"
                                     error={

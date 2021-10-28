@@ -30,6 +30,17 @@ const useStyles = (value: string) =>
                 backgroundColor: "#fff",
             },
         },
+        yearPiker:{
+            width:52,
+            height:30,
+            marginRight:24,
+            paddingRight:0,
+            paddingLeft:4,
+            "& input": {
+                fontSize: "16px !important",
+                textAlign:"center"
+            }
+        },
 
   })
 );
@@ -47,7 +58,7 @@ export default function InputFilterDatePicker({
   return (
     <DatePicker
       allowClear
-      className={classes.select + " " + className}
+      className={classes.select + " " + className + " " + className.yearPiker}
       value={value === "" ? null : value}
       onChange={handleChange}
       onMouseOver={() => setOpenCalendar(true)}

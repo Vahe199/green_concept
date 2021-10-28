@@ -12,8 +12,7 @@ import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicker";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
 import { Table, Divider, Spin } from "antd";
-import {useTableStyles} from "./useTableStyles";
-
+import { useTableStyles } from "./useTableStyles";
 
 export default function CounterpartiesTable(props: any) {
   const { fetchCounterpartiesList } = useActions();
@@ -35,9 +34,9 @@ export default function CounterpartiesTable(props: any) {
     label: option.name,
   }));
   const crmsOptions = crms?.map((option: any) => ({
-    key: option.author_id,
-    value: option.author_id,
-    label: option.author_fio,
+    key: option.id,
+    value: option.id,
+    label: option.full_name,
   }));
 
   const { getAuthorData } = useActions();
@@ -123,14 +122,15 @@ export default function CounterpartiesTable(props: any) {
   const columns = [
     {
       title: () => (
-          <>
+        <>
           <span className={classes.titleText}>&#x2116;</span>
-    <div>
-      <InputFilterSelect style={{visibility:"hidden"}}
-          className={classes.input}
-      />
-    </div>
-          </>
+          <div>
+            <InputFilterSelect
+              style={{ visibility: "hidden" }}
+              className={classes.input}
+            />
+          </div>
+        </>
       ), //todo Arsen change icon
       dataIndex: "id",
       width: "5%",

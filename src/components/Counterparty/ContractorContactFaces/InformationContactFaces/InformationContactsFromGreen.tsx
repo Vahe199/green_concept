@@ -43,9 +43,15 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
   setChangeContactsFromGreen,
 }) => {
   const classes = useStyles();
-    const { contractor_contacts } = useTypedSelector((state) => state.contactPerson);
-      const {employees } :any= contractor_contacts
-    debugger
+  const employeesState = {
+      employees:[ {info:"",
+          direction:{name:""},
+          employee:{surname:"",firstname:"",middlename:""}
+      }]
+  }
+    const { contractor_contacts }:any = useTypedSelector((state) => state.contactPerson);
+      const {employees } :any= contractor_contacts?.employees ? contractor_contacts : employeesState
+
   return (
     <div className={classes.root}>
       <div
@@ -67,7 +73,7 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
               <div className={classes.label}>
           <span className={classes.spanTitle}>Направление</span>
           <span style={{ width: "60%" }}>
-              {emp.direction.name}
+              {emp.direction?.name}
           </span>
         </div>
         <div className={classes.label}>

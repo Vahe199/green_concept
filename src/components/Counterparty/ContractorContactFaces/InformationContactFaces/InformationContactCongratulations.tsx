@@ -2,6 +2,7 @@ import { Paper } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -37,8 +38,13 @@ type InfoCongratulations = {
 
 export const InformationContactCongratulations: React.FC<InfoCongratulations> =
   ({ setChangeCongratulations }) => {
+    const congratulationsState = {
+        congratulations:[{name:'',other:"",congratulation_type:{name:""}}]
+    }
     const classes = useStyles();
-
+      const { contractor_contacts }:any = useTypedSelector((state) => state.contactPerson);
+      const {congratulations}:any = contractor_contacts?.congratulations.length > 0 ?contractor_contacts : congratulationsState
+      debugger
     return (
       <div className={classes.root}>
         <div
@@ -55,18 +61,20 @@ export const InformationContactCongratulations: React.FC<InfoCongratulations> =
           </span>
         </div>
         <Paper className={classes.paper}>
-          <div className={classes.label}>
-            <span className={classes.spanTitle}>Праздник</span>
-            <span style={{ width: "60%" }}>Новый год</span>
-          </div>
-          <div className={classes.label}>
-            <span className={classes.spanTitle}>Тип поздравления</span>
-            <span style={{ width: "60%" }}>Открытка</span>
-          </div>
-          <div className={classes.label}>
-            <span className={classes.spanTitle}> Другое</span>
-            <span style={{ width: "60%" }}>Другое</span>
-          </div>
+            {congratulations?.map((cong:any) => (<div>
+                <div className={classes.label}>
+                    <span className={classes.spanTitle}>Праздник</span>
+                    <span style={{width: "60%"}}>{cong.name}</span>
+                </div>
+                <div className={classes.label}>
+                    <span className={classes.spanTitle}>Тип поздравления</span>
+                    <span style={{width: "60%"}}>{cong?.congratulation_type?.name}</span>
+                </div>
+                <div className={classes.label}>
+                    <span className={classes.spanTitle}> Другое</span>
+                    <span style={{width: "60%"}}>{cong.other}</span>
+                </div>
+            </div>))}
         </Paper>
       </div>
     );

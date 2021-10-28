@@ -9,8 +9,8 @@ import { InformationContactCongratulations } from "./InformationContactFaces/Inf
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import { useActions } from "../../../redux/type_redux_hook/useAction";
 import BackToAddress from "../../Utils/BackToAddress";
-import TableForContact from "../Core/TableForContact";
 import {withRouter} from "react-router-dom";
+import TableForContact from "../Core/TableForContact";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -21,9 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
  const ContractorContactFacesData = (props:any) => {
 
-  const {fetchContractorContacts} = useActions()
-  const {AuthorData} = useTypedSelector(state => state.author)
-  const {contractor}:any = AuthorData
   const classes = useStyles();
   const [changeBasicInformation, setChangeBasicInformation] =
     useState<boolean>(true);

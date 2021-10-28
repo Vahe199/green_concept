@@ -28,8 +28,8 @@ export const Counterparty = () => {
   // const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
   //   setValue(newValue);
   // };
-  const handleClick = (path: string) => {
-    history.push(`/counterparty/${path}`);
+  const handleClick = (path: string,tab:string) => {
+    history.push(`/counterparty/${path}/${tab}`);
   };
   return (
     <div className={classes.container}>
@@ -45,7 +45,7 @@ export const Counterparty = () => {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <span style={{ display: "flex" }}>
             <Button
-              onClick={() => handleClick("new-contractor")}
+              onClick={() => handleClick("new-contractor", "Общие сведения")}
               variant="contained"
               color="primary"
               startIcon={<AddIcon />}
@@ -56,7 +56,7 @@ export const Counterparty = () => {
           </span>
           <div style={{ width: 525 }}>
             <Button
-              onClick={() => handleClick("new contact")}
+              onClick={() => handleClick("new-contractor", "Контактные лица")}
               variant="contained"
               startIcon={<AddIcon />}
               className={classes.button}
@@ -65,7 +65,7 @@ export const Counterparty = () => {
               Новый контакт
             </Button>
             <Button
-              onClick={() => handleClick("all contact persons")}
+              onClick={() => handleClick("author","Контактные лица")}
               variant="contained"
               className={classes.button}
               style={{ width: 214, marginRight: 32, marginLeft: 30 }}

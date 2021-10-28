@@ -142,8 +142,8 @@ export const contractorApi = {
   insertContractorContactData(data: any) {
     return axios.request({ method: "post", url: "contacts/", data });
   },
-  getContractorContactData() {
-    return axios.request({ method: "get", url: "contacts" });
+  getContractorContactData(config = {}) {
+    return axios.request({ method: "get", url: "contacts", ...config });
   },
   getContractorContactDataWithId(id: number) {
     return axios.request({ method: "get", url: `contacts/${id}` });
@@ -151,40 +151,44 @@ export const contractorApi = {
 };
 
 export const employeesApi = {
-
   creatNewEmployee(data: any) {
     return axios.request({
       method: "post",
       url: `employees`,
       data,
-       headers: { "Content-Type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"},
+      headers: {
+        "Content-Type":
+          "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+      },
     });
   },
 
-  createNewEmployeeQualification(id:number,data:any) {
-    return axios.request({method: "post", url: `employee_skills/${id}`, data});
+  createNewEmployeeQualification(id: number, data: any) {
+    return axios.request({
+      method: "post",
+      url: `employee_skills/${id}`,
+      data,
+    });
   },
 
-
   getEmployeesAssets() {
-    return axios.request({method: "get", url: "employees/get_assets"});
+    return axios.request({ method: "get", url: "employees/get_assets" });
   },
 
   getEmployeesData() {
-    return axios.request({method: "get", url: "employees"});
+    return axios.request({ method: "get", url: "employees" });
   },
 
   getEmployeeDataById(id: number) {
-    return axios.request({method: "get", url: `employees/${id}`});
+    return axios.request({ method: "get", url: `employees/${id}` });
   },
 
-
-  updateEmployeeDataById(id: number,data: any) {
+  updateEmployeeDataById(id: number, data: any) {
     return axios.request({
       method: "put",
       url: `employees/employee_data/${id}`,
       data,
-      headers: {"Content-Type": "multipart/form-data"},
+      headers: { "Content-Type": "multipart/form-data" },
     });
   },
   updateEmployeeGeneralInfoById(data: any, id: number) {
@@ -200,24 +204,25 @@ export const employeesApi = {
       url: `employees/about_info/${id}`,
       data,
     });
-
   },
 
   //employee educations
 
-  updateEmployeeEducationsById(id:number, data:any) {
-    return axios.request({ method: "put", url: `employee_educations/${id}`, data })
-
-  }  ,
-  updateEmployeeSkillsById( id:number,data:any,) {
-
-    return axios.request({ method: "put", url: `employee_skills/${id}`, data })
-
+  updateEmployeeEducationsById(id: number, data: any) {
+    return axios.request({
+      method: "put",
+      url: `employee_educations/${id}`,
+      data,
+    });
   },
-  updateEmployeeRegisterById( id:number,data:any,) {
-
-    return axios.request({ method: "put", url: `employee_registers/${id}`, data })
-
-  }
-}
-
+  updateEmployeeSkillsById(id: number, data: any) {
+    return axios.request({ method: "put", url: `employee_skills/${id}`, data });
+  },
+  updateEmployeeRegisterById(id: number, data: any) {
+    return axios.request({
+      method: "put",
+      url: `employee_registers/${id}`,
+      data,
+    });
+  },
+};

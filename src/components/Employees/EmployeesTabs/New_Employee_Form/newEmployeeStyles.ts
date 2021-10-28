@@ -169,7 +169,8 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
         link:{
             fontSize:14,
             fontWeight:400,
-            textDecoration:"underline"
+            textDecoration:"underline",
+            cursor: "pointer"
 
         },
         input: {

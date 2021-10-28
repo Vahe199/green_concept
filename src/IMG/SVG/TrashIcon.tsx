@@ -2,7 +2,8 @@ import React from "react";
 
 export const TrashIcon = (props: any) => {
   return (
-    <svg
+    <span style={{cursor: "pointer"}}>
+       <svg
       width="24"
       height="30"
       viewBox="0 0 24 24"
@@ -45,5 +46,7 @@ export const TrashIcon = (props: any) => {
         stroke-linejoin="round"
       />
     </svg>
+    </span>
+   
   );
 };

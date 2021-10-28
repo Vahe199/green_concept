@@ -42,19 +42,13 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             },
         },
         blockMain: {
-            width: "864px",
+            width: "42%",
             marginLeft: 32,
             marginRight: "1%",
-            "@media (max-width: 1900px)": {
-                width:'42%',
-            }
         },
         blockSecond: {
-            width: "864px",
+            width: "52%",
             marginRight: 32,
-            "@media (max-width: 1900px)": {
-                width:'52%',
-            }
         },
         block1:{
             width:'864px',

@@ -120,6 +120,14 @@ export const useStylesEmployeeForm = makeStyles((theme: Theme) =>
              fontSize: 16,
             color: '#3B4750'
         },
+        typographyValue2:{
+            display:'flex',
+            flexDirection:'column',
+            width:"40%",
+            textAlign:"left",
+            fontSize: 16,
+            color: '#3B4750'
+        },
         field:{
             height:27,
             border: '1px solid #ADB3B8',

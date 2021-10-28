@@ -99,7 +99,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
             </div>
             <Paper elevation={0} className={classes.paper}>
                 <div className={classes.row}>
-                    <div style={{width:"37%"}}>
+                    <div style={{width:"27%"}}>
                         <input
                             name={"photo"}
                             accept="image/*"
@@ -130,7 +130,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                             </Button>
                         </label>
                     </div>
-                    <div style={{width:"63%"}}>
+                    <div style={{width:"73%"}}>
                         <div className={classes.column}>
                             <Typography className={classes.typographyTitle}>
                                 Фамилия:
@@ -199,7 +199,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                             <Typography className={classes.typographyTitle}>
                                 Дата рождения
                             </Typography>
-                            <Typography className={classes.typographyValue}>
+                            <Typography className={classes.typographyValue2}>
                                 <ValidationErrorWrapper
                                     inputClassName="ant-picker"
                                     error={touched.birthdate && Boolean(errors.birthdate)}
@@ -227,7 +227,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                             <Typography className={classes.typographyTitle}>
                                 Телефон
                             </Typography>
-                            <Typography className={classes.typographyValue}>
+                            <Typography className={classes.typographyValue2}>
                                 <FieldArray name="phones">
                                     {() => {
                                         return (
@@ -286,7 +286,7 @@ const EmployeeInfoItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeData})
                             <Typography className={classes.typographyTitle} >
                                 E-mail
                             </Typography>
-                            <Typography className={classes.typographyValue}>
+                            <Typography className={classes.typographyValue2}>
                                 <FieldArray name="emails">
                                     {({ insert, remove, push }) => (
                                         <div>

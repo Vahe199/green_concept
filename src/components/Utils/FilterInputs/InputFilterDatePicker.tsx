@@ -2,12 +2,19 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { DatePicker } from "antd";
 import { Calendar } from "../../../IMG/SVG/calendar";
 import { useState } from "react";
+import moment from "moment";
 
 const useStyles = (value: string) =>
   makeStyles((theme: Theme) =>
     createStyles({
       
       select: {
+          "& input" : {
+              fontSize: 16,
+          },
+          "& input-placeholder" : {
+              color: 'red',
+          },
         "& .ant-select": {
           height: "50%",
           border: "1px solid #F1F2F3",

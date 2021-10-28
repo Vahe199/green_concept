@@ -5,7 +5,7 @@ export const validationSchemaGeneralInfo = (value: any) =>  yup.object().shape({
 
     crms: yup.array()
         .of(
-            yup.number(),
+            yup.number().nullable(),
                 //.required("Обязательное поле"),
         ),
         //.required("Обязательное поле"),
@@ -42,7 +42,7 @@ export const validationSchemaFormCompanyDetails = (value: any) => yup.object().s
     full_name: yup.string().min(0, "должен состоять минимум из 10 символов")
         .max(300, `должен состоять максимум из 300 символов`)
         .required("Обязательно к заполнению"),
-    short_name: yup.string() .min(10, "должен состоять минимум из 10 символов")
+    short_name: yup.string() .min(10, "должен состоять минимум из 10 символов").nullable()
         .max(value == "ЮЛ" ? 100 : 50, `должен состоять максимум из ${value == "ЮЛ" ? 100 : 50} символов`),
         //.required("Обязательное поле"),
        // parent_id: yup.string() .min(0, "должен состоять минимум из 1 символов")
@@ -62,42 +62,45 @@ export const validationSchemaCompanyContacts = (value: any) => yup.object().shap
     actual_address: yup.string().min(10, "должен состоять минимум из 10 символов")
         .max(300,
             `должен состоять максимум из 300 символов`
-        )
-        .required("Обязательное поле"),
+        ).nullable(true),
+        //.required("Обязательное поле"),
     legal_registration_address: yup.string()
         .min(10, "должен состоять минимум из 10 символов")
         .max(
             300,
             `должен состоять максимум из 300 символов`
-        )
-        .required("Обязательное поле"),
+        ).nullable(true),
+        //.required("Обязательное поле"),
     post_address: yup.string().min(10, "должен состоять минимум из 10 символов")
         .max(
             300,
             `должен состоять максимум из 300 символов`
-        )
-        .required("Обязательное поле"),
+        ).nullable(true),
+        //.required("Обязательное поле"),
 
     sites: yup.array()
         .of(
             yup.object().shape({
-                url: yup.string().min(3, 'Слишком короткый').required("Обязательное поле"),
+                url: yup.string().min(3, 'Слишком короткый'),
+                    //.required("Обязательное поле"),
             })
-        )
-        .required("Обязательное поле"),
+        ),
+       // .required("Обязательное поле"),
     phones: yup.array()
         .of(
             yup.object().shape({
-                phone: yup.string().min(10, 'Слишком короткый').required("Обязательное поле"),
+                phone: yup.string().min(10, 'Слишком короткый'),
+                    //.required("Обязательное поле"),
             })
         )
         .required("Обязательное поле"),
     emails: yup.array()
         .of(
             yup.object().shape({
-                email: yup.string().email('Неверный адрес электронной почты').required("Обязательное поле"),
+                email: yup.string().email('Неверный адрес электронной почты'),
+                    //.required("Обязательное поле"),
             })
         )
-        .required("Обязательное поле")
+        //.required("Обязательное поле")
 });
 

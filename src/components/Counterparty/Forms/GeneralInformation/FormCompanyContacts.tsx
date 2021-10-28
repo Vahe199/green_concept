@@ -248,7 +248,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
               </div>
               <div
                 className={classes.label}
-                style={{ alignItems: "flex-start" }}
+                style={{ alignItems: "center" }}
               >
                 {org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}
                 <span style={{ width: "60%", flexDirection: "column" }}>
@@ -328,7 +328,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
 
               <div
                 className={classes.label}
-                style={{ alignItems: "flex-start" }}
+                style={{ alignItems: "center" }}
               >
                 <span>Телефон</span>
                 <span style={{ width: "60%", flexDirection: "column" }}>
@@ -421,7 +421,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
 
               <div
                 className={classes.label}
-                style={{ alignItems: "flex-start" }}
+                style={{ alignItems: "center" }}
               >
                 <span>E-mail</span>
                 <span style={{ width: "60%", flexDirection: "column" }}>

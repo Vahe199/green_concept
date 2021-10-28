@@ -98,7 +98,7 @@ const CreateCounterparty = (props: any) => {
   const { AuthorData } = useTypedSelector((state) => state.author);
   let { contractor }: any = AuthorData ? AuthorData :AuthorState;
   const { id }: any = contractor;
-
+  //console.log(contractor, id, 'id')
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [edit, setEdit] = useState(true);
@@ -108,6 +108,9 @@ const CreateCounterparty = (props: any) => {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
   };
+
+
+
 
   return (
     <div className={classes.container}>

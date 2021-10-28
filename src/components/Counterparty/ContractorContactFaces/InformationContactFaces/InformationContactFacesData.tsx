@@ -163,12 +163,12 @@ const {firstname,surname, middlename, sex, birthdate,branches,emails,phones,deli
         <div className={classes.label}>
           <span className={classes.spanTitle}>Роль</span>
           <span style={{ width: "60%" }}>
-            {contractors.length > 0 ?contractors[0]?.contact_role?.name: ""}
+            {contractors && contractors.length > 0 ? contractors[0]?.contact_role?.name: ""}
           </span>
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Должность</span>
-          <span style={{ width: "60%" }}>{contractors[0]?.position}</span>
+          <span style={{ width: "60%" }}>{contractors && contractors[0]?.position}</span>
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Тип контрагента</span>

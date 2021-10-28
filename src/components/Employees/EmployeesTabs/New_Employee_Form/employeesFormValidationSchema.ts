@@ -29,25 +29,11 @@ export const validationSchemaEmployeesGeneralInfForm = yup.object({
     phones: yup.array()
         .of(
             yup.number().nullable()
-            .required("Обязательное поле"),
+            .required("Обязательно к заполнению"),
         ),
     // emails: [""],
-     //phones: yup.required("Обязательно к заполнению"),
-    // phones: yup.array()
-    //     .of(
-    //         yup.object().shape({
-    //             phone: yup.string().min(10, 'Слишком короткый')
-    //             .required("Обязательное поле"),
-    //         })
-    //     ).nullable()
-    //     .required("Обязательное поле"),
+
     //directions:[null],
-    // phones: yup.array()
-    //     .of(
-    //         yup.object().shape({
-    //             phone: yup.string().required('Required'),
-    //         })
-    //     )
-    //     .required('Required'),
+
     about:yup.string(),
 });

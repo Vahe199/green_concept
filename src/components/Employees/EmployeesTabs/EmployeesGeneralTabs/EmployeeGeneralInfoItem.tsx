@@ -4,6 +4,7 @@ import {Link, Paper, Typography} from "@material-ui/core";
 import {useStylesEmployee} from "./EmployeesStyles";
 import AddIcon from "@material-ui/icons/Add";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import {PencilSimpleIcon} from "../../../../IMG/SVG/PencilSimpleIcon";
 
 type GeneralInfoProps = {
     setEmployeeGeneralInfo:(val:boolean)=>void
@@ -22,10 +23,9 @@ const EmployeeGeneralInfoItem:React.FC<GeneralInfoProps> = ({setEmployeeGeneralI
                 <Typography  className={classes.typographyTitle}>
                     Общие сведения
                 </Typography>
-                <Link onClick={() => setEmployeeGeneralInfo(false)}
-                  className={classes.link} >
-                    <AddIcon /> &nbsp;   Принять на работу
-                </Link>
+                <div onClick={() => setEmployeeGeneralInfo(false)}>
+                    <PencilSimpleIcon color="#3B4750" />
+                </div>
             </div>
             <Paper elevation={0} className={classes.paper}>
                 <div className={classes.row}>

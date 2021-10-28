@@ -133,10 +133,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                             if (fileReader.readyState === 2) {
                                                                 setFieldValue("photo", e.target.files[0]);
                                                                 setAvatarPreview(fileReader.result);
-                                                                console.log(
-                                                                    e.target.files[0],
-                                                                    "e.target.files[0]"
-                                                                );
+
                                                             }
                                                         };
                                                         if (e.target.files[0]) {

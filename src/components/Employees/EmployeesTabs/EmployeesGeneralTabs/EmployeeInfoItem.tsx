@@ -60,7 +60,7 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
                         </div>
                         <div className={classes.column}>
                             <Typography className={classes.typographyTitle}>
-                                Дата рождения
+                                Дата рождения1
                             </Typography>
                             <Typography className={classes.typographyValue}>
                                 {birthdate.replaceAll("-",".")}

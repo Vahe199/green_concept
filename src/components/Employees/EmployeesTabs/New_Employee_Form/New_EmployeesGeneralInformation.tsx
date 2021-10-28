@@ -293,6 +293,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                                     }
                                                                                 >
                                                                                     <MaskedInput
+                                                                                  
                                                                                         name={fieldName}
                                                                                         value={phone}
                                                                                         onChange={(e) => {

@@ -230,6 +230,8 @@ const NewEmployeesQualification:React.FC = () => {
                                                                             name={field_institution_name}
                                                                             value={education.educational_institution_name}
                                                                             onChange={handleChange}
+                                                                            className={classes.input2}
+                                                                            autoComplete={'off'}
                                                                             placeholder="Наименование учебного заведения" />
                                                                     </ValidationErrorWrapper>
                                                                 </Typography>
@@ -256,6 +258,8 @@ const NewEmployeesQualification:React.FC = () => {
                                                                             name={field_education_document}
                                                                             value={education.education_document}
                                                                             onChange={handleChange}
+                                                                            className={classes.input2}
+                                                                            autoComplete={'off'}
                                                                             placeholder="Документ об образовании" />
                                                                     </ValidationErrorWrapper>
                                                                 </Typography>
@@ -282,6 +286,8 @@ const NewEmployeesQualification:React.FC = () => {
                                                                             name={field_speciality}
                                                                             value={education.speciality}
                                                                             onChange={handleChange}
+                                                                            className={classes.input2}
+                                                                            autoComplete={'off'}
                                                                             placeholder="Специальность" />
                                                                     </ValidationErrorWrapper>
                                                                 </Typography>
@@ -388,6 +394,8 @@ const NewEmployeesQualification:React.FC = () => {
                                                name={"construction_branch_register"}
                                                value={values.construction_branch_register}
                                                onChange={handleChange}
+                                               className={classes.input2}
+                                               autoComplete={'off'}
                                                placeholder="Введите номер реестра" />
                                        </ValidationErrorWrapper>
                                    </Typography>
@@ -412,6 +420,8 @@ const NewEmployeesQualification:React.FC = () => {
                                                name={"engineering_surveys_construction_design_register"}
                                                value={values.engineering_surveys_construction_design_register}
                                                onChange={handleChange}
+                                               className={classes.input2}
+                                               autoComplete={'off'}
                                                placeholder="Введите номер реестра" />
                                        </ValidationErrorWrapper>
                                    </Typography>
@@ -479,6 +489,8 @@ const NewEmployeesQualification:React.FC = () => {
                                                                              name={field_institution_name}
                                                                              value={skills.educational_institution_name}
                                                                              onChange={handleChange}
+                                                                             className={classes.input2}
+                                                                             autoComplete={'off'}
                                                                              placeholder="Наименование учебного заведения" />
                                                                      </ValidationErrorWrapper>
                                                                  </Typography>
@@ -505,6 +517,8 @@ const NewEmployeesQualification:React.FC = () => {
                                                                              name={field_document}
                                                                              value={skills.education_document}
                                                                              onChange={handleChange}
+                                                                             className={classes.input2}
+                                                                             autoComplete={'off'}
                                                                              placeholder="Впишите название документа" />
                                                                      </ValidationErrorWrapper>
                                                                  </Typography>

@@ -176,6 +176,8 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                 name="surname"
                                                                 placeholder={"Фамилия"}
                                                                 value={values.surname}
+                                                                className={classes.input2}
+                                                                autoComplete={'off'}
                                                                 onChange={handleChange}
                                                             />
                                                         </ValidationErrorWrapper>
@@ -196,6 +198,8 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                             <Input
                                                                 name="firstname"
                                                                 placeholder={"Имя"}
+                                                                className={classes.input2}
+                                                                autoComplete={'off'}
                                                                 value={values.firstname}
                                                                 onChange={handleChange}
                                                             />
@@ -219,6 +223,8 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                             <Input
                                                                 name="middlename"
                                                                 placeholder={"Отчество"}
+                                                                className={classes.input2}
+                                                                autoComplete={'off'}
                                                                 value={values.middlename}
                                                                 onChange={handleChange}
                                                             />
@@ -359,6 +365,8 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                                             marginBottom: 16,
                                                                                         }}
                                                                                         name={fieldName}
+                                                                                        className={classes.input2}
+                                                                                        autoComplete={'off'}
                                                                                         placeholder={`email${
                                                                                             index + 1
                                                                                         }@email.com`}

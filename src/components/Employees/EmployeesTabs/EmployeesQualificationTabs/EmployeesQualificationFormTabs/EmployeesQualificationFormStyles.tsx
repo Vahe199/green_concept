@@ -31,6 +31,13 @@ export const useStylesEmployeeQualificationForm = makeStyles((theme: Theme) =>
             justifyContent:"flex-start",
             marginBottom:16,
         },
+        input2: {
+            fontSize: 16,
+            "&::placeholder": {
+                fontSize: 16,
+                fontWeight: 400,
+            },
+        },
         avatar:{
             width:144,
             height:144,

@@ -83,6 +83,13 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             justifyContent:"flex-start",
             marginBottom:16
         },
+        input2: {
+            fontSize: 16,
+            "&::placeholder": {
+                fontSize: 16,
+                fontWeight: 400,
+            },
+        },
         fileInput:{
             backgroundColor:"#D6D9DC",
             width:144,
@@ -133,6 +140,9 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             textAlign:"left",
             fontSize: 16,
             color: '#3B4750'
+        },
+        inputData: {
+            width: "60% !important",
         },
         field:{
             height:27,
@@ -202,9 +212,6 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
                 fontSize: "16px !important",
                 textAlign:"center"
             }
-        },
-        inputData: {
-            width: "60% !important",
         },
         addItem: {
             fontSize:14,

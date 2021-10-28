@@ -97,14 +97,14 @@ const AuthorState ={
 const CreateCounterparty = (props: any) => {
 
   let history = useHistory();
-  let params = useParams<{item: string}>();
+  let params = useParams<{item: string,tab:string}>();
   console.log(params)
   const { AuthorData } = useTypedSelector((state) => state.author);
   let { contractor }: any = AuthorData ? AuthorData :AuthorState;
   const { id }: any = contractor;
 
   const classes = useStyles();
-  const [selectedTab, setSelectedTab] = React.useState<string>("Общие сведения");
+  const [selectedTab, setSelectedTab] = React.useState<string>(params.tab);
   const [edit, setEdit] = useState(true);
   const [contractorBankDetail, setContractorBankDetail] =
     useState<ContractorBankDetailType>(initialBankDetails);

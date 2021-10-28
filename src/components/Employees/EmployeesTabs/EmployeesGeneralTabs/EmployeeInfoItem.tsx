@@ -20,7 +20,7 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
         <div className={classes.root}>
             <div className={classes.title} >
                 <Typography  className={classes.typographyTitle}>
-                    sssss сотрудника
+                    Данные сотрудника
                 </Typography>
                 <div onClick={() => setEmployeeData(false)}>
                     <PencilSimpleIcon color="#3B4750" />

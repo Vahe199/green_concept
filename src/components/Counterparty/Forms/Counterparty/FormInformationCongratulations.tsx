@@ -1,14 +1,21 @@
 import React from "react";
 import {FieldArray, Form, Formik, getIn} from "formik";
-import {Button, Divider, Paper, TextField} from "@material-ui/core";
+import {Button, Divider, Paper} from "@material-ui/core";
 import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 import InputFilterSelectedType from "../../../Utils/FilterInputs/InputFilterSelect";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 import {useStylesInformationCongratulations} from "./BasicInformationFormStyles";
 import {validationSchemaInformationCongratulations} from "./BasicInformationFormValidationSchema";
 import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
-import {counterpartiesApi} from "../../../../api/api";
+import {contractorApi} from "../../../../api/api";
 import {Input} from "antd";
+import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
+import {Dispatch} from "redux";
+import {
+    ContractorContactDataAction,
+    ContractorContactDataActionType
+} from "../../../../redux/types/contractor_contact_data";
+import {useDispatch} from "react-redux";
 
 
 type InfoCongratulations = {
@@ -19,19 +26,16 @@ type InfoCongratulations = {
 export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
   setChangeCongratulations,}) => {
   const classes = useStylesInformationCongratulations();
+    const dispatch: Dispatch<ContractorContactDataAction> = useDispatch()
+    const { contractor_contacts,loading: assetsLoading}:any = useTypedSelector((state) => state.contactPerson);
+    const {congratulations,id}= contractor_contacts
 
-    const { AuthorData } = useTypedSelector((state) => state.author);
-    const { id }: any = AuthorData;
-  const { assets, load: assetsLoading } = useTypedSelector((state) => state.assets);
-  const { congratulation_types, }: any = assets;
+const {assetsOptionsCongratulation} = InputAssetsOptions()
 
-  const assetsOptionsCongratulation = congratulation_types?.map((option: any) => ({
-    key: option.id,
-    value: option.id ? option.id : 0,
-    label: option.name,
-  }));
   const initialValues = {
-    contact_congratulations:[{name: '', congratulation_type_id: '', other: ''}]
+    contact_congratulations:[{name: congratulations.length > 0 ? congratulations[0].name:'',
+        congratulation_type_id: congratulations.length > 0 ? congratulations[0].congratulation_type.id:'',
+        other: congratulations.length > 0 ? congratulations[0].other:''}]
   }
   return (
       <div className={classes.root}>
@@ -40,13 +44,16 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
             validationSchema={validationSchemaInformationCongratulations}
             onSubmit={async (values,action) => {
               console.log(values,"values")
-                counterpartiesApi.changeContactCongratulationsData(values,id).then(res =>{
-                    console.log(res)
+                contractorApi.changeContactCongratulationsData(id,values).then(res =>{
+                    const {data} = res
+                    dispatch({type:ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
+                        payload:data?.contact})
+
                     setChangeCongratulations(true)
 
                 })
                     .catch((e)=>{
-                        console.log(e.response)
+
 
                     })
             }}

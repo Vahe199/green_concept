@@ -102,13 +102,7 @@ export const counterpartiesApi = {
       data: formData,
     });
   },
-  changeContactCongratulationsData(formData: any, id: any) {
-    return axios.request({
-      method: "put",
-      url: `contacts/congratulations_info/${id}`,
-      data: formData,
-    });
-  },
+
 
   getAssetsData() {
     return axios.request({ method: "get", url: "contractors/get_assets" });
@@ -147,6 +141,13 @@ export const contractorApi = {
     return axios.request({
       method: "put",
       url: `contacts/green_employee_info/${id}`,
+      data: formData,
+    });
+  },
+  changeContactCongratulationsData(id: number, formData: any, ) {
+    return axios.request({
+      method: "put",
+      url: `contacts/congratulations_info/${id}`,
       data: formData,
     });
   },

@@ -241,7 +241,14 @@ export default function CounterpartiesTable(props: any) {
   const columns = [
     {
       title: () => (
-        <div style={{ minHeight: 78, alignItems: "flex-start" }}>&#x2116;</div>
+          <>
+          <span className={classes.titleText}>&#x2116;</span>
+    <div>
+      <InputFilterSelect style={{visibility:"hidden"}}
+          className={classes.input}
+      />
+    </div>
+          </>
       ), //todo Arsen change icon
       dataIndex: "id",
       width: "5%",

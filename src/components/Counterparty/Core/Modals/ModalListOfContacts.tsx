@@ -100,6 +100,9 @@ const useStyles = (loading: boolean) =>
       bottom: 0,
       top: "70%",
     },
+      titleText: {
+          fontsize: "16px",
+      },
     searchWraper: {
       position: "relative",
 
@@ -196,11 +199,14 @@ export default function ModalListOfContacts(props: any) {
   const columns = [
     {
       title: () => (
-        <div>
-          <div style={{ minHeight: 75, alignItems: "flex-start" }}>
-            &#x2116;
-          </div>
-        </div>
+          <>
+              <span className={classes.titleText}>&#x2116;</span>
+              <div>
+                  <InputFilterSelect style={{visibility:"hidden"}}
+                                     className={classes.input}
+                  />
+              </div>
+          </>
       ),
       dataIndex: "id",
       width: "5%",

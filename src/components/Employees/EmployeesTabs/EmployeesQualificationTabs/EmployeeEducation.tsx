@@ -45,7 +45,8 @@ let employeeEduc = {educations:[{
                         </div>
                         {educations?.length >0 &&
                         educations?.map((educ:any) =><div>
-                            <Divider variant="middle" style={{marginBottom: 24, marginTop: 24}}/>
+                            {/*<Divider variant="middle" style={{marginBottom: 24, marginTop: 24}}/>*/}
+                            <div className={classes.divider}></div>
                             <div className={classes.column}>
                                 <Typography className={classes.typographyTitle}>
                                     Образование:

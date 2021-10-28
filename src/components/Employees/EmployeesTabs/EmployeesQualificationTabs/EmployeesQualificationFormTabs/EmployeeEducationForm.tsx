@@ -165,7 +165,8 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
                                     return (
                 <div className={classes.row}>
                     <div style={{width:"100%"}}>
-                            <Divider variant="middle" style={{marginTop:0,marginBottom: 16}}/>
+                            {/*<Divider variant="middle" style={{marginTop:0,marginBottom: 16}}/>*/}
+                        <div className={classes.divider}></div>
                             <div style={{display:"flex", flexDirection:"row",}}>
                                 <div style={{width:"100%"}}>
                             <div className={classes.column}>

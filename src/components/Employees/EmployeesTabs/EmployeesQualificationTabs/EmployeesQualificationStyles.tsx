@@ -29,6 +29,12 @@ export const useStylesEmployeeQualification = makeStyles((theme: Theme) =>
             justifyContent:"flex-start",
             marginBottom:16
         },
+        divider: {
+            marginTop:24,
+            marginBottom: 24,
+            height: 0.3,
+            backgroundColor: '#ADB3B8'
+        },
         avatar:{
             width:144,
             height:144,

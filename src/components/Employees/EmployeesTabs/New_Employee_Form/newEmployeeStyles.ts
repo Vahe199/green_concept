@@ -95,6 +95,12 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             alignItems:'start',
             justifyContent:"space-between"
         },
+        divider: {
+            marginTop:0,
+            marginBottom: 16,
+            height: 0.3,
+            backgroundColor: '#ADB3B8'
+        },
         column:{
             display:'flex',
             flexWrap:"wrap",
@@ -238,6 +244,7 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             fontSize:14,
             fontWeight:400,
             cursor: "pointer",
+            textDecoration: "underline",
             
         },
         typographyTitleEnh:{

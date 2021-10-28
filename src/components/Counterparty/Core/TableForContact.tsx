@@ -13,14 +13,17 @@ import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicke
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
 import { Table, Divider, Spin } from "antd";
 import {useTableStyles} from "./useTableStyles";
+import {InputAssetsOptions} from "../../Utils/utils_options/InputAssetsOptions";
+import {fetchContractorContacts} from "../../../redux/store/action_creator/contractors_action_creatot/ContractorContactAC";
 
 
-export default function CounterpartiesTable(props: any) {
-  const { fetchCounterpartiesList } = useActions();
 
+export default function TableForContact(props: any) {
+  const { fetchContactsList} = useActions();
+const {assetsOptionsStatus} = InputAssetsOptions()
   const history = useHistory();
-  const { contractors, loading } = useTypedSelector(
-    (state) => state.counterparties
+  const { ContactList, loading } = useTypedSelector(
+    (state) => state.contactPerson
   );
   const classes = useTableStyles(loading)();
 
@@ -40,14 +43,21 @@ export default function CounterpartiesTable(props: any) {
     label: option.author_fio,
   }));
 
-  const { getAuthorData } = useActions();
+  const { fetchContractorContacts } = useActions();
 
   const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
     []
   );
 
   const [params, setParams] = useState<any>({
-    include: "type,crms,branches,service,sites,emails,phones,author,group",
+      "filter[fio]": "",
+      "filter[branches.id]":null,
+      "filter[service_type_id]": null,
+      "filter[contractors.contractor_id]": null,
+      "filter[contractors.contractor.group.full_name]": "",
+      "filter[status_id]": null,
+      "filter[created_by]": null,
+      sort:""
   });
   const [services, setServices] = useState("");
   const [fullName, setFullName] = useState("");
@@ -60,20 +70,18 @@ export default function CounterpartiesTable(props: any) {
   // full name options
   const getFilteredFullNameOptions = () => {
     const filteredFullName =
-      fullName.length > 3
-        ? contractors.filter(({ full_name = "" }: { full_name: string }) =>
-            full_name.includes(fullName)
-          )
-        : [];
+      ContactList.filter(({ fio = "" }: { fio: string }) =>
+            fio.includes(fullName)
+          );
 
     return (
       filteredFullName.length
-        ? [{ id: -1, full_name: "Все" }, ...filteredFullName]
-        : [{ id: -1, full_name: "Все" }]
+        ? [{ id: -1, fio: "Все" }, ...filteredFullName]
+        : [{ id: -1, fio: "Все" }]
     ).map((option: any) => ({
       key: option.id,
-      value: option.full_name !== "Все" ? option.id : "",
-      label: option.full_name,
+      value: option.fio !== "Все" ? option.id : "",
+      label: option.fio,
     }));
   };
 
@@ -116,8 +124,8 @@ export default function CounterpartiesTable(props: any) {
   };
 
   const getUserData = (data: any) => {
-    history.push(`/counterparty/author/Общие сведения/${data.id}`);
-    getAuthorData(data.id);
+     history.push(`/counterparty/author/contacts/${data.id}`);
+      fetchContractorContacts(data.id);
   };
 
   const columns = [
@@ -139,28 +147,51 @@ export default function CounterpartiesTable(props: any) {
     {
       title: () => (
         <>
-          <span className={classes.titleText}>Тип</span>
-          <div>
-            <InputFilterSelect
-              className={classes.input}
-              handleChange={(id: any) => {
-                setServices(id);
-                setParams({ ...params, "filter[contractor_type_id]": id });
-              }}
-              value={services}
-              options={[{ key: "", value: "", label: "Все" }, ...assetsOptions]}
-              placeholder="Все"
-              loading={assetsLoading}
-            />
-          </div>
+          <span className={classes.titleText}>ФИО</span>
+          {/*<div>*/}
+          {/*  <InputFilterSelect*/}
+          {/*    className={classes.input}*/}
+          {/*    handleChange={(id: any) => {*/}
+          {/*      setServices(id);*/}
+          {/*      setParams({ ...params, "filter[fio]": id });*/}
+          {/*    }}*/}
+          {/*    value={services}*/}
+          {/*    options={[{ key: "", value: "", label: "Все" }, ...assetsOptions]}*/}
+          {/*    placeholder="Все"*/}
+          {/*    loading={assetsLoading}*/}
+          {/*  />*/}
+          {/*</div>*/}
+            <div className={classes.searchWraper}>
+                <MagnifyingGlass className="searchIcon" />
+                <InputFilterSelect
+                    options={getFilteredFullNameOptions()}
+                    filterOption={false}
+                    onSearch={setFullName}
+                    onSelect={(id: number, { value, label }: any) => {
+                        setParams({
+                            ...params,
+                            "filter[fio]": label === "Все" ? "" : label,
+                        });
+
+                        if (value === "") {
+                            setFullName("");
+                        }
+                    }}
+                    notFoundContent={null}
+                    value={params["filter[fio]"]}
+                    className={"searchMode " + classes.input}
+                    prefix={<MagnifyingGlass className={classes.icon} />}
+                    showSearch
+                />
+            </div>
         </>
       ),
-      dataIndex: "typeName",
+      dataIndex: "fio",
     },
     {
       title: () => (
         <>
-          <span className={classes.titleText}>Наименование</span>
+          <span className={classes.titleText}>Отрасль/Тип услуг</span>
           <div className={classes.searchWraper}>
             <MagnifyingGlass className="searchIcon" />
             <InputFilterSelect
@@ -192,7 +223,7 @@ export default function CounterpartiesTable(props: any) {
     {
       title: () => (
         <>
-          <span className={classes.titleText}>Отрасль</span>
+          <span className={classes.titleText}>Контрагент</span>
           <div className={classes.searchWraper}>
             <MagnifyingGlass className="searchIcon" />
             <InputFilterSelect
@@ -260,40 +291,44 @@ export default function CounterpartiesTable(props: any) {
     {
       title: () => (
         <>
-          <span className={classes.titleText}>Ответственный</span>
-          <div className={classes.searchWraper}>
-            <MagnifyingGlass className="searchIcon" />
+          <span className={classes.titleText}>Статус</span>
+          {/*<div className={classes.searchWraper}>*/}
+          {/*  <MagnifyingGlass className="searchIcon" />*/}
+          {/*  <InputFilterSelect*/}
+          {/*    options={[].map((option: any) => ({*/}
+          {/*      key: option.id,*/}
+          {/*      value: option.id,*/}
+          {/*      label: option.name,*/}
+          {/*    }))}*/}
+          {/*    filterOption={false}*/}
+          {/*    onSelect={(id: number) => {*/}
+          {/*      setParams({ ...params, "filter[status_id]": id });*/}
+          {/*    }}*/}
+          {/*    notFoundContent={null}*/}
+          {/*    value={""}*/}
+          {/*    className={"searchMode " + classes.input}*/}
+          {/*    prefix={<MagnifyingGlass className={classes.icon} />}*/}
+          {/*    loading={assetsLoading}*/}
+          {/*    showSearch*/}
+          {/*  />*/}
+          {/*</div>*/}
             <InputFilterSelect
-              options={[].map((option: any) => ({
-                key: option.id,
-                value: option.id,
-                label: option.name,
-              }))}
-              filterOption={false}
-              onSelect={(id: number) => {
-                setParams({ ...params, "filter[created_by]": id });
-              }}
-              notFoundContent={null}
-              value={""}
-              className={"searchMode " + classes.input}
-              prefix={<MagnifyingGlass className={classes.icon} />}
-              loading={assetsLoading}
-              showSearch
+                className={classes.input}
+                placeholder="Все"
+                // value={crm}
+                handleChange={(val: any) => {
+                    // setCrm(val);
+                    setParams({ ...params, "filter[status_id]": val }); // Todo Arsen, check backend field
+                }}
+                options={[{ key: "", value: "", label: "Все" }, ...assetsOptionsStatus]}
+                loading={assetsLoading}
             />
-          </div>
         </>
       ),
-      dataIndex: "crms",
-      render: (crms: any[]) => {
-        return crms?.map((crm: any, index: number) => {
-          return (
-            <span key={index}>
-              {crm.firstname + " " + crm.surname && crm.surname}
-              {index < crms.length - 1 ? ", " : " "}
-            </span>
-          );
-        });
-      },
+      dataIndex: "status",
+        render: (status: any) => (
+            <span style={{ color: "#3B4750" }}>{status.name}</span>
+        ),
     },
     {
       title: () => (
@@ -317,10 +352,8 @@ export default function CounterpartiesTable(props: any) {
       dataIndex: "author",
       render: (author: any = {}) => {
         const authorFullName = author
-          ? `${author.surname} ${author.firstname?.substring(0, 1)}. `
-          : "" + author.middlename
-          ? `${author.middlename?.substring(0, 1)}.`
-          : "";
+          ? `${author?.surname} ${author.firstname?.substring(0, 1)}. `
+          : "" +  `${author?.middlename ? author.middlename?.substring(0, 1) : ""}.`;
 
         return authorFullName;
       },
@@ -330,7 +363,7 @@ export default function CounterpartiesTable(props: any) {
         <>
           <div style={{ display: "flex" }}>
             <span className={classes.titleText}>Создано</span>
-            <span style={{ position: "absolute", right: 15, top: 8 }}>
+            <span style={{ position: "absolute", right: 8, top: 8 }}>
               <SortingButtons color="#5B6770" />
             </span>
           </div>
@@ -353,7 +386,7 @@ export default function CounterpartiesTable(props: any) {
         <>
           <div style={{ display: "flex" }}>
             <span className={classes.titleText}>Обновлено</span>
-            <span style={{ position: "absolute", right: 15, top: 8 }}>
+            <span style={{ position: "absolute", right: 8, top: 8 }}>
               <SortingButtons color="#5B6770" />
             </span>
           </div>
@@ -373,17 +406,17 @@ export default function CounterpartiesTable(props: any) {
     },
   ];
 
-  const data = contractors.map(
+  const data = ContactList.map(
     ({
       id,
-      type = {},
-      full_name,
-      branches,
-      group,
-      crms,
-      author,
-      created_at,
-      updated_at,
+         fio,
+         service_type,
+         contractors,
+         branches,
+         status,
+         author,
+         created_at,
+         updated_at
     }) => {
       // console.log({
       //   key: id,
@@ -401,11 +434,11 @@ export default function CounterpartiesTable(props: any) {
       return {
         key: id,
         id,
-        typeName: type.name,
-        full_name,
+          fio,
         branches,
-        group,
-        crms,
+          service_type,
+          contractors,
+          status,
         author,
         created_at,
         updated_at,
@@ -427,13 +460,13 @@ export default function CounterpartiesTable(props: any) {
       }
     });
 
-    fetchCounterpartiesList({ params: newParams });
+      fetchContactsList({ params: newParams });
   }, [params]);
 
   useEffect(() => {
     !companyGroupFilterInital.length &&
-      setCompanyGroupFilterInital(contractors);
-  }, [contractors]);
+      setCompanyGroupFilterInital(ContactList);
+  }, [ContactList]);
 
   return (
     <Paper className={classes.root}>
@@ -447,7 +480,7 @@ export default function CounterpartiesTable(props: any) {
         onRow={(record) => ({
           onClick: () => getUserData(record),
         })}
-        dataSource={data}
+         dataSource={data}
         pagination={false}
         {...tableProps}
       />

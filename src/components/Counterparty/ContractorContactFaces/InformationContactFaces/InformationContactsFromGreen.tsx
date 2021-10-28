@@ -3,6 +3,7 @@ import React from "react";
 import { Paper } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,6 +43,9 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
   setChangeContactsFromGreen,
 }) => {
   const classes = useStyles();
+    const { contractor_contacts } = useTypedSelector((state) => state.contactPerson);
+      const {employees } :any= contractor_contacts
+    debugger
   return (
     <div className={classes.root}>
       <div
@@ -58,24 +62,28 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
         </span>
       </div>
       <Paper className={classes.paper}>
-        <div className={classes.label}>
+          {employees.map((emp:any)=>(
+              <div>
+              <div className={classes.label}>
           <span className={classes.spanTitle}>Направление</span>
-          <span style={{ width: "60%" }}>Управление строительством</span>
+          <span style={{ width: "60%" }}>
+              {emp.direction.name}
+          </span>
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Контактное лицо</span>
-          <samp style={{ width: "60%" }}>Петров Пётр Петрович</samp>
+          <samp style={{ width: "60%" }}>
+              {emp.employee.surname + " " + emp.employee.firstname + " " + emp.employee.middlename}</samp>
         </div>
-        <div className={classes.label} style={{ alignItems: "self-start" }}>
-          <span className={classes.spanTitle}>Дополнительная информация</span>
 
-          <span style={{ width: "60%", maxHeight: 164, overflowY: "auto" }}>
-            Дополнительная информация .Сайт рыбатекст поможет дизайнеру,
-            верстальщику, вебмастеру сгенерировать несколько абзацев более менее
-            осмысленного текста рыбы на русском языке, а начинающему оратору
-            отточить навык публичных выступлений в домашних условиях.
+              <div className={classes.label} style={{alignItems: "self-start"}}>
+                  <span className={classes.spanTitle}>Дополнительная информация</span>
+
+                  <span style={{width: "60%", maxHeight: 164, overflowY: "auto"}}>
+        {emp.info}
           </span>
-        </div>
+              </div>
+              </div>))}
       </Paper>
     </div>
   );

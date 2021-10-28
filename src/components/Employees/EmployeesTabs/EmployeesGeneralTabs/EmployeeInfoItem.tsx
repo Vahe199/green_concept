@@ -28,12 +28,12 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
             </div>
             <Paper elevation={0} className={classes.paper}>
                 <div className={classes.row}>
-                    <div style={{width:"37%"}}>
+                    <div style={{width:"27%"}}>
                         <Avatar alt="Remy Sharp"
                                 src={photo ?`https://green-kis.tecman.ru${photo}`:""}
                                 className={classes.avatar}/>
                     </div>
-                    <div style={{width:"63%"}}>
+                    <div style={{width:"73%"}}>
                         <div className={classes.column}>
                             <Typography className={classes.typographyTitle}>
                                 Фамилия:
@@ -60,7 +60,7 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
                         </div>
                         <div className={classes.column}>
                             <Typography className={classes.typographyTitle}>
-                                Дата рождения1
+                                Дата рождения
                             </Typography>
                             <Typography className={classes.typographyValue}>
                                 {birthdate.replaceAll("-",".")}

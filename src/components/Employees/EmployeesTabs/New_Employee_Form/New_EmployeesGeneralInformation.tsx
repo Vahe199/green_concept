@@ -306,6 +306,9 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                                             );
                                                                                         }}
                                                                                         placeholder={"7 999 999 99 99"}
+                                                                                        style={{
+                                                                                            fontSize: 20
+                                                                                        }}
                                                                                         mask="1 111 111 11 11"
                                                                                         prefix={<>+</>}
                                                                                     />

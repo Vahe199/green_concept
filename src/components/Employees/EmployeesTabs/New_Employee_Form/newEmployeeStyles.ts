@@ -41,6 +41,21 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
                 marginLeft: 0,
             },
         },
+        blockMain: {
+            width: "864px",
+            marginLeft: 32,
+            marginRight: "1%",
+            "@media (max-width: 1900px)": {
+                width:'42%',
+            }
+        },
+        blockSecond: {
+            width: "864px",
+            marginRight: 32,
+            "@media (max-width: 1900px)": {
+                width:'52%',
+            }
+        },
         block1:{
             width:'864px',
             marginLeft:32,
@@ -163,6 +178,14 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             display:'flex',
             flexDirection:'column',
             width:"60%",
+            textAlign:"left",
+            fontSize: 16,
+            color: '#3B4750'
+        },
+        typographyValue2:{
+            display:'flex',
+            flexDirection:'column',
+            width:"40%",
             textAlign:"left",
             fontSize: 16,
             color: '#3B4750'

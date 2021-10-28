@@ -170,7 +170,7 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             fontSize:14,
             fontWeight:400,
             textDecoration:"underline",
-            cursor: "pointer"
+            cursor:"pointer"
 
         },
         input: {
@@ -219,7 +219,6 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             fontSize:14,
             fontWeight:400,
             cursor: "pointer",
-            textDecoration: "underline",
             
         },
         typographyTitleEnh:{

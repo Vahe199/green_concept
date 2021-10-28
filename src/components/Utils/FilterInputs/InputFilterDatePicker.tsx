@@ -6,6 +6,7 @@ import { useState } from "react";
 const useStyles = (value: string) =>
   makeStyles((theme: Theme) =>
     createStyles({
+      
       select: {
         "& .ant-select": {
           height: "50%",
@@ -14,10 +15,11 @@ const useStyles = (value: string) =>
         "& .ant-select-selector": {
           height: "100% !important",
         },
-
+        
         "& .ant-picker-input:hover .ant-picker-suffix": {
           opacity: value ? 0 : 1,
         },
+        
       },
         "& .ant-picker-suffix":{
             height:16

@@ -122,6 +122,8 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
                                                                             name={field_institution_name}
                                                                             value={skills.educational_institution_name}
                                                                             onChange={handleChange}
+                                                                            className={classes.input2}
+                                                                            autoComplete={'off'}
                                                                             placeholder="Наименование учебного заведения" />
                                                                     </ValidationErrorWrapper>
                                                                 </Typography>
@@ -148,6 +150,8 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
                                                                             name={field_document}
                                                                             value={skills.education_document}
                                                                             onChange={handleChange}
+                                                                            className={classes.input2}
+                                                                            autoComplete={'off'}
                                                                             placeholder="Впишите название документа" />
                                                                     </ValidationErrorWrapper>
                                                                 </Typography>
@@ -177,7 +181,7 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
                                                                             value={
                                                                                 skills.expire_date
                                                                                     ? moment(skills.expire_date, "YYYY-MM-DD")
-                                                                                    : null
+                                                                                    : ""
                                                                             }
                                                                             handleChange={(date: any) =>
                                                                                 setFieldValue(

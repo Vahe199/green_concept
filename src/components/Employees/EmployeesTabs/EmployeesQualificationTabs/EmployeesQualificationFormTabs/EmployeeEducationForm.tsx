@@ -226,6 +226,8 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
                                         name={field_institution_name}
                                         value={education.educational_institution_name}
                                         onChange={handleChange}
+                                        className={classes.input2}
+                                        autoComplete={'off'}
                                         placeholder="Наименование учебного заведения" />
                                     </ValidationErrorWrapper>
                                 </Typography>
@@ -252,6 +254,8 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
                                             name={field_education_document}
                                             value={education.education_document}
                                             onChange={handleChange}
+                                            className={classes.input2}
+                                            autoComplete={'off'}
                                             placeholder="Документ об образовании" />
                                     </ValidationErrorWrapper>
                                 </Typography>
@@ -278,6 +282,8 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
                                             name={field_speciality}
                                             value={education.speciality}
                                             onChange={handleChange}
+                                            className={classes.input2}
+                                            autoComplete={'off'}
                                             placeholder="Специальность" />
                                     </ValidationErrorWrapper>
                                 </Typography>

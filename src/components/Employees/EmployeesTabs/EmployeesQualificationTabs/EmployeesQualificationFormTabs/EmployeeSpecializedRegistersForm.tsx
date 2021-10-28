@@ -90,6 +90,8 @@ const {recoveryEmployeesQualificationState,updateEmployeeRegisterDataAC} = useAc
                                         name={"construction_branch_register"}
                                         value={values.construction_branch_register}
                                         onChange={handleChange}
+                                        className={classes.input2}
+                                        autoComplete={'off'}
                                         placeholder="Введите номер реестра" />
                                 </ValidationErrorWrapper>
                             </Typography>
@@ -114,6 +116,8 @@ const {recoveryEmployeesQualificationState,updateEmployeeRegisterDataAC} = useAc
                                         name={"engineering_surveys_construction_design_register"}
                                         value={values.engineering_surveys_construction_design_register}
                                         onChange={handleChange}
+                                        className={classes.input2}
+                                        autoComplete={'off'}
                                         placeholder="Введите номер реестра" />
                                 </ValidationErrorWrapper>
                             </Typography>

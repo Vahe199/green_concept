@@ -448,7 +448,7 @@ export default function CounterpartiesTable(props: any) {
         <>
           <div style={{ display: "flex" }}>
             <span className={classes.titleText}>Создано</span>
-            <span style={{ position: "absolute", right: 8, top: 8 }}>
+            <span style={{ position: "absolute", right: 15, top: 8 }}>
               <SortingButtons color="#5B6770" />
             </span>
           </div>
@@ -471,7 +471,7 @@ export default function CounterpartiesTable(props: any) {
         <>
           <div style={{ display: "flex" }}>
             <span className={classes.titleText}>Обновлено</span>
-            <span style={{ position: "absolute", right: 8, top: 8 }}>
+            <span style={{ position: "absolute", right: 15, top: 8 }}>
               <SortingButtons color="#5B6770" />
             </span>
           </div>

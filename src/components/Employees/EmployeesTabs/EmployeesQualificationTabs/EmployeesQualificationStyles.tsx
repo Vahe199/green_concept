@@ -11,7 +11,7 @@ export const useStylesEmployeeQualification = makeStyles((theme: Theme) =>
             justifyContent: "space-between",
             alignItems: "center",
             width: "100%",
-            marginBottom: 8.5,
+            marginBottom: 8,
         },
         paper: {
             padding:16

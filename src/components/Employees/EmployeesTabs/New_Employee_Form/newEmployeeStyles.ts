@@ -61,7 +61,7 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             justifyContent: "space-between",
             alignItems: "center",
             width: "100%",
-            marginBottom: 5,
+            marginBottom: 8,
             fontSize:16,
             fontWeight:400
         },
@@ -132,6 +132,7 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             fontWeight:500,
             color: '#3B4750',
             width:"40%"
+
         },
         typographyValue:{
             display:'flex',

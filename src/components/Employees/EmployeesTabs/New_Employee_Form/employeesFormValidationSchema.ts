@@ -16,18 +16,38 @@ export const validationSchemaEmployeesQualificationForm = yup.object({
 });
 
 export const validationSchemaEmployeesGeneralInfForm = yup.object({
-    firstname: yup.string().required("Обязательное поле"),
-    middlename: yup.string().required("Обязательное поле"),
-    surname: yup.string().required("Обязательное поле"),
-    photo:yup.string().required("Обязательное поле"),
-    birthdate: yup.string().required("Обязательное поле"),
-    region_id:yup.number().nullable(true).required("Обязательное поле"),
-    green_legal_id: yup.number().nullable(true).required("Обязательное поле"),
-    position_id:yup.number().nullable(true).required("Обязательное поле"),
-    start_work_date:yup.string().required("Обязательное поле"),
-    end_work_date:yup.string().required("Обязательное поле"),
+    firstname: yup.string().required("Обязательно к заполнению"),
+    middlename: yup.string(),
+    surname: yup.string().required("Обязательно к заполнению"),
+    photo:yup.string(),
+    birthdate: yup.string(),
+    region_id:yup.number().nullable(true),
+    green_legal_id: yup.number().nullable(true),
+    position_id:yup.number().nullable(true),
+    start_work_date:yup.string(),
+    end_work_date:yup.string(),
+    phones: yup.array()
+        .of(
+            yup.number().nullable()
+            .required("Обязательное поле"),
+        ),
     // emails: [""],
-    // phones:[""],
-    // directions:[null],
-    about:yup.string().required("Обязательное поле"),
+     //phones: yup.required("Обязательно к заполнению"),
+    // phones: yup.array()
+    //     .of(
+    //         yup.object().shape({
+    //             phone: yup.string().min(10, 'Слишком короткый')
+    //             .required("Обязательное поле"),
+    //         })
+    //     ).nullable()
+    //     .required("Обязательное поле"),
+    //directions:[null],
+    // phones: yup.array()
+    //     .of(
+    //         yup.object().shape({
+    //             phone: yup.string().required('Required'),
+    //         })
+    //     )
+    //     .required('Required'),
+    about:yup.string(),
 });

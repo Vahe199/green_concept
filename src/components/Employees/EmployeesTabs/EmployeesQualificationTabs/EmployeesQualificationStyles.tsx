@@ -32,8 +32,9 @@ export const useStylesEmployeeQualification = makeStyles((theme: Theme) =>
         divider: {
             marginTop:24,
             marginBottom: 24,
-            height: 0.3,
-            backgroundColor: '#ADB3B8'
+            height: 1,
+            backgroundColor: '#ADB3B8',
+            opacity: 0.5,
         },
         avatar:{
             width:144,

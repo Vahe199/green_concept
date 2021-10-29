@@ -152,6 +152,7 @@ export const ContactPersonsForCreating: React.FC = () => {
   };
 
   const initialValues = {
+    // @ts-ignore
     ...pick(PersonContact, [
       "firstname",
       "middlename",

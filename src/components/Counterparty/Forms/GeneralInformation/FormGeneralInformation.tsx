@@ -13,6 +13,8 @@ import {useStylesGeneralInformation} from "./GeneralInformationStyles";
 import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
 import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
 import {Input} from "antd";
+import pick from "lodash/pick";
+import get from "lodash/get";
 
 type Props = {
   // change: boolean;
@@ -36,7 +38,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
 
   const [contractorId, setContractorId] = React.useState(1);
   let errorMessage: string = "General";
-
+debugger
   const [validateValue2, setValidateValue2] = React.useState<string>("ЮЛ");
 
 const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
@@ -67,14 +69,19 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
   }, [contractorId])
 
   const initialValues = {
-    org_type: org_type ? org_type : "ЮЛ",
-    contractor_type_id:service ? service.contractor_type_id : "",
-    crms: [crms.length > 0 ?crms[0]?.id : null],
-    service_type_id: service && service?.contractor_type_id == 1 ? "" : service?.id ,
-    inn: inn,
-    kpp:kpp ? kpp : null,
-    ogrn: ogrn,
-    nda: nda ? nda : 0,
+      // @ts-ignore
+    crms: get(contractor, "crms", []).map((crms: any) =>
+      get(crms, "id", "")
+  ),
+    ...pick(contractor, [
+      "inn",
+      "kpp",
+      "ogrn",
+      "nda",
+      "org_type",
+      "contractor_type_id",
+      "service_type_id"
+    ]),
   };
 
   return (
@@ -152,7 +159,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                   />
                 </div>
               </div>
-              {contractorId !== 1 ||  <div
+              {contractorId == 1 &&  <div
                   className={classes.label}
                   style={{alignItems: "flex-start"}}
               >
@@ -168,7 +175,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                     {({remove, push}) => (
                         <div style={{width: "100%", alignItems: "center"}}>
                           {values.crms.length > 0 &&
-                          values.crms.map((crm, index) => {
+                          values.crms.map((crm:any, index:number) => {
                             const fieldName = `crms[${index}]`;
                             const touchedFieldName = getIn(touched, fieldName);
                             const errorFieldName = getIn(errors, fieldName);
@@ -182,12 +189,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                                     }}
                                 >
                                   <div
-                                      style={
-                                        index > 0
-                                            ? {width: "80%"}
-                                            : {width: "100%"}
-                                      }
-                                  >
+                                      style={{width: "100%"}}>
                                     <ValidationErrorWrapper
                                         inputClassName="ant-select-selector"
                                         error={Boolean(

@@ -52,10 +52,8 @@ export const GeneralInformationForUser: React.FC<Props> = ({
     const { contractor }: any = AuthorData;
   const { crms, org_type, inn, kpp, ogrn, nda, contractor_type_id }: any = contractor;
 
-    let contractorType= assetsOptionsCongratulation.filter((type:any) =>type.key == contractor_type_id).map((type:any) =>(
-        <div key={type.id}>{type.label}</div>
-    ))
-
+    let contractorType= assetsOptionsCongratulation.find((type:any) =>type.value == contractor_type_id)
+debugger
 
   const classes = useStyles();
   return (
@@ -84,7 +82,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
         >
           {org_type === "ФЛ" ? "Физическое лицо" : "Юридическое лицо"}
         </Typography>
-          {contractor_type_id !== 1 || <div className={classes.div}>
+          {contractor_type_id == 1 && <div className={classes.div}>
               <Typography
                   variant={"button"}
                   style={{width: "40%"}}
@@ -118,9 +116,9 @@ export const GeneralInformationForUser: React.FC<Props> = ({
             style={{ marginTop: 2 }}
             className={classes.title}
           >
-              <span className={classes.title}>{contractor_type_id ? contractorType :
-                  "------------------"
-              }</span>
+              <span className={classes.title}>
+                  { contractorType?.label}
+              </span>
 
           </Typography>
         </div>

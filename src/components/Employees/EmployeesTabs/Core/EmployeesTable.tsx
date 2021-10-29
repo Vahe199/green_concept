@@ -47,10 +47,10 @@ export default function EmployeesTable(props: any) {
   const [filterField, setFilterField] = useState<any>({
     id: "",
     FIO: "",
-    company: "",
-    region: "",
-    directions: "",
-    position: "",
+    company: 0,
+    region: 0,
+    directions: 0,
+    position: 0,
     status: 1,
   });
 

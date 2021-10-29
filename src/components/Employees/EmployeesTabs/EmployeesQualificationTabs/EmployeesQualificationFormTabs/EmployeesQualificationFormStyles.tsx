@@ -70,6 +70,14 @@ export const useStylesEmployeeQualificationForm = makeStyles((theme: Theme) =>
             fontSize: 16,
             color: '#3B4750'
         },
+        typographyValue3:{
+            display:'flex',
+            flexDirection:'column',
+            //width:"20%",
+            textAlign:"left",
+            fontSize: 16,
+            color: '#3B4750'
+        },
         typographyValueEnh:{
             display:'flex',
             flexDirection:'column',

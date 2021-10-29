@@ -59,6 +59,8 @@ export default function EmployeesTable(props: any) {
     fetchEmployeeByIdtAC(data.id);
   };
 
+
+
   const employeeData = employees?.map(
     ({
       id,
@@ -75,7 +77,8 @@ export default function EmployeesTable(props: any) {
       return {
         key: id,
         id,
-        FIO: `${surname} ${firstname} ${middlename}`,
+        FIO: `${surname} ${firstname} ${middlename ? middlename : '' +
+            ''}`,
         company:company ? company : {},
         region:region ? region :{},
         directions:directions.length > 0 ? directions :[],
@@ -92,6 +95,8 @@ export default function EmployeesTable(props: any) {
       .toUpperCase()
       .includes(item.toString().toUpperCase());
   };
+
+
 
   const filterData = employeeData?.filter((item: any, index: any) => {
     let check = true;
@@ -163,7 +168,7 @@ export default function EmployeesTable(props: any) {
       ),
       dataIndex: "FIO",
       width: 300,
-      render: (FIO: string) => <span style={{ color: "#3B4750" }}>{FIO}</span>,
+      render: (FIO: string) => <span style={{ color: "#3B4750", fontSize: 15 }}>{FIO}</span>,
     },
     {
       title: () => (
@@ -187,7 +192,7 @@ export default function EmployeesTable(props: any) {
       dataIndex: "company",
       width: 289,
       render: (company: any) => (
-        <span style={{ color: "#3B4750" }}>{company?.name}</span>
+        <span style={{ color: "#3B4750", fontSize: 15 }}>{company?.name}</span>
       ),
     },
     {
@@ -212,7 +217,7 @@ export default function EmployeesTable(props: any) {
       dataIndex: "region",
       width: 172,
       render: (region: any) => (
-        <span style={{ color: "#3B4750" }}>{region?.name}</span>
+        <span style={{ color: "#3B4750", fontSize: 15 }}>{region?.name}</span>
       ),
     },
     {
@@ -238,7 +243,7 @@ export default function EmployeesTable(props: any) {
       dataIndex: "directions",
       render: (directions: any[]) => {
         return directions?.map((direction: any) => {
-          return <div key={direction.id}>{direction?.name}</div>;
+          return <div key={direction.id} style={{ color: "#3B4750", fontSize: 15 }}>{direction?.name}</div>;
         });
       },
     },
@@ -264,7 +269,7 @@ export default function EmployeesTable(props: any) {
       dataIndex: "position",
       width: 189,
       render: (position: any) => (
-        <span style={{ color: "#3B4750" }}>{position?.name}</span>
+        <span style={{ color: "#3B4750", fontSize: 15 }}>{position?.name}</span>
       ),
     },
     {
@@ -280,7 +285,7 @@ export default function EmployeesTable(props: any) {
       width: 130,
       render: (phones: any[]) => {
         return phones?.map((phone: any) => {
-          return <div key={phone?.id}>{phone?.phone}</div>;
+          return <div key={phone?.id} style={{ color: "#3B4750", fontSize: 15 }}>{phone?.phone}</div>;
         });
       },
     },
@@ -307,7 +312,7 @@ export default function EmployeesTable(props: any) {
       dataIndex: "status",
       width: 154,
       render: (status: any) => (
-        <span style={{ color: "#3B4750" }}>{status?.name}</span>
+        <span style={{ color: "#3B4750", fontSize: 15 }}>{status?.name}</span>
       ),
     },
   ];

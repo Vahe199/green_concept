@@ -58,7 +58,7 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
             <ToastContainer style={{ fontSize: 20, marginTop: "5%" }} />
             <Formik
                 initialValues={initialValues}
-                // validationSchema={validationSchemaContactsFromGreen}
+                 validationSchema={validationSchemaContactsFromGreen}
                 onSubmit={async ({experience_years, experience_months,...values},action) => {
                     // console.log (111, {...values, experience_months: moment(month).format("MM"), experience_years: 222})
                      console.log (111, {...values})
@@ -89,51 +89,89 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
                         Стаж работы по специальности
                     </Typography>
                     <div style={{width:"50%", display:"flex", justifyContent:"flex-start"}}>
+                        <Typography className={classes.typographyValue3}>
+                            <ValidationErrorWrapper
+                                inputClassName="ant-input"
+                                error={touched.experience_years && Boolean(errors.experience_years)}
+                                helperText={touched.experience_years && errors.experience_years}
+                            >
+                                <Input
+                                    name={'experience_years'}
+                                    value={values.experience_years}
+                                    onChange={handleChange}
+                                    className={classes.yearPiker}
+                                    autoComplete={'off'}
+                                    maxLength={2}
+                                    //min={'0'}
+                                    //max={'12'}
+                                    //max={99}
+                                    //controls={true}
+                                    placeholder="Лет" />
+                            </ValidationErrorWrapper>
+                        </Typography>
 
-                            <DatePicker
+                        <Typography className={classes.typographyValue}>
+                            <ValidationErrorWrapper
+                                inputClassName="ant-input"
+                                error={touched.experience_months && Boolean(errors.experience_months)}
+                                helperText={touched.experience_months && errors.experience_months}
+                            >
+                                <Input
+                                    name={'experience_months'}
+                                    value={values.experience_months}
+                                    onChange={handleChange}
+                                    maxLength={2}
+                                    //min={'0'}
+                                    //max={'12'}
+                                    //controls={false}
+                                    className={classes.monthPiker}
+                                    autoComplete={'off'}
+                                    placeholder="Месяцев" />
+                            </ValidationErrorWrapper>
+                        </Typography>
+                            {/*<DatePicker*/}
+                            {/*    className={classes.yearPiker}*/}
+                            {/*            name={"experience_years"}*/}
+                            {/*            value={*/}
+                            {/*                values.experience_years*/}
+                            {/*                    ? moment(values.experience_years, "YYYY-MM-DD")*/}
+                            {/*                    : null*/}
+                            {/*            }*/}
+                            {/*            onChange={(_:any,date: any) => {*/}
+                            {/*                setFieldValue(*/}
+                            {/*                    "experience_years",*/}
+                            {/*                    moment(date).format("YYYY-MM-DD")*/}
+                            {/*                )*/}
+                            {/*            }*/}
+                            {/*            }*/}
+                            {/*    placeholder={"Лет"}*/}
+                            {/*            allowClear={false}*/}
+                            {/*            suffixIcon={<div></div>}*/}
+                            {/*            picker="year"*/}
+                            {/*/>*/}
 
-                                className={classes.yearPiker}
-                                        name={"experience_years"}
-                                        value={
-                                            values.experience_years
-                                                ? moment(values.experience_years, "YYYY-MM-DD")
-                                                : null
-                                        }
-                                        onChange={(_:any,date: any) => {
-                                            setFieldValue(
-                                                "experience_years",
-                                                moment(date).format("YYYY-MM-DD")
-                                            )
-                                        }
-                                        }
-                                placeholder={"Лет"}
-                                        allowClear={false}
-                                        suffixIcon={<div></div>}
-                                        picker="year"
-                            />
 
+                            {/*<DatePicker*/}
+                            {/*    locale={locale}*/}
+                            {/*    name={"experience_months"}*/}
+                            {/*    value={*/}
+                            {/*        values.experience_months*/}
+                            {/*            ? moment(values.experience_months, "MMM")*/}
+                            {/*            : null*/}
+                            {/*    }*/}
+                            {/*    onChange={(date:any) => {*/}
+                            {/*        console.log(date)*/}
 
-                            <DatePicker
-                                locale={locale}
-                                name={"experience_months"}
-                                value={
-                                    values.experience_months
-                                        ? moment(values.experience_months, "MMM")
-                                        : null
-                                }
-                                onChange={(date:any) => {
-                                    console.log(date)
+                            {/*        setFieldValue("experience_months", date)*/}
+                            {/*    }*/}
+                            {/*    }*/}
+                            {/*    className={classes.monthPiker}*/}
+                            {/*    placeholder={"Месяцев"}*/}
 
-                                    setFieldValue("experience_months", date)
-                                }
-                                }
-                                className={classes.monthPiker}
-                                placeholder={"Месяцев"}
-
-                                picker="month"
-                                  format="MMM"
-                                allowClear={false}
-                                suffixIcon={<div></div>}/>
+                            {/*    picker="month"*/}
+                            {/*      format="MMM"*/}
+                            {/*    allowClear={false}*/}
+                            {/*    suffixIcon={<div></div>}/>*/}
 
                     </div>
                 </div>

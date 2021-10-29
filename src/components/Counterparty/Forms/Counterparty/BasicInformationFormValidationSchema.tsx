@@ -45,6 +45,8 @@ export const validationSchemaContactsFromGreen = yup.object({
                 info: yup.string(),
             })
         ),
+    experience_years: yup.string().matches(/^[0-9]+$/, "Толко число"),
+    experience_months: yup.string().matches(/^[0-9]+$/, "Толко число"),
 });
 export const validationSchemaInformationCongratulations = yup.object({
     contact_congratulations:yup.array()

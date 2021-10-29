@@ -10,11 +10,16 @@ import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelecto
 import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicker";
 import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 import { InputAssetsOptions } from "../../Utils/utils_options/InputAssetsOptions";
+import getFilteredOptions from "../../Utils/FilterInputs/getFilteredOptions";
+
 import { useTableStyles } from "./useTableStyles";
 import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 export default function TableForContact(props: any) {
+  const { contractor_id }: { contractor_id: number } = props;
+  console.log(contractor_id);
+
   const { fetchContactsList } = useActions();
   const { assetsOptionsStatus } = InputAssetsOptions();
   const history = useHistory();
@@ -26,7 +31,8 @@ export default function TableForContact(props: any) {
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
-  const { branches = [], crms: authors = [] }: any = assets;
+  const { authors = [] } = useTypedSelector((state) => state.authorsList);
+  const { branches = [] }: any = assets;
 
   const { fetchContractorContacts } = useActions();
 
@@ -34,76 +40,18 @@ export default function TableForContact(props: any) {
     []
   );
 
-  const [params, setParams] = useState<any>({});
+  const [params, setParams] = useState<any>({
+    "filter[contractors.contractor_id]": 102,
+  });
 
   const [services, setServices] = useState("");
   const [fullName, setFullName] = useState("");
   const [branch, setBranch] = useState("");
+  const [contractor, setContractor] = useState("");
   const [group, setGroup] = useState("");
   const [crm, setCrm] = useState("");
   const [createdAt, setCreatedAt] = useState<any>(null);
   const [updatedAt, setUpdatedAt] = useState<any>(null);
-
-  // full name options
-  const getFilteredFullNameOptions = () => {
-    const filteredFullName =
-      fullName.length > 3
-        ? ContactList.filter(({ fio = "" }: { fio: string }) =>
-            fio
-              .toString()
-              .toLocaleUpperCase()
-              .includes(fullName.toString().toLocaleUpperCase())
-          )
-        : [];
-
-    return (
-      filteredFullName.length
-        ? [{ id: -1, fio: "Все" }, ...filteredFullName]
-        : [{ id: -1, fio: "Все" }]
-    ).map((option: any) => ({
-      key: option.id,
-      value: option.fio !== "Все" ? option.fio : "",
-      label: option.fio,
-    }));
-  };
-
-  // barnches options
-  const getFilteredBranchesOptions = () => {
-    const filteredBranches =
-      branch.length > 3
-        ? branches.filter(({ name }: { name: string }) => name.includes(branch))
-        : [];
-
-    return (
-      filteredBranches.length
-        ? [{ id: -1, name: "Все" }, ...filteredBranches]
-        : []
-    ).map((option: any) => ({
-      key: option.id,
-      value: option.id >= 0 ? option.id : "",
-      label: option.name,
-    }));
-  };
-
-  // company group options
-  const getCompanyGroupFilterOptions = () => {
-    const companyGroupFilter =
-      group.length > 3
-        ? companyGroupFilterInital.filter(
-            ({ full_name }: { full_name: string }) => full_name.includes(group)
-          )
-        : [];
-
-    return (
-      companyGroupFilter.length
-        ? [{ id: -1, name: "Все" }, ...companyGroupFilter]
-        : []
-    ).map((option: any) => ({
-      key: option.id,
-      value: option.id >= 0 ? option.id : "",
-      label: option.full_name,
-    }));
-  };
 
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/contacts/${data.id}`);
@@ -111,9 +59,9 @@ export default function TableForContact(props: any) {
   };
 
   const authorsOptions = authors?.map((option: any) => ({
-    key: option.id,
-    value: option.id,
-    label: option.full_name,
+    key: option.author_id,
+    value: option.author_id,
+    label: option.author_fio,
   }));
 
   const columns = [
@@ -153,7 +101,13 @@ export default function TableForContact(props: any) {
           <div className={classes.searchWraper}>
             <MagnifyingGlass className="searchIcon" />
             <InputFilterSelect
-              options={getFilteredFullNameOptions()}
+              options={getFilteredOptions({
+                searchValue: fullName,
+                array: ContactList,
+                keyPath: "id",
+                valuePath: "fio",
+                labelPath: "fio",
+              })}
               filterOption={false}
               onSearch={setFullName}
               onSelect={(id: number, { value, label }: any) => {
@@ -185,7 +139,13 @@ export default function TableForContact(props: any) {
           <div className={classes.searchWraper}>
             <MagnifyingGlass className="searchIcon" />
             <InputFilterSelect
-              options={getFilteredBranchesOptions()}
+              options={getFilteredOptions({
+                searchValue: branch,
+                array: branches,
+                keyPath: "id",
+                valuePath: "id",
+                labelPath: "name",
+              })}
               filterOption={false}
               onSearch={setBranch}
               onSelect={(id: number, { value }: any) => {
@@ -224,18 +184,27 @@ export default function TableForContact(props: any) {
           <div className={classes.searchWraper}>
             <MagnifyingGlass className="searchIcon" />
             <InputFilterSelect
-              options={getFilteredBranchesOptions()}
+              options={getFilteredOptions({
+                searchValue: contractor,
+                array: branches, // todo must be changed Arsen
+                keyPath: "id",
+                valuePath: "id",
+                labelPath: "name",
+              })}
               filterOption={false}
-              onSearch={setBranch}
+              onSearch={setContractor}
               onSelect={(id: number, { value }: any) => {
-                setParams({ ...params, "filter[branches.id]": id });
+                setParams({
+                  ...params,
+                  "filter[contractors.contractor_id]": id,
+                });
 
                 if (value === "") {
-                  setBranch("");
+                  setContractor("");
                 }
               }}
               notFoundContent={null}
-              value={params["filter[branches.id]"]}
+              value={params["filter[contractors.contractor_id]"]}
               className={"searchMode " + classes.input}
               prefix={<MagnifyingGlass className={classes.icon} />}
               showSearch
@@ -265,13 +234,19 @@ export default function TableForContact(props: any) {
             <InputFilterSelect
               onSearch={setGroup}
               value={params["filter[parent_id]"]}
-              options={getCompanyGroupFilterOptions()}
+              options={getFilteredOptions({
+                searchValue: group,
+                array: companyGroupFilterInital,
+                keyPath: "id",
+                valuePath: "id",
+                labelPath: "name",
+              })}
               filterOption={false}
               onSelect={(id: number, { value }: any) => {
                 setParams({ ...params, "filter[parent_id]": id });
 
                 if (value === "") {
-                setGroup("");
+                  setGroup("");
                 }
               }}
               notFoundContent={null}
@@ -360,9 +335,11 @@ export default function TableForContact(props: any) {
       ),
       dataIndex: "created_at",
       width: "11%",
-        render: (createdAt: any) => (
-            <span style={{ color: "#3B4750" }}>{moment(createdAt).format("DD.MM.YYYY HH:mm:ss")}</span>
-        ),
+      render: (createdAt: any) => (
+        <span style={{ color: "#3B4750" }}>
+          {moment(createdAt).format("DD.MM.YYYY HH:mm:ss")}
+        </span>
+      ),
     },
     {
       title: () => (
@@ -386,9 +363,11 @@ export default function TableForContact(props: any) {
       ),
       dataIndex: "updated_at",
       width: "11%",
-        render: (updatedAt: any) => (
-            <span style={{ color: "#3B4750" }}>{moment(updatedAt).format("DD.MM.YYYY HH:mm:ss")}</span>
-        ),
+      render: (updatedAt: any) => (
+        <span style={{ color: "#3B4750" }}>
+          {moment(updatedAt).format("DD.MM.YYYY HH:mm:ss")}
+        </span>
+      ),
     },
   ];
 
@@ -404,7 +383,6 @@ export default function TableForContact(props: any) {
       created_at,
       updated_at,
     }) => {
-
       return {
         key: id,
         id,
@@ -433,7 +411,7 @@ export default function TableForContact(props: any) {
         newParams[key] = value;
       }
     });
-      fetchContactsList({ params: newParams });
+    fetchContactsList({ params: newParams });
   }, [params]);
 
   useEffect(() => {

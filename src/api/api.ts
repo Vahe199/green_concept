@@ -105,7 +105,6 @@ export const counterpartiesApi = {
     });
   },
 
-
   getAssetsData() {
     return axios.request({ method: "get", url: "contractors/get_assets" });
   },
@@ -132,21 +131,20 @@ export const contractorApi = {
       data,
     });
   },
-  getContactById(id:number){
+  getContactById(id: number) {
     return axios.request({
       method: "get",
       url: `contacts/${id}`,
-
-    })
+    });
   },
-  changeContactEmployeesData( id: number, formData: any,) {
+  changeContactEmployeesData(id: number, formData: any) {
     return axios.request({
       method: "put",
       url: `contacts/green_employee_info/${id}`,
       data: formData,
     });
   },
-  changeContactCongratulationsData(id: number, formData: any, ) {
+  changeContactCongratulationsData(id: number, formData: any) {
     return axios.request({
       method: "put",
       url: `contacts/congratulations_info/${id}`,
@@ -205,7 +203,10 @@ export const employeesApi = {
       method: "post",
       url: `employees/employee_data/${id}`,
       data,
-      headers: { "Content-Type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"},
+      headers: {
+        "Content-Type":
+          "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+      },
     });
   },
   updateEmployeeGeneralInfoById(data: any, id: number) {

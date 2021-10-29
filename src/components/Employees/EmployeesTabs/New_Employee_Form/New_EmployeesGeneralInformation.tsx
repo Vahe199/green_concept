@@ -306,6 +306,8 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                                             );
                                                                                         }}
                                                                                         placeholder={"7 999 999 99 99"}
+                                                                                        className={classes.inputMask}
+                                                                                        autoComplete={'off'}
                                                                                         style={{
                                                                                             fontSize: 20
                                                                                         }}

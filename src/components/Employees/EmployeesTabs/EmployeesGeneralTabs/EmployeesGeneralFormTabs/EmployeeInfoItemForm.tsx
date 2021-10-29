@@ -296,6 +296,8 @@ const EmployeeInfoItemForm: React.FC<EmployeeFormDataProps> = ({
                                         );
                                       }}
                                       placeholder={"7 999 999 99 99"}
+                                      autoComplete={'off'}
+                                      className={classes.inputMask}
                                       mask="1 111 111 11 11"
                                       prefix={<>+</>}
                                     />

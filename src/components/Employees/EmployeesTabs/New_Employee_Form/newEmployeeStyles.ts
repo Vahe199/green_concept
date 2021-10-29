@@ -184,6 +184,11 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             fontSize: 16,
             color: '#3B4750'
         },
+        inputMask: {
+            "& input" : {
+                fontSize: 16,
+            }
+        },
         inputData: {
             width: "60% !important",
         },

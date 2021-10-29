@@ -128,6 +128,11 @@ export const useStylesEmployeeForm = makeStyles((theme: Theme) =>
             fontSize: 16,
             color: '#3B4750'
         },
+        inputMask: {
+            "& input" : {
+                fontSize: 16,
+            }
+        },
         field:{
             height:27,
             border: '1px solid #ADB3B8',

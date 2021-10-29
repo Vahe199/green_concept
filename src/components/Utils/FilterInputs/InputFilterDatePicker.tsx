@@ -22,14 +22,21 @@ const useStyles = (value: string) =>
         "& .ant-select-selector": {
           height: "100% !important",
         },
+
         
         "& .ant-picker-input:hover .ant-picker-suffix": {
           opacity: value ? 0 : 1,
+            cursor: 'pointer',
         },
+
         
       },
         "& .ant-picker-suffix":{
-            height:16
+            height:16,
+        },
+
+        "& .ant-picker-suffix:hover": {
+             cursor: 'pointer',
         },
         iconCalendar: {
             fontSize:18,
@@ -59,7 +66,7 @@ export default function InputFilterDatePicker({
       onChange={handleChange}
       onMouseOver={() => setOpenCalendar(true)}
       style={{ width: "100%" }}
-      suffixIcon={openCalendar && <Calendar />}
+      suffixIcon={<Calendar />}
       {...props}
     />
   );

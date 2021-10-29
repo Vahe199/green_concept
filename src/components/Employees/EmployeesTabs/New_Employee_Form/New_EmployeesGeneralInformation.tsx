@@ -41,14 +41,14 @@ const NewEmployeesGeneralInformation: React.FC = () => {
         surname: "",
         photo: "",
         birthdate: "",
-        region_id: null,
-        green_legal_id: null,
-        position_id: null,
+        region_id: "",
+        green_legal_id: "",
+        position_id: "",
         start_work_date: "",
         end_work_date: "",
         emails: [''],
         phones: [''],
-        directions: [null],
+        directions: [""],
         about: "",
     };
 
@@ -75,7 +75,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
 
                         if (Array.isArray(value)) {
                           value.forEach((val, index) => {
-                            formData.append(`${key}[${index}][${nameMapper[key as keyof typeof nameMapper]}]`, val);
+                            formData.append(`${key}[${index}][${nameMapper[key as keyof typeof nameMapper]}]`, val ? val : "");
                           });
                         }
                         else {
@@ -293,7 +293,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                                                                     }
                                                                                 >
                                                                                     <MaskedInput
-                                                                                  
+
                                                                                         name={fieldName}
                                                                                         value={phone}
                                                                                         onChange={(e) => {

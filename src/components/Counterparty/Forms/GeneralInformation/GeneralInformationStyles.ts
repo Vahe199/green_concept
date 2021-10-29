@@ -64,9 +64,7 @@ export const useStylesGeneralInformation = makeStyles((theme: Theme) =>
       fontSize: 14,
       fontWeight: 400,
       cursor: "pointer",
-      "&:hover": {
-        textDecoration: "underline",
-      },
+      textDecoration: "underline",
     },
     input: {
       marginBottom: 16,
@@ -261,6 +259,9 @@ export const useStylesCompanyContacts = makeStyles((theme: Theme) =>
       textTransform: "none",
       textDecoration: "underline",
     },
+      contactsCompany: {
+        marginTop: 8,
+      },
     title: {
       fontSize: 16,
     },
@@ -268,9 +269,7 @@ export const useStylesCompanyContacts = makeStyles((theme: Theme) =>
       fontSize: 14,
       fontWeight: 400,
       cursor: "pointer",
-      "&:hover": {
-        textDecoration: "underline",
-      },
+      textDecoration: "underline",
     },
     input: {
       marginBottom: 16,
@@ -282,5 +281,10 @@ export const useStylesCompanyContacts = makeStyles((theme: Theme) =>
         fontWeight: 400,
       },
     },
+      inputMask: {
+          "& input" : {
+              fontSize: 16,
+          }
+      },
   })
 );

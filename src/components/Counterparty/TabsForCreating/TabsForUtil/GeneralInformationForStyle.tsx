@@ -97,9 +97,7 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
       fontSize: 14,
       fontWeight: 400,
       cursor: "pointer",
-      "&:hover": {
-        textDecoration: "underline",
-      },
+      textDecoration: "underline",
     },
     paper: {
       padding: 16,
@@ -127,6 +125,9 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
       fontSize: 16,
       fontWeight: 500,
     },
+    contactsCompany: {
+      marginTop: 8,
+    },
     check: {
       marginLeft: "-1%",
       marginTop: -3,
@@ -143,6 +144,11 @@ export const useStylesGeneralInfo = makeStyles((theme: Theme) =>
         fontSize: 16,
         fontWeight: 400,
       },
+    },
+    inputMask: {
+      "& input" : {
+        fontSize: 16,
+      }
     },
     searchWraper: {
       position: "relative",

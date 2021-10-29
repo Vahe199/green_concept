@@ -184,7 +184,7 @@ const {firstname,surname, middlename, sex, birthdate,branches,emails,phones,deli
         </div>
         <div className={classes.label}>
           <span className={classes.spanTitle}>Отрасль</span>
-          <span style={{ width: "60%" }}>{branches[0]?.name}</span>
+          <span style={{ width: "60%" }}>{branches && branches.length > 0 ? branches[0]?.name: ""}</span>
         </div>
         <div className={classes.label} style={{ alignItems: "self-start" }}>
           <span className={classes.spanTitle}>Телефон рабочий</span>

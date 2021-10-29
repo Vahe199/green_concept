@@ -318,7 +318,12 @@ export default function EmployeesTable(props: any) {
           Найдено <span>{filterData?.length}</span> из{" "}
           <span>{employeeData?.length}</span>
         </div>
-        <Divider />
+        <Divider style={
+            {backgroundColor: '#ADB3B8',
+                height: 1,
+                opacity: 0.5
+            }
+        }/>
       </div>
       <Table
         onRow={(record) => ({

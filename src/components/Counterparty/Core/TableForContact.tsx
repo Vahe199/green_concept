@@ -31,7 +31,8 @@ export default function TableForContact(props: any) {
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
-  const { branches = [], crms: authors = [] }: any = assets;
+  const { authors = [] } = useTypedSelector((state) => state.authorsList);
+  const { branches = [] }: any = assets;
 
   const { fetchContractorContacts } = useActions();
 
@@ -39,7 +40,9 @@ export default function TableForContact(props: any) {
     []
   );
 
-  const [params, setParams] = useState<any>({});
+  const [params, setParams] = useState<any>({
+    "filter[contractors.contractor_id]": 102,
+  });
 
   const [services, setServices] = useState("");
   const [fullName, setFullName] = useState("");
@@ -56,9 +59,9 @@ export default function TableForContact(props: any) {
   };
 
   const authorsOptions = authors?.map((option: any) => ({
-    key: option.id,
-    value: option.id,
-    label: option.full_name,
+    key: option.author_id,
+    value: option.author_id,
+    label: option.author_fio,
   }));
 
   const columns = [
@@ -236,14 +239,14 @@ export default function TableForContact(props: any) {
                 array: companyGroupFilterInital,
                 keyPath: "id",
                 valuePath: "id",
-                labelPath: "full_name",
+                labelPath: "name",
               })}
               filterOption={false}
               onSelect={(id: number, { value }: any) => {
                 setParams({ ...params, "filter[parent_id]": id });
 
                 if (value === "") {
-                setGroup("");
+                  setGroup("");
                 }
               }}
               notFoundContent={null}
@@ -332,9 +335,11 @@ export default function TableForContact(props: any) {
       ),
       dataIndex: "created_at",
       width: "11%",
-        render: (createdAt: any) => (
-            <span style={{ color: "#3B4750" }}>{moment(createdAt).format("DD.MM.YYYY HH:mm:ss")}</span>
-        ),
+      render: (createdAt: any) => (
+        <span style={{ color: "#3B4750" }}>
+          {moment(createdAt).format("DD.MM.YYYY HH:mm:ss")}
+        </span>
+      ),
     },
     {
       title: () => (
@@ -358,9 +363,11 @@ export default function TableForContact(props: any) {
       ),
       dataIndex: "updated_at",
       width: "11%",
-        render: (updatedAt: any) => (
-            <span style={{ color: "#3B4750" }}>{moment(updatedAt).format("DD.MM.YYYY HH:mm:ss")}</span>
-        ),
+      render: (updatedAt: any) => (
+        <span style={{ color: "#3B4750" }}>
+          {moment(updatedAt).format("DD.MM.YYYY HH:mm:ss")}
+        </span>
+      ),
     },
   ];
 
@@ -376,7 +383,6 @@ export default function TableForContact(props: any) {
       created_at,
       updated_at,
     }) => {
-
       return {
         key: id,
         id,
@@ -405,7 +411,7 @@ export default function TableForContact(props: any) {
         newParams[key] = value;
       }
     });
-      fetchContactsList({ params: newParams });
+    fetchContactsList({ params: newParams });
   }, [params]);
 
   useEffect(() => {

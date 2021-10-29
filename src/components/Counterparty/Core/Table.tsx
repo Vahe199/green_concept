@@ -34,9 +34,9 @@ export default function CounterpartiesTable(props: any) {
     label: option.name,
   }));
   const crmsOptions = crms?.map((option: any) => ({
-    key: option.id,
-    value: option.id,
-    label: option.full_name,
+    key: option.author_id,
+    value: option.author_id,
+    label: option.author_fio,
   }));
 
   const { getAuthorData } = useActions();

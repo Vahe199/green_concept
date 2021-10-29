@@ -43,7 +43,8 @@ export const InformationContactCongratulations: React.FC<InfoCongratulations> =
     }
     const classes = useStyles();
       const { contractor_contacts }:any = useTypedSelector((state) => state.contactPerson);
-      const {congratulations}:any = contractor_contacts && contractor_contacts.length > 0 && contractor_contacts?.congratulations.length > 0 ?contractor_contacts : congratulationsState
+      const {congratulations}:any = contractor_contacts  && contractor_contacts?.congratulations?.length > 0 ?contractor_contacts : congratulationsState
+
     return (
       <div className={classes.root}>
         <div
@@ -60,7 +61,10 @@ export const InformationContactCongratulations: React.FC<InfoCongratulations> =
           </span>
         </div>
         <Paper className={classes.paper}>
-            {congratulations?.map((cong:any) => (<div>
+            {congratulations?.map((cong:any,index:number) => (<div>
+                {index != 0 && <div
+                    style={{backgroundColor:"#ADB3B8", width:"100%",height:1,opacity:0.5,
+                        marginTop: 16, marginBottom: 16}}/>}
                 <div className={classes.label}>
                     <span className={classes.spanTitle}>Праздник</span>
                     <span style={{width: "60%"}}>{cong.name}</span>

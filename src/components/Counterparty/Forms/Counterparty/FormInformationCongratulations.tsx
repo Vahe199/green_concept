@@ -16,6 +16,8 @@ import {
     ContractorContactDataActionType
 } from "../../../../redux/types/contractor_contact_data";
 import {useDispatch} from "react-redux";
+import get from "lodash/get";
+import pick from "lodash/pick";
 
 
 type InfoCongratulations = {
@@ -28,14 +30,17 @@ export const FormInformationCongratulations: React.FC<InfoCongratulations> = ({
   const classes = useStylesInformationCongratulations();
     const dispatch: Dispatch<ContractorContactDataAction> = useDispatch()
     const { contractor_contacts,loading: assetsLoading}:any = useTypedSelector((state) => state.contactPerson);
-    const {congratulations,id}= contractor_contacts
+    const {id}= contractor_contacts
 
 const {assetsOptionsCongratulation} = InputAssetsOptions()
 
   const initialValues = {
-    contact_congratulations:[{name: congratulations.length > 0 ? congratulations[0].name:'',
-        congratulation_type_id: congratulations.length > 0 ? congratulations[0].congratulation_type.id:'',
-        other: congratulations.length > 0 ? congratulations[0].other:''}]
+      contact_congratulations: get(contractor_contacts, "congratulations", [{name:'',
+          congratulation_type_id:'',
+          other:''}]).map(
+          (congratulation: any) =>
+              pick(congratulation, ["name", "congratulation_type_id", "other"])
+      ),
   }
   return (
       <div className={classes.root}>
@@ -83,7 +88,7 @@ const {assetsOptionsCongratulation} = InputAssetsOptions()
                     {({ remove, push }) => {
                       return (<div>
                             {values.contact_congratulations.length > 0 &&
-                            values.contact_congratulations?.map((congratulations, index) => {
+                            values.contact_congratulations?.map((congratulations:any, index:number) => {
                               const fieldName = `contact_congratulations[${index}].name`;
                               const touchedFieldName = getIn(touched, fieldName);
                               const errorFieldName = getIn(errors, fieldName);

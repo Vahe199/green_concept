@@ -1,24 +1,22 @@
-import { Link, Typography } from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
-import React, { useEffect, useState } from "react";
-import { useParams, useHistory, withRouter } from "react-router-dom";
-import { CaretDoubleLeft } from "../../IMG/SVG/CaretDoubleLeft";
-import { useTypedSelector } from "../../redux/type_redux_hook/useTypedSelector";
+import React, {useState} from "react";
+import {useHistory, useParams, withRouter} from "react-router-dom";
+import {useTypedSelector} from "../../redux/type_redux_hook/useTypedSelector";
 import CreatingBankDetails from "./BankDetails/CreatingBankDetails";
-import  ContractorContactFacesData from "./ContractorContactFaces/ContractorContactFacesData";
-import { InformationUserData } from "./InformationUserData/InformationUserData";
+import ContractorContactFacesData from "./ContractorContactFaces/ContractorContactFacesData";
+import {InformationUserData} from "./InformationUserData/InformationUserData";
 import CreatEditBankAccount, {
   ContractorBankDetailType,
   initialBankDetails,
 } from "./Forms/BankAccountForm/CreatEditBankAccount";
-import { BankDetails } from "./TabsForCreating/BankDetails";
-import { ContactPersonsForCreating } from "./TabsForCreating/ContactPersonsForCreating";
-import { GeneralInformationForCreating } from "./TabsForCreating/GeneralInformationForCreating";
-import { useActions } from "../../redux/type_redux_hook/useAction";
+import {BankDetails} from "./TabsForCreating/BankDetails";
+import {ContactPersonsForCreating} from "./TabsForCreating/ContactPersonsForCreating";
+import {GeneralInformationForCreating} from "./TabsForCreating/GeneralInformationForCreating";
 import BackToAddress from "../Utils/BackToAddress";
 
 // interface TabPanelProps {
@@ -98,10 +96,9 @@ const CreateCounterparty = (props: any) => {
 
   let history = useHistory();
   let params = useParams<{item: string,tab:string}>();
-  console.log(params)
   const { AuthorData } = useTypedSelector((state) => state.author);
   let { contractor }: any = AuthorData ? AuthorData :AuthorState;
-  const { id }: any = contractor;
+
 
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState<string>(params.tab);
@@ -110,7 +107,7 @@ const CreateCounterparty = (props: any) => {
     useState<ContractorBankDetailType>(initialBankDetails);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-     history.push(`/counterparty/${params.item}/${newValue}${params.item == "author" ? `/${id}`  : ""}`);
+     history.push(`/counterparty/${params.item}/${newValue}${params.item == "author" ? `/${contractor?.id}`  : ""}`);
     setSelectedTab(newValue);
   };
 
@@ -122,7 +119,7 @@ const CreateCounterparty = (props: any) => {
       <Paper square className={classes.root}>
         <Typography variant="subtitle1" noWrap className={classes.typography}>
           {params.item === "author"
-            ? `ООО «Контрагент №${id ? id : ""}»`
+            ? `ООО «Контрагент №${contractor?.id }»`
             : "Новый контрагент"}
         </Typography>
 

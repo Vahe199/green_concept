@@ -21,6 +21,8 @@ import {
     ContractorContactDataActionType
 } from "../../../../redux/types/contractor_contact_data";
 import {Dispatch} from "redux";
+import get from "lodash/get";
+import pick from "lodash/pick";
 
 
 type InfoProps = {
@@ -32,17 +34,20 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
 }) => {
   const classes = useStylesContactsFromGreen();
     const { TextArea } = Input;
-    const [branch, setBranch] = useState("");
+    const [setBranch] = useState("");
 
   const dispatch: Dispatch<ContractorContactDataAction> = useDispatch()
     const { contractor_contacts ,loading: assetsLoading} = useTypedSelector((state) => state.contactPerson);
-    const {id,employees }:any = contractor_contacts
+    const {id}:any = contractor_contacts
 
     const searchOptions = SearchContactPerson()
     const {assetsOptionsDirections} = InputAssetsOptions();
-
+debugger
 const initialValues = {
-  contact_employees:[{direction_id: employees.length > 0 ? employees[0].direction_id:'', employee_id: employees.length > 0 ? employees[0].employee_id:"", info: employees.length > 0 ? employees[0].info :""}]
+
+    contact_employees: get(contractor_contacts, "employees", [{direction_id:'', employee_id: "", info: ""}]).map(
+        (employee: any) => pick(employee, ["direction_id", "employee_id", "info"])
+    ),
 }
   return (
     <div className={classes.root}>
@@ -92,7 +97,7 @@ const initialValues = {
             {({ remove, push }) => {
               return (<div>
                     {values.contact_employees.length > 0 &&
-                    values.contact_employees?.map((employees, index) => {
+                    values.contact_employees?.map((employees:any, index:number) => {
                       const fieldDirection = `contact_employees[${index}].direction_id`;
                       const touchedFieldDirection = getIn(touched, fieldDirection);
                       const errorFieldDirection = getIn(errors, fieldDirection);

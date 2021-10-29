@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Paper } from "@material-ui/core";
+import {Divider, Paper} from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
@@ -74,8 +74,11 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
         </span>
       </div>
       <Paper className={classes.paper2}>
-          {employees.map((emp:any)=>(
+          {employees.map((emp:any,index:number)=>(
               <div>
+                  {index != 0 && <div
+                                  style={{backgroundColor:"#ADB3B8", width:"100%",height:1,opacity:0.5,
+                                              marginTop: 0, marginBottom: 16}}/>}
               <div className={classes.label}>
           <span className={classes.spanTitle}>Направление</span>
           <span style={{ width: "60%" }}>

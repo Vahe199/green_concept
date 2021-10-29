@@ -15,6 +15,14 @@ import { InputAssetsOptions } from "../../../Utils/utils_options/InputAssetsOpti
 import { counterpartiesApi } from "../../../../api/api";
 import { Input } from "antd";
 import MaskedInput from "antd-mask-input";
+import get from "lodash/get";
+import pick from "lodash/pick";
+import {
+  ContractorContactDataAction,
+  ContractorContactDataActionType
+} from "../../../../redux/types/contractor_contact_data";
+import {Dispatch} from "redux";
+import {useDispatch} from "react-redux";
 
 type InfoProps = {
   // change: boolean;
@@ -23,14 +31,15 @@ type InfoProps = {
 export const FormBasicInformation: React.FC<InfoProps> = ({
   setChangeBasicInformation,
 }) => {
+  const dispatch: Dispatch<ContractorContactDataAction> = useDispatch()
   const classes = useStylesBasicInformation();
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
   const { types_and_services }: any = assets;
   const [contractorId, setContractorId] = React.useState(1);
-  const { contractor_contacts } = useTypedSelector((state) => state.contactPerson);
-  const {id,firstname,surname, middlename, sex, birthdate,branches,emails,phones,delivery_address,contractors,service_type_id,contractor_type_id}:any =  contractor_contacts
+  const { contractor_contacts }:any = useTypedSelector((state) => state.contactPerson);
+  const {id}:any =  contractor_contacts
 debugger
 
   const { TextArea } = Input;
@@ -50,29 +59,37 @@ debugger
   }));
 
   const initialValues = {
-    firstname: firstname,
-    middlename: middlename,
-    surname: surname,
-    contractor_type_id: contractor_type_id,
-    service_type_id: service_type_id,
-    sex: sex ? sex :"Муж",
-    birthdate: birthdate,
-    delivery_address: delivery_address,
-    emails: [{ email: "" }],
-    phones: [
-      { phone: "", phone_type: "Рабочий" },
-      { phone: "", phone_type: "Мобильный" },
-    ],
-    branches: [branches[0]?.id],
+    // @ts-ignore
+    ...pick(contractor_contacts, [
+      "firstname",
+      "middlename",
+      "surname",
+      "contractor_type_id",
+      "service_type_id",
+      "sex",
+      "birthdate",
+      "delivery_address",
+      "status_id",
+    ]),
+
+    emails: get(contractor_contacts, "emails", []).map((email: any) =>
+        pick(email, ["email"])
+    ),
+    phones: get(contractor_contacts, "phones", []).map((phone: any) =>
+        pick(phone, ["phone", "phone_type"])
+    ),
+   branches: get(contractor_contacts, "branches", []).map((branch: any) =>
+      get(branch, "id", "")
+  ),
 
     contact_contractors: {
-      main: 1,
-      role_id: null,
-      position: "",
-      contractor_id: id,
+      ...pick(get(contractor_contacts, "contractors[0]", {}), [
+        "main",
+        "role_id",
+        "position",
+        "contractor_id",
+      ]),
     },
-
-    contractors_position: "",
   };
 
 
@@ -84,9 +101,13 @@ debugger
         onSubmit={async (values, action) => {
           console.log(values, "values");
           await counterpartiesApi
-            .changeContactGeneralInfoData(values, id)
+            .changeContactGeneralInfoData(id, values)
+
             .then((res) => {
-              console.log(res);
+              const {data} = res
+              console.log(res)
+              dispatch({type:ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
+                payload:data?.contact})
               setChangeBasicInformation(true);
             })
             .catch((e) => {
@@ -463,7 +484,7 @@ debugger
                         return (
                           <div>
                             {values.phones.length > 0 &&
-                              values.phones?.map((phone, index) => {
+                              values.phones?.map((phone:any, index:number) => {
                                 const fieldName = `phones[${index}].phone`;
                                 const touchedFieldName = getIn(
                                   touched,
@@ -573,7 +594,7 @@ debugger
                         return (
                           <div>
                             {values.phones.length > 0 &&
-                              values.phones?.map((phone, index) => {
+                              values.phones?.map((phone:any, index:number) => {
                                 const fieldName = `phones[${index}].phone`;
                                 const touchedFieldName = getIn(
                                   touched,
@@ -679,7 +700,7 @@ debugger
                       {({ remove, push }) => (
                         <div>
                           {values.emails.length > 0 &&
-                            values.emails.map((email, index) => {
+                            values.emails.map((email:any, index:number) => {
                               const fieldName = `emails[${index}].email`;
                               const touchedFieldName = getIn(
                                 touched,

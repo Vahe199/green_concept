@@ -9,7 +9,7 @@ export const changeAuthorGeneralData =
   (formData: any, id: number, errorMessage: string) =>
 
   async (dispatch: Dispatch<AuthorDataAction>) => {
-
+debugger
     try {
       dispatch({
         type: AuthorDataActionType.CHANGE_AUTHOR_DATA,
@@ -18,9 +18,10 @@ export const changeAuthorGeneralData =
         formData,
         id
       );
+
       dispatch({
         type: AuthorDataActionType.CHANGE_AUTHOR_DATA_SUCCESS,
-        payload: data.contractor,
+        payload: data
       });
     } catch (e) {
       dispatch({

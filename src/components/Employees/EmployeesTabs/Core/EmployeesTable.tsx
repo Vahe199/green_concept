@@ -26,7 +26,7 @@ type EmployeesType = {
 };
 
 export default function EmployeesTable(props: any) {
-  const { fetchCounterpartiesList, fetchEmployeeByIdtAC } = useActions();
+  const { fetchEmployeeByIdtAC } = useActions();
   const {
     assetsOptionsCompanies,
     assetsOptionsRegions,
@@ -76,12 +76,12 @@ export default function EmployeesTable(props: any) {
         key: id,
         id,
         FIO: `${surname} ${firstname} ${middlename}`,
-        company,
-        region,
-        directions,
-        position,
+        company:company ? company : {},
+        region:region ? region :{},
+        directions:directions.length > 0 ? directions :[],
+        position:position ? position :{},
         phones,
-        status,
+        status:status ? status :{},
       };
     }
   );
@@ -95,7 +95,6 @@ export default function EmployeesTable(props: any) {
 
   const filterData = employeeData?.filter((item: any, index: any) => {
     let check = true;
-
     Object.entries(filterField).forEach((filter) => {
       const [key, value] = filter;
       const field = item[key];

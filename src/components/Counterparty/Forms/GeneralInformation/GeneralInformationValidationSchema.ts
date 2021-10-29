@@ -13,7 +13,7 @@ export const validationSchemaGeneralInfo = (value: any) =>  yup.object().shape({
         .string()
         .required("Обязательно к заполнению"),
     service_type_id: yup
-        .string(),
+        .string().nullable(true),
         //.required("Обязательное поле"),
     inn: yup
         .string()

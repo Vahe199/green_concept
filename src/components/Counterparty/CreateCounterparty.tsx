@@ -99,7 +99,6 @@ const CreateCounterparty = (props: any) => {
   const { AuthorData } = useTypedSelector((state) => state.author);
   let { contractor }: any = AuthorData ? AuthorData :AuthorState;
 
-
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState<string>(params.tab);
   const [edit, setEdit] = useState(true);
@@ -119,7 +118,7 @@ const CreateCounterparty = (props: any) => {
       <Paper square className={classes.root}>
         <Typography variant="subtitle1" noWrap className={classes.typography}>
           {params.item === "author"
-            ? `ООО «Контрагент №${contractor?.id }»`
+            ? `${contractor?.full_name ? contractor?.full_name : "<<>>"}`
             : "Новый контрагент"}
         </Typography>
 
@@ -141,6 +140,7 @@ const CreateCounterparty = (props: any) => {
               className={classes.rootTabStyle}
             />
             <Tab value={"Контактные лица"}
+                 disabled={contractor ?false:true}
               label={
                 <Typography
                   variant="subtitle1"
@@ -153,6 +153,7 @@ const CreateCounterparty = (props: any) => {
               className={classes.rootTabStyle}
             />
             <Tab value={"Банковские реквизиты"}
+                 disabled={contractor ?false:true}
               label={
                 <Typography variant="subtitle1" className={classes.tabStyle}>
                   Банковские реквизиты

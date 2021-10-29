@@ -82,6 +82,7 @@ export const counterpartiesApi = {
     });
   },
   changeContractorsCompanyDetailsData(formData: any, id: any) {
+    debugger
     return axios.request({
       method: "put",
       url: `contractors/about_company/${id}`,

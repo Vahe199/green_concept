@@ -47,14 +47,14 @@ type Props = {
 export const GeneralInformationForUser: React.FC<Props> = ({
   setChangeGeneralInformation,
 }) => {
-    const {assetsOptionsCongratulation} = InputAssetsOptions()
+    const {assetsOptionsCounterpartyType} = InputAssetsOptions()
   const { AuthorData } = useTypedSelector((state) => state.author);
     const { contractor }: any = AuthorData;
-  const { crms, org_type, inn, kpp, ogrn, nda, contractor_type_id }: any = contractor;
+  const { crms, org_type, inn, kpp, ogrn, nda, contractor_type_id, service }: any = contractor;
 
-    let contractorType= assetsOptionsCongratulation.find((type:any) =>type.value == contractor_type_id)
+   const contractorType= assetsOptionsCounterpartyType.find((type:any) =>type.value == contractor_type_id)
+
 debugger
-
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -122,6 +122,30 @@ debugger
 
           </Typography>
         </div>
+          {contractor_type_id !== 1 && <div className={classes.div}>
+              <Typography
+                  variant={"button"}
+                  style={{
+                      width: "40%",
+                      marginTop: -1,
+                      flexWrap: "wrap",
+                      textTransform: "none",
+                  }}
+                  className={classes.title}
+              >
+                  Тип услуг
+              </Typography>
+              <Typography
+                  variant={"body2"}
+                  style={{marginTop: 2}}
+                  className={classes.title}
+              >
+              <span className={classes.title}>
+                  {service?.name}
+              </span>
+
+              </Typography>
+          </div>}
           {<div className={classes.div}>
               <Typography
                   variant={"button"}

@@ -45,8 +45,7 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
 }) => {
   const { AuthorData } = useTypedSelector((state) => state.author);
   const { contractor }: any = AuthorData;
-  const { full_name, short_name, group, branches, org_type }: any = contractor;
-
+  const { full_name, short_name, group, branches, org_type,contractor_type_id }: any = contractor;
 
   const classes = useStyles();
   return (
@@ -92,7 +91,7 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
             {group ? group?.full_name : "-----------------------"}
           </Typography>
         </div>
-          {contractor?.service?.contractor_type_id !== 1 || <div className={classes.div}>
+          {contractor_type_id == 1 && <div className={classes.div}>
               <Typography variant={"button"} className={classes.description}>
                   Отрасль
               </Typography>

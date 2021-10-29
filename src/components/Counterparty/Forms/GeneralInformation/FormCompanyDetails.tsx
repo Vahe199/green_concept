@@ -12,6 +12,8 @@ import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationError
 import {MagnifyingGlass} from "../../../../IMG/SVG/MagnifyingGlass";
 import {Input} from "antd";
 import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
+import pick from "lodash/pick";
+import get from "lodash/get";
 
 type Props = {
   // change: boolean;
@@ -25,7 +27,7 @@ const {assetsOptionsBranches} = InputAssetsOptions()
   const { changeAuthorCompanyDetailsData, recoveryAuthorDataState } = useActions();
   const { AuthorData,error, isChange, errorMsg } = useTypedSelector((state) => state.author);
    const { contractor  }: any = AuthorData
-  const { id, full_name, short_name, parent_id ,org_type, branches}: any =  contractor;
+  const { id,org_type,contractor_type_id}: any =  contractor;
 
 
   const { contractors,} = useTypedSelector(
@@ -42,7 +44,7 @@ const {assetsOptionsBranches} = InputAssetsOptions()
   const { TextArea } = Input;
   const [group, setGroup] = useState("");
   const companyGroupFilter =
-      group.length === 0 || group.length > 3
+      group.length === 0 || group.length > 0
           ? companyGroupFilterInital.filter(
               ({ full_name }: { full_name: string }) => full_name.includes(group)
           )
@@ -66,10 +68,15 @@ const {assetsOptionsBranches} = InputAssetsOptions()
   }, [error, isChange]);
 
   const initialValues = {
-    full_name: full_name,
-    short_name: short_name,
-    parent_id: parent_id ? parent_id : null,
-    branches: [branches && branches.length > 0 ? branches[0]?.id : ""]
+    ...pick(contractor, [
+      "full_name",
+      "short_name",
+      "parent_id",
+    ]),
+    // @ts-ignore
+    branches: get(contractor, "branches", []).map((branch: any) =>
+        get(branch, "id", "")
+    ),
   }
 
 
@@ -80,7 +87,6 @@ const {assetsOptionsBranches} = InputAssetsOptions()
           initialValues={initialValues}
           validationSchema={() => validationSchemaFormCompanyDetails(validateValue)}
           onSubmit={async (values,action) => {
-            // console.log(values,"values")
             changeAuthorCompanyDetailsData(values, id, errorMessage)
           }}
       >
@@ -174,14 +180,14 @@ const {assetsOptionsBranches} = InputAssetsOptions()
               />
             </div>
           </div>
-          {contractor?.service?.contractor_type_id !== 1 || <div className={classes.label} style={{alignItems: "flex-start"}}>
+          {contractor_type_id == 1 && <div className={classes.label} style={{alignItems: "flex-start"}}>
             <span>Отрасль</span>
             <span style={{width: "60%", flexDirection: "column"}}>
               <FieldArray name="branches">
                                         {({remove, push}) => (
                                             <div style={{width: "100%"}}>
                                               {values.branches.length > 0 &&
-                                              values.branches.map((branch, index) => {
+                                              values.branches.map((branch:any, index:number) => {
                                                 const fieldName = `branches[${index}]`;
                                                 const touchedFieldName = getIn(touched, fieldName);
                                                 const errorFieldName = getIn(errors, fieldName);

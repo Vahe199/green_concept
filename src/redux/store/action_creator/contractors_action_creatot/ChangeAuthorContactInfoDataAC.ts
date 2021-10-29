@@ -10,7 +10,7 @@ export const changeAuthorContactInfoData = (formData:any, id:number,errorMessage
         const {data} = await counterpartiesApi.changeContractorsContactInfoData(formData,id)
       dispatch({
         type: AuthorDataActionType.CHANGE_AUTHOR_DATA_SUCCESS,
-        payload: data.contractor
+        payload: data
       });
     }catch (e) {
            dispatch({

@@ -7,28 +7,25 @@ import { XLSIcon } from "../../IMG/SVG/XLS";
 import { useActions } from "../../redux/type_redux_hook/useAction";
 import Table from "./Core/Table";
 import { useStyles } from "./Styles";
-import ModalListOfContacts from "./Core/Modals/ModalListOfContacts";
+import {useDispatch} from "react-redux";
+import {AuthorDataAction, AuthorDataActionType} from "../../redux/types/conterpart_author_data";
+import {Dispatch} from "redux";
 
 export const Counterparty = () => {
   const { fetchAuthorsList, getAssetsListData } = useActions();
   //const [showModal, setShowModal] = React.useState(true); //TODO modal put here for testing
   const getData = () => {
-    // fetchCounterpartiesList();
     fetchAuthorsList();
     getAssetsListData();
   };
   useEffect(() => {
     getData();
   }, []);
-
+const dispatch:Dispatch<AuthorDataAction> = useDispatch()
   let history = useHistory();
   const classes = useStyles();
-  // const [value, setValue] = React.useState(0);
-
-  // const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-  //   setValue(newValue);
-  // };
   const handleClick = (path: string,tab:string) => {
+    dispatch({type:AuthorDataActionType.GET_AUTHOR_DATA,payload:[]})
     history.push(`/counterparty/${path}/${tab}`);
   };
   return (

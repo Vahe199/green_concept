@@ -19,7 +19,7 @@ export const changeAuthorCompanyDetailsData =
         );
       dispatch({
         type: AuthorDataActionType.CHANGE_AUTHOR_DATA_SUCCESS,
-        payload: data.contractor,
+        payload: data,
       });
     } catch (e) {
       dispatch({

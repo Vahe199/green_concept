@@ -30,7 +30,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
     (state) => state.author
   );
   const { contractor }: any = AuthorData;
-  let { id, crms,org_type, inn, kpp, ogrn, nda, service }: any = contractor
+  let { id}: any = contractor
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
@@ -38,7 +38,6 @@ export const FormGeneralInformation: React.FC<Props> = ({
 
   const [contractorId, setContractorId] = React.useState(1);
   let errorMessage: string = "General";
-debugger
   const [validateValue2, setValidateValue2] = React.useState<string>("ЮЛ");
 
 const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()

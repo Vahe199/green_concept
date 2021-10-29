@@ -580,13 +580,13 @@ export const GeneralInformationForCreating = () => {
                             onSearch={setGroup}
                             //className={classes.input}
                             value={values.parent_id}
-                            // options={companyGroupFilter.map((option: any) => ({
-                            //   key: option.id,
-                            //   value: option.id,
-                            //   label: option.full_name,
-                            // }))}
+                            options={companyGroupFilter.map((option: any) => ({
+                              key: option.id,
+                              value: option.id,
+                              label: option.full_name,
+                            }))}
                             onFocus={fetchContactPerson}
-                            options={searchOptions}
+                            // options={searchOptions}
                             filterOption={false}
                             onSelect={(id: number) => {
                               setFieldValue("parent_id", id);

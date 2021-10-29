@@ -79,9 +79,9 @@ export const BankDetails: React.FC<BankProps> = ({
 
   const { fetchContractorBankDetails } = useActions();
 
-  useEffect(() => {
-    fetchContractorBankDetails(id);
-  }, []);
+  // useEffect(() => {
+  //   fetchContractorBankDetails(id);
+  // }, []);
 
   const classes = useStyles();
   const Details = (props: any) => {

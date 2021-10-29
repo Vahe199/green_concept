@@ -11,6 +11,8 @@ import { validationSchemaCompanyContacts } from "./GeneralInformationValidationS
 import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
 import { Input } from "antd";
 import MaskedInput from "antd-mask-input";
+import pick from "lodash/pick";
+import get from "lodash/get";
 
 type Props = {
   // change: boolean;
@@ -57,12 +59,21 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
     }
   }, [error, isChange]);
   const initialValues = {
-    legal_registration_address: legal_registration_address,
-    actual_address: actual_address,
-    post_address: post_address,
-    phones: [{ phone: phones.length > 0 ? phones[0]?.phone : "" }],
-    emails: [{ email: emails.length > 0 ? emails[0]?.email : "" }],
-    sites: [{ url: sites.length > 0 ? sites[0]?.url : "" }],
+    ...pick(contractor, [
+      "legal_registration_address",
+      "actual_address",
+      "post_address",
+    ]),
+    sites: get(contractor, "sites", []).map((site: any) =>
+        pick(site, ["url"])
+    ),
+    emails: get(contractor, "emails", []).map((email: any) =>
+        pick(email, ["email"])
+    ),
+    phones: get(contractor, "phones", []).map((phone: any) =>
+        pick(phone, ["phone"])
+    ),
+
   };
   return (
     <div className={classes.root}>
@@ -258,7 +269,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                     {({ insert, remove, push }) => (
                       <div style={{ width: "100%" }}>
                         {values.sites.length > 0 &&
-                          values.sites.map((url, index) => {
+                          values.sites.map((url:any, index:number) => {
                             const fieldName = `sites[${index}].url`;
                             const touchedFieldName = getIn(touched, fieldName);
                             const errorFieldName = getIn(errors, fieldName);
@@ -338,7 +349,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                     {({ insert, remove, push }) => (
                       <div>
                         {values.phones.length > 0 &&
-                          values.phones.map((phone, index) => {
+                          values.phones.map((phone:any, index:number) => {
                             const fieldName = `phones[${index}].phone`;
                             const touchedFieldName = getIn(touched, fieldName);
                             const errorFieldName = getIn(errors, fieldName);
@@ -432,7 +443,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                     {({ remove, push }) => (
                       <div>
                         {values.emails.length > 0 &&
-                          values.emails.map((email, index) => {
+                          values.emails.map((email:any, index:number) => {
                             const fieldName = `emails[${index}].email`;
                             const touchedFieldName = getIn(touched, fieldName);
                             const errorFieldName = getIn(errors, fieldName);

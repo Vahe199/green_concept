@@ -403,6 +403,8 @@ export default function ModalListOfContacts(props: any) {
           marginLeft: 16,
           marginBottom: 8,
           marginTop: 21,
+          backgroundColor: '#ADB3B8',
+          opacity: 0.5
         }}
       />
       <Table

@@ -27,8 +27,9 @@ export const useStylesEmployeeQualificationForm = makeStyles((theme: Theme) =>
         divider: {
             marginTop:0,
             marginBottom: 16,
-            height: 0.3,
-            backgroundColor: '#ADB3B8'
+            height: 1,
+            backgroundColor: '#ADB3B8',
+            opacity: 0.5,
         },
         column:{
             display:'flex',

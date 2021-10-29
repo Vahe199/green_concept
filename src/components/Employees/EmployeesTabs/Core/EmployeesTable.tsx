@@ -59,6 +59,8 @@ export default function EmployeesTable(props: any) {
     fetchEmployeeByIdtAC(data.id);
   };
 
+
+
   const employeeData = employees?.map(
     ({
       id,
@@ -75,7 +77,8 @@ export default function EmployeesTable(props: any) {
       return {
         key: id,
         id,
-        FIO: `${surname} ${firstname} ${middlename}`,
+        FIO: `${surname} ${firstname} ${middlename ? middlename : '' +
+            ''}`,
         company:company ? company : {},
         region:region ? region :{},
         directions:directions.length > 0 ? directions :[],
@@ -92,6 +95,8 @@ export default function EmployeesTable(props: any) {
       .toUpperCase()
       .includes(item.toString().toUpperCase());
   };
+
+
 
   const filterData = employeeData?.filter((item: any, index: any) => {
     let check = true;

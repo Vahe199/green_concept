@@ -245,9 +245,7 @@ export const useStylesContactPersons = makeStyles((theme: Theme) =>
       fontSize: 14,
       fontWeight: 400,
       cursor: "pointer",
-      "&:hover": {
-        textDecoration: "underline",
-      },
+      textDecoration: "underline",
     },
 
     input: {
@@ -263,6 +261,11 @@ export const useStylesContactPersons = makeStyles((theme: Theme) =>
           '&::placeholder': {
               fontSize: 16,
               fontWeight: 400,
+          }
+      },
+      inputMask: {
+          "& input" : {
+              fontSize: 16,
           }
       },
 

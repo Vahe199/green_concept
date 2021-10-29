@@ -721,7 +721,8 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                     )
                                                   );
                                                 }}
-                                                className={classes.input2}
+                                                className={classes.inputMask}
+                                                autoComplete={'off'}
                                                 placeholder={"7 999 999 99 99"}
                                                 mask="1 111 111 11 11"
                                                 prefix={<>+</>}
@@ -845,7 +846,8 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                     )
                                                   );
                                                 }}
-                                                className={classes.input2}
+                                                className={classes.inputMask}
+                                                autoComplete={'off'}
                                                 placeholder={"7 999 999 99 99"}
                                                 mask="1 111 111 11 11"
                                                 prefix={<>+</>}
@@ -1297,7 +1299,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                       onChange={handleChange}
                                                       className={classes.input2}
                                                       style={{
-                                                        height: "120px",
+                                                        height: "233px",
                                                       }}
                                                       //multiline
                                                       //rows={2}

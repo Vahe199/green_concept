@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#3B4750",
       boxShadow: "none",
     },
+      paper2: {
+          padding: 16, //10
+          height: 'auto',
+          color: "#3B4750",
+          boxShadow: "none",
+      },
     label: {
       display: "flex",
       alignItems: "center",
@@ -67,7 +73,7 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
           <PencilSimpleIcon color="#3B4750" />
         </span>
       </div>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper2}>
           {employees.map((emp:any)=>(
               <div>
               <div className={classes.label}>

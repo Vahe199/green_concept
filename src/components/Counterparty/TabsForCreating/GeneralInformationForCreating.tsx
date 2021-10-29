@@ -915,9 +915,9 @@ export const GeneralInformationForCreating = () => {
                   </div>
                   <div
                     className={classes.label}
-                    style={{ alignItems: "center" }}
+                    style={{ alignItems: "flex-start" }}
                   >
-                    <span>
+                    <span className={classes.contactsCompany}>
                       {values.org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}
                     </span>
 
@@ -1028,9 +1028,9 @@ export const GeneralInformationForCreating = () => {
                   </div>
                   <div
                     className={classes.label}
-                    style={{ alignItems: "center" }}
+                    style={{ alignItems: "flex-start" }}
                   >
-                    <span>Телефон</span>
+                    <span className={classes.contactsCompany}>Телефон</span>
                     <div
                       style={{
                         width: "60%",
@@ -1089,7 +1089,8 @@ export const GeneralInformationForCreating = () => {
                                               )
                                             );
                                           }}
-                                          className={classes.input}
+                                          className={classes.inputMask}
+                                          autoComplete={'off'}
                                           placeholder={"7 999 999 99 99"}
                                           mask="1 111 111 11 11"
                                           prefix={<>+</>}
@@ -1136,9 +1137,9 @@ export const GeneralInformationForCreating = () => {
 
                   <div
                     className={classes.label}
-                    style={{ alignItems: "center" }}
+                    style={{ alignItems: "flex-start" }}
                   >
-                    <span>E-mail</span>
+                    <span className={classes.contactsCompany}>E-mail</span>
                     <div
                       style={{
                         width: "60%",

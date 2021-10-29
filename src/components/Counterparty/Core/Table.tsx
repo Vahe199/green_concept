@@ -441,7 +441,12 @@ export default function CounterpartiesTable(props: any) {
         <div>
           Найдено <span>{data.length}</span> из <span>{data.length}</span>
         </div>
-        <Divider />
+        <Divider style={
+            {backgroundColor: '#ADB3B8',
+                height: 1,
+                opacity: 0.5
+            }
+        } />
       </div>
       <Table
         onRow={(record) => ({

@@ -26,7 +26,7 @@ type EmployeesType = {
 };
 
 export default function EmployeesTable(props: any) {
-  const { fetchCounterpartiesList, fetchEmployeeByIdtAC } = useActions();
+  const { fetchEmployeeByIdtAC } = useActions();
   const {
     assetsOptionsCompanies,
     assetsOptionsRegions,
@@ -42,24 +42,24 @@ export default function EmployeesTable(props: any) {
   );
   const { employees }: any = employeesData;
   const classes = useTableStyles(loading)();
-  const [params, setParams] = useState<any>({
-    include: "type,crms,branches,service,sites,emails,phones,author,group",
-  });
+
 
   const [filterField, setFilterField] = useState<any>({
     id: "",
     FIO: "",
-    company: "",
-    region: "",
-    directions: "",
-    position: "",
-    status: "",
+    company: 0,
+    region: 0,
+    directions: 0,
+    position: 0,
+    status: 1,
   });
 
   const getUserData = (data: any) => {
     history.push(`/employee/author`);
     fetchEmployeeByIdtAC(data.id);
   };
+
+
 
   const employeeData = employees?.map(
     ({
@@ -77,13 +77,14 @@ export default function EmployeesTable(props: any) {
       return {
         key: id,
         id,
-        FIO: `${surname} ${firstname} ${middlename}`,
-        company,
-        region,
-        directions,
-        position,
+        FIO: `${surname} ${firstname} ${middlename ? middlename : '' +
+            ''}`,
+        company:company ? company : {},
+        region:region ? region :{},
+        directions:directions.length > 0 ? directions :[],
+        position:position ? position :{},
         phones,
-        status,
+        status:status ? status :{},
       };
     }
   );
@@ -95,16 +96,17 @@ export default function EmployeesTable(props: any) {
       .includes(item.toString().toUpperCase());
   };
 
+
+
   const filterData = employeeData?.filter((item: any, index: any) => {
     let check = true;
-
     Object.entries(filterField).forEach((filter) => {
       const [key, value] = filter;
-
       const field = item[key];
       if (field) {
         if (!value) {
           check = !check ? false : true;
+
         } else if (Array.isArray(field)) {
           if (typeof value === "string" || typeof value === "number") {
             check = !check ? false : field?.some((el: any) => el.id == +value);
@@ -121,17 +123,6 @@ export default function EmployeesTable(props: any) {
 
     return check;
   });
-
-  useEffect(() => {
-    const newParams: any = {};
-    Object.entries(params).forEach(([key, value]) => {
-      if (value) {
-        newParams[key] = value;
-      }
-    });
-
-    fetchCounterpartiesList({ params: newParams });
-  }, [params]);
 
   const columns = [
     {
@@ -169,6 +160,7 @@ export default function EmployeesTable(props: any) {
               const { value } = e.target;
               setFilterField({ ...filterField, FIO: value });
             }}
+            placeholder="Все"
             value={filterField.FIO}
             className={classes.input}
           />
@@ -176,7 +168,7 @@ export default function EmployeesTable(props: any) {
       ),
       dataIndex: "FIO",
       width: 300,
-      render: (FIO: string) => <span style={{ color: "#3B4750" }}>{FIO}</span>,
+      render: (FIO: string) => <span style={{ color: "#3B4750", fontSize: 15 }}>{FIO}</span>,
     },
     {
       title: () => (
@@ -190,6 +182,7 @@ export default function EmployeesTable(props: any) {
             }}
             notFoundContent={null}
             value={filterField.company}
+            placeholder="Все"
             className={"searchMode " + classes.input}
             prefix={<MagnifyingGlass className={classes.icon} />}
             showSearch
@@ -199,7 +192,7 @@ export default function EmployeesTable(props: any) {
       dataIndex: "company",
       width: 289,
       render: (company: any) => (
-        <span style={{ color: "#3B4750" }}>{company.name}</span>
+        <span style={{ color: "#3B4750", fontSize: 15 }}>{company?.name}</span>
       ),
     },
     {
@@ -212,6 +205,7 @@ export default function EmployeesTable(props: any) {
             onSelect={(id: number) => {
               setFilterField({ ...filterField, region: id });
             }}
+            placeholder="Все"
             notFoundContent={null}
             value={filterField.region}
             className={"searchMode " + classes.input}
@@ -223,7 +217,7 @@ export default function EmployeesTable(props: any) {
       dataIndex: "region",
       width: 172,
       render: (region: any) => (
-        <span style={{ color: "#3B4750" }}>{region.name}</span>
+        <span style={{ color: "#3B4750", fontSize: 15 }}>{region?.name}</span>
       ),
     },
     {
@@ -237,6 +231,7 @@ export default function EmployeesTable(props: any) {
               setFilterField({ ...filterField, directions: id });
             }}
             notFoundContent={null}
+            placeholder="Все"
             value={filterField.directions}
             className={"searchMode " + classes.input}
             prefix={<MagnifyingGlass className={classes.icon} />}
@@ -248,7 +243,7 @@ export default function EmployeesTable(props: any) {
       dataIndex: "directions",
       render: (directions: any[]) => {
         return directions?.map((direction: any) => {
-          return <div key={direction.id}>{direction.name}</div>;
+          return <div key={direction.id} style={{ color: "#3B4750", fontSize: 15 }}>{direction?.name}</div>;
         });
       },
     },
@@ -264,6 +259,7 @@ export default function EmployeesTable(props: any) {
             }}
             notFoundContent={null}
             value={filterField.position}
+            placeholder="Все"
             className={"searchMode " + classes.input}
             prefix={<MagnifyingGlass className={classes.icon} />}
             showSearch
@@ -273,7 +269,7 @@ export default function EmployeesTable(props: any) {
       dataIndex: "position",
       width: 189,
       render: (position: any) => (
-        <span style={{ color: "#3B4750" }}>{position?.name}</span>
+        <span style={{ color: "#3B4750", fontSize: 15 }}>{position?.name}</span>
       ),
     },
     {
@@ -286,10 +282,10 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "phones",
-      width: 104,
+      width: 130,
       render: (phones: any[]) => {
         return phones?.map((phone: any) => {
-          return <div key={phone?.id}>{phone?.phone}</div>;
+          return <div key={phone?.id} style={{ color: "#3B4750", fontSize: 15 }}>{phone?.phone}</div>;
         });
       },
     },
@@ -306,6 +302,7 @@ export default function EmployeesTable(props: any) {
             }}
             notFoundContent={null}
             value={filterField.status}
+            placeholder="Все"
             className={"searchMode " + classes.input}
             prefix={<MagnifyingGlass className={classes.icon} />}
             showSearch
@@ -313,9 +310,9 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "status",
-      width: 104,
+      width: 154,
       render: (status: any) => (
-        <span style={{ color: "#3B4750" }}>{status?.name}</span>
+        <span style={{ color: "#3B4750", fontSize: 15 }}>{status?.name}</span>
       ),
     },
   ];
@@ -326,7 +323,12 @@ export default function EmployeesTable(props: any) {
           Найдено <span>{filterData?.length}</span> из{" "}
           <span>{employeeData?.length}</span>
         </div>
-        <Divider />
+        <Divider style={
+            {backgroundColor: '#ADB3B8',
+                height: 1,
+                opacity: 0.5
+            }
+        }/>
       </div>
       <Table
         onRow={(record) => ({

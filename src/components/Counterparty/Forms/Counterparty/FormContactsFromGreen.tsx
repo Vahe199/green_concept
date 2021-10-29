@@ -224,7 +224,7 @@ const initialValues = {
                                                   value={employees.info}
                                                   className={classes.input}
                                                   onChange={handleChange}
-                                                  style={{height: '120px'}}
+                                                  style={{height: '233px'}}
                                                   //multiline
                                                   //rows={2}
                                                   autoSize={false}

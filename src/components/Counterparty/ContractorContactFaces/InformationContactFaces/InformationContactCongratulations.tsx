@@ -43,8 +43,7 @@ export const InformationContactCongratulations: React.FC<InfoCongratulations> =
     }
     const classes = useStyles();
       const { contractor_contacts }:any = useTypedSelector((state) => state.contactPerson);
-      const {congratulations}:any = contractor_contacts?.congratulations.length > 0 ?contractor_contacts : congratulationsState
-      debugger
+      const {congratulations}:any = contractor_contacts && contractor_contacts.length > 0 && contractor_contacts?.congratulations.length > 0 ?contractor_contacts : congratulationsState
     return (
       <div className={classes.root}>
         <div

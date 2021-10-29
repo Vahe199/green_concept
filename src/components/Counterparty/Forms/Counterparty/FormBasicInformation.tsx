@@ -511,7 +511,8 @@ debugger
                                                 )
                                               );
                                             }}
-                                            className={classes.input2}
+                                            className={classes.inputMask}
+                                            autoComplete={'off'}
                                             placeholder={"7 999 999 99 99"}
                                             mask="1 111 111 11 11"
                                             prefix={<>+</>}
@@ -608,6 +609,8 @@ debugger
                                           <MaskedInput
                                             name={fieldName}
                                             value={phone.phone}
+                                            className={classes.inputMask}
+                                            autoComplete={'off'}
                                             style={{
                                               width: "100%",
                                             }}
@@ -620,7 +623,6 @@ debugger
                                                 )
                                               );
                                             }}
-                                            className={classes.input2}
                                             placeholder={"7 999 999 99 99"}
                                             mask="1 111 111 11 11"
                                             prefix={<>+</>}

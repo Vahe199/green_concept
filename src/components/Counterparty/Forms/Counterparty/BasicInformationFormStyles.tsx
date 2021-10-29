@@ -92,6 +92,11 @@ export const useStylesBasicInformation = makeStyles((theme: Theme) =>
         fontWeight: 400,
       },
     },
+    inputMask: {
+      "& input" : {
+        fontSize: 16,
+      }
+    },
     addItemCRM: {
       fontSize: 14,
       fontWeight: 400,

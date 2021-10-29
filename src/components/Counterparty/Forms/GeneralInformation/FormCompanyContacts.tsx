@@ -248,9 +248,11 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
               </div>
               <div
                 className={classes.label}
-                style={{ alignItems: "center" }}
+                style={{ alignItems: "flex-start" }}
               >
-                {org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}
+                <span className={classes.contactsCompany}>
+                  {org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}
+                </span>
                 <span style={{ width: "60%", flexDirection: "column" }}>
                   <FieldArray name="sites">
                     {({ insert, remove, push }) => (
@@ -328,9 +330,9 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
 
               <div
                 className={classes.label}
-                style={{ alignItems: "center" }}
+                style={{ alignItems: "flex-start" }}
               >
-                <span>Телефон</span>
+                <span className={classes.contactsCompany}>Телефон</span>
                 <span style={{ width: "60%", flexDirection: "column" }}>
                   <FieldArray name="phones">
                     {({ insert, remove, push }) => (
@@ -375,7 +377,8 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                                           )
                                         );
                                       }}
-                                      className={classes.input2}
+                                      className={classes.inputMask}
+                                      autoComplete={'off'}
                                       placeholder={"7 999 999 99 99"}
                                       mask="1 111 111 11 11"
                                       prefix={<>+</>}
@@ -421,9 +424,9 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
 
               <div
                 className={classes.label}
-                style={{ alignItems: "center" }}
+                style={{ alignItems: "flex-start" }}
               >
-                <span>E-mail</span>
+                <span className={classes.contactsCompany}>E-mail</span>
                 <span style={{ width: "60%", flexDirection: "column" }}>
                   <FieldArray name="emails">
                     {({ remove, push }) => (

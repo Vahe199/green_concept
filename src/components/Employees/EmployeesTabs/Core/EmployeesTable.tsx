@@ -118,7 +118,7 @@ export default function EmployeesTable(props: any) {
 
     return check;
   });
-    console.log( "employeeData", employeeData, "filterData",filterData)
+
   const columns = [
     {
       title: () => (

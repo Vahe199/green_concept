@@ -271,9 +271,7 @@ export default function TableForContact(props: any) {
                 setParams({ ...params, "filter[parent_id]": id });
 
                 if (value === "") {
-                  console.log(1111);
-
-                  setGroup("");
+                setGroup("");
                 }
               }}
               notFoundContent={null}
@@ -289,26 +287,6 @@ export default function TableForContact(props: any) {
       title: () => (
         <>
           <span className={classes.titleText}>Статус</span>
-          {/*<div className={classes.searchWraper}>*/}
-          {/*  <MagnifyingGlass className="searchIcon" />*/}
-          {/*  <InputFilterSelect*/}
-          {/*    options={[].map((option: any) => ({*/}
-          {/*      key: option.id,*/}
-          {/*      value: option.id,*/}
-          {/*      label: option.name,*/}
-          {/*    }))}*/}
-          {/*    filterOption={false}*/}
-          {/*    onSelect={(id: number) => {*/}
-          {/*      setParams({ ...params, "filter[status_id]": id });*/}
-          {/*    }}*/}
-          {/*    notFoundContent={null}*/}
-          {/*    value={""}*/}
-          {/*    className={"searchMode " + classes.input}*/}
-          {/*    prefix={<MagnifyingGlass className={classes.icon} />}*/}
-          {/*    loading={assetsLoading}*/}
-          {/*    showSearch*/}
-          {/*  />*/}
-          {/*</div>*/}
           <InputFilterSelect
             className={classes.input}
             placeholder="Все"
@@ -382,6 +360,9 @@ export default function TableForContact(props: any) {
       ),
       dataIndex: "created_at",
       width: "11%",
+        render: (createdAt: any) => (
+            <span style={{ color: "#3B4750" }}>{moment(createdAt).format("DD.MM.YYYY HH:mm:ss")}</span>
+        ),
     },
     {
       title: () => (
@@ -405,6 +386,9 @@ export default function TableForContact(props: any) {
       ),
       dataIndex: "updated_at",
       width: "11%",
+        render: (updatedAt: any) => (
+            <span style={{ color: "#3B4750" }}>{moment(updatedAt).format("DD.MM.YYYY HH:mm:ss")}</span>
+        ),
     },
   ];
 
@@ -420,18 +404,6 @@ export default function TableForContact(props: any) {
       created_at,
       updated_at,
     }) => {
-      // console.log({
-      //   key: id,
-      //   id,
-      //   typeName: type.name,
-      //   full_name,
-      //   branches,
-      //   group,
-      //   crms,
-      //   author,
-      //   created_at,
-      //   updated_at,
-      // });
 
       return {
         key: id,
@@ -461,9 +433,7 @@ export default function TableForContact(props: any) {
         newParams[key] = value;
       }
     });
-    console.log(params);
-
-    fetchContactsList({ params: newParams });
+      fetchContactsList({ params: newParams });
   }, [params]);
 
   useEffect(() => {

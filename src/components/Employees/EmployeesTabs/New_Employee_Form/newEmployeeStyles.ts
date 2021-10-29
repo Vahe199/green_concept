@@ -185,6 +185,14 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             fontSize: 16,
             color: '#3B4750'
         },
+        typographyValue3:{
+            display:'flex',
+            flexDirection:'column',
+            //width:"20%",
+            textAlign:"left",
+            fontSize: 16,
+            color: '#3B4750'
+        },
         inputMask: {
             "& input" : {
                 fontSize: 16,
@@ -244,7 +252,8 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
         },
         monthPiker:{
             width:91,
-            height:30,
+            height:27,
+            textAlign: 'center',
             paddingRight:4,
             paddingLeft:8,
             "& input": {
@@ -254,9 +263,10 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
         },
         yearPiker:{
             width:52,
-            height:30,
+            height:27,
             marginRight:24,
             paddingRight:0,
+            textAlign: 'center',
             paddingLeft:4,
             "& input": {
                 fontSize: "16px !important",

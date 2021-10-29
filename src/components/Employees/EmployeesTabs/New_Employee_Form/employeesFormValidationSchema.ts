@@ -5,14 +5,18 @@ export const validationSchemaEmployeesQualificationForm = yup.object({
     employee_skills: yup.array()
         .of(
             yup.object().shape({
-                educational_institution_name: yup.string().required("Обязательное поле")
+                educational_institution_name: yup.string().required("Обязательно к заполнению")
                     .max(300, " не больше 300 символов"),
-                education_document: yup.string().required("Обязательное поле")
+                education_document: yup.string().required("Обязательно к заполнению")
                     .max(300, " не больше 300 символов"),
-                expire_date: yup.string().required("Обязательное поле"),
+                expire_date: yup.string().required("Обязательно к заполнению"),
             })
         )
-        .required("Обязательное поле"),
+        .required("Обязательно к заполнению"),
+    // experience_years: yup.number().transform(value => (isNaN(value) ? undefined : value)),
+    // experience_months: yup.number().transform(value => (isNaN(value) ? undefined : value)),
+    experience_years: yup.string().matches(/^[0-9]+$/, "Толко число"),
+    experience_months: yup.string().matches(/^[0-9]+$/, "Толко число"),
 });
 
 export const validationSchemaEmployeesGeneralInfForm = yup.object({

@@ -77,8 +77,7 @@ export default function EmployeesTable(props: any) {
       return {
         key: id,
         id,
-        FIO: `${surname} ${firstname} ${middlename ? middlename : '' +
-            ''}`,
+        FIO: `${surname} ${firstname} ${middlename ? middlename : ''}`,
         company:company ? company : {},
         region:region ? region :{},
         directions:directions.length > 0 ? directions :[],
@@ -142,7 +141,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "id",
-      width: 148,
+      width: '8%',
       render: (id: number) => <span style={{ color: "#3B4750" }}>{id}</span>,
     },
     {
@@ -167,7 +166,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "FIO",
-      width: 300,
+      width: 250,
       render: (FIO: string) => <span style={{ color: "#3B4750", fontSize: 15 }}>{FIO}</span>,
     },
     {
@@ -190,7 +189,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "company",
-      width: 289,
+      width: 230,
       render: (company: any) => (
         <span style={{ color: "#3B4750", fontSize: 15 }}>{company?.name}</span>
       ),
@@ -215,7 +214,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "region",
-      width: 172,
+      width: '10%',
       render: (region: any) => (
         <span style={{ color: "#3B4750", fontSize: 15 }}>{region?.name}</span>
       ),
@@ -239,7 +238,7 @@ export default function EmployeesTable(props: any) {
           />
         </div>
       ),
-      width: 180,
+      width: '11%',
       dataIndex: "directions",
       render: (directions: any[]) => {
         return directions?.map((direction: any) => {
@@ -267,7 +266,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "position",
-      width: 189,
+      width: '12%',
       render: (position: any) => (
         <span style={{ color: "#3B4750", fontSize: 15 }}>{position?.name}</span>
       ),
@@ -282,7 +281,7 @@ export default function EmployeesTable(props: any) {
         </>
       ),
       dataIndex: "phones",
-      width: 130,
+      width: '11%',
       render: (phones: any[]) => {
         return phones?.map((phone: any) => {
           return <div key={phone?.id} style={{ color: "#3B4750", fontSize: 15 }}>{phone?.phone}</div>;

@@ -6,7 +6,7 @@ import { useActions } from "../../../redux/type_redux_hook/useAction";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import { PencilSimpleIcon } from "../../../IMG/SVG/PencilSimpleIcon";
 import { ContractorBankDetailType } from "../Forms/BankAccountForm/CreatEditBankAccount";
-import clsx from "clsx";
+import get from "lodash/get";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,7 +67,8 @@ export const BankDetails: React.FC<BankProps> = ({
   );
 
   const { AuthorData } = useTypedSelector((state) => state.author);
-  const { id }: any = AuthorData;
+
+  const id: any = get(AuthorData, "contractor.id", "");
 
   const fieldsMapper = [
     { id: 1, title: "БИК", field: "bik" },
@@ -79,9 +80,9 @@ export const BankDetails: React.FC<BankProps> = ({
 
   const { fetchContractorBankDetails } = useActions();
 
-  // useEffect(() => {
-  //   fetchContractorBankDetails(id);
-  // }, []);
+  useEffect(() => {
+    if (id) fetchContractorBankDetails(id);
+  }, []);
 
   const classes = useStyles();
   const Details = (props: any) => {
@@ -92,7 +93,7 @@ export const BankDetails: React.FC<BankProps> = ({
         </Typography>
         <Typography
           variant={"button"}
-          className={clsx(classes.description, classes.textSmall)}
+          className={classes.description + " " + classes.textSmall}
         >
           {props.value}
         </Typography>

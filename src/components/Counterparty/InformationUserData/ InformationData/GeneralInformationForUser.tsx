@@ -54,7 +54,6 @@ export const GeneralInformationForUser: React.FC<Props> = ({
 
    const contractorType= assetsOptionsCounterpartyType.find((type:any) =>type.value == contractor_type_id)
 
-debugger
   const classes = useStyles();
   return (
     <div className={classes.root}>

@@ -42,7 +42,6 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
 
     const searchOptions = SearchContactPerson()
     const {assetsOptionsDirections} = InputAssetsOptions();
-debugger
 const initialValues = {
 
     contact_employees: get(contractor_contacts, "employees", [{direction_id:'', employee_id: "", info: ""}]).map(

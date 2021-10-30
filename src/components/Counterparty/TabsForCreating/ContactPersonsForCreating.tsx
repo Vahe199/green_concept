@@ -30,44 +30,44 @@ import BackToAddress from "../../Utils/BackToAddress";
 import get from "lodash/get";
 import pick from "lodash/pick";
 
-type PersonContactType = {
-  PersonContact: {
-    firstname: string;
-    middlename: string;
-    surname: string;
-    contractor_type_id: string;
-    sex: string;
-    birthdate: string;
-    delivery_address: string;
-    emails: [
-      {
-        [key: string]: any;
-      }
-    ];
+// type contractor_contactsType = {
+//   contractor_contacts: {
+//     firstname: string;
+//     middlename: string;
+//     surname: string;
+//     contractor_type_id: string;
+//     sex: string;
+//     birthdate: string;
+//     delivery_address: string;
+//     emails: [
+//       {
+//         [key: string]: any;
+//       }
+//     ];
 
-    phones: { phone: string; phone_type: string }[];
-    contact_contractors: {
-      main: number;
-      role_id: any;
-      position: string;
-      contractor_id: number;
-    };
-    contact_employees: {
-      direction_id: string;
-      employee_id: number;
-      info: string;
-    }[];
-    contact_congratulations: {
-      name: string;
-      congratulation_type_id: number;
-      other: string;
-    }[];
-    branches: string[];
-    [key: string]: any;
-  };
-  error: boolean;
-  success: boolean;
-};
+//     phones: { phone: string; phone_type: string }[];
+//     contact_contractors: {
+//       main: number;
+//       role_id: any;
+//       position: string;
+//       contractor_id: number;
+//     };
+//     contact_employees: {
+//       direction_id: string;
+//       employee_id: number;
+//       info: string;
+//     }[];
+//     contact_congratulations: {
+//       name: string;
+//       congratulation_type_id: number;
+//       other: string;
+//     }[];
+//     branches: string[];
+//     [key: string]: any;
+//   };
+//   error: boolean;
+//   success: boolean;
+// };
 
 export const ContactPersonsForCreating: React.FC = () => {
   const {
@@ -75,13 +75,13 @@ export const ContactPersonsForCreating: React.FC = () => {
     recoveryContractorContactState,
     getContactPersonsDataWithId,
   } = useActions();
-  const { assets,  load: assetsLoading } = useTypedSelector(
+  const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
   const { types_and_services }: any = assets;
   const { AuthorData } = useTypedSelector((state) => state.author);
-  const { id }: any = AuthorData;
-  const { PersonContact, error, success } = useTypedSelector(
+  const id: any = get(AuthorData, "contractor.id", "");
+  const { contractor_contacts, error, success } = useTypedSelector(
     (state) => state.contactPerson
   );
 
@@ -103,23 +103,21 @@ export const ContactPersonsForCreating: React.FC = () => {
     }
   }, [success, error]);
 
-
-
   const [contractorId, setContractorId] = useState(1);
   const [attachedContact, onAttachedContact] = useState("");
   const [showModal, setShowModal] = useState(false);
   const searchOptions = SearchContactPerson();
 
-
-
   const [branch, setBranch] = useState("");
   // const filteredBranches = branches.filter(({ name }: { name: string }) => name.includes(branch))
 
-  const assetsOptionsServiceType = types_and_services[
-    contractorId - 1
-  ]?.services?.map((option: any) => ({
+  const assetsOptionsServiceType = get(
+    types_and_services,
+    `${contractorId - 1}.services`,
+    []
+  )?.map((option: any) => ({
     key: option.id,
-    value: option.id ? option.id : 0,
+    value: option?.id ? option?.id : 0,
     label: option.name,
   }));
 
@@ -153,7 +151,7 @@ export const ContactPersonsForCreating: React.FC = () => {
 
   const initialValues = {
     // @ts-ignore
-    ...pick(PersonContact, [
+    ...pick(contractor_contacts, [
       "firstname",
       "middlename",
       "surname",
@@ -166,29 +164,32 @@ export const ContactPersonsForCreating: React.FC = () => {
     ]),
 
     // @ts-ignore
-    branches: get(PersonContact, "branches", []).map((branch: any) =>
+    branches: get(contractor_contacts, "branches", []).map((branch: any) =>
       get(branch, "id", "")
     ),
     contact_contractors: {
-      ...pick(get(PersonContact, "contractors[0]", {}), [
+      ...pick(get(contractor_contacts, "contractors[0]", {}), [
         "main",
         "role_id",
         "position",
         "contractor_id",
       ]),
-      contractor_id: get(PersonContact, "contractors[0]id", ""),
+      contractor_id: get(contractor_contacts, "contractors[0]id", ""),
     },
-    contact_employees: get(PersonContact, "employees", []).map(
+    contact_employees: get(contractor_contacts, "employees", []).map(
       (employee: any) => pick(employee, ["direction_id", "employee_id", "info"])
     ),
-    contact_congratulations: get(PersonContact, "congratulations", []).map(
-      (congratulation: any) =>
-        pick(congratulation, ["name", "congratulation_type_id", "other"])
+    contact_congratulations: get(
+      contractor_contacts,
+      "congratulations",
+      []
+    ).map((congratulation: any) =>
+      pick(congratulation, ["name", "congratulation_type_id", "other"])
     ),
-    emails: get(PersonContact, "emails", []).map((email: any) =>
+    emails: get(contractor_contacts, "emails", []).map((email: any) =>
       pick(email, ["email"])
     ),
-    phones: get(PersonContact, "phones", []).map((phone: any) =>
+    phones: get(contractor_contacts, "phones", []).map((phone: any) =>
       pick(phone, ["phone", "phone_type"])
     ),
   };
@@ -586,10 +587,11 @@ export const ContactPersonsForCreating: React.FC = () => {
                       </ValidationErrorWrapper>
                     </div>
                   </div>
-                  {contractorId !== 1 && <div className={classes.label}>
-                    <span>Тип услуг</span>
-                    <div style={{width: "60%"}}>
-                      <ValidationErrorWrapper
+                  {contractorId !== 1 && (
+                    <div className={classes.label}>
+                      <span>Тип услуг</span>
+                      <div style={{ width: "60%" }}>
+                        <ValidationErrorWrapper
                           inputClassName="ant-select-selector"
                           error={
                             touched.service_type_id &&
@@ -598,21 +600,22 @@ export const ContactPersonsForCreating: React.FC = () => {
                           helperText={
                             touched.service_type_id && errors.service_type_id
                           }
-                      >
-                        <InputFilterSelectedType
+                        >
+                          <InputFilterSelectedType
                             // className={classes.input}
                             name="service_type_id"
                             handleChange={(value: any) =>
-                                setFieldValue("service_type_id", value)
+                              setFieldValue("service_type_id", value)
                             }
                             value={values.service_type_id}
                             options={assetsOptionsServiceType}
                             placeholder="Выберите"
                             loading={assetsLoading}
-                        />
-                      </ValidationErrorWrapper>
+                          />
+                        </ValidationErrorWrapper>
+                      </div>
                     </div>
-                  </div>}
+                  )}
                   <div className={classes.label}>
                     <span>Отрасль</span>
                     <div style={{ width: "60%" }}>
@@ -723,7 +726,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                   );
                                                 }}
                                                 className={classes.inputMask}
-                                                autoComplete={'off'}
+                                                autoComplete={"off"}
                                                 placeholder={"7 999 999 99 99"}
                                                 mask="1 111 111 11 11"
                                                 prefix={<>+</>}
@@ -848,7 +851,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                   );
                                                 }}
                                                 className={classes.inputMask}
-                                                autoComplete={'off'}
+                                                autoComplete={"off"}
                                                 placeholder={"7 999 999 99 99"}
                                                 mask="1 111 111 11 11"
                                                 prefix={<>+</>}

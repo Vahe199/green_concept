@@ -8,7 +8,8 @@ import * as yup from "yup";
 import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
 import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
-import {Input} from "antd";
+import { Input } from "antd";
+import get from "lodash/get";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: "start",
         height: "30px",
         backgroundColor: "transparent",
-        fontWeight:400,
+        fontWeight: 400,
         fontSize: 16,
       },
       "& .MuiFormHelperText-root": {
@@ -49,16 +50,16 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     input: {
       fontSize: 16,
-      '&::placeholder': {
+      "&::placeholder": {
         fontSize: 16,
         fontWeight: 400,
-      }
+      },
     },
     textInTable: {
       color: "#3B4750",
       fontWeight: 500,
       fontSize: 16,
-      width: '25%',
+      width: "25%",
     },
     label: {
       display: "flex",
@@ -77,9 +78,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 15,
       fontWeight: 400,
       marginLeft: 24,
-      height:30,
+      height: 30,
       width: 170,
-       whiteSpace:"nowrap",
+      whiteSpace: "nowrap",
       paddingTop: 4.5,
       paddingBottom: 4.5,
       paddingRight: 16,
@@ -158,7 +159,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
   setContractorBankDetail,
 }) => {
   const { AuthorData } = useTypedSelector((state) => state.author);
-  const { id }: any = AuthorData;
+  const id: any = get(AuthorData, "contractor.id", "");
 
   const { loading } = useTypedSelector((state) => state.contractorBankDetails);
 
@@ -166,6 +167,7 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
 
   const { insertContractorBankDetails, updateContractorBankDetails } =
     useActions();
+  console.log(id);
 
   const formik = useFormik({
     initialValues: contractorBankDetail,
@@ -175,6 +177,8 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
       if (contractorBankDetail && contractorBankDetail.id) {
         updateContractorBankDetails(contractorBankDetail.id, data);
       } else {
+        console.log(data);
+
         insertContractorBankDetails(data);
       }
       setTimeout(() => {
@@ -200,10 +204,14 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
             width: "100%",
           }}
         >
-          <span style={{
-            color: '#3B4750',
-            fontSize: '16px',
-          }} >Основной банковский счет</span>
+          <span
+            style={{
+              color: "#3B4750",
+              fontSize: "16px",
+            }}
+          >
+            Основной банковский счет
+          </span>
           <Button
             type="submit"
             color="primary"
@@ -223,20 +231,21 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
                 justifyContent: "space-between",
               }}
             >
-              <div style={{width:"70%"}}>
+              <div style={{ width: "70%" }}>
                 <ValidationErrorWrapper
-                    inputClassName="ant-input"
-                      error={formik.touched.bik && Boolean(formik.errors.bik)}
-                      helperText={formik.touched.bik && formik.errors.bik}
+                  inputClassName="ant-input"
+                  error={formik.touched.bik && Boolean(formik.errors.bik)}
+                  helperText={formik.touched.bik && formik.errors.bik}
                 >
                   <Input
-                      name="bik"
-                      style={{ width: "100%" }}
-                      onChange={formik.handleChange}
-                      autoComplete={'off'}
-                      className={classes.input}
-                      value={formik.values.bik}
-                      placeholder={"1234556789101112"} />
+                    name="bik"
+                    style={{ width: "100%" }}
+                    onChange={formik.handleChange}
+                    autoComplete={"off"}
+                    className={classes.input}
+                    value={formik.values.bik}
+                    placeholder={"1234556789101112"}
+                  />
                 </ValidationErrorWrapper>
               </div>
               {/*<TextField*/}
@@ -260,20 +269,21 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
           </div>
           <div className={classes.label}>
             <span className={classes.textInTable}>Наименование банка</span>
-            <div style={{width:"75%"}}>
+            <div style={{ width: "75%" }}>
               <ValidationErrorWrapper
-                  inputClassName="ant-input"
-                    error={formik.touched.name && Boolean(formik.errors.name)}
-                    helperText={formik.touched.name && formik.errors.name}
+                inputClassName="ant-input"
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
               >
                 <Input
-                    name="name"
-                    style={{ width: "100%" }}
-                    onChange={formik.handleChange}
-                    autoComplete={'off'}
-                    className={classes.input}
-                    value={formik.values.name}
-                    placeholder={"Наименование банка"} />
+                  name="name"
+                  style={{ width: "100%" }}
+                  onChange={formik.handleChange}
+                  autoComplete={"off"}
+                  className={classes.input}
+                  value={formik.values.name}
+                  placeholder={"Наименование банка"}
+                />
               </ValidationErrorWrapper>
             </div>
             {/*<TextField*/}
@@ -289,20 +299,21 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
           </div>
           <div className={classes.label}>
             <span className={classes.textInTable}>Город</span>
-            <div style={{width:"75%"}}>
+            <div style={{ width: "75%" }}>
               <ValidationErrorWrapper
-                  inputClassName="ant-input"
-                  error={formik.touched.city && Boolean(formik.errors.city)}
-                  helperText={formik.touched.city && formik.errors.city}
+                inputClassName="ant-input"
+                error={formik.touched.city && Boolean(formik.errors.city)}
+                helperText={formik.touched.city && formik.errors.city}
               >
                 <Input
-                    name="city"
-                    style={{ width: "100%" }}
-                    onChange={formik.handleChange}
-                    autoComplete={'off'}
-                    className={classes.input}
-                    value={formik.values.city}
-                    placeholder={"Город"} />
+                  name="city"
+                  style={{ width: "100%" }}
+                  onChange={formik.handleChange}
+                  autoComplete={"off"}
+                  className={classes.input}
+                  value={formik.values.city}
+                  placeholder={"Город"}
+                />
               </ValidationErrorWrapper>
             </div>
             {/*<TextField*/}
@@ -318,20 +329,21 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
           </div>
           <div className={classes.label}>
             <span className={classes.textInTable}>К/c</span>
-            <div style={{width:"75%"}}>
+            <div style={{ width: "75%" }}>
               <ValidationErrorWrapper
-                  inputClassName="ant-input"
-                  error={formik.touched.ks && Boolean(formik.errors.ks)}
-                  helperText={formik.touched.ks && formik.errors.ks}
+                inputClassName="ant-input"
+                error={formik.touched.ks && Boolean(formik.errors.ks)}
+                helperText={formik.touched.ks && formik.errors.ks}
               >
                 <Input
-                    name="ks"
-                    style={{ width: "100%" }}
-                    onChange={formik.handleChange}
-                    autoComplete={'off'}
-                    className={classes.input}
-                    value={formik.values.ks}
-                    placeholder={"123456789101112"} />
+                  name="ks"
+                  style={{ width: "100%" }}
+                  onChange={formik.handleChange}
+                  autoComplete={"off"}
+                  className={classes.input}
+                  value={formik.values.ks}
+                  placeholder={"123456789101112"}
+                />
               </ValidationErrorWrapper>
             </div>
             {/*<TextField*/}
@@ -347,20 +359,21 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
           </div>
           <div className={classes.label}>
             <span className={classes.textInTable}>Р/c</span>
-            <div style={{width:"75%"}}>
+            <div style={{ width: "75%" }}>
               <ValidationErrorWrapper
-                  inputClassName="ant-input"
-                  error={formik.touched.rs && Boolean(formik.errors.rs)}
-                  helperText={formik.touched.rs && formik.errors.rs}
+                inputClassName="ant-input"
+                error={formik.touched.rs && Boolean(formik.errors.rs)}
+                helperText={formik.touched.rs && formik.errors.rs}
               >
                 <Input
-                    name="rs"
-                    style={{ width: "100%" }}
-                    onChange={formik.handleChange}
-                    autoComplete={'off'}
-                    className={classes.input}
-                    value={formik.values.rs}
-                    placeholder={"123456789101112"} />
+                  name="rs"
+                  style={{ width: "100%" }}
+                  onChange={formik.handleChange}
+                  autoComplete={"off"}
+                  className={classes.input}
+                  value={formik.values.rs}
+                  placeholder={"123456789101112"}
+                />
               </ValidationErrorWrapper>
             </div>
             {/*<TextField*/}
@@ -377,19 +390,19 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
           <div className={classes.label}>
             <span className={classes.textInTable}>Счет активный</span>
             <span style={{ width: "82%" }}>
-                <Checkbox
-                    defaultChecked
-                    name="is_active"
-                    color="default"
-                    inputProps={{ "aria-label": "checkbox with default color" }}
-                    value={formik.values.is_active ? true : false}
-                    onChange={(e) =>
-                        formik.setFieldValue("is_active", e.target.checked ? 1 : 0)
-                    }
-                    icon={<CheckSquareUnChecked color="#ADB3B8" />}
-                    checkedIcon={<CheckSquareChecked color="#5B6770" />}
-                    // todo, not implemented
-                />
+              <Checkbox
+                defaultChecked
+                name="is_active"
+                color="default"
+                inputProps={{ "aria-label": "checkbox with default color" }}
+                value={formik.values.is_active ? true : false}
+                onChange={(e) =>
+                  formik.setFieldValue("is_active", e.target.checked ? 1 : 0)
+                }
+                icon={<CheckSquareUnChecked color="#ADB3B8" />}
+                checkedIcon={<CheckSquareChecked color="#5B6770" />}
+                // todo, not implemented
+              />
             </span>
           </div>
         </Paper>

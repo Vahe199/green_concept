@@ -74,7 +74,6 @@ export const counterpartiesApi = {
     });
   },
   changeContractorsGeneralData(formData: any, id: any) {
-    debugger
     return axios.request({
       method: "put",
       url: `contractors/general_info/${id}`,
@@ -82,7 +81,6 @@ export const counterpartiesApi = {
     });
   },
   changeContractorsCompanyDetailsData(formData: any, id: any) {
-    debugger
     return axios.request({
       method: "put",
       url: `contractors/about_company/${id}`,
@@ -97,8 +95,7 @@ export const counterpartiesApi = {
     });
   },
   //contacts update
-  changeContactGeneralInfoData(id: any ,formData: any) {
-    debugger
+  changeContactGeneralInfoData(id: any, formData: any) {
     return axios.request({
       method: "put",
       url: `contacts/general_info/${id}`,

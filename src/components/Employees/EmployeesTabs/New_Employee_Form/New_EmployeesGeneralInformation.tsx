@@ -90,7 +90,6 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                             action.resetForm();
                             setAvatarPreview("")
                             console.log(res,"res")
-                            debugger
                             return res;
                         })
                         .catch((e:any) => {

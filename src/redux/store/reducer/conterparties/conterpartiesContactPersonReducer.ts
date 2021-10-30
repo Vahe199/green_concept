@@ -5,11 +5,9 @@ import {
 } from "../../../types/contractor_contact_data";
 
 const initialState: ContractorContactDataState = {
-  ContactList:[],
-  ContactPerson: [],
+  ContactList: [],
   NewContactPerson: [],
-  PersonContact: {},
-  contractor_contacts:[],
+  contractor_contacts: [],
   loading: false,
   error: false,
   success: false,
@@ -21,7 +19,7 @@ export const counterpartiesContactPersonReducer = (
   switch (action.type) {
     case ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA:
       return {
-    ...state,
+        ...state,
         error: false,
         loading: true,
         success: false,
@@ -46,7 +44,7 @@ export const counterpartiesContactPersonReducer = (
     case ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID:
       return {
         ...state,
-        contractor_contacts:action.payload,
+        contractor_contacts: action.payload,
         error: false,
         loading: false,
         success: true,
@@ -59,24 +57,6 @@ export const counterpartiesContactPersonReducer = (
         success: false,
       };
 
-    case ContractorContactDataActionType.GET_CONTRACTOR_CONTACT_LIST_DATA:
-      return {
-        ...state,
-        ContactPerson: action.payload,
-        error: false,
-        loading: false,
-        success: false,
-      };
-
-    case ContractorContactDataActionType.GET_CONTRACTOR_CONTACT_DATA_WITH_ID:
-      return {
-        ...state,
-        PersonContact: action.payload,
-        error: false,
-        loading: false,
-        success: false,
-      };
-
     case ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA_ERROR:
       return {
         ...state,
@@ -86,11 +66,7 @@ export const counterpartiesContactPersonReducer = (
       };
 
     case ContractorContactDataActionType.RECOVERY_CONTRACTOR_CONTACT_DATA_STATE:
-      return { ...state,
-        error: false,
-        loading: false,
-        success: false,
-      };
+      return { ...state, error: false, loading: false, success: false };
 
     default:
       return state;

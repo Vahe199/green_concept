@@ -100,9 +100,9 @@ const useStyles = (loading: boolean) =>
       bottom: 0,
       top: "70%",
     },
-      titleText: {
-          fontsize: "16px",
-      },
+    titleText: {
+      fontsize: "16px",
+    },
     searchWraper: {
       position: "relative",
 
@@ -128,8 +128,8 @@ const useStyles = (loading: boolean) =>
 
 export default function ModalListOfContacts(props: any) {
   const { attachedContact, onAttachedContact, onCancel, ...modalProps } = props;
-  const { getContactPersonsListData } = useActions();
-  const { ContactPerson, loading } = useTypedSelector(
+  const { fetchContactsList } = useActions();
+  const { ContactList, loading } = useTypedSelector(
     (state) => state.contactPerson
   );
   const { assets, load: assetsLoading } = useTypedSelector(
@@ -165,7 +165,7 @@ export default function ModalListOfContacts(props: any) {
   const getFilteredFullNameOptions = () => {
     const filteredFullName =
       fullName.length > 3
-        ? ContactPerson.filter(({ fio = "" }: { fio: string }) =>
+        ? ContactList.filter(({ fio = "" }: { fio: string }) =>
             fio
               .toString()
               .toLocaleUpperCase()
@@ -199,14 +199,15 @@ export default function ModalListOfContacts(props: any) {
   const columns = [
     {
       title: () => (
-          <>
-              <span className={classes.titleText}>&#x2116;</span>
-              <div>
-                  <InputFilterSelect style={{visibility:"hidden"}}
-                                     className={classes.input}
-                  />
-              </div>
-          </>
+        <>
+          <span className={classes.titleText}>&#x2116;</span>
+          <div>
+            <InputFilterSelect
+              style={{ visibility: "hidden" }}
+              className={classes.input}
+            />
+          </div>
+        </>
       ),
       dataIndex: "id",
       width: "5%",
@@ -375,7 +376,7 @@ export default function ModalListOfContacts(props: any) {
       }
     });
 
-    getContactPersonsListData({ params: newParams });
+    fetchContactsList({ params: newParams });
   }, [params]);
 
   return (
@@ -390,7 +391,7 @@ export default function ModalListOfContacts(props: any) {
         }}
       >
         <span style={{ fontSize: 16, fontWeight: 500 }}>
-          Найдено {ContactPerson.length} из {ContactPerson.length}
+          Найдено {ContactList.length} из {ContactList.length}
         </span>
         <div onClick={() => onCancel()}>
           <img src={close} width={"20"} height={"20"} />
@@ -403,8 +404,8 @@ export default function ModalListOfContacts(props: any) {
           marginLeft: 16,
           marginBottom: 8,
           marginTop: 21,
-          backgroundColor: '#ADB3B8',
-          opacity: 0.5
+          backgroundColor: "#ADB3B8",
+          opacity: 0.5,
         }}
       />
       <Table
@@ -416,7 +417,7 @@ export default function ModalListOfContacts(props: any) {
             cursor: "pointer",
           },
         })}
-        dataSource={ContactPerson}
+        dataSource={ContactList}
         columns={columns}
         pagination={false}
         // scroll={{ y: window.innerHeight - 328 }}

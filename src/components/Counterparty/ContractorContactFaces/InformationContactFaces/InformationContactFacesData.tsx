@@ -9,7 +9,9 @@ import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: "4%",
+      margin: "4% 32px 4% 4%",
+
+      // marginRight:32,
       "& .MuiIconButton-root.Mui-disabled": {
         color: "#5B6770 !important",
       },

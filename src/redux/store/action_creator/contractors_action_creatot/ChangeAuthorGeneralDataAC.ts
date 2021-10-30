@@ -7,9 +7,7 @@ import { counterpartiesApi } from "../../../../api/api";
 
 export const changeAuthorGeneralData =
   (formData: any, id: number, errorMessage: string) =>
-
   async (dispatch: Dispatch<AuthorDataAction>) => {
-debugger
     try {
       dispatch({
         type: AuthorDataActionType.CHANGE_AUTHOR_DATA,
@@ -21,7 +19,7 @@ debugger
 
       dispatch({
         type: AuthorDataActionType.CHANGE_AUTHOR_DATA_SUCCESS,
-        payload: data
+        payload: data,
       });
     } catch (e) {
       dispatch({

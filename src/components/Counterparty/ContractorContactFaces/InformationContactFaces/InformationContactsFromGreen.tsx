@@ -1,14 +1,14 @@
 import React from "react";
 
-import {Divider, Paper} from "@material-ui/core";
+import { Divider, Paper } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
-import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: "4%",
+      margin: "4% 4% 4% 0",
     },
 
     paper: {
@@ -17,12 +17,12 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#3B4750",
       boxShadow: "none",
     },
-      paper2: {
-          padding: 16, //10
-          height: 'auto',
-          color: "#3B4750",
-          boxShadow: "none",
-      },
+    paper2: {
+      padding: 16, //10
+      height: "auto",
+      color: "#3B4750",
+      boxShadow: "none",
+    },
     label: {
       display: "flex",
       alignItems: "center",
@@ -50,13 +50,20 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
 }) => {
   const classes = useStyles();
   const employeesState = {
-      employees:[ {info:"",
-          direction:{name:""},
-          employee:{surname:"",firstname:"",middlename:""}
-      }]
-  }
-    const { contractor_contacts }:any = useTypedSelector((state) => state.contactPerson);
-      const {employees } :any= contractor_contacts?.employees ? contractor_contacts : employeesState
+    employees: [
+      {
+        info: "",
+        direction: { name: "" },
+        employee: { surname: "", firstname: "", middlename: "" },
+      },
+    ],
+  };
+  const { contractor_contacts }: any = useTypedSelector(
+    (state) => state.contactPerson
+  );
+  const { employees }: any = contractor_contacts?.employees
+    ? contractor_contacts
+    : employeesState;
 
   return (
     <div className={classes.root}>
@@ -74,31 +81,46 @@ export const InformationContactsFromGreen: React.FC<InfoProps> = ({
         </span>
       </div>
       <Paper className={classes.paper2}>
-          {employees.map((emp:any,index:number)=>(
-              <div>
-                  {index != 0 && <div
-                                  style={{backgroundColor:"#ADB3B8", width:"100%",height:1,opacity:0.5,
-                                              marginTop: 0, marginBottom: 16}}/>}
-              <div className={classes.label}>
-          <span className={classes.spanTitle}>Направление</span>
-          <span style={{ width: "60%" }}>
-              {emp.direction?.name}
-          </span>
-        </div>
-        <div className={classes.label}>
-          <span className={classes.spanTitle}>Контактное лицо</span>
-          <samp style={{ width: "60%" }}>
-              {emp.employee.surname + " " + emp.employee.firstname + " " + emp.employee.middlename}</samp>
-        </div>
+        {employees.map((emp: any, index: number) => (
+          <div>
+            {index != 0 && (
+              <div
+                style={{
+                  backgroundColor: "#ADB3B8",
+                  width: "100%",
+                  height: 1,
+                  opacity: 0.5,
+                  marginTop: 0,
+                  marginBottom: 16,
+                }}
+              />
+            )}
+            <div className={classes.label}>
+              <span className={classes.spanTitle}>Направление</span>
+              <span style={{ width: "60%" }}>{emp.direction?.name}</span>
+            </div>
+            <div className={classes.label}>
+              <span className={classes.spanTitle}>Контактное лицо</span>
+              <samp style={{ width: "60%" }}>
+                {emp.employee.surname +
+                  " " +
+                  emp.employee.firstname +
+                  " " +
+                  emp.employee.middlename}
+              </samp>
+            </div>
 
-              <div className={classes.label} style={{alignItems: "self-start"}}>
-                  <span className={classes.spanTitle}>Дополнительная информация</span>
+            <div className={classes.label} style={{ alignItems: "self-start" }}>
+              <span className={classes.spanTitle}>
+                Дополнительная информация
+              </span>
 
-                  <span style={{width: "60%", maxHeight: 164, overflowY: "auto"}}>
-        {emp.info}
-          </span>
-              </div>
-              </div>))}
+              <span style={{ width: "60%", maxHeight: 164, overflowY: "auto" }}>
+                {emp.info}
+              </span>
+            </div>
+          </div>
+        ))}
       </Paper>
     </div>
   );

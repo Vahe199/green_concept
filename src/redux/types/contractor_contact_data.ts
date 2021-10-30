@@ -1,8 +1,6 @@
 export interface ContractorContactDataState {
   ContactList: any[];
-  ContactPerson: any[];
   NewContactPerson: any[];
-  PersonContact: { [key: string]: any };
   contractor_contacts:any[];
   loading: boolean;
   error: boolean | string;

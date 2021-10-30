@@ -6,8 +6,8 @@ import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelect
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginLeft: "4%",
-      marginRight: "4%",
+      margin: "4% 4% 4% 0",
+     
     },
     paper: {
       padding: 16, //10

@@ -29,11 +29,11 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
     const {id,educations}:any = employee;
     useEffect(()=>{
         if(error){
-            notifyError();
+            notifyError("некорректные данные");
             recoveryEmployeesQualificationState()
         }
         if(success){
-            notifySuccess();
+            notifySuccess("Изменение прошло успешно");
             recoveryEmployeesQualificationState()
             fetchEmployeeByIdtAC(id)
             setEmployeeEducation(true)

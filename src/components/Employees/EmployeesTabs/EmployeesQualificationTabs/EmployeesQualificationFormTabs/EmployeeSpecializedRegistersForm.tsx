@@ -22,11 +22,11 @@ const {recoveryEmployeesQualificationState,updateEmployeeRegisterDataAC} = useAc
 
     useEffect(()=>{
         if(error){
-            notifyError();
+            notifyError("некорректные данные");
             recoveryEmployeesQualificationState()
         }
         if(success){
-            notifySuccess();
+            notifySuccess("Изменение прошло успешно");
             recoveryEmployeesQualificationState()
             setEmployeeSpecialized(true)
         }

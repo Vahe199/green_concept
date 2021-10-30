@@ -118,7 +118,7 @@ const CreateCounterparty = (props: any) => {
       <Paper square className={classes.root}>
         <Typography variant="subtitle1" noWrap className={classes.typography}>
           {params.item === "author"
-            ? `${contractor?.full_name ? contractor?.full_name : "<<>>"}`
+            ? `${contractor?.full_name ? contractor?.full_name : "Контрагенты"}`
             : "Новый контрагент"}
         </Typography>
 
@@ -132,6 +132,7 @@ const CreateCounterparty = (props: any) => {
             aria-label="Новый контрагент"
           >
             <Tab value={"Общие сведения"}
+                 disabled={!contractor && params.item === "author" ?true:false}
               label={
                 <Typography variant="subtitle1" className={classes.tabStyle}>
                   Общие сведения

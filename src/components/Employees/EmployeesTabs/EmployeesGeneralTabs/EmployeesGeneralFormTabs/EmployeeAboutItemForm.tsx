@@ -22,11 +22,11 @@ const EmployeeAboutItemForm:React.FC<EmployeeFormDataProps> = ({setEmployeeAbout
     };
     useEffect( ()=>{
         if(error){
-            notifyError();
+            notifyError("некорректные данные");
              recoveryEmployeesState()
         }
         if(success_update === "ABOUT_INFO"){
-            notifySuccess();
+            notifySuccess("Изменение прошло успешно");
               recoveryEmployeesState()
             setEmployeeAboutData(true)
 

@@ -55,13 +55,13 @@ const NewEmployeesQualification:React.FC = () => {
                     // console.log (111, {...values, experience_months: moment(month).format("MM"), experience_years: 222})
                     console.log (111, {...values})
                     employeesApi.createNewEmployeeQualification(9,values ).then(res =>{
-                        notifySuccess();
+                        notifySuccess("успешно добавлен");
                         action.resetForm()
                         console.log(res.data, "res data")
                         return res
                     })
                         .catch((e)=>{
-                            notifyError();
+                            notifyError("некорректные данные");
                             return e
                         })
                 }}

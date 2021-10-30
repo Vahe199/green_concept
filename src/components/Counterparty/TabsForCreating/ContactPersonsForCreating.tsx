@@ -94,11 +94,11 @@ export const ContactPersonsForCreating: React.FC = () => {
   const search = SearchContactPerson();
   useEffect(() => {
     if (error) {
-      notifyError();
+      notifyError("некорректные данные");
       recoveryContractorContactState();
     }
     if (success) {
-      notifySuccess();
+      notifySuccess("Изменение прошло успешно");
       recoveryContractorContactState();
     }
   }, [success, error]);

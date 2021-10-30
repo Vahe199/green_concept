@@ -1,6 +1,6 @@
 import {toast} from "react-toastify";
 
-export const notifyError = () => toast.error("некорректные данные",{
+export const notifyError = (msg:any) => toast.error(msg,{
     position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
@@ -9,7 +9,7 @@ export const notifyError = () => toast.error("некорректные данн�
     draggable: true,
     progress:undefined,
 });
-export const notifySuccess = () => toast.success("подрядчик успешно добавлен",{
+export const notifySuccess = (msg:any) => toast.success(msg,{
     position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,

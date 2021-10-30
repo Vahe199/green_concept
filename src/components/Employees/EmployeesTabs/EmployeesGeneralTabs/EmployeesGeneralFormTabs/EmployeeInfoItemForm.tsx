@@ -48,11 +48,11 @@ const EmployeeInfoItemForm: React.FC<EmployeeFormDataProps> = ({
   const [avatarPreview, setAvatarPreview] = useState<any>();
   useEffect(() => {
     if (error) {
-      notifyError();
+      notifyError("некорректные данные");
       recoveryEmployeesState();
     }
     if (success_update == "EMPLOYEE_DATA") {
-      notifySuccess();
+      notifySuccess("Изменение прошло успешно");
       recoveryEmployeesState();
       setEmployeeData(true);
     }

@@ -74,11 +74,11 @@ export const GeneralInformationForCreating = () => {
   }, [contractors]);
   useEffect(() => {
     if (error) {
-      notifyError();
+      notifyError("некорректные данные");
       recoveryAuthorDataState();
     }
     if (success) {
-      notifySuccess();
+      notifySuccess("контрагент успешно добавлен");
       formikRef.current.resetForm();
       recoveryAuthorDataState();
     }

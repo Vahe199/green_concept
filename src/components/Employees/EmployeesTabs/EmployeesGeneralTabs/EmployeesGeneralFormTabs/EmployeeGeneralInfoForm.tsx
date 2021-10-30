@@ -26,11 +26,11 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
     let {region,company,directions,position,end_work_date ,start_work_date, id}:any = employee;
     useEffect( ()=>{
         if(error){
-            notifyError();
+            notifyError("некорректные данные");
             recoveryEmployeesState()
         }
         if(success_update === "GENERAL_INFO"){
-            notifySuccess();
+            notifySuccess("Изменение прошло успешно");
             recoveryEmployeesState()
             setEmployeeGeneralInfo(true)
 

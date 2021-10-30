@@ -27,11 +27,11 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
     const {skills}:any =employee;
     useEffect(()=>{
         if(error){
-            notifyError();
+            notifyError("некорректные данные");
             recoveryEmployeesQualificationState()
         }
         if(success){
-            notifySuccess();
+            notifySuccess("Изменение прошло успешно");
             recoveryEmployeesQualificationState()
             fetchEmployeeByIdtAC(employee.id)
             setEmployeeTraining(true)

@@ -86,14 +86,16 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                     employeesApi
                         .creatNewEmployee(formData)
                         .then((res) => {
-                            notifySuccess();
+                            notifySuccess("сотрудник успешно добавлена");
                             action.resetForm();
                             setAvatarPreview("")
                             console.log(res,"res")
+                            debugger
                             return res;
                         })
-                        .catch((e) => {
-                            notifyError();
+                        .catch((e:any) => {
+                            const {data}:any = e.response
+                            notifyError(`${data ? data?.message : "некорректные данные"}`);
                             console.log(e.response)
                             return e;
                         });

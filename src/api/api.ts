@@ -158,9 +158,7 @@ export const contractorApi = {
   getContractorContactData(config = {}) {
     return axios.request({ method: "get", url: "contacts", ...config });
   },
-  getContractorContactDataWithId(id: number) {
-    return axios.request({ method: "get", url: `contacts/${id}` });
-  },
+
 };
 
 export const employeesApi = {

@@ -109,7 +109,7 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
               console.log(res);
               dispatch({
                 type: ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
-                payload: data?.contact,
+                payload: data?.contact,success:true
               });
               setChangeBasicInformation(true);
             })

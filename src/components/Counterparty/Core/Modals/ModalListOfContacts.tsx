@@ -128,6 +128,7 @@ const useStyles = (loading: boolean) =>
 
 export default function ModalListOfContacts(props: any) {
   const { attachedContact, onAttachedContact, onCancel, ...modalProps } = props;
+  const [item ,setItem] = useState<number>()
   const { fetchContactsList } = useActions();
   const { ContactList, loading } = useTypedSelector(
     (state) => state.contactPerson
@@ -135,7 +136,11 @@ export default function ModalListOfContacts(props: any) {
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
-
+const getContactItem = (id:number) => {
+    setItem(id)
+    const itemData = ContactList?.find((item:any) => item.id == id)
+    onAttachedContact(itemData)
+}
   const classes = useStyles(loading)();
 
   const [params, setParams] = useState<any>({});
@@ -362,7 +367,7 @@ export default function ModalListOfContacts(props: any) {
       render: (id: number) => (
         <Radio
           style={{ height: 24, width: 24, color: "#5B6770" }}
-          checked={attachedContact === id}
+          checked={item === id}
         />
       ),
     },
@@ -375,8 +380,10 @@ export default function ModalListOfContacts(props: any) {
         newParams[key] = value;
       }
     });
-
+    if(ContactList.length < 5){
     fetchContactsList({ params: newParams });
+   }
+
   }, [params]);
 
   return (
@@ -393,7 +400,10 @@ export default function ModalListOfContacts(props: any) {
         <span style={{ fontSize: 16, fontWeight: 500 }}>
           Найдено {ContactList.length} из {ContactList.length}
         </span>
-        <div onClick={() => onCancel()}>
+        <div onClick={() => {
+            onCancel()
+            onAttachedContact({})
+        }}>
           <img src={close} width={"20"} height={"20"} />
         </div>
       </div>
@@ -410,8 +420,10 @@ export default function ModalListOfContacts(props: any) {
       />
       <Table
         onRow={(record: { id?: any }) => ({
+
           onClick: () => {
-            onAttachedContact(record?.id);
+            // onAttachedContact(record?.id);
+              getContactItem(record.id)
           },
           style: {
             cursor: "pointer",

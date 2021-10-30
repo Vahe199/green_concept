@@ -15,6 +15,7 @@ import getFilteredOptions from "../../Utils/FilterInputs/getFilteredOptions";
 import { useTableStyles } from "./useTableStyles";
 import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import {getContactPersonsDataWithId} from "../../../redux/store/action_creator/contractors_action_creatot/ContractorContactAC";
 
 export default function TableForContact(props: any) {
   const { contractor_id }: { contractor_id: number } = props;
@@ -34,7 +35,7 @@ export default function TableForContact(props: any) {
   const { authors = [] } = useTypedSelector((state) => state.authorsList);
   const { branches = [] }: any = assets;
 
-  const { fetchContractorContacts } = useActions();
+  const { getContactPersonsDataWithId } = useActions();
 
   const [companyGroupFilterInital, setCompanyGroupFilterInital] = useState<any>(
     []
@@ -55,7 +56,7 @@ export default function TableForContact(props: any) {
 
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/contacts/${data.id}`);
-    fetchContractorContacts(data.id);
+      getContactPersonsDataWithId(data.id);
   };
 
   const authorsOptions = authors?.map((option: any) => ({

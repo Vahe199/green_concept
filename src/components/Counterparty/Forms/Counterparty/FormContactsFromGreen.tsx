@@ -60,7 +60,7 @@ const initialValues = {
                       const {data} = res
                       console.log(res)
                       dispatch({type:ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
-                          payload:data?.contact})
+                          payload:data?.contact, success:true})
                       setChangeContactsFromGreen(true)
                   }).catch((e)=>{
                       console.log(e.response)

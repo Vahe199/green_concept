@@ -11,7 +11,7 @@ export const updateContractorContactsForGreen = (id:number,formData:any) => asyn
     try {
         const {data} = await contractorApi.changeContactEmployeesData(id, formData)
         dispatch({type:ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
-            payload:data?.contact})
+            payload:data?.contact, success:true})
 
     }catch (e:any) {
         console.log(e.response)

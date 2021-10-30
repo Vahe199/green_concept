@@ -28,6 +28,7 @@ export const fetchContactsList =
 export const insertContractorContactData =
   (formData: any) =>
   async (dispatch: Dispatch<ContractorContactDataAction>) => {
+
     try {
       dispatch({
         type: ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA,
@@ -55,27 +56,15 @@ export const getContactPersonsDataWithId =
   async (dispatch: Dispatch<ContractorContactDataAction>) => {
     try {
       const { data } = id
-        ? await contractorApi.getContractorContactDataWithId(id)
+        ? await contractorApi.getContactById(id)
         : { data: { contact: {} } };
 
       dispatch({
         type: ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
-        payload: data?.contact,
+        payload: data?.contact, success:id ? true :false
       });
     } catch (e: any) {
       console.log(e.response);
     }
   };
 
-export const fetchContractorContacts =
-  (id: number) => async (dispatch: Dispatch<ContractorContactDataAction>) => {
-    try {
-      const { data } = await contractorApi.getContactById(id);
-      dispatch({
-        type: ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
-        payload: data?.contact,
-      });
-    } catch (e: any) {
-      console.log(e.response);
-    }
-  };

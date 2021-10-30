@@ -29,6 +29,7 @@ import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 import BackToAddress from "../../Utils/BackToAddress";
 import get from "lodash/get";
 import pick from "lodash/pick";
+import {recoveryContractorContactState} from "../../../redux/store/action_creator/contractors_action_creatot/recoveryAuthorDataState";
 
 // type contractor_contactsType = {
 //   contractor_contacts: {
@@ -90,24 +91,24 @@ export const ContactPersonsForCreating: React.FC = () => {
   const classes = useStylesContactPersons();
   const Options = InputAssetsOptions();
   const { TextArea } = Input;
-
-  const search = SearchContactPerson();
   useEffect(() => {
     if (error) {
+      console.log(error)
       notifyError(error);
-      recoveryContractorContactState();
+       recoveryContractorContactState();
     }
     if (success) {
-      notifySuccess("данные успешно добавиле");
+       notifySuccess("данные успешно добавиле");
+      formikRef.current.resetForm();
       recoveryContractorContactState();
     }
-  }, [success, error]);
+  },[success, error]);
 
   const [contractorId, setContractorId] = useState(1);
-  const [attachedContact, onAttachedContact] = useState("");
+  const [attachedContact, onAttachedContact] = useState<any>({});
   const [showModal, setShowModal] = useState(false);
   const searchOptions = SearchContactPerson();
-
+  console.log(attachedContact,"itemData",contractor_contacts,"contractor_contacts")
   const [branch, setBranch] = useState("");
   // const filteredBranches = branches.filter(({ name }: { name: string }) => name.includes(branch))
 
@@ -151,7 +152,7 @@ export const ContactPersonsForCreating: React.FC = () => {
 
   const initialValues = {
     // @ts-ignore
-    ...pick(contractor_contacts, [
+    ...pick(attachedContact, [
       "firstname",
       "middlename",
       "surname",
@@ -164,45 +165,45 @@ export const ContactPersonsForCreating: React.FC = () => {
     ]),
 
     // @ts-ignore
-    branches: get(contractor_contacts, "branches", []).map((branch: any) =>
+    branches: get(attachedContact, "branches", []).map((branch: any) =>
       get(branch, "id", "")
     ),
     contact_contractors: {
-      ...pick(get(contractor_contacts, "contractors[0]", {}), [
+      ...pick(get(attachedContact, "contractors[0]", {}), [
         "main",
         "role_id",
         "position",
         "contractor_id",
       ]),
-      contractor_id: get(contractor_contacts, "contractors[0]id", ""),
+      contractor_id: get(attachedContact, "contractors[0]id", ""),
     },
-    contact_employees: get(contractor_contacts, "employees", []).map(
+    contact_employees: get(attachedContact, "employees", []).map(
       (employee: any) => pick(employee, ["direction_id", "employee_id", "info"])
     ),
     contact_congratulations: get(
-      contractor_contacts,
+        attachedContact,
       "congratulations",
       []
     ).map((congratulation: any) =>
       pick(congratulation, ["name", "congratulation_type_id", "other"])
     ),
-    emails: get(contractor_contacts, "emails", []).map((email: any) =>
+    emails: get(attachedContact, "emails", []).map((email: any) =>
       pick(email, ["email"])
     ),
-    phones: get(contractor_contacts, "phones", []).map((phone: any) =>
+    phones: get(attachedContact, "phones", []).map((phone: any) =>
       pick(phone, ["phone", "phone_type"])
     ),
   };
 
-  useEffect(() => {
-    if (attachedContact) {
-      getContactPersonsDataWithId(+attachedContact);
-    }
-
-    return () => {
-      getContactPersonsDataWithId(null);
-    };
-  }, [attachedContact]);
+  // useEffect(() => {
+  //   if (attachedContact) {
+  //     getContactPersonsDataWithId(+attachedContact);
+  //   }
+  //
+  //   return () => {
+  //      getContactPersonsDataWithId(null);
+  //   };
+  // }, [attachedContact]);
 
   useEffect(() => {
     if (get(initialValues, "firstname", false)) {

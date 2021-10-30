@@ -35,7 +35,7 @@ interface fetchContractorContactListDataSuccessAction {
 
 interface fetchContractorContactDataByContractorIdSuccessAction {
   type: ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID;
-  payload: any[];
+  payload: any[]; success: boolean
 }
 
 interface InsertContractorContactDataErrorAction {

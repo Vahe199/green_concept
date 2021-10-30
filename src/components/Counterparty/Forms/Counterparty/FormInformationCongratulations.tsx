@@ -52,7 +52,7 @@ const {assetsOptionsCongratulation} = InputAssetsOptions()
                 contractorApi.changeContactCongratulationsData(id,values).then(res =>{
                     const {data} = res
                     dispatch({type:ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
-                        payload:data?.contact})
+                        payload:data?.contact, success:true})
 
                     setChangeCongratulations(true)
 

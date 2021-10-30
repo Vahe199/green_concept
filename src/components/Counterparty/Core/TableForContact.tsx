@@ -422,7 +422,9 @@ export default function TableForContact(props: any) {
     history.push(`/counterparty/${path}`);
   };
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} style={{ marginLeft: "2%",
+        marginRight: "2%",
+        marginTop:16}}>
       <div className={classes.titleWrapper}>
         <div>
           <Button

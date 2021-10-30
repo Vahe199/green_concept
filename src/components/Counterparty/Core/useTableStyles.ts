@@ -3,10 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 export const useTableStyles = (loading: boolean) =>
   makeStyles({
     root: {
-      marginLeft: "2%",
-      marginRight: "2%",
-      marginTop:16,
-      width: "96%",
       color: "#3b475080",
       position: "relative",
 

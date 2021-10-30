@@ -82,7 +82,7 @@ debugger
         >
           {org_type === "ФЛ" ? "Физическое лицо" : "Юридическое лицо"}
         </Typography>
-          {contractor_type_id == 1 && <div className={classes.div}>
+          {contractor_type_id === 1 && <div className={classes.div}>
               <Typography
                   variant={"button"}
                   style={{width: "40%"}}

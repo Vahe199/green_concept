@@ -36,7 +36,7 @@ export const FormGeneralInformation: React.FC<Props> = ({
   );
   const { types_and_services }: any = assets;
 
-  const [contractorId, setContractorId] = React.useState(1);
+  const [contractorId, setContractorId] = React.useState(contractor ? contractor?.contractor_type_id : 1);
   let errorMessage: string = "General";
   const [validateValue2, setValidateValue2] = React.useState<string>("ЮЛ");
 
@@ -158,7 +158,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                   />
                 </div>
               </div>
-              {contractorId == 1 &&  <div
+              {contractorId === 1 &&  <div
                   className={classes.label}
                   style={{alignItems: "flex-start"}}
               >
@@ -258,6 +258,13 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                     handleChange={(value: any) => {
                       setFieldValue("contractor_type_id", value);
                       setContractorId(value);
+                      if (value === 1) {
+                        setFieldValue("service_type_id", "");
+                  
+                      }
+                      if(value !== 1){
+                        setFieldValue("crms", []);
+                      }
                     }}
                     value={values.contractor_type_id}
                     options={assetsOptionsCounterpartyType}

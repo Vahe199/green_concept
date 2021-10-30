@@ -186,7 +186,7 @@ export const GeneralInformationForCreating = () => {
                       />
                     </div>
                   </div>
-                  {(contractorId !== 1) || (
+                  {contractorId !== 1 || (
                     <div
                       className={classes.label}
                       style={{ alignItems: "flex-start" }}
@@ -311,6 +311,14 @@ export const GeneralInformationForCreating = () => {
                           handleChange={(value: any) => {
                             setFieldValue("contractor_type_id", value);
                             setContractorId(value);
+                            if (value === 1) {
+                              setFieldValue("service_type_id", "");
+                        
+                            }
+                            if(value !== 1){
+                              setFieldValue("crms", []);
+                            }
+                            
                           }}
                           value={values.contractor_type_id}
                           options={Options.assetsOptionsCounterpartyType}
@@ -320,10 +328,11 @@ export const GeneralInformationForCreating = () => {
                       </ValidationErrorWrapper>
                     </span>
                   </div>
-                  {contractorId == 1 || <div className={classes.label}>
-                    <span>Тип услуг</span>
-                    <span style={{width: "60%"}}>
-                      <ValidationErrorWrapper
+                  {contractorId == 1 || (
+                    <div className={classes.label}>
+                      <span>Тип услуг</span>
+                      <span style={{ width: "60%" }}>
+                        <ValidationErrorWrapper
                           inputClassName="ant-select-selector"
                           error={
                             touched.service_type_id &&
@@ -332,21 +341,22 @@ export const GeneralInformationForCreating = () => {
                           helperText={
                             touched.service_type_id && errors.service_type_id
                           }
-                      >
-                        <InputFilterSelectedType
+                        >
+                          <InputFilterSelectedType
                             // className={classes.input}
                             name="service_type_id"
                             handleChange={(value: any) =>
-                                setFieldValue("service_type_id", value)
+                              setFieldValue("service_type_id", value)
                             }
                             value={values.service_type_id}
                             options={assetsOptionsServiceType}
                             placeholder="Другое"
                             loading={assetsLoading}
-                        />
-                      </ValidationErrorWrapper>
-                    </span>
-                  </div>}
+                          />
+                        </ValidationErrorWrapper>
+                      </span>
+                    </div>
+                  )}
                   <div className={classes.label}>
                     <span>ИНН</span>
                     {/*<TextField*/}
@@ -599,7 +609,7 @@ export const GeneralInformationForCreating = () => {
                       </ValidationErrorWrapper>
                     </div>
                   </div>
-                  {(contractorId !== 1) || (
+                  {contractorId !== 1 || (
                     <div
                       className={classes.label}
                       style={{ alignItems: "flex-start" }}
@@ -975,8 +985,8 @@ export const GeneralInformationForCreating = () => {
                                           //placeholder={"www.сайткомпании.ru"}
                                           placeholder={
                                             values.org_type === "ЮЛ"
-                                                ? 'www.сайткомпании.ru”'
-                                                : "Сайт"
+                                              ? "www.сайткомпании.ru”"
+                                              : "Сайт"
                                           }
                                         />
                                       </ValidationErrorWrapper>
@@ -1090,7 +1100,7 @@ export const GeneralInformationForCreating = () => {
                                             );
                                           }}
                                           className={classes.inputMask}
-                                          autoComplete={'off'}
+                                          autoComplete={"off"}
                                           placeholder={"7 999 999 99 99"}
                                           mask="1 111 111 11 11"
                                           prefix={<>+</>}

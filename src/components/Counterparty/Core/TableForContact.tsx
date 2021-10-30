@@ -2,7 +2,7 @@ import Paper from "@material-ui/core/Paper";
 import { Spin, Table } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
 import { useActions } from "../../../redux/type_redux_hook/useAction";
@@ -19,11 +19,12 @@ import {getContactPersonsDataWithId} from "../../../redux/store/action_creator/c
 
 export default function TableForContact(props: any) {
   const { contractor_id }: { contractor_id: number } = props;
-  console.log(contractor_id);
+
 
   const { fetchContactsList } = useActions();
   const { assetsOptionsStatus } = InputAssetsOptions();
   const history = useHistory();
+  const {user}= useParams<any>()
   const { ContactList, loading } = useTypedSelector(
     (state) => state.contactPerson
   );
@@ -42,7 +43,7 @@ export default function TableForContact(props: any) {
   );
 
   const [params, setParams] = useState<any>({
-    "filter[contractors.contractor_id]": 102,
+    "filter[contractors.contractor_id]": user ? user : "",
   });
 
   const [services, setServices] = useState("");

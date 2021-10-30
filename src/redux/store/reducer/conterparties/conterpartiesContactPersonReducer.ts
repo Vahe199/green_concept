@@ -80,7 +80,7 @@ export const counterpartiesContactPersonReducer = (
     case ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA_ERROR:
       return {
         ...state,
-        error: true,
+        error: action.payload,
         loading: true,
         success: false,
       };

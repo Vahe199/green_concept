@@ -75,7 +75,7 @@ export const ContactPersonsForCreating: React.FC = () => {
     recoveryContractorContactState,
     getContactPersonsDataWithId,
   } = useActions();
-  const { assets, load: assetsLoading } = useTypedSelector(
+  const { assets,  load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
   const { types_and_services }: any = assets;
@@ -94,11 +94,11 @@ export const ContactPersonsForCreating: React.FC = () => {
   const search = SearchContactPerson();
   useEffect(() => {
     if (error) {
-      notifyError("некорректные данные");
+      notifyError(error);
       recoveryContractorContactState();
     }
     if (success) {
-      notifySuccess("Изменение прошло успешно");
+      notifySuccess("данные успешно добавиле");
       recoveryContractorContactState();
     }
   }, [success, error]);

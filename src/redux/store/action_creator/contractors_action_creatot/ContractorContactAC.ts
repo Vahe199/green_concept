@@ -39,9 +39,10 @@ export const insertContractorContactData =
       });
     } catch (e: any) {
       console.log(e.response);
+      const {data} =e.response
       dispatch({
         type: ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA_ERROR,
-        payload: "Error Happened Conterparties Table List Is Fallen",
+        payload: `${data ? data.message : "что-то пошло не так"}`,
       });
     }
   };

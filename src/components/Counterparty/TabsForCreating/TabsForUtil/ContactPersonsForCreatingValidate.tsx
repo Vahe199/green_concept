@@ -4,7 +4,7 @@ export const validationSchemaContactPerson = (value: any) => yup.object({
 
   firstname: yup.string().max(100, "должен состоять максимум из 100 символов").required("Обязательно к заполнению"),
   surname: yup.string().max(100, "должен состоять максимум из 100 символов").required("Обязательно к заполнению"),
-  birthdate: yup.string(),
+  birthdate: yup.string().nullable(true),
     branches: yup.array()
         .of(yup.number())
         .strict(),
@@ -17,7 +17,7 @@ export const validationSchemaContactPerson = (value: any) => yup.object({
         other: yup.string(),
       })
     ),
-   
+
 
   contact_employees: yup
     .array()
@@ -37,7 +37,7 @@ export const validationSchemaContactPerson = (value: any) => yup.object({
       }),
 
   contractor_type_id: yup.string().required("Обязательно к заполнению"),
-  delivery_address: yup.string().max(200, "должен состоять максимум из 200 символов"),
+  delivery_address: yup.string().nullable(true).max(200, "должен состоять максимум из 200 символов"),
   emails: yup
     .array()
     .of(
@@ -48,7 +48,7 @@ export const validationSchemaContactPerson = (value: any) => yup.object({
         // salary: yup.string().min(3, 'cmon').required('Required'),
       })
     ),
-  middlename: yup.string().max(100, "должен состоять максимум из 100 символов"),
+  middlename: yup.string().nullable(true).max(100, "должен состоять максимум из 100 символов"),
   phones: yup
     .array().required("Обязательно к заполнению")
     .of(

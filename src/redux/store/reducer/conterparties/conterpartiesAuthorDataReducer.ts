@@ -33,7 +33,7 @@ export const counterpartiesAuthorDataReducer = (
 
     case AuthorDataActionType.RECOVERY_AUTHOR_DATA_STATE:
       return {
-        ...state,AuthorData:state.AuthorData,success:false,isChange:false,error:false,errorMsg:false
+        ...state,success:false,isChange:false,error:false,errorMsg:false
       }
 
     default:

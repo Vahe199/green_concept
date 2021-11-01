@@ -19,18 +19,24 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 16,
       borderRadius: 4,
       boxShadow: "none",
+
     },
     div: {
       display: "flex",
       marginBottom: 10,
+        alignItems:"center",
+
     },
     description: {
+        alignItems:"flex-start",
       width: "50%",
       flexWrap: "wrap",
       textTransform: "none",
       fontSize: 16,
     },
     val: {
+        alignItems:"flex-start",
+        width: "50%",
       fontSize: 15,
       fontWeight: 400,
     },
@@ -88,11 +94,11 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
             Группа компаний (при наличии)
           </Typography>
           <Typography variant={"body2"} className={classes.val}>
-            {group ? group?.full_name : "-----------------------"}
+            {group ? group?.full_name : ""}
           </Typography>
         </div>
-          {contractor_type_id == 1 && <div className={classes.div}>
-              <Typography variant={"button"} className={classes.description}>
+          {contractor_type_id == 1 && <div className={classes.div} style={{alignItems:"start"}}>
+              <Typography variant={"button"} className={classes.description} >
                   Отрасль
               </Typography>
               <Typography variant={"body2"}>

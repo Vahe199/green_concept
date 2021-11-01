@@ -43,7 +43,6 @@ export default function InputFilterSelect({
 
   //It's for change position arrow in select type
   const [arrow, setArrow] = useState<any>(false);
-
   return (
     <Select
       className={classes.select + " " + className}

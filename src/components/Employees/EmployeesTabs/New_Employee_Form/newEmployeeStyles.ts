@@ -7,8 +7,10 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
         container:{
             display:'flex',flexWrap:"wrap",
             width:"100%", height:"100%",
-            justifyContent:'space-between',
-            backgroundColor:"#F2F3F4"
+            backgroundColor:"#F2F3F4",
+            "@media (max-width: 1800px)": {
+                justifyContent:'space-between',
+            }
         },
         containerQualification:{
             display:'flex',
@@ -42,13 +44,26 @@ export const useStylesNewEmployee = makeStyles((theme: Theme) =>
             },
         },
         blockMain: {
-            width: "42%",
+            width: '864px',
             marginLeft: 32,
-            marginRight: "1%",
+            marginRight: "0.5%",
+            "@media (max-width: 1800px)": {
+                width:'42%',
+                marginRight: "1%",
+            }
         },
         blockSecond: {
-            width: "52%",
+            width: '864px',
             marginRight: 32,
+            "@media (max-width: 1800px)": {
+                width:'52%',
+            }
+        },
+        blockAbout: {
+            width: '864px',
+            "@media (max-width: 1800px)": {
+                width:'100%',
+            }
         },
         block1:{
             width:'864px',

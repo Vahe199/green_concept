@@ -113,7 +113,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                         </Button>
                         <div className={classes.container}>
                             <div className={classes.blockMain} >
-                                <div>
+                                <div >
                                     <div className={classes.title}>
                                         <Typography className={classes.typographyTitle}>
                                             Данные сотрудника
@@ -406,7 +406,7 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                                     </Paper>
                                 </div>
 
-                                <div>
+                                <div className={classes.blockAbout}>
                                     <div className={classes.title}>
                                         <Typography className={classes.typographyTitle}>
                                             О себе

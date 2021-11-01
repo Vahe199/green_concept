@@ -111,7 +111,6 @@ export const ContactPersonsForCreating: React.FC = () => {
   console.log(attachedContact,"itemData",contractor_contacts,"contractor_contacts")
   const [branch, setBranch] = useState("");
   // const filteredBranches = branches.filter(({ name }: { name: string }) => name.includes(branch))
-
   const assetsOptionsServiceType = get(
     types_and_services,
     `${contractorId - 1}.services`,
@@ -175,7 +174,7 @@ export const ContactPersonsForCreating: React.FC = () => {
         "position",
         "contractor_id",
       ]),
-      contractor_id: get(attachedContact, "contractors[0]id", ""),
+      contractor_id: get(attachedContact, "contractors[0]id", id),
     },
     contact_employees: get(attachedContact, "employees", []).map(
       (employee: any) => pick(employee, ["direction_id", "employee_id", "info"])

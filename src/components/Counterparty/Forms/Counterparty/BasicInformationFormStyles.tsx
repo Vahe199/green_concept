@@ -93,9 +93,9 @@ export const useStylesBasicInformation = makeStyles((theme: Theme) =>
       },
     },
     inputMask: {
-      "& input" : {
+      "& input": {
         fontSize: 16,
-      }
+      },
     },
     addItemCRM: {
       fontSize: 14,
@@ -111,7 +111,7 @@ export const useStylesBasicInformation = makeStyles((theme: Theme) =>
 export const useStylesContactsFromGreen = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: "4%",
+      margin: "4% 4% 4% 0",
       "& .MuiTextField-root": {
         minWidth: "60%",
         height: "30px",
@@ -268,7 +268,7 @@ export const useStylesContactsFromGreen = makeStyles((theme: Theme) =>
 export const useStylesInformationCongratulations = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginLeft: "4%",
+      marginLeft: "4% 4% 4% 0",
       marginRight: "4%",
       "& .MuiTextField-root": {
         minWidth: "60%",

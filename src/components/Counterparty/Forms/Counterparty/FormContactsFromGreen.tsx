@@ -1,29 +1,27 @@
-import {Button, InputAdornment, Paper, TextField} from "@material-ui/core";
-import {FieldArray, Form, Formik, getIn} from "formik";
-import React, {useState} from "react";
+import { Button, Paper } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
-import InputFilterSelectedType from "../../../Utils/FilterInputs/InputFilterSelect";
-import SearchIcon from "@material-ui/icons/Search";
-import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
-import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
-import {validationSchemaContactsFromGreen} from "./BasicInformationFormValidationSchema";
-import {useStylesContactsFromGreen} from "./BasicInformationFormStyles";
-import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
-import {MagnifyingGlass} from "../../../../IMG/SVG/MagnifyingGlass";
-import InputFilterSelect from "../../../Utils/FilterInputs/InputFilterSelect";
-import {SearchContactPerson} from "../../../Utils/utils_options/SearchContactPerson";
-import {contractorApi, counterpartiesApi} from "../../../../api/api";
-import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
-import {Input} from "antd";
-import {useDispatch} from "react-redux";
-import {
-    ContractorContactDataAction,
-    ContractorContactDataActionType
-} from "../../../../redux/types/contractor_contact_data";
-import {Dispatch} from "redux";
+import { Input } from "antd";
+import { FieldArray, Form, Formik, getIn } from "formik";
 import get from "lodash/get";
 import pick from "lodash/pick";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
+import { contractorApi } from "../../../../api/api";
+import { MagnifyingGlass } from "../../../../IMG/SVG/MagnifyingGlass";
+import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
+import {
+  ContractorContactDataAction,
+  ContractorContactDataActionType
+} from "../../../../redux/types/contractor_contact_data";
+import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import getFilteredOptions from "../../../Utils/FilterInputs/getFilteredOptions";
+import { default as InputFilterSelect, default as InputFilterSelectedType } from "../../../Utils/FilterInputs/InputFilterSelect";
+import { InputAssetsOptions } from "../../../Utils/utils_options/InputAssetsOptions";
+import { SearchContactPerson } from "../../../Utils/utils_options/SearchContactPerson";
+import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
+import { useStylesContactsFromGreen } from "./BasicInformationFormStyles";
+import { validationSchemaContactsFromGreen } from "./BasicInformationFormValidationSchema";
 
 
 type InfoProps = {

@@ -13,6 +13,7 @@ import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicke
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
 import { Table, Divider, Spin } from "antd";
 import { useTableStyles } from "./useTableStyles";
+import getFilteredOptions from "../../Utils/FilterInputs/getFilteredOptions";
 
 export default function CounterpartiesTable(props: any) {
   const { fetchCounterpartiesList } = useActions();
@@ -59,7 +60,7 @@ export default function CounterpartiesTable(props: any) {
   // full name options
   const getFilteredFullNameOptions = () => {
     const filteredFullName =
-      fullName.length > 3
+      fullName.length > 0
         ? contractors.filter(({ full_name = "" }: { full_name: string }) =>
             full_name.includes(fullName)
           )
@@ -228,35 +229,42 @@ export default function CounterpartiesTable(props: any) {
         });
       },
     },
-    {
-      title: () => (
-        <div style={{ minWidth: 125 }}>
-          <span className={classes.titleText}>Группа компаний</span>
-          <div className={classes.searchWraper}>
-            <MagnifyingGlass className="searchIcon" />
-            <InputFilterSelect
-              onSearch={setGroup}
-              value={params["filter[parent_id]"]}
-              options={getCompanyGroupFilterOptions()}
-              filterOption={false}
-              onSelect={(id: number, { value }: any) => {
-                setParams({ ...params, "filter[parent_id]": id });
+      {
+          title: () => (
+              <div style={{ minWidth: 125 }}>
+                  <span className={classes.titleText}>Группа компаний</span>
+                  <div className={classes.searchWraper}>
+                      <MagnifyingGlass className="searchIcon" />
+                      <InputFilterSelect
+                          onSearch={setGroup}
+                          value={params["filter[parent_id]"]}
+                          options={getFilteredOptions({
+                              searchValue: group,
+                              array: contractors, // todo must be changed Arsen
+                              keyPath: "id",
+                              valuePath: "id",
+                              labelPath: "full_name"
+                          })}
+                          filterOption={false}
+                          onSelect={(id: number, { value }: any) => {
+                              setParams({ ...params, "filter[parent_id]": id });
 
-                if (value === "") {
-                  console.log(1111);
+                              if (value === "") {
+                                  setGroup("");
+                              }
+                          }}
+                          notFoundContent={null}
+                          className={"searchMode " + classes.input}
+                          showSearch
+                      />
+                  </div>
+              </div>
+          ),
+          dataIndex: "group",
+          render: (group:any) => (<span >{group?.full_name}</span>)
 
-                  setGroup("");
-                }
-              }}
-              notFoundContent={null}
-              className={"searchMode " + classes.input}
-              showSearch
-            />
-          </div>
-        </div>
-      ),
-      dataIndex: "group",
-    },
+
+      },
     {
       title: () => (
         <>

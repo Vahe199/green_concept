@@ -26,7 +26,7 @@ const getFilteredOptions = ({
         })
       : [];
 
-
+debugger
   return (
     filtered.length
       ? [{ id: -1, [labelPath]: "Все" }, ...filtered]

@@ -241,13 +241,13 @@ export default function TableForContact(props: any) {
                   searchValue: group,
                   array: contractors, // todo must be changed Arsen
                   keyPath: "id",
-                  valuePath: "parent_id",
+                  valuePath: "full_name",
                   labelPath: "full_name"
               })}
               filterOption={false}
               onSelect={(id: number, { value }: any) => {
                   console.log(id ,"idv vv")
-                setParams({ ...params, "filter[parent_id]": id });
+                setParams({ ...params, "filter[contractors.contractor.group.full_name]": id });
 
                 if (value === "") {
                   setGroup("");
@@ -265,7 +265,7 @@ export default function TableForContact(props: any) {
             return contractors?.map((branch: any, index: number) => {
                 return (
                     <span key={index}>
-              {branch.contractor?.parent_id}
+              {branch.contractor?.full_name}
                         {index < contractors.length - 1 ? ", " : " "}
             </span>
                 );

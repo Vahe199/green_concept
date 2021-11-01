@@ -5,6 +5,9 @@ import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import { CheckSquareChecked } from "../../../../IMG/SVG/CheckSquareChecked";
 import { CheckSquareUnChecked } from "../../../../IMG/SVG/CheckSquareUnChecked";
+import {formatPhoneNumber} from "../../../Utils/numberMask";
+import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -87,6 +90,9 @@ const {firstname,surname, middlename, sex, birthdate,branches,emails,phones,deli
 
   const classes = useStyles();
 
+  const {assetsOptionsCounterpartyType} = InputAssetsOptions()
+
+  const contractorType= assetsOptionsCounterpartyType.find((type:any) =>type.value == contractor_type_id)
 
 
   return (
@@ -175,15 +181,15 @@ const {firstname,surname, middlename, sex, birthdate,branches,emails,phones,deli
         <div className={classes.label}>
           <span className={classes.spanTitle}>Тип контрагента</span>
           <span style={{ width: "60%" }}>
-            {contractor_type_id}
+            { contractorType?.label}
           </span>
         </div>
-        <div className={classes.label}>
+        {contractor_type_id !== 1 && <div className={classes.label}>
           <span className={classes.spanTitle}>Тип услуг</span>
-          <span style={{ width: "60%" }}>
+          <span style={{width: "60%"}}>
             {service_type?.name}
           </span>
-        </div>
+        </div>}
         <div className={classes.label}>
           <span className={classes.spanTitle}>Отрасль</span>
           <span style={{ width: "60%" }}>{branches && branches.length > 0 ? branches[0]?.name: ""}</span>
@@ -194,7 +200,7 @@ const {firstname,surname, middlename, sex, birthdate,branches,emails,phones,deli
             {phones?.map((phone: PhoneProps) => {
               return (
                 phone?.phone_type == "Рабочий" && (
-                  <div key={phone.id}>{phone?.phone}</div>
+                  <div key={phone.id}>{`${formatPhoneNumber(phone?.phone)}`}</div>
                 )
               );
             })}
@@ -206,7 +212,7 @@ const {firstname,surname, middlename, sex, birthdate,branches,emails,phones,deli
             {phones?.map((phone: PhoneProps) => {
               return (
                 phone?.phone_type == "Мобильный" && (
-                  <div key={phone.id}>{phone.phone}</div>
+                  <div key={phone.id}>{`${formatPhoneNumber(phone?.phone)}`}</div>
                 )
               );
             })}

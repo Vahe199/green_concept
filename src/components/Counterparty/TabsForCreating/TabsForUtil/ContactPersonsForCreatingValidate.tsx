@@ -49,15 +49,20 @@ export const validationSchemaContactPerson = (value: any) => yup.object({
       })
     ),
   middlename: yup.string().nullable(true).max(100, "должен состоять максимум из 100 символов"),
-  phones: yup
-    .array().required("Обязательно к заполнению")
-    .of(
-      yup.object().shape({
-        phone: yup
-          .string()
-          .min(10, "Слишком короткый").required("Обязательно к заполнению"),
-        // salary: yup.string().min(3, 'cmon').required('Required'),
-      })
+  // phones: yup
+  //   .array().required("Обязательно к заполнению")
+  //   .of(
+  //     yup.object().shape({
+  //       phone: yup
+  //         .string()
+  //         .min(10, "Слишком короткый").required("Обязательно к заполнению"),
+  //       // salary: yup.string().min(3, 'cmon').required('Required'),
+  //     })
+  //   ),
+    phones: yup.array().of(
+        yup.object().shape({
+            'phone': yup.string().required("Required"),
+        })
     ),
   service_type_id: value !== 1 ? yup.number().nullable(true) : yup.number().nullable(true),
   sex: yup.string(),

@@ -94,6 +94,10 @@ export const useTableStyles =(loading: boolean) =>
         input: {
             marginTop: 16,
         },
+        input2: {
+            marginTop: 16,
+            width: 148,
+        },
         icon: {
             fontSize: "16px",
         },

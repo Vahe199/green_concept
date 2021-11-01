@@ -23,6 +23,7 @@ import {
 import {Dispatch} from "redux";
 import get from "lodash/get";
 import pick from "lodash/pick";
+import getFilteredOptions from "../../../Utils/FilterInputs/getFilteredOptions";
 
 
 type InfoProps = {
@@ -34,11 +35,13 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
 }) => {
   const classes = useStylesContactsFromGreen();
     const { TextArea } = Input;
-    const [setBranch] = useState("");
+    const [branch, setBranch] = useState("");
 
   const dispatch: Dispatch<ContractorContactDataAction> = useDispatch()
     const { contractor_contacts ,loading: assetsLoading} = useTypedSelector((state) => state.contactPerson);
     const {id}:any = contractor_contacts
+const {employeesData} = useTypedSelector(state => state.employees)
+    const {employees=[]}:any = employeesData
 
     const searchOptions = SearchContactPerson()
     const {assetsOptionsDirections} = InputAssetsOptions();
@@ -96,7 +99,7 @@ const initialValues = {
             {({ remove, push }) => {
               return (<div>
                     {values.contact_employees.length > 0 &&
-                    values.contact_employees?.map((employees:any, index:number) => {
+                    values.contact_employees?.map((employ:any, index:number) => {
                       const fieldDirection = `contact_employees[${index}].direction_id`;
                       const touchedFieldDirection = getIn(touched, fieldDirection);
                       const errorFieldDirection = getIn(errors, fieldDirection);
@@ -131,7 +134,7 @@ const initialValues = {
                                           <InputFilterSelectedType
                                                //className={classes.input}
                                               name={fieldDirection}
-                                              value={employees.direction_id}
+                                              value={employ.direction_id}
                                               handleChange={(value: any) =>
                                                   setFieldValue(
                                                       fieldDirection,
@@ -166,21 +169,43 @@ const initialValues = {
                                           <div className={classes.searchWraper}>
                                               <MagnifyingGlass className="searchIcon" />
                                               <InputFilterSelect
-                                                  name={fieldEmployee}
-                                                  placeholder={"Введите слово или часть слова"}
-                                                  value={employees.employee_id}
-                                                  onFocus={()=>searchOptions.fetchContactPerson()}
-                                                  options={searchOptions.searchOptions}
-                                                  filterOption={false}
                                                   onSearch={setBranch}
-                                                  onSelect={(id: number) => {
+                                                  value={employ.employee_id}
+                                                  options={getFilteredOptions({
+                                                      searchValue: branch,
+                                                      array: employees, // todo must be changed Arsen
+                                                      keyPath: "id",
+                                                      valuePath: "id",
+                                                      labelPath: "surname"
+                                                  })}
+                                                  filterOption={false}
+                                                  onSelect={(id: number, { value }: any) => {
                                                       setFieldValue(fieldEmployee,id)
+                                                      if (value === "") {
+                                                          setBranch("");
+                                                      }
                                                   }}
+                                                  placeholder={"Введите слово или часть слова"}
                                                   notFoundContent={null}
-                                                  className={"searchMode " }
-                                                  prefix={<MagnifyingGlass className={classes.icon} />}
+                                                  className={"searchMode " + classes.input}
                                                   showSearch
                                               />
+                                              {/*<InputFilterSelect*/}
+                                              {/*    name={fieldEmployee}*/}
+                                              {/*    placeholder={"Введите слово или часть слова"}*/}
+                                              {/*    value={employees.employee_id}*/}
+                                              {/*    onFocus={()=>searchOptions.fetchContactPerson()}*/}
+                                              {/*    options={searchOptions.searchOptions}*/}
+                                              {/*    filterOption={false}*/}
+                                              {/*    onSearch={setBranch}*/}
+                                              {/*    onSelect={(id: number) => {*/}
+                                              {/*        setFieldValue(fieldEmployee,id)*/}
+                                              {/*    }}*/}
+                                              {/*    notFoundContent={null}*/}
+                                              {/*    className={"searchMode " }*/}
+                                              {/*    prefix={<MagnifyingGlass className={classes.icon} />}*/}
+                                              {/*    showSearch*/}
+                                              {/*/>*/}
                                           </div>
                                       </ValidationErrorWrapper>
 
@@ -225,7 +250,7 @@ const initialValues = {
                                           >
                                               <TextArea
                                                   name={fieldInfo}
-                                                  value={employees.info}
+                                                  value={employ.info}
                                                   className={classes.input}
                                                   onChange={handleChange}
                                                   style={{height: '233px'}}

@@ -8,7 +8,7 @@ const headers = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JlZW4ta2lzLnRlY21hbi5ydVwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTU3ODYwMSwiZXhwIjoxNjM1NjY1MDAxLCJuYmYiOjE2MzU1Nzg2MDEsImp0aSI6IkIzaVlURVpnczZKdnJKRlEiLCJzdWIiOjE1NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Y0lCfj4E-l5x027vHgXEql4B7C7dvFV5vjBLM8AugYs`,
+  Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JlZW4ta2lzLnRlY21hbi5ydVwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTc0ODEwNSwiZXhwIjoxNjM1ODM0NTA1LCJuYmYiOjE2MzU3NDgxMDUsImp0aSI6IjhXQmFzb1Z6ek9XdE5ndzEiLCJzdWIiOjE1NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.ZrrND8-JwCTsUJ5jaaNn8VruT23Nlej6m2yVmRTzAD0`,
 };
 
 const createAxios = () => {

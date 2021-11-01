@@ -34,6 +34,7 @@ export default function TableForContact(props: any) {
     (state) => state.assets
   );
   const { authors = [] } = useTypedSelector((state) => state.authorsList);
+  const {contractors } = useTypedSelector((state) => state.counterparties);
   const { branches = [] }: any = assets;
 
   const { getContactPersonsDataWithId } = useActions();
@@ -188,10 +189,10 @@ export default function TableForContact(props: any) {
             <InputFilterSelect
               options={getFilteredOptions({
                 searchValue: contractor,
-                array: branches, // todo must be changed Arsen
+                array: contractors, // todo must be changed Arsen
                 keyPath: "id",
                 valuePath: "id",
-                labelPath: "name",
+                labelPath: "full_name",
               })}
               filterOption={false}
               onSearch={setContractor}
@@ -220,7 +221,7 @@ export default function TableForContact(props: any) {
         return contractors?.map((branch: any, index: number) => {
           return (
             <span key={index}>
-              {branch.name}
+              {branch.contractor?.full_name}
               {index < contractors.length - 1 ? ", " : " "}
             </span>
           );
@@ -237,15 +238,16 @@ export default function TableForContact(props: any) {
               onSearch={setGroup}
               value={params["filter[parent_id]"]}
               options={getFilteredOptions({
-                searchValue: group,
-                array: companyGroupFilterInital,
-                keyPath: "id",
-                valuePath: "id",
-                labelPath: "name",
+                  searchValue: group,
+                  array: contractors, // todo must be changed Arsen
+                  keyPath: "id",
+                  valuePath: "full_name",
+                  labelPath: "full_name"
               })}
               filterOption={false}
               onSelect={(id: number, { value }: any) => {
-                setParams({ ...params, "filter[parent_id]": id });
+                  console.log(id ,"idv vv")
+                setParams({ ...params, "filter[contractors.contractor.group.full_name]": id });
 
                 if (value === "") {
                   setGroup("");
@@ -258,7 +260,17 @@ export default function TableForContact(props: any) {
           </div>
         </div>
       ),
-      dataIndex: "group",
+        dataIndex: "contractors",
+        render: (contractors: any[]) => {
+            return contractors?.map((branch: any, index: number) => {
+                return (
+                    <span key={index}>
+              {branch.contractor?.full_name}
+                        {index < contractors.length - 1 ? ", " : " "}
+            </span>
+                );
+            });
+        },
     },
     {
       title: () => (

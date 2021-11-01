@@ -17,7 +17,7 @@ const getFilteredOptions = ({
   labelPath,
 }: Props) => {
   const filtered =
-    searchValue?.toString()?.length > 3
+    searchValue?.toString()?.length > 0
       ? array.filter((value) => {
           return get(value, labelPath, "")
             .toString()
@@ -25,8 +25,8 @@ const getFilteredOptions = ({
             .includes(searchValue.toString().toLocaleUpperCase());
         })
       : [];
-  console.log(searchValue, labelPath, filtered);
 
+debugger
   return (
     filtered.length
       ? [{ id: -1, [labelPath]: "Все" }, ...filtered]

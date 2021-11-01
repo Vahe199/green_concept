@@ -48,6 +48,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
   const { org_type,  legal_registration_address,
     actual_address,
     post_address,
+    sites=[],
     emails=[],
     phones=[], }: any = contractor;
 
@@ -99,7 +100,10 @@ export const CompanyContactsForUser: React.FC<Props> = ({
             {org_type === "ЮЛ" ? "Сайт компании" : "Сайт"}
           </Typography>
           <Typography variant={"body2"} className={classes.title}>
-            www.сайткомпании.ru
+            {sites.length > 0 ?
+              sites?.map((site: any) => (
+                <div key={site.id} className={classes.title}>{site.url}</div>
+            )):""}
           </Typography>
         </div>
         <div className={classes.div}>
@@ -107,9 +111,10 @@ export const CompanyContactsForUser: React.FC<Props> = ({
             Телефон
           </Typography>
           <Typography variant={"body2"}>
-            {phones?.map((phone: any) => (
+            {phones.length > 0 ?
+              phones?.map((phone: any) => (
               <div key={phone.id} className={classes.title}>{phone.phone}</div>
-            ))}
+            )):""}
           </Typography>
         </div>
         <div className={classes.div}>
@@ -117,9 +122,10 @@ export const CompanyContactsForUser: React.FC<Props> = ({
             E-mail
           </Typography>
           <Typography variant={"body2"}>
-            {emails?.map((mail: any) => (
+            {emails.length > 0 ?
+              emails?.map((mail: any) => (
               <div key={mail.id} className={classes.title}>{mail.email}</div>
-            ))}
+            )):""}
           </Typography>
         </div>
         <div className={classes.div}>
@@ -127,14 +133,7 @@ export const CompanyContactsForUser: React.FC<Props> = ({
             variant={"button"}
             style={{ width: "47%", flexWrap: "wrap" }}
           ></Typography>
-          <Link
-            href="#"
-            onClick={() => console.log("Посмотреть карту")}
-            color="inherit"
-            style={{fontSize: 16}}
-          >
-            Посмотреть карту
-          </Link>
+
         </div>
       </Paper>
     </div>

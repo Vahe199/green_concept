@@ -26,16 +26,21 @@ import ValidationErrorWrapper from "../../Utils/utils_options/ValidationErrorWra
 import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
 import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 import { InputAssetsOptions } from "../../Utils/utils_options/InputAssetsOptions";
-import { recoveryAuthorDataState } from "../../../redux/store/action_creator/contractors_action_creatot/recoveryAuthorDataState";
 import BackToAddress from "../../Utils/BackToAddress";
 import { SearchContactPerson } from "../../Utils/utils_options/SearchContactPerson";
+import { useHistory } from "react-router-dom";
 
 import { Input } from "antd";
 import MaskedInput from "antd-mask-input";
+import get from "lodash/get";
 
 export const GeneralInformationForCreating = () => {
+  const history = useHistory();
+
   const formikRef = useRef<any>();
+
   const classes = useStylesGeneralInfo();
+
   const [matchesAddressActualAddress, setMatchesAddressActualAddress] =
     React.useState<boolean>(true);
   const [matchesAddressMailingAddress, setMatchesAddressMailingAddress] =
@@ -53,6 +58,7 @@ export const GeneralInformationForCreating = () => {
 
   const Options = InputAssetsOptions();
   const { insertContractorGeneralData, recoveryAuthorDataState } = useActions();
+
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
@@ -61,6 +67,8 @@ export const GeneralInformationForCreating = () => {
   const { contractors, loading } = useTypedSelector(
     (state) => state.counterparties
   );
+  const { AuthorData } = useTypedSelector((state) => state.author);
+
   const companyGroupFilter = companyGroupFilterInital.filter(
     ({ full_name }: { full_name: string }) => full_name.includes(group)
   );
@@ -68,10 +76,14 @@ export const GeneralInformationForCreating = () => {
 
   const [validateValue, setValidateValue] = useState<string>("ЮЛ");
 
+  const id: any = get(AuthorData, "contractor.id", "");
+  if (id) history.push(`/counterparty/author/Общие сведения/${id}`);
+
   useEffect(() => {
     !companyGroupFilterInital.length &&
       setCompanyGroupFilterInital(contractors);
   }, [contractors]);
+
   useEffect(() => {
     if (error) {
       notifyError("некорректные данные");
@@ -121,7 +133,6 @@ export const GeneralInformationForCreating = () => {
         initialValues={initialValues}
         validationSchema={() => validationSchema(validateValue)}
         onSubmit={async (values, action) => {
-          console.log(values, "values");
           insertContractorGeneralData(values);
         }}
       >
@@ -313,12 +324,10 @@ export const GeneralInformationForCreating = () => {
                             setContractorId(value);
                             if (value === 1) {
                               setFieldValue("service_type_id", "");
-                        
                             }
-                            if(value !== 1){
+                            if (value !== 1) {
                               setFieldValue("crms", []);
                             }
-                            
                           }}
                           value={values.contractor_type_id}
                           options={Options.assetsOptionsCounterpartyType}

@@ -2,7 +2,7 @@ import Paper from "@material-ui/core/Paper";
 import { Spin, Table } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import {useHistory, useParams} from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
 import { SortingButtons } from "../../../IMG/SVG/sortingButtonsIcon";
 import { useActions } from "../../../redux/type_redux_hook/useAction";
@@ -15,16 +15,14 @@ import getFilteredOptions from "../../Utils/FilterInputs/getFilteredOptions";
 import { useTableStyles } from "./useTableStyles";
 import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import {getContactPersonsDataWithId} from "../../../redux/store/action_creator/contractors_action_creatot/ContractorContactAC";
 
 export default function TableForContact(props: any) {
   const { contractor_id }: { contractor_id: number } = props;
 
-
   const { fetchContactsList } = useActions();
   const { assetsOptionsStatus } = InputAssetsOptions();
   const history = useHistory();
-  const {user}= useParams<any>()
+  const { user } = useParams<any>();
   const { ContactList, loading } = useTypedSelector(
     (state) => state.contactPerson
   );
@@ -34,7 +32,7 @@ export default function TableForContact(props: any) {
     (state) => state.assets
   );
   const { authors = [] } = useTypedSelector((state) => state.authorsList);
-  const {contractors } = useTypedSelector((state) => state.counterparties);
+  const { contractors } = useTypedSelector((state) => state.counterparties);
   const { branches = [] }: any = assets;
 
   const { getContactPersonsDataWithId } = useActions();
@@ -58,7 +56,7 @@ export default function TableForContact(props: any) {
 
   const getUserData = (data: any) => {
     history.push(`/counterparty/author/contacts/${data.id}`);
-      getContactPersonsDataWithId(data.id);
+    getContactPersonsDataWithId(data.id);
   };
 
   const authorsOptions = authors?.map((option: any) => ({
@@ -238,16 +236,19 @@ export default function TableForContact(props: any) {
               onSearch={setGroup}
               value={params["filter[parent_id]"]}
               options={getFilteredOptions({
-                  searchValue: group,
-                  array: contractors, // todo must be changed Arsen
-                  keyPath: "id",
-                  valuePath: "full_name",
-                  labelPath: "full_name"
+                searchValue: group,
+                array: contractors, // todo must be changed Arsen
+                keyPath: "id",
+                valuePath: "full_name",
+                labelPath: "full_name",
               })}
               filterOption={false}
               onSelect={(id: number, { value }: any) => {
-                  console.log(id ,"idv vv")
-                setParams({ ...params, "filter[contractors.contractor.group.full_name]": id });
+                console.log(id, "idv vv");
+                setParams({
+                  ...params,
+                  "filter[contractors.contractor.group.full_name]": id,
+                });
 
                 if (value === "") {
                   setGroup("");
@@ -260,17 +261,17 @@ export default function TableForContact(props: any) {
           </div>
         </div>
       ),
-        dataIndex: "contractors",
-        render: (contractors: any[]) => {
-            return contractors?.map((branch: any, index: number) => {
-                return (
-                    <span key={index}>
+      dataIndex: "contractors",
+      render: (contractors: any[]) => {
+        return contractors?.map((branch: any, index: number) => {
+          return (
+            <span key={index}>
               {branch.contractor?.full_name}
-                        {index < contractors.length - 1 ? ", " : " "}
+              {index < contractors.length - 1 ? ", " : " "}
             </span>
-                );
-            });
-        },
+          );
+        });
+      },
     },
     {
       title: () => (
@@ -333,7 +334,15 @@ export default function TableForContact(props: any) {
           <div style={{ display: "flex" }}>
             <span className={classes.titleText}>Создано</span>
             <span style={{ position: "absolute", right: 8, top: 8 }}>
-              <SortingButtons color="#5B6770" />
+              <SortingButtons
+                color="#5B6770"
+                handleChange={(direction: "-" | "+") => {
+                  setParams({
+                    ...params,
+                    sort: `${direction === "-" ? "-" : ""}created_at`,
+                  });
+                }}
+              />
             </span>
           </div>
           <InputFilterDatePicker
@@ -361,7 +370,15 @@ export default function TableForContact(props: any) {
           <div style={{ display: "flex" }}>
             <span className={classes.titleText}>Обновлено</span>
             <span style={{ position: "absolute", right: 8, top: 8 }}>
-              <SortingButtons color="#5B6770" />
+              <SortingButtons
+                color="#5B6770"
+                handleChange={(direction: "-" | "+") => {
+                  setParams({
+                    ...params,
+                    sort: `${direction === "-" ? "-" : ""}updated_at`,
+                  });
+                }}
+              />
             </span>
           </div>
           <InputFilterDatePicker
@@ -436,9 +453,10 @@ export default function TableForContact(props: any) {
     history.push(`/counterparty/${path}`);
   };
   return (
-    <Paper className={classes.root} style={{ marginLeft: "2%",
-        marginRight: "2%",
-        marginTop:16}}>
+    <Paper
+      className={classes.root}
+      style={{ marginLeft: "2%", marginRight: "2%", marginTop: 16 }}
+    >
       <div className={classes.titleWrapper}>
         <div>
           <Button

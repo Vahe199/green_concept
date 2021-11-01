@@ -165,19 +165,24 @@ export default function CounterpartiesTable(props: any) {
           <div className={classes.searchWraper}>
             <MagnifyingGlass className="searchIcon" />
             <InputFilterSelect
-              options={getFilteredFullNameOptions()}
+              // options={getFilteredFullNameOptions()}
               filterOption={false}
-              onSearch={setFullName}
-              onSelect={(id: number, { value, label }: any) => {
+              onSearch={(value: string) =>
                 setParams({
                   ...params,
-                  "filter[full_name]": label === "Все" ? "" : label,
-                });
+                  "filter[full_name]": value,
+                })
+              }
+              // onSelect={(id: number, { value, label }: any) => {
+              //   setParams({
+              //     ...params,
+              //     "filter[full_name]": label === "Все" ? "" : label,
+              //   });
 
-                if (value === "") {
-                  setFullName("");
-                }
-              }}
+              //   if (value === "") {
+              //     setFullName("");
+              //   }
+              // }}
               notFoundContent={null}
               value={params["filter[full_name]"]}
               className={"searchMode " + classes.input}
@@ -229,42 +234,40 @@ export default function CounterpartiesTable(props: any) {
         });
       },
     },
-      {
-          title: () => (
-              <div style={{ minWidth: 125 }}>
-                  <span className={classes.titleText}>Группа компаний</span>
-                  <div className={classes.searchWraper}>
-                      <MagnifyingGlass className="searchIcon" />
-                      <InputFilterSelect
-                          onSearch={setGroup}
-                          value={params["filter[parent_id]"]}
-                          options={getFilteredOptions({
-                              searchValue: group,
-                              array: contractors, // todo must be changed Arsen
-                              keyPath: "id",
-                              valuePath: "id",
-                              labelPath: "full_name"
-                          })}
-                          filterOption={false}
-                          onSelect={(id: number, { value }: any) => {
-                              setParams({ ...params, "filter[parent_id]": id });
+    {
+      title: () => (
+        <div style={{ minWidth: 125 }}>
+          <span className={classes.titleText}>Группа компаний</span>
+          <div className={classes.searchWraper}>
+            <MagnifyingGlass className="searchIcon" />
+            <InputFilterSelect
+              onSearch={setGroup}
+              value={params["filter[parent_id]"]}
+              options={getFilteredOptions({
+                searchValue: group,
+                array: contractors, // todo must be changed Arsen
+                keyPath: "id",
+                valuePath: "id",
+                labelPath: "full_name",
+              })}
+              filterOption={false}
+              onSelect={(id: number, { value }: any) => {
+                setParams({ ...params, "filter[parent_id]": id });
 
-                              if (value === "") {
-                                  setGroup("");
-                              }
-                          }}
-                          notFoundContent={null}
-                          className={"searchMode " + classes.input}
-                          showSearch
-                      />
-                  </div>
-              </div>
-          ),
-          dataIndex: "group",
-          render: (group:any) => (<span >{group?.full_name}</span>)
-
-
-      },
+                if (value === "") {
+                  setGroup("");
+                }
+              }}
+              notFoundContent={null}
+              className={"searchMode " + classes.input}
+              showSearch
+            />
+          </div>
+        </div>
+      ),
+      dataIndex: "group",
+      render: (group: any) => <span>{group?.full_name}</span>,
+    },
     {
       title: () => (
         <>
@@ -339,7 +342,15 @@ export default function CounterpartiesTable(props: any) {
           <div style={{ display: "flex" }}>
             <span className={classes.titleText}>Создано</span>
             <span style={{ position: "absolute", right: 15, top: 8 }}>
-              <SortingButtons color="#5B6770" />
+              <SortingButtons
+                color="#5B6770"
+                handleChange={(direction: "-" | "+") => {
+                  setParams({
+                    ...params,
+                    sort: `${direction === "-" ? "-" : ""}created_at`,
+                  });
+                }}
+              />
             </span>
           </div>
           <InputFilterDatePicker
@@ -362,7 +373,15 @@ export default function CounterpartiesTable(props: any) {
           <div style={{ display: "flex" }}>
             <span className={classes.titleText}>Обновлено</span>
             <span style={{ position: "absolute", right: 15, top: 8 }}>
-              <SortingButtons color="#5B6770" />
+              <SortingButtons
+                color="#5B6770"
+                handleChange={(direction: "-" | "+") => {
+                  setParams({
+                    ...params,
+                    sort: `${direction === "-" ? "-" : ""}created_at`,
+                  });
+                }}
+              />
             </span>
           </div>
           <InputFilterDatePicker
@@ -449,12 +468,9 @@ export default function CounterpartiesTable(props: any) {
         <div>
           Найдено <span>{data.length}</span> из <span>{data.length}</span>
         </div>
-        <Divider style={
-            {backgroundColor: '#ADB3B8',
-                height: 1,
-                opacity: 0.5
-            }
-        } />
+        <Divider
+          style={{ backgroundColor: "#ADB3B8", height: 1, opacity: 0.5 }}
+        />
       </div>
       <Table
         onRow={(record) => ({

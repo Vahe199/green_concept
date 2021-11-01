@@ -52,6 +52,7 @@ export default function EmployeesTable(props: any) {
     position: "",
     status: 1,
   });
+  const [sorter, setSorter] = useState("");
 
   const getUserData = (data: any) => {
     history.push(`/employee/author`);
@@ -144,7 +145,14 @@ export default function EmployeesTable(props: any) {
           <div style={{ display: "flex" }}>
             <span className={classes.titleText}>Фамилия Имя Отчество</span>
             <span style={{ position: "absolute", right: 8, top: 8 }}>
-              <SortingButtons color="#5B6770" />
+              <SortingButtons
+                color="#5B6770"
+                handleChange={(direction: "-" | "+") => {
+                  setSorter((sorter) =>
+                    sorter === direction ? "" : direction
+                  );
+                }}
+              />
             </span>
           </div>
 
@@ -319,6 +327,19 @@ export default function EmployeesTable(props: any) {
       ),
     },
   ];
+  let dataSource = filterData;
+  if (sorter) {
+    dataSource = [...filterData].sort((a, b) => {
+      if (a.FIO > b.FIO) {
+        return sorter === "+" ? 1 : -1;
+      }
+      if (a.FIO < b.FIO) {
+        return sorter === "+" ? -1 : 1;
+      }
+      return 0;
+    });
+  }
+
   return (
     <Paper className={classes.root}>
       <div className={classes.titleWrapper}>
@@ -335,7 +356,7 @@ export default function EmployeesTable(props: any) {
           onClick: () => getUserData(record),
         })}
         columns={columns}
-        dataSource={filterData}
+        dataSource={dataSource}
         pagination={false}
         scroll={{ y: window.innerHeight - 328 }}
         className={classes.table}

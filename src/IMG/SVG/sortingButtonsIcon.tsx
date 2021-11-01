@@ -1,7 +1,7 @@
 import React from "react";
 
 export const SortingButtons = (props: any) => {
-  const { color } = props;
+  const { color, handleChange = () => {} } = props;
   return (
     <svg
       width="16"
@@ -16,6 +16,7 @@ export const SortingButtons = (props: any) => {
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
+        onClick={() => handleChange("-")}
       />
       <path
         d="M13 22L8 27L3 22"
@@ -23,6 +24,7 @@ export const SortingButtons = (props: any) => {
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
+        onClick={() => handleChange("+")}
       />
     </svg>
   );

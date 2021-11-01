@@ -98,7 +98,7 @@ export const ContactPersonsForCreating: React.FC = () => {
        recoveryContractorContactState();
     }
     if (success) {
-       notifySuccess("данные успешно добавлен");
+       notifySuccess("Данные успешно добавлены");
       formikRef.current.resetForm();
       recoveryContractorContactState();
     }

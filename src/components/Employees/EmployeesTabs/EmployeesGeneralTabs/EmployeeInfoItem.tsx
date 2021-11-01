@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Avatar, Paper,Typography} from "@material-ui/core";
 import avatar from "../../../../IMG/profilePic.png"
 import {useStylesEmployee} from "./EmployeesStyles";
 import {PencilSimpleIcon} from "../../../../IMG/SVG/PencilSimpleIcon";
 import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import {formatPhoneNumber} from "../../../Utils/numberMask";
 
 type EmployeeDataProps = {
     setEmployeeData:(val:boolean)=>void
@@ -16,6 +17,10 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
     const {loading,employeeById} = useTypedSelector(state => state.employees)
     let {employee}:any = employeeById
     let {photo, surname,firstname, middlename, birthdate,phones,emails}:any = employee;
+
+    useEffect(() => {
+        console.log(phones[0], 'phones')
+    }, [])
     return(
         <div className={classes.root}>
             <div className={classes.title} >
@@ -73,7 +78,9 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
                             <Typography className={classes.typographyValue}>
                                 {phones.map((phone:any)=>{
                                     return(
-                                       <div key={phone.id}>{phone.phone}</div>
+                                       <div key={phone.id}>
+                                           {`${formatPhoneNumber(phone.phone)}`}
+                                       </div>
                                     )
                                 })}
                             </Typography>

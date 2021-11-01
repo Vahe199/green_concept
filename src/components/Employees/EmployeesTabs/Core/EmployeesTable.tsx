@@ -46,10 +46,10 @@ export default function EmployeesTable(props: any) {
   const [filterField, setFilterField] = useState<any>({
     id: "",
     FIO: "",
-    company: 0,
-    region: 0,
-    directions: 0,
-    position: 0,
+    company: "",
+    region: "",
+    directions: "",
+    position: "",
     status: 1,
   });
 
@@ -129,7 +129,7 @@ export default function EmployeesTable(props: any) {
                 setFilterField({ ...filterField, id: value });
               }}
               value={filterField.id}
-              className={classes.input}
+              className={classes.input2}
             />
           </div>
         </>

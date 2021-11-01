@@ -27,6 +27,7 @@ const useStyles = (value: string) =>
         "& .ant-picker-input:hover .ant-picker-suffix": {
           opacity: value ? 0 : 1,
             cursor: 'pointer',
+            pointerEvents: 'all',
         },
 
         

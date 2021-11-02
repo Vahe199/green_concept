@@ -40,7 +40,6 @@ export default function InputFilterSelect({
   ...props
 }: any): any {
   const classes = useStyles();
-
   //It's for change position arrow in select type
   const [arrow, setArrow] = useState<any>(false);
   return (

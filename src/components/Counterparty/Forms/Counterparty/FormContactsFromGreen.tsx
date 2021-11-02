@@ -38,10 +38,9 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
   const dispatch: Dispatch<ContractorContactDataAction> = useDispatch()
     const { contractor_contacts ,loading: assetsLoading} = useTypedSelector((state) => state.contactPerson);
     const {id}:any = contractor_contacts
-const {employeesData} = useTypedSelector(state => state.employees)
-    const {employees=[]}:any = employeesData
 
-    const searchOptions = SearchContactPerson()
+
+    const {fetchContactPerson,searchOptions,searchFilter} = SearchContactPerson()
     const {assetsOptionsDirections} = InputAssetsOptions();
 const initialValues = {
 
@@ -167,43 +166,23 @@ const initialValues = {
                                           <div className={classes.searchWraper}>
                                               <MagnifyingGlass className="searchIcon" />
                                               <InputFilterSelect
-                                                  onSearch={setBranch}
-                                                  value={employ.employee_id}
-                                                  options={getFilteredOptions({
-                                                      searchValue: branch,
-                                                      array: employees, // todo must be changed Arsen
-                                                      keyPath: "id",
-                                                      valuePath: "id",
-                                                      labelPath: "surname"
-                                                  })}
-                                                  filterOption={false}
-                                                  onSelect={(id: number, { value }: any) => {
-                                                      setFieldValue(fieldEmployee,id)
-                                                      if (value === "") {
-                                                          setBranch("");
-                                                      }
-                                                  }}
+                                                  name={fieldEmployee}
                                                   placeholder={"Введите слово или часть слова"}
+                                                  value={employ.employee_id}
+                                                  onFocus={()=>fetchContactPerson()}
+                                                  options={searchOptions}
+                                                  filterOption={false}
+                                                  onSearch={(val:any)=> {
+                                                       searchFilter(val)
+                                                  }}
+                                                  onSelect={(id: number) => {
+                                                      setFieldValue(fieldEmployee,id)
+                                                  }}
                                                   notFoundContent={null}
-                                                  className={"searchMode " + classes.input}
+                                                  className={"searchMode " }
+                                                  prefix={<MagnifyingGlass className={classes.icon} />}
                                                   showSearch
                                               />
-                                              {/*<InputFilterSelect*/}
-                                              {/*    name={fieldEmployee}*/}
-                                              {/*    placeholder={"Введите слово или часть слова"}*/}
-                                              {/*    value={employees.employee_id}*/}
-                                              {/*    onFocus={()=>searchOptions.fetchContactPerson()}*/}
-                                              {/*    options={searchOptions.searchOptions}*/}
-                                              {/*    filterOption={false}*/}
-                                              {/*    onSearch={setBranch}*/}
-                                              {/*    onSelect={(id: number) => {*/}
-                                              {/*        setFieldValue(fieldEmployee,id)*/}
-                                              {/*    }}*/}
-                                              {/*    notFoundContent={null}*/}
-                                              {/*    className={"searchMode " }*/}
-                                              {/*    prefix={<MagnifyingGlass className={classes.icon} />}*/}
-                                              {/*    showSearch*/}
-                                              {/*/>*/}
                                           </div>
                                       </ValidationErrorWrapper>
 

@@ -4,17 +4,17 @@ import {useTypedSelector} from "../../../redux/type_redux_hook/useTypedSelector"
 
 export const SearchContactPerson = () => {
 
+  const [searchQuery, setSearchQuery] = React.useState('');
   const {employeesData} = useTypedSelector(state => state.employees)
   const {employees=[]}:any = employeesData
   const [filterData, setFilterData] = React.useState<any>(employees);
   const fetchContactPerson = async () => {
-    if(employees.length > 5) {
+    if(employees.length < 5) {
       await employeesApi
           .getEmployeesData()
           .then((response) => response)
           .then(({data}: any) => {
-            const {employees} = data;
-            setFilterData(employees);
+            setFilterData(data?.employees);
           })
           .catch((error) => {
             console.error(error.response);
@@ -28,18 +28,23 @@ export const SearchContactPerson = () => {
     value: option.id,
     label: option.surname + " " + option.firstname + " " + option.middlename,
   }));
-  const searchFilter = (text:string) => {
 
-    if (text) {
-      const newData = searchOptions.filter((item:any) => {
-        const itemData = item.label ?
-            item.label.toUpperCase() : ''.toUpperCase();
+  const searchFilter = (text:string) => {
+if(!text){
+  setFilterData(employees);
+}else if (text) {
+      const newData = employees.filter((item:any) => {
+        const itemData = item.surname ?
+            item.surname.toUpperCase() : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
+      console.log(newData,"newData")
       setFilterData(newData);
+      setSearchQuery(text)
     } else {
-      setFilterData(filterData);
+      setFilterData(employees);
+      setSearchQuery(text)
     }
   }
   return { fetchContactPerson, searchOptions ,searchFilter};

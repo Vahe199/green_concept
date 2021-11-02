@@ -25,7 +25,7 @@ import BackToAddress from "../Utils/BackToAddress";
 //   value: any;
 // }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   menuRoot: {
     flexGrow: 1,
     backgroundColor: "#000",
@@ -106,7 +106,7 @@ const CreateCounterparty = (props: any) => {
     useState<ContractorBankDetailType>(initialBankDetails);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-     history.push(`/counterparty/${params.item}/${newValue}${params.item == "author" ? `/${contractor?.id}`  : ""}`);
+     history.push(`/counterparty/${params.item}/${newValue}${params.item === "author" ? `/${contractor?.id}`  : ""}`);
     setSelectedTab(newValue);
   };
 
@@ -132,7 +132,7 @@ const CreateCounterparty = (props: any) => {
             aria-label="Новый контрагент"
           >
             <Tab value={"Общие сведения"}
-                 disabled={!contractor && params.item === "author" ?true:false}
+                 disabled={!contractor && params.item === "author" ? true:false}
               label={
                 <Typography variant="subtitle1" className={classes.tabStyle}>
                   Общие сведения
@@ -141,7 +141,7 @@ const CreateCounterparty = (props: any) => {
               className={classes.rootTabStyle}
             />
             <Tab value={"Контактные лица"}
-                 disabled={contractor ?false:true}
+                 disabled={contractor ? false:true}
               label={
                 <Typography
                   variant="subtitle1"
@@ -154,7 +154,7 @@ const CreateCounterparty = (props: any) => {
               className={classes.rootTabStyle}
             />
             <Tab value={"Банковские реквизиты"}
-                 disabled={contractor ?false:true}
+                 disabled={contractor ? false : true}
               label={
                 <Typography variant="subtitle1" className={classes.tabStyle}>
                   Банковские реквизиты

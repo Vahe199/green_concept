@@ -1,17 +1,16 @@
 import { Checkbox, Paper, Typography } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import React, {useEffect} from "react";
+import { createStyles, makeStyles} from "@material-ui/core/styles";
+import React from "react";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 
 import {CheckSquareUnChecked} from "../../../../IMG/SVG/CheckSquareUnChecked";
 import {CheckSquareChecked} from "../../../../IMG/SVG/CheckSquareChecked";
 
-import InputFilterSelectedType from "../../../Utils/FilterInputs/InputFilterSelect";
 import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
 
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       marginLeft: "7%",
@@ -52,7 +51,7 @@ export const GeneralInformationForUser: React.FC<Props> = ({
     const { contractor }: any = AuthorData;
   const { crms, org_type, inn, kpp, ogrn, nda, contractor_type_id, service }: any = contractor;
 
-   const contractorType= assetsOptionsCounterpartyType.find((type:any) =>type.value == contractor_type_id)
+   const contractorType= assetsOptionsCounterpartyType.find((type:any) =>type.value === contractor_type_id)
 
   const classes = useStyles();
   return (

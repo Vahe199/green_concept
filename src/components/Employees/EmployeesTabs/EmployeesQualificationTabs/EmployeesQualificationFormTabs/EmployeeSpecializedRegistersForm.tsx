@@ -43,7 +43,6 @@ const {recoveryEmployeesQualificationState,updateEmployeeRegisterDataAC} = useAc
                 initialValues={initialValues}
                 // validationSchema={validationSchemaContactsFromGreen}
                 onSubmit={async (values,action) => {
-                    console.log (111, values)
                     updateEmployeeRegisterDataAC(values,17)
                 }}
             >
@@ -54,13 +53,11 @@ const {recoveryEmployeesQualificationState,updateEmployeeRegisterDataAC} = useAc
                     color: '#3B4750'}}>
                     Данные о включении в специализированные реестры
                 </Typography>
-                <div onClick={() => console.log('true 11')}>
+                <div >
                     <Button
                         color="primary"
                         type="submit"
                         className={classes.btnSubmit}
-                        // onClick={() => setChangeContactsFromGreen(true)}
-                        //  onClick={() => console.log(values)}
                     >
                         Сохранить
                     </Button>

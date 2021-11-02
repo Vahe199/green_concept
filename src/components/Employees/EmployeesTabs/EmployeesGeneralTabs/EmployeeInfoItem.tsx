@@ -14,13 +14,10 @@ const EmployeeInfoItem:React.FC<EmployeeDataProps> = ({setEmployeeData}) => {
     const classes = useStylesEmployee();
 
 
-    const {loading,employeeById} = useTypedSelector(state => state.employees)
+    const {employeeById} = useTypedSelector(state => state.employees)
     let {employee}:any = employeeById
     let {photo, surname,firstname, middlename, birthdate,phones,emails}:any = employee;
 
-    useEffect(() => {
-        console.log(phones[0], 'phones')
-    }, [])
     return(
         <div className={classes.root}>
             <div className={classes.title} >

@@ -1,27 +1,29 @@
-import { Button, Paper } from "@material-ui/core";
+import {Button, Paper} from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
-import { Input } from "antd";
-import { FieldArray, Form, Formik, getIn } from "formik";
+import {Input} from "antd";
+import {FieldArray, Form, Formik, getIn} from "formik";
 import get from "lodash/get";
 import pick from "lodash/pick";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
-import { contractorApi } from "../../../../api/api";
-import { MagnifyingGlass } from "../../../../IMG/SVG/MagnifyingGlass";
-import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
+import React from "react";
+import {useDispatch} from "react-redux";
+import {Dispatch} from "redux";
+import {contractorApi} from "../../../../api/api";
+import {MagnifyingGlass} from "../../../../IMG/SVG/MagnifyingGlass";
+import {TrashIcon} from "../../../../IMG/SVG/TrashIcon";
 import {
-  ContractorContactDataAction,
-  ContractorContactDataActionType
+    ContractorContactDataAction,
+    ContractorContactDataActionType
 } from "../../../../redux/types/contractor_contact_data";
-import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
-import getFilteredOptions from "../../../Utils/FilterInputs/getFilteredOptions";
-import { default as InputFilterSelect, default as InputFilterSelectedType } from "../../../Utils/FilterInputs/InputFilterSelect";
-import { InputAssetsOptions } from "../../../Utils/utils_options/InputAssetsOptions";
-import { SearchContactPerson } from "../../../Utils/utils_options/SearchContactPerson";
+import {useTypedSelector} from "../../../../redux/type_redux_hook/useTypedSelector";
+import {
+    default as InputFilterSelect,
+    default as InputFilterSelectedType
+} from "../../../Utils/FilterInputs/InputFilterSelect";
+import {InputAssetsOptions} from "../../../Utils/utils_options/InputAssetsOptions";
+import {SearchContactPerson} from "../../../Utils/utils_options/SearchContactPerson";
 import ValidationErrorWrapper from "../../../Utils/utils_options/ValidationErrorWrapper";
-import { useStylesContactsFromGreen } from "./BasicInformationFormStyles";
-import { validationSchemaContactsFromGreen } from "./BasicInformationFormValidationSchema";
+import {useStylesContactsFromGreen} from "./BasicInformationFormStyles";
+import {validationSchemaContactsFromGreen} from "./BasicInformationFormValidationSchema";
 
 
 type InfoProps = {
@@ -33,7 +35,6 @@ export const FormContactsFromGreen: React.FC<InfoProps> = ({
 }) => {
   const classes = useStylesContactsFromGreen();
     const { TextArea } = Input;
-    const [branch, setBranch] = useState("");
 
   const dispatch: Dispatch<ContractorContactDataAction> = useDispatch()
     const { contractor_contacts ,loading: assetsLoading} = useTypedSelector((state) => state.contactPerson);
@@ -54,16 +55,13 @@ const initialValues = {
           initialValues={initialValues}
           validationSchema={validationSchemaContactsFromGreen}
           onSubmit={async (values,action) => {
-            console.log(values,"values")
               await contractorApi.changeContactEmployeesData(id,values)
                   .then(res =>{
                       const {data} = res
-                      console.log(res)
                       dispatch({type:ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
                           payload:data?.contact, success:true})
                       setChangeContactsFromGreen(true)
                   }).catch((e)=>{
-                      console.log(e.response)
 
                   })
 
@@ -85,8 +83,6 @@ const initialValues = {
             color="primary"
             type="submit"
             className={classes.btnSubmit}
-            // onClick={() => setChangeContactsFromGreen(true)}
-            onClick={() => console.log(errors)}
           >
             Сохранить
           </Button>
@@ -185,26 +181,6 @@ const initialValues = {
                                               />
                                           </div>
                                       </ValidationErrorWrapper>
-
-                                    {/*<TextField style={{width:"100%"}}*/}
-                                    {/*           variant={"outlined"}*/}
-                                    {/*           name={fieldEmployee}*/}
-                                    {/*           placeholder={"Введите слово или часть слова"}*/}
-                                    {/*           value={employees.employee_id}*/}
-                                    {/*           onChange={handleChange}*/}
-                                    {/*           InputProps={{*/}
-                                    {/*             startAdornment: (*/}
-                                    {/*                 <InputAdornment position="start">*/}
-                                    {/*                   <SearchIcon*/}
-                                    {/*                       fontSize={"small"}*/}
-                                    {/*                       className={classes.icon}*/}
-                                    {/*                   />*/}
-                                    {/*                 </InputAdornment>*/}
-                                    {/*             ),*/}
-                                    {/*           }}*/}
-                                    {/*           error={Boolean(touchedFieldEmployee && errorFieldEmployee)}*/}
-                                    {/*           helperText={touchedFieldEmployee && errorFieldEmployee ? errorFieldEmployee : ""}*/}
-                                    {/*/>*/}
                                   </div>
 
                                 </div>
@@ -239,22 +215,6 @@ const initialValues = {
                                                   placeholder={'Введите текст'} />
                                           </ValidationErrorWrapper>
                                       </div>
-                                      {/*<ValidationErrorWrapper*/}
-                                      {/*    inputClassName="makeStyles-textAreas"*/}
-                                      {/*    error={Boolean(touchedFieldInfo && errorFieldInfo)}*/}
-                                      {/*    helperText={touchedFieldInfo && errorFieldInfo ? errorFieldInfo : ""}*/}
-                                      {/*>*/}
-                                      {/*          <textarea*/}
-                                      {/*              className={classes.textAreas}*/}
-                                      {/*              name={fieldInfo}*/}
-                                      {/*              placeholder={"Введите текст"}*/}
-                                      {/*              value={employees.info}*/}
-                                      {/*              onChange={handleChange}*/}
-
-                                      {/*          >*/}
-                                      {/*            Расскажите о себе*/}
-                                      {/*          </textarea>*/}
-                                      {/*</ValidationErrorWrapper>*/}
                                   </div>
                                 </div>
                               </div>
@@ -276,42 +236,6 @@ const initialValues = {
                   </div>
               )}}
           </FieldArray>
-
-          {/*<div className={classes.label}>*/}
-          {/*  <span className={classes.spanTitle}>Направление</span>*/}
-
-          {/*  <InputFilterSelectedDirection*/}
-          {/*    selected={checked}*/}
-          {/*    onChange={handleChange}*/}
-          {/*  />*/}
-          {/*</div>*/}
-          {/*<div className={classes.label}>*/}
-          {/*  <span className={classes.spanTitle}>Контактное лицо</span>*/}
-
-          {/*  <SearchInput />*/}
-          {/*</div>*/}
-          {/*<div className={classes.label}>*/}
-          {/*  <span className={classes.spanTitle}>Дополнительная информация</span>*/}
-
-          {/*  <TextField*/}
-          {/*    variant={"outlined"}*/}
-          {/*    className={classes.textArea}*/}
-          {/*    multiline*/}
-          {/*    rows={8}*/}
-          {/*    name="add_Info"*/}
-          {/*    placeholder={"Введите текст"}*/}
-          {/*    value={formik.values.add_Info}*/}
-          {/*    onChange={formik.handleChange}*/}
-          {/*    error={formik.touched.add_Info && Boolean(formik.errors.add_Info)}*/}
-          {/*    helperText={formik.touched.add_Info && formik.errors.add_Info}*/}
-          {/*  />*/}
-          {/*</div>*/}
-          {/*<div*/}
-          {/*  className={classes.addItem}*/}
-          {/*  // onClick={addBranch}*/}
-          {/*>*/}
-          {/*  + Новый контакт*/}
-          {/*</div>*/}
         </Paper>
             </Form>
         )}

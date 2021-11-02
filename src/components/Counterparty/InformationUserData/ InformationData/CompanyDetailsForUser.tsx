@@ -1,11 +1,11 @@
-import React, {useEffect} from "react";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import React from "react";
+import { makeStyles, createStyles} from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: "flex",
@@ -97,7 +97,7 @@ export const CompanyDetailsForUser: React.FC<Props> = ({
             {group ? group?.full_name : ""}
           </Typography>
         </div>
-          {contractor_type_id == 1 && <div className={classes.div} style={{alignItems:"start"}}>
+          {contractor_type_id === 1 && <div className={classes.div} style={{alignItems:"start"}}>
               <Typography variant={"button"} className={classes.description} >
                   Отрасль
               </Typography>

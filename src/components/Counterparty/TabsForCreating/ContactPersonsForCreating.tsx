@@ -1,88 +1,45 @@
-import React, { useState, useRef, useEffect } from "react";
-import { FieldArray, Form, Formik, getIn } from "formik";
-import { Button, Checkbox, Paper, Radio } from "@material-ui/core";
-import { CheckSquareChecked } from "../../../IMG/SVG/CheckSquareChecked";
-import { CheckSquareUnChecked } from "../../../IMG/SVG/CheckSquareUnChecked";
+import React, {useEffect, useRef, useState} from "react";
+import {FieldArray, Form, Formik, getIn} from "formik";
+import {Button, Checkbox, Paper, Radio} from "@material-ui/core";
+import {CheckSquareChecked} from "../../../IMG/SVG/CheckSquareChecked";
+import {CheckSquareUnChecked} from "../../../IMG/SVG/CheckSquareUnChecked";
 import InputFilterSelectedType from "../../Utils/FilterInputs/InputFilterSelect";
-import { TrashIcon } from "../../../IMG/SVG/TrashIcon";
+import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
+import {TrashIcon} from "../../../IMG/SVG/TrashIcon";
 import Divider from "@material-ui/core/Divider";
-import { useStylesContactPersons } from "./TabsForUtil/ContactPersonsForCreatingStyles";
-import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
+import {useStylesContactPersons} from "./TabsForUtil/ContactPersonsForCreatingStyles";
+import {useTypedSelector} from "../../../redux/type_redux_hook/useTypedSelector";
 import InputFilterDatePicker from "../../Utils/FilterInputs/InputFilterDatePicker";
 import moment from "moment";
-import { validationSchemaContactPerson } from "./TabsForUtil/ContactPersonsForCreatingValidate";
-import { useActions } from "../../../redux/type_redux_hook/useAction";
+import {validationSchemaContactPerson} from "./TabsForUtil/ContactPersonsForCreatingValidate";
+import {useActions} from "../../../redux/type_redux_hook/useAction";
 import ModalListOfContacts from "../Core/Modals/ModalListOfContacts";
 import ValidationErrorWrapper from "../../Utils/utils_options/ValidationErrorWrapper";
-import { Input } from "antd";
+import {Input} from "antd";
 import MaskedInput from "antd-mask-input";
-import { InputAssetsOptions } from "../../Utils/utils_options/InputAssetsOptions";
-import { ToastContainer } from "react-toastify";
+import {InputAssetsOptions} from "../../Utils/utils_options/InputAssetsOptions";
+import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  notifyError,
-  notifySuccess,
-} from "../../Utils/utils_options/ToastNotify";
-import { SearchContactPerson } from "../../Utils/utils_options/SearchContactPerson";
-import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
-import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
+import {notifyError, notifySuccess,} from "../../Utils/utils_options/ToastNotify";
+import {SearchContactPerson} from "../../Utils/utils_options/SearchContactPerson";
+import {MagnifyingGlass} from "../../../IMG/SVG/MagnifyingGlass";
 import BackToAddress from "../../Utils/BackToAddress";
 import get from "lodash/get";
 import pick from "lodash/pick";
-import {recoveryContractorContactState} from "../../../redux/store/action_creator/contractors_action_creatot/recoveryAuthorDataState";
-
-// type contractor_contactsType = {
-//   contractor_contacts: {
-//     firstname: string;
-//     middlename: string;
-//     surname: string;
-//     contractor_type_id: string;
-//     sex: string;
-//     birthdate: string;
-//     delivery_address: string;
-//     emails: [
-//       {
-//         [key: string]: any;
-//       }
-//     ];
-
-//     phones: { phone: string; phone_type: string }[];
-//     contact_contractors: {
-//       main: number;
-//       role_id: any;
-//       position: string;
-//       contractor_id: number;
-//     };
-//     contact_employees: {
-//       direction_id: string;
-//       employee_id: number;
-//       info: string;
-//     }[];
-//     contact_congratulations: {
-//       name: string;
-//       congratulation_type_id: number;
-//       other: string;
-//     }[];
-//     branches: string[];
-//     [key: string]: any;
-//   };
-//   error: boolean;
-//   success: boolean;
-// };
 
 export const ContactPersonsForCreating: React.FC = () => {
   const {
     insertContractorContactData,
     recoveryContractorContactState,
-    getContactPersonsDataWithId,
   } = useActions();
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
+  const {fetchContactPerson,searchOptions,searchFilter} = SearchContactPerson()
   const { types_and_services }: any = assets;
   const { AuthorData } = useTypedSelector((state) => state.author);
   const id: any = get(AuthorData, "contractor.id", "");
-  const { contractor_contacts, error, success } = useTypedSelector(
+  const { error, success } = useTypedSelector(
     (state) => state.contactPerson
   );
 
@@ -93,7 +50,6 @@ export const ContactPersonsForCreating: React.FC = () => {
   const { TextArea } = Input;
   useEffect(() => {
     if (error) {
-      console.log(error)
       notifyError(error);
        recoveryContractorContactState();
     }
@@ -107,10 +63,6 @@ export const ContactPersonsForCreating: React.FC = () => {
   const [contractorId, setContractorId] = useState(1);
   const [attachedContact, onAttachedContact] = useState<any>({});
   const [showModal, setShowModal] = useState(false);
-  const searchOptions = SearchContactPerson();
-  console.log(attachedContact,"itemData",contractor_contacts,"contractor_contacts")
-  const [branch, setBranch] = useState("");
-  // const filteredBranches = branches.filter(({ name }: { name: string }) => name.includes(branch))
   const assetsOptionsServiceType = get(
     types_and_services,
     `${contractorId - 1}.services`,
@@ -222,8 +174,7 @@ export const ContactPersonsForCreating: React.FC = () => {
         innerRef={formikRef}
         initialValues={defaultValues}
         validationSchema={() => validationSchemaContactPerson(contractorId)}
-        onSubmit={async (values, action) => {
-          console.log(values, "values");
+        onSubmit={async (values) => {
           insertContractorContactData(values);
         }}
       >
@@ -298,9 +249,6 @@ export const ContactPersonsForCreating: React.FC = () => {
                                       fieldName,
                                       e.target.checked ? 0 : 1
                                     );
-                                    console.log(
-                                      values.contact_contractors.main
-                                    );
                                   }}
                                 />
                               );
@@ -354,15 +302,6 @@ export const ContactPersonsForCreating: React.FC = () => {
                         />
                       </ValidationErrorWrapper>
                     </div>
-                    {/*<TextField*/}
-                    {/*  variant={"outlined"}*/}
-                    {/*  name="surname"*/}
-                    {/*  placeholder={"Фамилия"}*/}
-                    {/*  value={values.surname}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  error={touched.surname && Boolean(errors.surname)}*/}
-                    {/*  helperText={touched.surname && errors.surname}*/}
-                    {/*/>*/}
                   </div>
                   <div className={classes.label}>
                     <span>Имя</span>
@@ -382,15 +321,6 @@ export const ContactPersonsForCreating: React.FC = () => {
                         />
                       </ValidationErrorWrapper>
                     </div>
-                    {/*<TextField*/}
-                    {/*  variant={"outlined"}*/}
-                    {/*  name="firstname"*/}
-                    {/*  placeholder={"Имя"}*/}
-                    {/*  value={values.firstname}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  error={touched.firstname && Boolean(errors.firstname)}*/}
-                    {/*  helperText={touched.firstname && errors.firstname}*/}
-                    {/*/>*/}
                   </div>
                   <div className={classes.label}>
                     <span>Отчество</span>
@@ -410,15 +340,6 @@ export const ContactPersonsForCreating: React.FC = () => {
                         />
                       </ValidationErrorWrapper>
                     </div>
-                    {/*<TextField*/}
-                    {/*  variant={"outlined"}*/}
-                    {/*  name="middlename"*/}
-                    {/*  placeholder={"Отчество"}*/}
-                    {/*  value={values.middlename}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  error={touched.middlename && Boolean(errors.middlename)}*/}
-                    {/*  helperText={touched.middlename && errors.middlename}*/}
-                    {/*/>*/}
                   </div>
                   <div className={classes.label}>
                     <span>Пол</span>
@@ -541,19 +462,6 @@ export const ContactPersonsForCreating: React.FC = () => {
                               />
                             </ValidationErrorWrapper>
                           </div>
-                          // <TextField
-                          //   variant={"outlined"}
-                          //   name={fieldName}
-                          //   placeholder={"Должность"}
-                          //   value={values.contact_contractors.position}
-                          //   onChange={handleChange}
-                          //   error={Boolean(touchedFieldName && errorFieldName)}
-                          //   helperText={
-                          //     touchedFieldName && errorFieldName
-                          //       ? errorFieldName
-                          //       : ""
-                          //   }
-                          // />
                         );
                       }}
                     </FieldArray>
@@ -683,7 +591,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                       fieldName
                                     );
                                     return (
-                                      phone.phone_type == "Рабочий" && (
+                                      phone.phone_type === "Рабочий" && (
                                         <div
                                           key={index}
                                           style={{
@@ -733,26 +641,6 @@ export const ContactPersonsForCreating: React.FC = () => {
                                               />
                                             </ValidationErrorWrapper>
                                           </div>
-                                          {/*<TextField*/}
-                                          {/*  fullWidth*/}
-                                          {/*  style={{*/}
-                                          {/*    width: "100%",*/}
-                                          {/*    marginBottom: 16,*/}
-                                          {/*  }}*/}
-                                          {/*  placeholder={"+79999999999"}*/}
-                                          {/*  variant={"outlined"}*/}
-                                          {/*  name={fieldName}*/}
-                                          {/*  value={phone.phone}*/}
-                                          {/*  onChange={handleChange}*/}
-                                          {/*  error={Boolean(*/}
-                                          {/*    touchedFieldName && errorFieldName*/}
-                                          {/*  )}*/}
-                                          {/*  helperText={*/}
-                                          {/*    touchedFieldName && errorFieldName*/}
-                                          {/*      ? errorFieldName*/}
-                                          {/*      : ""*/}
-                                          {/*  }*/}
-                                          {/*/>*/}
                                           <div
                                             style={{ marginLeft: 16 }}
                                             onClick={() => remove(index)}
@@ -808,7 +696,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                       fieldName
                                     );
                                     return (
-                                      phone.phone_type == "Мобильный" && (
+                                      phone.phone_type === "Мобильный" && (
                                         <div
                                           key={index}
                                           style={{
@@ -858,26 +746,6 @@ export const ContactPersonsForCreating: React.FC = () => {
                                               />
                                             </ValidationErrorWrapper>
                                           </div>
-                                          {/*<TextField*/}
-                                          {/*  fullWidth*/}
-                                          {/*  style={{*/}
-                                          {/*    width: "90%",*/}
-                                          {/*    marginBottom: 16,*/}
-                                          {/*  }}*/}
-                                          {/*  placeholder={"+79999999999"}*/}
-                                          {/*  variant={"outlined"}*/}
-                                          {/*  name={fieldName}*/}
-                                          {/*  value={phone.phone}*/}
-                                          {/*  onChange={handleChange}*/}
-                                          {/*  error={Boolean(*/}
-                                          {/*    touchedFieldName && errorFieldName*/}
-                                          {/*  )}*/}
-                                          {/*  helperText={*/}
-                                          {/*    touchedFieldName && errorFieldName*/}
-                                          {/*      ? errorFieldName*/}
-                                          {/*      : ""*/}
-                                          {/*  }*/}
-                                          {/*/>*/}
                                           <div
                                             style={{ marginLeft: 16 }}
                                             onClick={() => remove(index)}
@@ -972,29 +840,6 @@ export const ContactPersonsForCreating: React.FC = () => {
                                           />
                                         </ValidationErrorWrapper>
                                       </div>
-                                      {/*<TextField*/}
-                                      {/*  fullWidth*/}
-                                      {/*  style={{*/}
-                                      {/*    width: "100%",*/}
-                                      {/*    marginBottom: 16,*/}
-                                      {/*  }}*/}
-                                      {/*  placeholder={`email${*/}
-                                      {/*    index + 1*/}
-                                      {/*  }@email.com`}*/}
-                                      {/*  variant={"outlined"}*/}
-                                      {/*  name={fieldName}*/}
-                                      {/*  type="email"*/}
-                                      {/*  value={email.email}*/}
-                                      {/*  onChange={handleChange}*/}
-                                      {/*  error={Boolean(*/}
-                                      {/*    touchedFieldName && errorFieldName*/}
-                                      {/*  )}*/}
-                                      {/*  helperText={*/}
-                                      {/*    touchedFieldName && errorFieldName*/}
-                                      {/*      ? errorFieldName*/}
-                                      {/*      : ""*/}
-                                      {/*  }*/}
-                                      {/*/>*/}
                                       <div
                                         style={{ marginLeft: 16 }}
                                         onClick={() => remove(index)}
@@ -1045,23 +890,6 @@ export const ContactPersonsForCreating: React.FC = () => {
                         />
                       </ValidationErrorWrapper>
                     </div>
-                    {/*<TextField*/}
-                    {/*  variant={"outlined"}*/}
-                    {/*  className={classes.textArea}*/}
-                    {/*  multiline*/}
-                    {/*  rows={3}*/}
-                    {/*  name="delivery_address"*/}
-                    {/*  placeholder={"Адрес доставки адрес вторая линия"}*/}
-                    {/*  value={values.delivery_address}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  error={*/}
-                    {/*    touched.delivery_address &&*/}
-                    {/*    Boolean(errors.delivery_address)*/}
-                    {/*  }*/}
-                    {/*  helperText={*/}
-                    {/*    touched.delivery_address && errors.delivery_address*/}
-                    {/*  }*/}
-                    {/*/>*/}
                   </div>
                 </Paper>
               </div>
@@ -1118,7 +946,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                     );
                                     return (
                                       <div>
-                                        {index == 0 ? (
+                                        {index === 0 ? (
                                           ""
                                         ) : (
                                           <Divider
@@ -1136,7 +964,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                             <div className={classes.label}>
                                               <span
                                                 style={
-                                                  index == 0
+                                                  index === 0
                                                     ? { width: "35%" }
                                                     : { width: "37%" }
                                                 }
@@ -1145,7 +973,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                               </span>
                                               <div
                                                 style={
-                                                  index == 0
+                                                  index === 0
                                                     ? { width: "65%" }
                                                     : { width: "63%" }
                                                 }
@@ -1189,7 +1017,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                             <div className={classes.label}>
                                               <span
                                                 style={
-                                                  index == 0
+                                                  index === 0
                                                     ? { width: "35%" }
                                                     : { width: "37%" }
                                                 }
@@ -1198,7 +1026,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                               </span>
                                               <div
                                                 style={
-                                                  index == 0
+                                                  index === 0
                                                     ? { width: "65%" }
                                                     : { width: "63%" }
                                                 }
@@ -1230,14 +1058,13 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                       value={
                                                         employees.employee_id
                                                       }
-                                                      onFocus={() =>
-                                                        searchOptions.fetchContactPerson()
-                                                      }
-                                                      options={
-                                                        searchOptions.searchOptions
-                                                      }
+                                                      onFocus={()=>fetchContactPerson()}
+                                                      options={searchOptions}
+                                                      onSearch={(val:any)=> {
+                                                        searchFilter(val)
+                                                      }}
                                                       filterOption={false}
-                                                      onSearch={setBranch}
+
                                                       onSelect={(
                                                         id: number
                                                       ) => {
@@ -1269,7 +1096,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                             >
                                               <span
                                                 style={
-                                                  index == 0
+                                                  index === 0
                                                     ? { width: "35%" }
                                                     : { width: "37%" }
                                                 }
@@ -1278,7 +1105,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                               </span>
                                               <div
                                                 style={
-                                                  index == 0
+                                                  index === 0
                                                     ? { width: "65%" }
                                                     : { width: "63%" }
                                                 }
@@ -1316,37 +1143,10 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                     />
                                                   </ValidationErrorWrapper>
                                                 </div>
-                                                {/*<ValidationErrorWrapper*/}
-                                                {/*  inputClassName="makeStyles-textAreas"*/}
-                                                {/*  error={Boolean(*/}
-                                                {/*    touchedFieldInfo &&*/}
-                                                {/*      errorFieldInfo*/}
-                                                {/*  )}*/}
-                                                {/*  helperText={*/}
-                                                {/*    touchedFieldInfo &&*/}
-                                                {/*    errorFieldInfo*/}
-                                                {/*      ? errorFieldInfo*/}
-                                                {/*      : ""*/}
-                                                {/*  }*/}
-                                                {/*>*/}
-                                                {/*  <textarea*/}
-                                                {/*    className={*/}
-                                                {/*      classes.textAreas*/}
-                                                {/*    }*/}
-                                                {/*    name={fieldInfo}*/}
-                                                {/*    placeholder={*/}
-                                                {/*      "Введите текст"*/}
-                                                {/*    }*/}
-                                                {/*    value={employees.info}*/}
-                                                {/*    onChange={handleChange}*/}
-                                                {/*  >*/}
-                                                {/*    Расскажите о себе*/}
-                                                {/*  </textarea>*/}
-                                                {/*</ValidationErrorWrapper>*/}
                                               </div>
                                             </div>
                                           </div>
-                                          {index == 0 ? (
+                                          {index === 0 ? (
                                             ""
                                           ) : (
                                             <div
@@ -1432,7 +1232,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                   );
                                   return (
                                     <div>
-                                      {index == 0 ? (
+                                      {index === 0 ? (
                                         ""
                                       ) : (
                                         <Divider style={{ marginBottom: 16 }} />
@@ -1448,7 +1248,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                           <div className={classes.label}>
                                             <span
                                               style={
-                                                index == 0
+                                                index === 0
                                                   ? { width: "35%" }
                                                   : { width: "37%" }
                                               }
@@ -1457,7 +1257,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                             </span>
                                             <div
                                               style={
-                                                index == 0
+                                                index === 0
                                                   ? { width: "65%" }
                                                   : { width: "63%" }
                                               }
@@ -1488,32 +1288,12 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                   />
                                                 </ValidationErrorWrapper>
                                               </div>
-                                              {/*<TextField*/}
-                                              {/*  style={{ width: "100%" }}*/}
-                                              {/*  variant={"outlined"}*/}
-                                              {/*  name={fieldName}*/}
-                                              {/*  value={congratulations.name}*/}
-                                              {/*  placeholder={*/}
-                                              {/*    "Название праздника"*/}
-                                              {/*  }*/}
-                                              {/*  onChange={handleChange}*/}
-                                              {/*  error={Boolean(*/}
-                                              {/*    touchedFieldName &&*/}
-                                              {/*      errorFieldName*/}
-                                              {/*  )}*/}
-                                              {/*  helperText={*/}
-                                              {/*    touchedFieldName &&*/}
-                                              {/*    errorFieldName*/}
-                                              {/*      ? errorFieldName*/}
-                                              {/*      : ""*/}
-                                              {/*  }*/}
-                                              {/*/>*/}
                                             </div>
                                           </div>
                                           <div className={classes.label}>
                                             <span
                                               style={
-                                                index == 0
+                                                index === 0
                                                   ? { width: "35%" }
                                                   : { width: "37%" }
                                               }
@@ -1522,7 +1302,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                             </span>
                                             <div
                                               style={
-                                                index == 0
+                                                index === 0
                                                   ? { width: "65%" }
                                                   : { width: "63%" }
                                               }
@@ -1566,7 +1346,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                           <div className={classes.label}>
                                             <span
                                               style={
-                                                index == 0
+                                                index === 0
                                                   ? { width: "35%" }
                                                   : { width: "37%" }
                                               }
@@ -1575,7 +1355,7 @@ export const ContactPersonsForCreating: React.FC = () => {
                                             </span>
                                             <div
                                               style={
-                                                index == 0
+                                                index === 0
                                                   ? { width: "65%" }
                                                   : { width: "63%" }
                                               }
@@ -1607,28 +1387,10 @@ export const ContactPersonsForCreating: React.FC = () => {
                                                   />
                                                 </ValidationErrorWrapper>
                                               </div>
-                                              {/*<TextField*/}
-                                              {/*  style={{ width: "100%" }}*/}
-                                              {/*  variant={"outlined"}*/}
-                                              {/*  name={fieldOther}*/}
-                                              {/*  placeholder={"Другое"}*/}
-                                              {/*  value={congratulations.other}*/}
-                                              {/*  onChange={handleChange}*/}
-                                              {/*  error={Boolean(*/}
-                                              {/*    touchedFieldOther &&*/}
-                                              {/*      errorFieldOther*/}
-                                              {/*  )}*/}
-                                              {/*  helperText={*/}
-                                              {/*    touchedFieldOther &&*/}
-                                              {/*    errorFieldOther*/}
-                                              {/*      ? errorFieldOther*/}
-                                              {/*      : ""*/}
-                                              {/*  }*/}
-                                              {/*/>*/}
                                             </div>
                                           </div>
                                         </div>
-                                        {index == 0 ? (
+                                        {index === 0 ? (
                                           ""
                                         ) : (
                                           <div

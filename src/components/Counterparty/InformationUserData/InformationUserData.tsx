@@ -1,4 +1,4 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles} from "@material-ui/core/styles";
 import React, { useState } from "react";
 import { FormCompanyContacts } from "../Forms/GeneralInformation/FormCompanyContacts";
 import { FormCompanyDetails } from "../Forms/GeneralInformation/FormCompanyDetails";
@@ -10,7 +10,7 @@ import Loader from "../../Layout/Loader/Loader";
 import { useTypedSelector } from "../../../redux/type_redux_hook/useTypedSelector";
 import BackToAddress from "../../Utils/BackToAddress";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: "flex",

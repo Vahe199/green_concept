@@ -100,13 +100,11 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
         initialValues={initialValues}
         validationSchema={() => validationSchemaBasicInformation(contractorId)}
         onSubmit={async (values, action) => {
-          console.log(values, "values");
           await counterpartiesApi
             .changeContactGeneralInfoData(id, values)
 
             .then((res) => {
               const { data } = res;
-              console.log(res);
               dispatch({
                 type: ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
                 payload: data?.contact,success:true
@@ -136,7 +134,6 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                 <Button
                   color="primary"
                   // onClick={() => setChangeBasicInformation(true)}
-                  onClick={() => console.log(errors)}
                   type="submit"
                   style={{ textTransform: "none", boxShadow: "none" }}
                 >
@@ -173,7 +170,6 @@ export const FormBasicInformation: React.FC<InfoProps> = ({
                                 fieldName,
                                 e.target.checked ? 0 : 1
                               );
-                              console.log(values.contact_contractors.main);
                             }}
                           />
                         );

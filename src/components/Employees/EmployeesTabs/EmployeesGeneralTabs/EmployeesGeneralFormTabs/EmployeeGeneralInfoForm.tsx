@@ -64,7 +64,6 @@ const EmployeeGeneralInfoForm:React.FC<EmployeeFormDataProps> = ({setEmployeeGen
                     Общие сведения
                 </Typography>
                 <Button color="primary" type="submit"
-                        // onClick={()=>console.log(values,"values")}
                         className={classes.saveButton}>
                     Сохранить
                 </Button>

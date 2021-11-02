@@ -52,7 +52,6 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
                 initialValues={initialValues}
                 // validationSchema={validationSchemaContactsFromGreen}
                 onSubmit={async (values,action) => {
-                    console.log (111,values)
                      updateEmployeeSkillsDataAC(values,employee.id)
                     // setEmployeeTraining(true) gevor
                 }}
@@ -67,8 +66,6 @@ const EmployeeTrainingForm:React.FC<TrainingFormProps> = ({setEmployeeTraining})
                     color="primary"
                     type="submit"
                     className={classes.btnSubmit}
-                    // onClick={() => setChangeContactsFromGreen(true)}
-                    //  onClick={() => console.log(values)}
                 >
                     Сохранить
                 </Button>

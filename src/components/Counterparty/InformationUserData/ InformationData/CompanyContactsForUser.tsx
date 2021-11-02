@@ -1,11 +1,11 @@
 import React from "react";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Link, Typography } from "@material-ui/core";
+import { makeStyles, createStyles} from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
 import { PencilSimpleIcon } from "../../../../IMG/SVG/PencilSimpleIcon";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: "flex",

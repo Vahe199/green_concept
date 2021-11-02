@@ -177,7 +177,6 @@ const getContactItem = (id:number) => {
               .includes(fullName.toString().toLocaleUpperCase())
           )
         : [];
-    console.log(filteredFullName);
 
     return (
       filteredFullName.length
@@ -228,7 +227,6 @@ const getContactItem = (id:number) => {
               filterOption={false}
               onSearch={setFullName}
               onSelect={(id: number, { value, label }: any) => {
-                console.log(value, id);
 
                 setParams({
                   ...params,

@@ -104,7 +104,7 @@ const EmployeeInfoItemForm: React.FC<EmployeeFormDataProps> = ({
             }
           });
 
-          console.log(values, "values", formData, "formData");
+
           updateEmployeeEmployeeDataAC(formData, id);
         }}
       >
@@ -117,7 +117,7 @@ const EmployeeInfoItemForm: React.FC<EmployeeFormDataProps> = ({
               <Button
                 color="primary"
                 type="submit"
-                // onClick={()=>console.log(values,"values", errors, " errors")}
+
                 className={classes.saveButton}
               >
                 Сохранить
@@ -246,7 +246,6 @@ const EmployeeInfoItemForm: React.FC<EmployeeFormDataProps> = ({
                               : null
                           }
                           handleChange={(date: any) => {
-                            console.log(date);
                             setFieldValue(
                               "birthdate",
                               date ? moment(date).format("YYYY-MM-DD") : null

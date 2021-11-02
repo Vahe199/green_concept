@@ -89,7 +89,6 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
         initialValues={initialValues}
         validationSchema={() => validationSchemaGeneralInfo(validateValue2)}
         onSubmit={async (values, action) => {
-          console.log(values, "values");
           changeAuthorGeneralData(values, id, errorMessage);
         }}
       >
@@ -108,9 +107,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                 Общие сведения
               </span>
               <Button
-                onClick={() => {
-                  console.log(errors);
-                }}
+
                 color="primary"
                 type="submit"
                 className={classes.saveButton}
@@ -260,7 +257,7 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                       setContractorId(value);
                       if (value === 1) {
                         setFieldValue("service_type_id", "");
-                  
+
                       }
                       if(value !== 1){
                         setFieldValue("crms", []);
@@ -317,15 +314,6 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                         placeholder={"1234556789101112"} />
                   </ValidationErrorWrapper>
                 </div>
-                {/*<TextField style={{width: "60%"}}*/}
-                {/*  variant={"outlined"}*/}
-                {/*  name="inn"*/}
-                {/*  placeholder={"1234556789101112"}*/}
-                {/*  value={values.inn}*/}
-                {/*  onChange={handleChange}*/}
-                {/*  error={touched.inn && Boolean(errors.inn)}*/}
-                {/*  helperText={touched.inn && errors.inn}*/}
-                {/*/>*/}
               </div>
               {values.org_type === "ЮЛ" && (
                 <div className={classes.label}>
@@ -344,15 +332,6 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                           placeholder={"1234556789101112"} />
                     </ValidationErrorWrapper>
                   </div>
-                  {/*<TextField style={{width: "60%"}}*/}
-                  {/*  variant={"outlined"}*/}
-                  {/*  name="kpp"*/}
-                  {/*  placeholder={"1234556789101112"}*/}
-                  {/*  value={values.kpp}*/}
-                  {/*  onChange={handleChange}*/}
-                  {/*  error={touched.kpp && Boolean(errors.kpp)}*/}
-                  {/*  helperText={touched.kpp && errors.kpp}*/}
-                  {/*/>*/}
                 </div>
               )}
               <div className={classes.label}>
@@ -371,15 +350,6 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                         placeholder={"1234556789101112"} />
                   </ValidationErrorWrapper>
                 </div>
-                {/*<TextField style={{width: "60%"}}*/}
-                {/*  variant={"outlined"}*/}
-                {/*  name="ogrn"*/}
-                {/*  placeholder={"1234556789101112"}*/}
-                {/*  value={values.ogrn}*/}
-                {/*  onChange={handleChange}*/}
-                {/*  error={touched.ogrn && Boolean(errors.ogrn)}*/}
-                {/*  helperText={touched.ogrn && errors.ogrn}*/}
-                {/*/>*/}
               </div>
               <div  className={clsx(classes.label, classes.NDASection)}>
                 <span style={{ width: "37%" }}>NDA</span>
@@ -390,7 +360,6 @@ const {assetsOptionsCounterpartyType, assetsOptionsCRMS} = InputAssetsOptions()
                      value={values.nda === 1 ? true : false}
                     onChange={(e: any) => {
                       setFieldValue("nda", e.target.checked ? 0 : 1)
-                      console.log(e.target.checked ? 0 : 1,values.nda, "e.target.checked")
                     }
                     }
 

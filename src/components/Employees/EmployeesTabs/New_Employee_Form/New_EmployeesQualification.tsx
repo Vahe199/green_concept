@@ -53,11 +53,9 @@ const NewEmployeesQualification:React.FC = () => {
                  validationSchema={validationSchemaEmployeesQualificationForm}
                 onSubmit={async ({experience_years, experience_months,...values},action) => {
                     // console.log (111, {...values, experience_months: moment(month).format("MM"), experience_years: 222})
-                    console.log (111, {...values})
                     employeesApi.createNewEmployeeQualification(9,values ).then(res =>{
                         notifySuccess("успешно добавлен");
                         action.resetForm()
-                        console.log(res.data, "res data")
                         return res
                     })
                         .catch((e)=>{
@@ -69,7 +67,6 @@ const NewEmployeesQualification:React.FC = () => {
                 {({ values, touched, handleChange,errors,setFieldValue }) => (
                     <Form>
                         <Button
-                            // onClick={()=>console.log(errors)}
                             type="submit"
                             variant="contained"
                             color="primary"

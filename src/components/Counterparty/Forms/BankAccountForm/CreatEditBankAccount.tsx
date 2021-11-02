@@ -167,7 +167,6 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
 
   const { insertContractorBankDetails, updateContractorBankDetails } =
     useActions();
-  console.log(id);
 
   const formik = useFormik({
     initialValues: contractorBankDetail,
@@ -177,7 +176,6 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
       if (contractorBankDetail && contractorBankDetail.id) {
         updateContractorBankDetails(contractorBankDetail.id, data);
       } else {
-        console.log(data);
 
         insertContractorBankDetails(data);
       }
@@ -191,7 +189,6 @@ const CreatEditBankAccount: React.FC<BankProps> = ({
     return () =>
       setContractorBankDetail && setContractorBankDetail(initialBankDetails);
   }, []);
-  console.log(formik.values);
 
   return (
     <div className={classes.root}>

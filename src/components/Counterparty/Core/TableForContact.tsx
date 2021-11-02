@@ -244,7 +244,6 @@ export default function TableForContact(props: any) {
               })}
               filterOption={false}
               onSelect={(id: number, { value }: any) => {
-                console.log(id, "idv vv");
                 setParams({
                   ...params,
                   "filter[contractors.contractor.group.full_name]": id,

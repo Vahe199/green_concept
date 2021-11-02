@@ -13,30 +13,30 @@ export const XLSIcon = (props: any) => {
       <path
         d="M5.625 27.25V4.75C5.625 4.45163 5.74353 4.16548 5.95451 3.95451C6.16548 3.74353 6.45163 3.625 6.75 3.625H29.25C29.5484 3.625 29.8345 3.74353 30.0455 3.95451C30.2565 4.16548 30.375 4.45163 30.375 4.75V20.034C30.375 20.1817 30.3459 20.328 30.2894 20.4645C30.2328 20.601 30.15 20.725 30.0455 20.8295L22.8295 28.0455C22.725 28.15 22.601 28.2328 22.4645 28.2894C22.328 28.3459 22.1817 28.375 22.034 28.375H22"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M30.2739 20.4989H22.5V28.2727"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9 27.4771L13.773 32.25L18.5459 27.4771"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M13.7729 21V32.25"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M16.7668 16.938H14.4148L12.5788 13.962L10.7428 16.938H8.48682L11.3308 12.534L8.65482 8.37H10.9228L12.6388 11.25L14.2948 8.37H16.5628L13.8748 12.678L16.7668 16.938Z"

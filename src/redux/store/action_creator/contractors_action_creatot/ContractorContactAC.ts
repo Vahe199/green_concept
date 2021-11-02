@@ -17,7 +17,6 @@ export const fetchContactsList =
         payload: data?.contacts,
       });
     } catch (e: any) {
-      console.log(e.response);
       dispatch({
         type: ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA_ERROR,
         payload: "Error Happened Conterparties Table List Is Fallen",
@@ -41,7 +40,6 @@ export const insertContractorContactData =
         payload: data,
       });
     } catch (e: any) {
-      console.log(e.response);
       const { data } = e.response;
       dispatch({
         type: ContractorContactDataActionType.INSERT_CONTRACTOR_CONTACT_DATA_ERROR,

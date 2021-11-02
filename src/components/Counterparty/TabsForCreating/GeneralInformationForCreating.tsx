@@ -3,7 +3,6 @@ import {
   Checkbox,
   Paper,
   Radio,
-  TextField,
   Typography,
 } from "@material-ui/core";
 import { FieldArray, Form, Formik, getIn } from "formik";
@@ -27,14 +26,15 @@ import { MagnifyingGlass } from "../../../IMG/SVG/MagnifyingGlass";
 import InputFilterSelect from "../../Utils/FilterInputs/InputFilterSelect";
 import { InputAssetsOptions } from "../../Utils/utils_options/InputAssetsOptions";
 import BackToAddress from "../../Utils/BackToAddress";
-import { SearchContactPerson } from "../../Utils/utils_options/SearchContactPerson";
 import { useHistory } from "react-router-dom";
 
 import { Input } from "antd";
 import MaskedInput from "antd-mask-input";
 import get from "lodash/get";
+import getFilteredOptions from "../../Utils/FilterInputs/getFilteredOptions";
 
 export const GeneralInformationForCreating = () => {
+  const { TextArea } = Input;
   const history = useHistory();
 
   const formikRef = useRef<any>();
@@ -50,29 +50,20 @@ export const GeneralInformationForCreating = () => {
     []
   );
   const [group, setGroup] = useState("");
-  const { fetchContactPerson, searchOptions } = SearchContactPerson();
 
-  //Now I work
-  const [legalRegistrationAddress, setLegalRegistrationAddress] =
-    useState<string>("");
-
-  const Options = InputAssetsOptions();
+  const {assetsOptionsCRMS,assetsOptionsCounterpartyType,assetsOptionsBranches} = InputAssetsOptions();
   const { insertContractorGeneralData, recoveryAuthorDataState } = useActions();
 
   const { assets, load: assetsLoading } = useTypedSelector(
     (state) => state.assets
   );
-  const { types_and_services }: any = assets;
+  const { types_and_services=[] }: any = assets;
   const { success, error }: any = useTypedSelector((state) => state.author);
-  const { contractors, loading } = useTypedSelector(
+  const { contractors} = useTypedSelector(
     (state) => state.counterparties
   );
   const { AuthorData } = useTypedSelector((state) => state.author);
 
-  const companyGroupFilter = companyGroupFilterInital.filter(
-    ({ full_name }: { full_name: string }) => full_name.includes(group)
-  );
-  const { TextArea } = Input;
 
   const [validateValue, setValidateValue] = useState<string>("ЮЛ");
 
@@ -96,7 +87,7 @@ export const GeneralInformationForCreating = () => {
     }
   }, [success, error, validateValue]);
 
-  const assetsOptionsServiceType = types_and_services[
+  const assetsOptionsServiceType =  types_and_services[
     contractorId - 1
   ]?.services?.map((option: any) => ({
     key: option.id,
@@ -132,14 +123,13 @@ export const GeneralInformationForCreating = () => {
         innerRef={formikRef}
         initialValues={initialValues}
         validationSchema={() => validationSchema(validateValue)}
-        onSubmit={async (values, action) => {
+        onSubmit={async (values) => {
           insertContractorGeneralData(values);
         }}
       >
         {({ values, touched, handleChange, errors, setFieldValue }) => (
           <Form>
             <Button
-              // onClick={()=>console.log(errors)}
               type="submit"
               variant="contained"
               color="primary"
@@ -267,7 +257,7 @@ export const GeneralInformationForCreating = () => {
                                                 value: "",
                                                 label: "",
                                               },
-                                              ...Options.assetsOptionsCRMS,
+                                              ...assetsOptionsCRMS,
                                             ]}
                                             placeholder="Фамилия Имя"
                                             loading={assetsLoading}
@@ -276,7 +266,7 @@ export const GeneralInformationForCreating = () => {
                                         </ValidationErrorWrapper>
                                       </div>
 
-                                      {index == 0 ? (
+                                      {index === 0 ? (
                                         ""
                                       ) : (
                                         <div
@@ -316,8 +306,6 @@ export const GeneralInformationForCreating = () => {
                         }
                       >
                         <InputFilterSelectedType
-                          //className={classes.input}
-                          //inputClassName="ant-select-selector"
                           name="contractor_type_id"
                           handleChange={(value: any) => {
                             setFieldValue("contractor_type_id", value);
@@ -330,14 +318,14 @@ export const GeneralInformationForCreating = () => {
                             }
                           }}
                           value={values.contractor_type_id}
-                          options={Options.assetsOptionsCounterpartyType}
+                          options={assetsOptionsCounterpartyType}
                           placeholder="Другое"
                           loading={assetsLoading}
                         />
                       </ValidationErrorWrapper>
                     </span>
                   </div>
-                  {contractorId == 1 || (
+                  {contractorId === 1 || (
                     <div className={classes.label}>
                       <span>Тип услуг</span>
                       <span style={{ width: "60%" }}>
@@ -368,15 +356,6 @@ export const GeneralInformationForCreating = () => {
                   )}
                   <div className={classes.label}>
                     <span>ИНН</span>
-                    {/*<TextField*/}
-                    {/*  variant={"outlined"}*/}
-                    {/*  name="inn"*/}
-                    {/*  placeholder={"1234556789101112"}*/}
-                    {/*  value={values.inn}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  error={touched.inn && Boolean(errors.inn)}*/}
-                    {/*  helperText={touched.inn && errors.inn}*/}
-                    {/*/>*/}
                     <div style={{ width: "60%" }}>
                       <ValidationErrorWrapper
                         inputClassName="ant-input"
@@ -412,15 +391,6 @@ export const GeneralInformationForCreating = () => {
                           />
                         </ValidationErrorWrapper>
                       </div>
-                      {/*<TextField*/}
-                      {/*  variant={"outlined"}*/}
-                      {/*  name="kpp"*/}
-                      {/*  placeholder={"1234556789101112"}*/}
-                      {/*  value={values.kpp}*/}
-                      {/*  onChange={handleChange}*/}
-                      {/*  error={touched.kpp && Boolean(errors.kpp)}*/}
-                      {/*  helperText={touched.kpp && errors.kpp}*/}
-                      {/*/>*/}
                     </div>
                   )}
                   <div className={classes.label}>
@@ -441,15 +411,6 @@ export const GeneralInformationForCreating = () => {
                         />
                       </ValidationErrorWrapper>
                     </div>
-                    {/*<TextField*/}
-                    {/*  variant={"outlined"}*/}
-                    {/*  name="ogrn"*/}
-                    {/*  placeholder={"1234556789101112"}*/}
-                    {/*  value={values.ogrn}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  error={touched.ogrn && Boolean(errors.ogrn)}*/}
-                    {/*  helperText={touched.ogrn && errors.ogrn}*/}
-                    {/*/>*/}
                   </div>
                   <div className={classes.label}>
                     <span>NDA</span>
@@ -517,18 +478,6 @@ export const GeneralInformationForCreating = () => {
                         />
                       </ValidationErrorWrapper>
                     </div>
-                    {/*<TextField*/}
-                    {/*  variant={"outlined"}*/}
-                    {/*  multiline*/}
-                    {/*  className={classes.textAreaCN}*/}
-                    {/*  rows={2}*/}
-                    {/*  name="full_name"*/}
-                    {/*  value={values.full_name}*/}
-                    {/*  placeholder={'ООО "Северо-Западная компания”'}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  error={touched.full_name && Boolean(errors.full_name)}*/}
-                    {/*  helperText={touched.full_name && errors.full_name}*/}
-                    {/*/>*/}
                   </div>
                   <div className={classes.label2}>
                     <span style={{ width: "40%" }}>
@@ -556,15 +505,6 @@ export const GeneralInformationForCreating = () => {
                         />
                       </ValidationErrorWrapper>
                     </div>
-                    {/*<TextField*/}
-                    {/*  variant={"outlined"}*/}
-                    {/*  name="short_name"*/}
-                    {/*  placeholder={"Краткое наименование компании"}*/}
-                    {/*  value={values.short_name}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  error={touched.short_name && Boolean(errors.short_name)}*/}
-                    {/*  helperText={touched.short_name && errors.short_name}*/}
-                    {/*/>*/}
                   </div>
                   <div
                     className={classes.label}
@@ -573,14 +513,7 @@ export const GeneralInformationForCreating = () => {
                     <span style={{ width: "40%" }}>
                       Группа компаний (при наличии)
                     </span>
-                    {/*<TextField*/}
-                    {/*    variant={"outlined"}*/}
-                    {/*    name="parent_id"*/}
-                    {/*    disabled={true}*/}
-                    {/*    placeholder={"Группа компаний"}*/}
-                    {/*    onChange={handleChange}*/}
 
-                    {/*/>*/}
 
                     <div
                       className={classes.searchWraper}
@@ -594,25 +527,29 @@ export const GeneralInformationForCreating = () => {
                         <div className={classes.searchWraper}>
                           <MagnifyingGlass className="searchIcon" />
                           <InputFilterSelect
-                            name="parent_id"
-                            placeholder={"Группа компаний"}
-                            onSearch={setGroup}
-                            //className={classes.input}
-                            value={values.parent_id}
-                            options={companyGroupFilter.map((option: any) => ({
-                              key: option.id,
-                              value: option.id,
-                              label: option.full_name,
-                            }))}
-                            onFocus={fetchContactPerson}
-                            // options={searchOptions}
-                            filterOption={false}
-                            onSelect={(id: number) => {
-                              setFieldValue("parent_id", id);
-                            }}
-                            notFoundContent={null}
-                            className={"searchMode "}
-                            showSearch
+                              onSearch={setGroup}
+                              name="parent_id"
+                              value={values.parent_id}
+                              options={getFilteredOptions({
+                                searchValue: group,
+                                array: contractors, // todo must be changed Arsen
+                                keyPath: "id",
+                                valuePath: "id",
+                                labelPath: "full_name",
+                              })}
+                              filterOption={false}
+
+                              onSelect={(id: number, { value }: any) => {
+                                setFieldValue("parent_id", id);
+
+                                if (value === "") {
+                                  setGroup("");
+                                }
+                              }}
+                              placeholder={"Группа компаний"}
+                              notFoundContent={null}
+                              className={"searchMode " + classes.input}
+                              showSearch
                           />
                         </div>
                       </ValidationErrorWrapper>
@@ -697,7 +634,7 @@ export const GeneralInformationForCreating = () => {
                                                 value: "",
                                                 label: "",
                                               },
-                                              ...Options.assetsOptionsBranches,
+                                              ...assetsOptionsBranches,
                                             ]}
                                             placeholder="Выберите отрасль"
                                             loading={assetsLoading}
@@ -705,7 +642,7 @@ export const GeneralInformationForCreating = () => {
                                         </ValidationErrorWrapper>
                                       </div>
 
-                                      {index == 0 ? (
+                                      {index === 0 ? (
                                         ""
                                       ) : (
                                         <div
@@ -769,35 +706,10 @@ export const GeneralInformationForCreating = () => {
                           onChange={handleChange}
                           className={classes.input}
                           autoComplete={"off"}
-                          onBlur={() =>
-                            setLegalRegistrationAddress(
-                              values.legal_registration_address
-                            )
-                          }
                           placeholder={"123456 город улица строени дом офис"}
                         />
                       </ValidationErrorWrapper>
                     </div>
-                    {/*<TextField*/}
-                    {/*  variant={"outlined"}*/}
-                    {/*  name="legal_registration_address"*/}
-                    {/*  placeholder={"123456 город улица строени дом офис"}*/}
-                    {/*  value={values.legal_registration_address}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  onBlur={() =>*/}
-                    {/*    setLegalRegistrationAddress(*/}
-                    {/*      values.legal_registration_address*/}
-                    {/*    )*/}
-                    {/*  }*/}
-                    {/*  error={*/}
-                    {/*    touched.legal_registration_address &&*/}
-                    {/*    Boolean(errors.legal_registration_address)*/}
-                    {/*  }*/}
-                    {/*  helperText={*/}
-                    {/*    touched.legal_registration_address &&*/}
-                    {/*    errors.legal_registration_address*/}
-                    {/*  }*/}
-                    {/*/>*/}
                   </div>
                   <div className={classes.label}>
                     <span>Фактический адрес</span>
@@ -822,19 +734,6 @@ export const GeneralInformationForCreating = () => {
                         />
                       </ValidationErrorWrapper>
                     </div>
-                    {/*<TextField*/}
-                    {/*  variant={"outlined"}*/}
-                    {/*  name="actual_address"*/}
-                    {/*  placeholder={"123456 город улица строени дом офис"}*/}
-                    {/*  value={values.actual_address}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  error={*/}
-                    {/*    touched.actual_address && Boolean(errors.actual_address)*/}
-                    {/*  }*/}
-                    {/*  helperText={*/}
-                    {/*    touched.actual_address && errors.actual_address*/}
-                    {/*  }*/}
-                    {/*/>*/}
                   </div>
                   <div style={{ justifyContent: "left", marginTop: -12 }}>
                     <Checkbox
@@ -888,17 +787,6 @@ export const GeneralInformationForCreating = () => {
                         />
                       </ValidationErrorWrapper>
                     </div>
-                    {/*<TextField*/}
-                    {/*  variant={"outlined"}*/}
-                    {/*  name="post_address"*/}
-                    {/*  placeholder={"123456 город улица строени дом офис"}*/}
-                    {/*  value={values.post_address}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  error={*/}
-                    {/*    touched.post_address && Boolean(errors.post_address)*/}
-                    {/*  }*/}
-                    {/*  helperText={touched.post_address && errors.post_address}*/}
-                    {/*/>*/}
                   </div>
                   <div style={{ justifyContent: "left", marginTop: -12 }}>
                     <Checkbox
@@ -948,7 +836,7 @@ export const GeneralInformationForCreating = () => {
                       }}
                     >
                       <FieldArray name="sites">
-                        {({ insert, remove, push }) => (
+                        {({remove, push }) => (
                           <div style={{ width: "100%" }}>
                             {values.sites.length > 0 &&
                               values.sites.map((url: any, index: any) => {
@@ -1000,28 +888,7 @@ export const GeneralInformationForCreating = () => {
                                         />
                                       </ValidationErrorWrapper>
                                     </div>
-                                    {/*<TextField*/}
-                                    {/*  style={*/}
-                                    {/*    index > 0*/}
-                                    {/*      ? { width: "90%" }*/}
-                                    {/*      : { width: "100%" }*/}
-                                    {/*  }*/}
-                                    {/*  variant={"outlined"}*/}
-                                    {/*  name={fieldName}*/}
-                                    {/*  value={url.url}*/}
-                                    {/*  placeholder={"www.сайткомпании.ru"}*/}
-                                    {/*  onChange={handleChange}*/}
-                                    {/*  error={Boolean(*/}
-                                    {/*    touchedFieldName && errorFieldName*/}
-                                    {/*  )}*/}
-                                    {/*  helperText={*/}
-                                    {/*    touchedFieldName && errorFieldName*/}
-                                    {/*      ? errorFieldName*/}
-                                    {/*      : ""*/}
-                                    {/*  }*/}
-                                    {/*/>*/}
-
-                                    {index == 0 ? (
+                                    {index === 0 ? (
                                       ""
                                     ) : (
                                       <div
@@ -1058,7 +925,7 @@ export const GeneralInformationForCreating = () => {
                       }}
                     >
                       <FieldArray name="phones">
-                        {({ insert, remove, push }) => (
+                        {({ remove, push }) => (
                           <div>
                             {values.phones.length > 0 &&
                               values.phones.map((phone, index) => {
@@ -1116,23 +983,7 @@ export const GeneralInformationForCreating = () => {
                                         />
                                       </ValidationErrorWrapper>
                                     </div>
-                                    {/*<TextField*/}
-                                    {/*  fullWidth*/}
-                                    {/*  style={{ width: "90%", marginBottom: 16 }}*/}
-                                    {/*  placeholder={"+79991234567"}*/}
-                                    {/*  variant={"outlined"}*/}
-                                    {/*  name={fieldName}*/}
-                                    {/*  value={phone.phone}*/}
-                                    {/*  onChange={handleChange}*/}
-                                    {/*  error={Boolean(*/}
-                                    {/*    touchedFieldName && errorFieldName*/}
-                                    {/*  )}*/}
-                                    {/*  helperText={*/}
-                                    {/*    touchedFieldName && errorFieldName*/}
-                                    {/*      ? errorFieldName*/}
-                                    {/*      : ""*/}
-                                    {/*  }*/}
-                                    {/*/>*/}
+
                                     <div
                                       style={{ marginLeft: 16 }}
                                       onClick={() => remove(index)}
@@ -1167,7 +1018,7 @@ export const GeneralInformationForCreating = () => {
                       }}
                     >
                       <FieldArray name="emails">
-                        {({ insert, remove, push }) => (
+                        {({ remove, push }) => (
                           <div>
                             {values.emails.length > 0 &&
                               values.emails.map((email, index) => {
@@ -1216,26 +1067,6 @@ export const GeneralInformationForCreating = () => {
                                         />
                                       </ValidationErrorWrapper>
                                     </div>
-                                    {/*<TextField*/}
-                                    {/*  fullWidth*/}
-                                    {/*  style={{ width: "90%", marginBottom: 16 }}*/}
-                                    {/*  placeholder={`email${*/}
-                                    {/*    index + 1*/}
-                                    {/*  }@email.com`}*/}
-                                    {/*  variant={"outlined"}*/}
-                                    {/*  name={fieldName}*/}
-                                    {/*  type="email"*/}
-                                    {/*  value={email.email}*/}
-                                    {/*  onChange={handleChange}*/}
-                                    {/*  error={Boolean(*/}
-                                    {/*    touchedFieldName && errorFieldName*/}
-                                    {/*  )}*/}
-                                    {/*  helperText={*/}
-                                    {/*    touchedFieldName && errorFieldName*/}
-                                    {/*      ? errorFieldName*/}
-                                    {/*      : ""*/}
-                                    {/*  }*/}
-                                    {/*/>*/}
                                     <div
                                       style={{ marginLeft: 16 }}
                                       onClick={() => remove(index)}

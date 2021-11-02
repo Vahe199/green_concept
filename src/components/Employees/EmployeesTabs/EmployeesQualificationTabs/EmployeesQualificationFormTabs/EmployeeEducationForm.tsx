@@ -61,7 +61,6 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
                  validationSchema={validationSchemaContactsFromGreen}
                 onSubmit={async ({experience_years, experience_months,...values},action) => {
                     // console.log (111, {...values, experience_months: moment(month).format("MM"), experience_years: 222})
-                     console.log (111, {...values})
                     updateEmployeeQualificationDataAC(values,id)
 
                 }}
@@ -76,8 +75,7 @@ const EmployeeEducationForm:React.FC<EmployeeEducationFormProps> = ({setEmployee
                     color="primary"
                     type="submit"
                     className={classes.btnSubmit}
-                    // onClick={() => setChangeContactsFromGreen(true)}
-                    //  onClick={() => console.log(values)}
+
                 >
                     Сохранить
                 </Button>

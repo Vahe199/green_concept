@@ -61,7 +61,6 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                  validationSchema={validationSchemaEmployeesGeneralInfForm}
                 onSubmit={async (values, action) => {
                     let formData = new FormData();
-                    console.log(values,"values");
 
                     Object.entries(values).forEach((item) => {
                         const key = get(item, "[0]", "");
@@ -89,13 +88,11 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                             notifySuccess("сотрудник успешно добавлена");
                             action.resetForm();
                             setAvatarPreview("")
-                            console.log(res,"res")
                             return res;
                         })
                         .catch((e:any) => {
                             const {data}:any = e.response
                             notifyError(`${data ? data?.message : "некорректные данные"}`);
-                            console.log(e.response)
                             return e;
                         });
                 }}
@@ -103,7 +100,6 @@ const NewEmployeesGeneralInformation: React.FC = () => {
                 {({ values, setFieldValue, touched, handleChange, errors }) => (
                     <Form encType={"multipart/form-data"}>
                         <Button
-                            // onClick={()=>console.log(errors)}
                             type="submit"
                             variant="contained"
                             color="primary"

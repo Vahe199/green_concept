@@ -10,7 +10,6 @@ import EmployeeGeneralInfoForm from "./EmployeesGeneralTabs/EmployeesGeneralForm
 
 const EmployeesGeneralInformation:React.FC = () => {
     const [employeeData, setEmployeeData] = useState<boolean>(true)
-    console.log(employeeData,"employeeData")
     const [employeeAboutData, setEmployeeAboutData] = useState<boolean>(true)
     const [employeeGeneralInfo, setEmployeeGeneralInfo] = useState<boolean>(true)
     return(

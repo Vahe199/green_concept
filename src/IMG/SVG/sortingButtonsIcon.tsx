@@ -13,17 +13,17 @@ export const SortingButtons = (props: any) => {
       <path
         d="M3 10L8 5L13 10"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         onClick={() => handleChange("-")}
       />
       <path
         d="M13 22L8 27L3 22"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         onClick={() => handleChange("+")}
       />
     </svg>

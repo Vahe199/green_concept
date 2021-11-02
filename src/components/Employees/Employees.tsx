@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Employees = (props: any) => {
-    console.log(props,"props")
+
     let empData = {
         surname:"",
         firstname:""

@@ -19,7 +19,7 @@ export const ContactPerson = () => {
     useState<boolean>(true);
   const [changeCongratulations, setChangeCongratulations] =
     useState<boolean>(true);
-  console.log(898098);
+
   const classes = useStyles();
   return (
     <div className={classes.root}>

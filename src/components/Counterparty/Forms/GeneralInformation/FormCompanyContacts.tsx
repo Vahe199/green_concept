@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FieldArray, Form, Formik, getIn } from "formik";
-import { Button, Checkbox, Paper, TextField } from "@material-ui/core";
+import { Button, Checkbox, Paper} from "@material-ui/core";
 import { useTypedSelector } from "../../../../redux/type_redux_hook/useTypedSelector";
 import { TrashIcon } from "../../../../IMG/SVG/TrashIcon";
 import { useActions } from "../../../../redux/type_redux_hook/useAction";
@@ -28,14 +28,8 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
 
   const {
     id,
-    legal_registration_address,
-    actual_address,
-    post_address,
-    emails = [],
-    sites = [],
-    phones = [],
     org_type
-  }: any = contractor;;
+  }: any = contractor;
 
   const [matchesAddressActualAddress, setMatchesAddressActualAddress] =
     React.useState<boolean>(true);
@@ -43,7 +37,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
     React.useState<boolean>(true);
 
 
-  const [validateValue, setValidateValue] = useState<any>(org_type);
+  const [validateValue] = useState<any>(org_type);
 
   let errorMessage: string = "ContactInfo";
   useEffect(() => {
@@ -80,8 +74,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
       <Formik
         initialValues={initialValues}
         validationSchema={() => validationSchemaCompanyContacts(validateValue)}
-        onSubmit={async (values, action) => {
-          console.log(values, "values");
+        onSubmit={async (values) => {
           changeAuthorContactInfoData(values, id, errorMessage);
         }}
       >
@@ -135,15 +128,6 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                     />
                   </ValidationErrorWrapper>
                 </div>
-                {/*<TextField*/}
-                {/*  variant={"outlined"}*/}
-                {/*  name="legal_registration_address"*/}
-                {/*  placeholder={"123456 город улица строени дом офис"}*/}
-                {/*  value={values.legal_registration_address}*/}
-                {/*  onChange={handleChange}*/}
-                {/*  error={touched.legal_registration_address && Boolean(errors.legal_registration_address)}*/}
-                {/*  helperText={touched.legal_registration_address && errors.legal_registration_address}*/}
-                {/*/>*/}
               </div>
               <div className={classes.label}>
                 <span>Фактический адрес</span>
@@ -165,15 +149,6 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                     />
                   </ValidationErrorWrapper>
                 </div>
-                {/*<TextField*/}
-                {/*  variant={"outlined"}*/}
-                {/*  name="actual_address"*/}
-                {/*  placeholder={"123456 город улица строени дом офис"}*/}
-                {/*  value={values.actual_address}*/}
-                {/*  onChange={handleChange}*/}
-                {/*  error={touched.actual_address && Boolean(errors.actual_address)}*/}
-                {/*  helperText={touched.actual_address && errors.actual_address}*/}
-                {/*/>*/}
               </div>
               <div>
                 <Checkbox
@@ -220,15 +195,6 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                     />
                   </ValidationErrorWrapper>
                 </div>
-                {/*<TextField*/}
-                {/*  variant={"outlined"}*/}
-                {/*  name="post_address"*/}
-                {/*  placeholder={"123456 город улица строени дом офис"}*/}
-                {/*  value={values.post_address}*/}
-                {/*  onChange={handleChange}*/}
-                {/*  error={touched.post_address && Boolean(errors.post_address)}*/}
-                {/*  helperText={touched.post_address && errors.post_address}*/}
-                {/*/>*/}
               </div>
               <div>
                 <Checkbox
@@ -266,7 +232,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                 </span>
                 <span style={{ width: "60%", flexDirection: "column" }}>
                   <FieldArray name="sites">
-                    {({ insert, remove, push }) => (
+                    {({ remove, push }) => (
                       <div style={{ width: "100%" }}>
                         {values.sites.length > 0 &&
                           values.sites.map((url:any, index:number) => {
@@ -303,18 +269,8 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                                     />
                                   </ValidationErrorWrapper>
                                 </div>
-                                {/*<TextField style={index > 0 ? {width: "90%"} : {width: "100%"}}*/}
-                                {/*           variant={"outlined"}*/}
-                                {/*           className={classes.input}*/}
-                                {/*           name={fieldName}*/}
-                                {/*           value={url.url}*/}
-                                {/*           placeholder={"www.сайткомпании.ru"}*/}
-                                {/*           onChange={handleChange}*/}
-                                {/*           error={Boolean(touchedFieldName && errorFieldName)}*/}
-                                {/*           helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}*/}
-                                {/*/>*/}
 
-                                {index == 0 ? (
+                                {index === 0 ? (
                                   ""
                                 ) : (
                                   <div
@@ -346,7 +302,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                 <span className={classes.contactsCompany}>Телефон</span>
                 <span style={{ width: "60%", flexDirection: "column" }}>
                   <FieldArray name="phones">
-                    {({ insert, remove, push }) => (
+                    {({ remove, push }) => (
                       <div>
                         {values.phones.length > 0 &&
                           values.phones.map((phone:any, index:number) => {
@@ -396,18 +352,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                                     />
                                   </ValidationErrorWrapper>
                                 </div>
-                                {/*<TextField*/}
-                                {/*    fullWidth*/}
-                                {/*    style={{ width: "100%", marginBottom:16}}*/}
-                                {/*    placeholder={"+79991234567"}*/}
-                                {/*    variant={"outlined"}*/}
-                                {/*    name={fieldName}*/}
-                                {/*    value={phone.phone}*/}
-                                {/*    onChange={handleChange}*/}
-                                {/*    error={Boolean(touchedFieldName && errorFieldName)}*/}
-                                {/*    helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}*/}
-                                {/*/>*/}
-                                {index == 0 ? (
+                                {index === 0 ? (
                                   ""
                                 ) : (
                                   <div
@@ -482,19 +427,7 @@ export const FormCompanyContacts: React.FC<Props> = ({ setChangeContacts }) => {
                                     />
                                   </ValidationErrorWrapper>
                                 </div>
-                                {/*<TextField*/}
-                                {/*    fullWidth*/}
-                                {/*    style={{ width: "100%", marginBottom:16}}*/}
-                                {/*    placeholder={`email${index + 1}@email.com`}*/}
-                                {/*    variant={"outlined"}*/}
-                                {/*    name={fieldName}*/}
-                                {/*    type="email"*/}
-                                {/*    value={email.email}*/}
-                                {/*    onChange={handleChange}*/}
-                                {/*    error={Boolean(touchedFieldName && errorFieldName)}*/}
-                                {/*    helperText={touchedFieldName && errorFieldName ? errorFieldName : ""}*/}
-                                {/*/>*/}
-                                {index == 0 ? (
+                                {index === 0 ? (
                                   ""
                                 ) : (
                                   <div

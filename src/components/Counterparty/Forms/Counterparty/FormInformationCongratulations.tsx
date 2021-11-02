@@ -48,7 +48,6 @@ const {assetsOptionsCongratulation} = InputAssetsOptions()
             initialValues={initialValues}
             validationSchema={validationSchemaInformationCongratulations}
             onSubmit={async (values,action) => {
-              console.log(values,"values")
                 contractorApi.changeContactCongratulationsData(id,values).then(res =>{
                     const {data} = res
                     dispatch({type:ContractorContactDataActionType.SET_CONTRACTOR_CONTACT_DATA_BY_CONTRACTOR_ID,
@@ -76,7 +75,6 @@ const {assetsOptionsCongratulation} = InputAssetsOptions()
                   <Button
                       color="primary"
                       // onClick={() => setChangeCongratulations(true)}
-                      onClick={() => console.log(errors)}
                       type="submit"
                       style={{ textTransform: "none" }}
                   >

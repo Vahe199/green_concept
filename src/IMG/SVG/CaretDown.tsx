@@ -13,9 +13,9 @@ export const CaretDown = (props: any) => {
         <path
           d="M15.4375 7.625L9.5 13.5625L3.5625 7.625"
           stroke="#5B6770"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </div>

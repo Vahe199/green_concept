@@ -118,13 +118,16 @@ export const useTableStyles = (loading: boolean) =>
       "& .searchMode .ant-select-arrow": {
         display: "none",
       },
+      // "& ant-select-selection-search-input": {
+      //   paddingLeft: 43,
+      // },
       "& .searchMode .ant-select-selection-search": {
         top: 4,
         left: 24,
       },
       "& .searchMode .ant-select-selection-item": {
         top: 0,
-        left: 15,
+        left: 18,
       },
       "& svg": {
         position: "absolute",

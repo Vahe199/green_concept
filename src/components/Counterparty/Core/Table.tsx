@@ -184,8 +184,8 @@ export default function CounterpartiesTable(props: any) {
               //   }
               // }}
               notFoundContent={null}
-              value={params["filter[full_name]"]}
-                //value={'dsvsvdsvs'}
+              //value={params["filter[full_name]"]}
+                value={'dsvsvdsvs'}
               className={"searchMode " + classes.input}
               prefix={<MagnifyingGlass className={classes.icon} />}
               showSearch

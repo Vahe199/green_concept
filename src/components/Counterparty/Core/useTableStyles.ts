@@ -132,7 +132,12 @@ export const useTableStyles = (loading: boolean) =>
         top: 28,
         zIndex: 4,
       },
-
+      "& .ant-select-selector": {
+        paddingLeft: 13,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
       "& .ant-select-selector .ant-select-selection-placeholder": {
         paddingLeft: 13,
       },

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b00082f7-a23c-4cf5-8937-53de29ed3f7c" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="22rPuKGetxmRhWYMntnt9jnxBSd" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b00082f7-a23c-4cf5-8937-53de29ed3f7c" name="Changes" comment="" />
+      <created>1640592958549</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1640592958549</updated>
+      <workItem from="1640592959904" duration="646000" />
+      <workItem from="1641896889622" duration="521000" />
+      <workItem from="1641899331477" duration="175000" />
+      <workItem from="1641900062839" duration="201000" />
+      <workItem from="1641999957357" duration="126000" />
+      <workItem from="1642153056205" duration="472000" />
+      <workItem from="1642413241456" duration="810000" />
+      <workItem from="1642577459178" duration="1169000" />
+      <workItem from="1642847576807" duration="693000" />
+      <workItem from="1643707493721" duration="62000" />
+      <workItem from="1643721399460" duration="122000" />
+      <workItem from="1643723276536" duration="221000" />
+      <workItem from="1644160618151" duration="150000" />
+      <workItem from="1644248284577" duration="74000" />
+      <workItem from="1644322993294" duration="1849000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
